@@ -132,7 +132,7 @@ const NavigationDesktop = () => {
         <div
           className={`absolute top-0  ${
             background === "white" ? `py-4 bg-opacity-90 backdrop-blur` : `pt-8`
-          } px-[3%] z-[54] flex items-center justify-between w-full bg-${background} transition-all duration-500`}
+          } px-[3%] z-[54] flex items-center justify-between w-full bg-${background}  transition-all duration-500`}
         >
           <div
             className="flex items-center gap-20 "
@@ -296,7 +296,7 @@ const NavigationDesktop = () => {
             }
           >
             <div className="h-full flex flex-col gap-10">
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 mix-blend-difference">
                 <Link
                   href="/"
                   className="uppercase  hover:translate-x-5 hover:text-slate-500 transition-all duration-300 text-lg  font-medium"
@@ -310,7 +310,7 @@ const NavigationDesktop = () => {
                   Promocije: do 50% popusta
                 </Link>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 mix-blend-difference">
                 {activeCategory?.children?.map((category) => {
                   const isActiveCategory =
                     isActiveSubcategory.id === category?.id;
