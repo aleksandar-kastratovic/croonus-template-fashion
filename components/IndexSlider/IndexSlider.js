@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Aos from "aos";
 
 const IndexSlider = ({ banners }) => {
   const [currentSlide, setCurrentSlide] = useState({
@@ -59,9 +60,15 @@ const IndexSlider = ({ banners }) => {
     setDraggingIndex(index);
     setIsDragging(true);
   };
-
+  useEffect(() => {
+    Aos.init();
+  });
   return (
-    <div className="absolute block h-[1057px]" ref={sliderRef}>
+    <div
+      data-aos="zoom-out"
+      className="absolute block h-[1057px]"
+      ref={sliderRef}
+    >
       <div className="relative h-full overflow-hidden">
         <div className="flex items-center justify-between w-full max-h-[1057px]">
           {banners.map((banner, index) => {

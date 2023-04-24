@@ -1,11 +1,19 @@
 "use client";
 
+import Aos from "aos";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const RecommendedCategories = ({ categories }) => {
+  useEffect(() => {
+    Aos.init();
+  }, []);
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-[1.25rem] mt-[1.25rem] mx-[1.25rem]">
+    <div
+      data-aos="fade-left"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-[1.25rem] mt-[1.25rem] mx-[1.25rem]"
+    >
       {categories?.map((category, index) => {
         return (
           <div className="col-span-1" key={index}>
