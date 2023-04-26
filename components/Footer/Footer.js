@@ -49,7 +49,7 @@ const Footer = () => {
           <i className="fa-brands fa-facebook-square text-[#191919] font-bold text-3xl hover:text-blue-500 transition-all duration-300 hover:scale-110"></i>
         </div>
       </div>
-      <div className="mx-[5rem] mt-[3.75rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
+      <div className="mx-[5rem] py-[2.625rem] mt-[3.75rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
         <div className="flex items-center 2xl:gap-[150px] 3xl:gap-[220px]">
           <div className="flex flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Korisnička podrška</h1>
