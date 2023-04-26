@@ -3,6 +3,8 @@ import { get, list } from "./api/api";
 import RecommendedCategories from "@/components/RecommendedCategories/RecommendedCategories";
 import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
 import IndexBanner from "@/components/IndexBanner/IndexBanner";
+import Newsletter from "@/components/Newsletter/Newsletter";
+import { Suspense } from "react";
 const getBanners = async () => {
   const getBanners = await get("/banners/index_slider").then(
     (res) => res?.payload
@@ -34,7 +36,7 @@ const Home = async () => {
   const indexBanner = await getIndexBanner();
   return (
     <div className="4xl:container mx-auto block relative overflow-hidden">
-      <div className="relative h-[1057px] block" id="slider">
+      <div className="relative 2xl:h-[1000px] 3xl:h-[1057px] block" id="slider">
         <IndexSlider banners={banners} />
       </div>
       <RecommendedCategories categories={categories} />
@@ -42,6 +44,7 @@ const Home = async () => {
         <RecommendedProducts products={newProducts} />
       </div>
       <IndexBanner banner={indexBanner} />
+      <Newsletter />
     </div>
   );
 };

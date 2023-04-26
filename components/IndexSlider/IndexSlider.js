@@ -66,7 +66,7 @@ const IndexSlider = ({ banners }) => {
   return (
     <div
       data-aos="zoom-out"
-      className="absolute block h-[1057px]"
+      className="absolute block 2xl:h-[1000px] 3xl:h-[1057px]"
       ref={sliderRef}
     >
       <div className="relative h-full overflow-hidden">

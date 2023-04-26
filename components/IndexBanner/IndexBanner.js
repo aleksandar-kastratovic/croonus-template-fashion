@@ -17,9 +17,9 @@ const IndexBanner = ({ banner }) => {
           alt={banner[0]?.title}
           width={1920}
           height={1080}
-          className="object-cover"
+          className="object-cover h-full"
         />
-        <div className="absolute flex flex-col items-center justify-center gap-10 top-[50%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute flex flex-col items-center justify-center gap-10 top-[55%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           {banner[0]?.title && (
             <h1 className="text-white text-[8.875rem] font-light uppercase leading-[4.625rem]">
               {banner[0]?.title}
