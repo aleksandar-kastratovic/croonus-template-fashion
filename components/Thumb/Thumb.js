@@ -31,6 +31,11 @@ const Thumb = ({ data, slider }) => {
                   className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
                 />
               )}
+              <div className="absolute bottom-2 left-4">
+                <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
+                  -35%
+                </span>
+              </div>
             </div>
             <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
               <div>
@@ -66,9 +71,9 @@ const Thumb = ({ data, slider }) => {
                 />
               </div>
             </div>
-            <div className="absolute rounded-lg py-5 left-3 bottom-[5rem] w-[95%] mx-auto bg-white chevrons">
+            <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
               <div className="flex flex-col items-center justify-center w-full">
-                <h1 className="text-[1.05rem] font-semibold text-center">
+                <h1 className="text-[0.938rem] font-semibold text-center">
                   Izaberi veličinu
                 </h1>
                 <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
@@ -80,7 +85,7 @@ const Thumb = ({ data, slider }) => {
                             {item2?.values.map((item3) => {
                               return (
                                 <>
-                                  <div className="rounded-full cursor-pointer p-2 w-12 border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border">
+                                  <div className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border">
                                     {item3?.name}
                                   </div>
                                 </>
@@ -123,7 +128,7 @@ const Thumb = ({ data, slider }) => {
                 />
               </div>
             </div>
-            <div className="mt-3 flex items-center gap-[10px]">
+            <div className="mt-0 flex items-center gap-[10px]">
               <h1 className="bg-[#f8ce5d] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
                 {currencyFormat(product?.price?.price?.original)}
               </h1>
