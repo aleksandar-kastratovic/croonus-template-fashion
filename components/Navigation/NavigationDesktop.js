@@ -149,9 +149,9 @@ const NavigationDesktop = () => {
           >
             <Link href="/">
               {open || background === "white" ? (
-                <Image src={LogoDark} width={100} height={100} alt="" />
+                <Image src={LogoDark} width={110} height={110} alt="" />
               ) : (
-                <Image src={LogoLight} width={100} height={100} alt="" />
+                <Image src={LogoLight} width={110} height={110} alt="" />
               )}
             </Link>
             <div
@@ -166,12 +166,12 @@ const NavigationDesktop = () => {
                     key={category?.id}
                     className={
                       isActiveCategory && !open
-                        ? "px-5 py-1 rounded cursor-pointer hover:bg-white hover:text-black bg-white uppercase text-black text-[1rem]"
+                        ? "px-5 py-1 rounded cursor-pointer hover:bg-white hover:text-black bg-white uppercase text-black text-[.8rem]"
                         : (open && isActiveCategory) || background === "white"
-                        ? "px-5 py-1 rounded cursor-pointer hover:bg-black hover:text-white text-white uppercase  text-[1rem] bg-black"
+                        ? "px-5 py-1 rounded cursor-pointer hover:bg-black hover:text-white text-white uppercase  text-[.8rem] bg-black"
                         : `px-5 py-1 rounded cursor-pointer hover:bg-black hover:text-white ${
                             open ? `text-black` : `text-white`
-                          } uppercase  text-[1rem]`
+                          } uppercase  text-[.8rem]`
                     }
                     onClick={() => {
                       setIsActive(category?.id);
@@ -232,7 +232,7 @@ const NavigationDesktop = () => {
                       background === "white" ? "wiggle" : "invert wiggle"
                     }
                   />
-                  <span className="absolute -top-2.5 -right-1 bg-white rounded-full w-5 h-5 flex items-center justify-center text-black text-xs">
+                  <span className="absolute -top-2.5 text-white -right-1 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
                     {wishListCount}
                   </span>
                 </div>
@@ -248,7 +248,7 @@ const NavigationDesktop = () => {
                       background === "white" ? "wiggle" : "invert wiggle"
                     }
                   />
-                  <span className="absolute -top-1 -right-1 bg-white rounded-full w-5 h-5 flex items-center justify-center text-black text-xs">
+                  <span className="absolute -top-1 text-white -right-1 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
                     {cartCount}
                   </span>
                 </div>

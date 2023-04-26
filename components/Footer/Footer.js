@@ -9,7 +9,9 @@ import Image5 from "../../assets/Icons/img.png";
 import Image6 from "../../assets/Icons/img3.png";
 import Image7 from "../../assets/Icons/img4.png";
 import Image8 from "../../assets/Icons/american.png";
-
+import Instagram from "../../assets/Icons/instagram.png";
+import Youtube from "../../assets/Icons/youtube.png";
+import Facebook from "../../assets/Icons/facebook.png";
 const Footer = () => {
   return (
     <div className="mt-[7.75rem] bg-[#f7f7f7]">
@@ -44,12 +46,12 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex items-center gap-[1.938rem]">
-          <i className="fa-brands fa-instagram text-[#191919] font-bold text-3xl hover:text-[#c84d61] transition-all duration-300 hover:scale-110"></i>
-          <i className="fa-brands fa-youtube text-[#191919] font-bold text-3xl hover:text-[#e10000] transition-all duration-300 hover:scale-110"></i>
-          <i className="fa-brands fa-facebook-square text-[#191919] font-bold text-3xl hover:text-blue-500 transition-all duration-300 hover:scale-110"></i>
+          <Image src={Instagram} width={30} height={30} alt="Instagram" />
+          <Image src={Youtube} width={30} height={30} alt="Instagram" />
+          <Image src={Facebook} width={30} height={30} alt="Instagram" />
         </div>
       </div>
-      <div className="mx-[5rem] mt-[3.75rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
+      <div className="mx-[5rem] py-[2.75rem] mt-[1.75rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
         <div className="flex items-center 2xl:gap-[150px] 3xl:gap-[220px]">
           <div className="flex flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Korisnička podrška</h1>
