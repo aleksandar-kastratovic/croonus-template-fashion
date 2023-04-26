@@ -60,7 +60,7 @@
   height: 100%;
   width: 0%;
   background-color: white;
-  animation: progress-bar 3s linear forwards;
+  animation: progress-bar 5s linear forwards;
 }
 
 @keyframes progress-bar {

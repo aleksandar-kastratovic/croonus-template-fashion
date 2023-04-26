@@ -63,6 +63,32 @@ const IndexSlider = ({ banners }) => {
   useEffect(() => {
     Aos.init();
   });
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    const nextSlide = () => {
+      setCurrentSlide((prevState) => {
+        const nextIndex = (prevState.index + 1) % banners.length;
+        return {
+          index: nextIndex,
+          banner: banners[nextIndex]?.image,
+        };
+      });
+    };
+    intervalRef.current = setInterval(nextSlide, 5000);
+    const handleInteraction = () => {
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(nextSlide, 5000);
+    };
+    window.addEventListener("click", handleInteraction);
+    window.addEventListener("keydown", handleInteraction);
+    return () => {
+      clearInterval(intervalRef.current);
+      window.removeEventListener("click", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+    };
+  }, [banners]);
+
   return (
     <div
       data-aos="zoom-out"
