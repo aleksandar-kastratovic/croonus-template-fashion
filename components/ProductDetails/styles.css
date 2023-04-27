@@ -39,7 +39,6 @@
 }
 
 .mySwiper {
-  height: 878;
   box-sizing: border-box;
   max-height: 878px;
 }
@@ -59,4 +58,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .mySwiper {
+    box-sizing: border-box;
+    max-height: 120px;
+    width: 100%;
+  }
 }
