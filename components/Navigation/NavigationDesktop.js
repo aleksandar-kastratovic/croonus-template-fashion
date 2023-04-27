@@ -133,7 +133,7 @@ const NavigationDesktop = ({ category }) => {
   return (
     <>
       <div
-        className={`sticky top-0 z-[54] flex items-center justify-between w-full bg-${
+        className={`max-md:hidden sticky top-0 z-[54] flex items-center justify-between w-full bg-${
           category ? `white` : `${background}`
         } ${background === "white" ? `bg-opacity-70 backdrop-blur` : ``}`}
         id="navigation"
@@ -271,10 +271,10 @@ const NavigationDesktop = ({ category }) => {
       <div
         className={
           open
-            ? `fixed  left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
+            ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
                 background === "white" ? `py-4` : `pt-8`
               } gap-[162px] bg-white transition-all duration-500`
-            : `fixed ${
+            : `max-md:hidden fixed ${
                 background === "white" ? `invisible` : ``
               } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
                 background === "white" ? `py-4` : `pt-8`
