@@ -147,3 +147,48 @@
 .favorites:hover > .favorite {
   filter: invert(1);
 }
+.slider .rs-slider-bar {
+  background-color: black;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 4px;
+}
+
+.slider .rs-slider-progress-bar {
+  left: 0%;
+  width: 100%;
+  background-color: #030303;
+  border-radius: 3px 0 0 3px;
+  height: 5px;
+  position: absolute;
+}
+
+.rs-slider-handle {
+  left: 0%;
+  outline: none;
+  position: absolute;
+  top: 0%;
+}
+.rs-slider-handle:before {
+  background-color: #6ba8eb;
+  border: 1px solid #6ba8eb;
+  border-radius: 10px;
+  content: "";
+  top: -12px;
+  cursor: pointer;
+  height: 32px;
+  margin-left: -6px;
+  position: absolute;
+  transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+  width: 32px;
+}
+.rs-slider-progress-bar {
+  background-color: #3498ff;
+  border-radius: 3px 0 0 3px;
+  height: 3px;
+  position: absolute;
+}
+.rs-tooltip-arrow {
+  display: none;
+}

@@ -117,6 +117,7 @@ const IndexSlider = ({ banners }) => {
                     alt={banner?.title}
                     width={1920}
                     height={1080}
+                    className="bg-fixed object-cover"
                   />
                   <div className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40">
                     <div className="absolute flex flex-col items-center justify-center gap-[33px] top-[40%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
