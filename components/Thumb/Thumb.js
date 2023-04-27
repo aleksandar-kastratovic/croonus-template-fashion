@@ -22,56 +22,65 @@ const Thumb = ({ data, slider, loading }) => {
       return (
         <SwiperSlide key={product?.basic_data?.id} className="">
           <div className=" w-full  item">
-            <div className="h-[575px] item relative">
-              {product?.image[0] && (
-                <Image
-                  src={convertHttpToHttps(product?.image[imageIndex])}
-                  alt={product?.basic_data?.name}
-                  width={22000}
-                  height={22000}
-                  className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                />
-              )}
-              <div className="absolute bottom-2 left-4">
-                <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
-                  -35%
-                </span>
+            <Link
+              href={`/proizvod/${product?.slug}`}
+              scroll={true}
+              className="relative z-[5]"
+            >
+              {" "}
+              <div className="h-[575px] item relative">
+                {product?.image[0] && (
+                  <Image
+                    src={convertHttpToHttps(product?.image[imageIndex])}
+                    alt={product?.basic_data?.name}
+                    width={22000}
+                    height={22000}
+                    className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                  />
+                )}
+
+                <div className="absolute bottom-2 left-4">
+                  <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
+                    -35%
+                  </span>
+                </div>
+                <div className="absolute z-[6] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
+                  <div>
+                    <Image
+                      className="cursor-pointer rotate-180"
+                      src={Chevron}
+                      alt="chevron"
+                      width={15}
+                      height={15}
+                      onClick={() => {
+                        if (imageIndex === 0) {
+                          setImageIndex(product?.image.length - 1);
+                        } else {
+                          setImageIndex(imageIndex - 1);
+                        }
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <Image
+                      className="cursor-pointer rotate-0"
+                      src={Chevron}
+                      alt="chevron"
+                      width={15}
+                      height={15}
+                      onClick={() => {
+                        if (imageIndex === product?.image.length - 1) {
+                          setImageIndex(0);
+                        } else {
+                          setImageIndex(imageIndex + 1);
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
-              <div>
-                <Image
-                  className="cursor-pointer rotate-180"
-                  src={Chevron}
-                  alt="chevron"
-                  width={15}
-                  height={15}
-                  onClick={() => {
-                    if (imageIndex === 0) {
-                      setImageIndex(product?.image.length - 1);
-                    } else {
-                      setImageIndex(imageIndex - 1);
-                    }
-                  }}
-                />
-              </div>
-              <div>
-                <Image
-                  className="cursor-pointer rotate-0"
-                  src={Chevron}
-                  alt="chevron"
-                  width={15}
-                  height={15}
-                  onClick={() => {
-                    if (imageIndex === product?.image.length - 1) {
-                      setImageIndex(0);
-                    } else {
-                      setImageIndex(imageIndex + 1);
-                    }
-                  }}
-                />
-              </div>
-            </div>
+            </Link>
+
             <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
               <div className="flex flex-col items-center justify-center w-full">
                 <h1 className="text-[0.938rem] font-semibold text-center">
@@ -186,13 +195,15 @@ const Thumb = ({ data, slider, loading }) => {
               <div className="h-full w-full bg-[#eeeee0] object-cover animate-pulse"></div>
             ) : (
               product?.image[0] && (
-                <Image
-                  src={convertHttpToHttps(product?.image[0])}
-                  alt={product?.basic_data?.name}
-                  width={22000}
-                  height={22000}
-                  className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                />
+                <Link href={`/proizvod/${product?.slug}`} scroll={true}>
+                  <Image
+                    src={convertHttpToHttps(product?.image[0])}
+                    alt={product?.basic_data?.name}
+                    width={22000}
+                    height={22000}
+                    className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                  />
+                </Link>
               )
             )}
 
