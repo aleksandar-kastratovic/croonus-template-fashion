@@ -140,13 +140,13 @@ const NavigationDesktop = ({ category }) => {
       >
         <div
           className={`absolute top-0  ${
-            background === "white" ? `py-4 bg-opacity-90 backdrop-blur` : `pt-8`
+            background === "white" ? `bg-opacity-90 backdrop-blur` : `pt-8`
           } px-[3%] z-[54] flex items-center justify-between w-full bg-${
             category ? `white` : `${background}`
           }  transition-all duration-500`}
         >
           <div
-            className="flex items-center gap-20 "
+            className="flex items-center py-[1.5rem] gap-20 "
             onMouseEnter={() => {
               if (background === "white") {
                 setOpen(true);

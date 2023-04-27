@@ -30,6 +30,26 @@ const getIndexBanner = async () => {
   );
   return getIndexBanner;
 };
+
+export async function generateMetadata() {
+  return {
+    title: "Pazari.rs Online Shop",
+    description: "Dobrodošli na Pazari.rs Online Shop",
+    keywords: [
+      "pazari",
+      "online",
+      "shop",
+      "pazari.rs",
+      "farmerke",
+      "trenerke",
+      "dukserice",
+      "pazari obuca",
+      "obuca",
+      "pazari online",
+    ],
+  };
+}
+
 const Home = async () => {
   const banners = await getBanners();
   const categories = await getRecommendedCategories();
