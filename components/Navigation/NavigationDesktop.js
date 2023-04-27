@@ -12,7 +12,7 @@ import User from "../../assets/Icons/user.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import Search from "../../assets/Icons/search.png";
-const NavigationDesktop = () => {
+const NavigationDesktop = ({ category }) => {
   const pathname = usePathname();
   const { push: navigate, asPath } = useRouter();
   const [categories, setCategories] = useState([]);
@@ -79,12 +79,21 @@ const NavigationDesktop = () => {
   });
   const [activeSubSubCategory, setActiveSubSubCategory] = useState();
   const [background, setBackground] = useState("transparent");
+  console.log(category);
   useEffect(() => {
+    if (category) {
+      setBackground("white");
+    }
+
     function handleScroll() {
-      if (window.scrollY > 0) {
+      if (category) {
         setBackground("white");
       } else {
-        setBackground("transparent");
+        if (window.scrollY > 1 && !category) {
+          setBackground("white");
+        } else {
+          setBackground("transparent");
+        }
       }
     }
 
@@ -93,7 +102,7 @@ const NavigationDesktop = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [category, background]);
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
@@ -124,15 +133,17 @@ const NavigationDesktop = () => {
   return (
     <>
       <div
-        className={`sticky top-0 z-[54] flex items-center justify-between w-full bg-${background} ${
-          background === "white" ? `bg-opacity-70 backdrop-blur` : ``
-        }`}
+        className={`sticky top-0 z-[54] flex items-center justify-between w-full bg-${
+          category ? `white` : `${background}`
+        } ${background === "white" ? `bg-opacity-70 backdrop-blur` : ``}`}
         id="navigation"
       >
         <div
           className={`absolute top-0  ${
             background === "white" ? `py-4 bg-opacity-90 backdrop-blur` : `pt-8`
-          } px-[3%] z-[54] flex items-center justify-between w-full bg-${background}  transition-all duration-500`}
+          } px-[3%] z-[54] flex items-center justify-between w-full bg-${
+            category ? `white` : `${background}`
+          }  transition-all duration-500`}
         >
           <div
             className="flex items-center gap-20 "
