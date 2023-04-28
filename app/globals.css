@@ -192,3 +192,12 @@
 .rs-tooltip-arrow {
   display: none;
 }
+
+.separate > div:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 16px;
+  background-color: #e5e7eb;
+  margin: 3px 23px;
+}

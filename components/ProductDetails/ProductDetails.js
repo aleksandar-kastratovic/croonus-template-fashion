@@ -1,11 +1,11 @@
 import ProductGallery from "./ProductGallery";
 import ProductInfo from "./ProductInfo";
 
-const ProductDetails = ({ product, productGallery }) => {
+const ProductDetails = ({ product, productGallery, desc }) => {
   return (
-    <div className="max-md:mt-[1rem] mt-[9rem] max-md:w-[95%]  max-md:mx-auto mx-[5rem] grid grid-cols-4">
-      <ProductInfo product={product} />
+    <div className="max-md:mt-[1rem] mt-[9rem] max-md:w-[95%]  max-md:mx-auto mx-[5rem] gap-x-[4.063rem] grid grid-cols-4">
       <ProductGallery productGallery={productGallery} />
+      <ProductInfo product={product} desc={desc} />
     </div>
   );
 };
