@@ -6,7 +6,7 @@ import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import { FreeMode, Thumbs } from "swiper";
 import Image from "next/image";
-import "./styles.css";
+import classes from "./styles.module.css";
 const ProductGallery = ({ productGallery }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const productImage = productGallery?.map((image, index) => {
@@ -22,7 +22,7 @@ const ProductGallery = ({ productGallery }) => {
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Thumbs]}
-        className="mySwiper2"
+        className={`${classes.mySwiper2} `}
       >
         {productImage}
       </Swiper>
@@ -43,7 +43,7 @@ const ProductGallery = ({ productGallery }) => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Thumbs]}
-        className="mySwiper"
+        className={classes.mySwiper}
       >
         {" "}
         {productImage}
