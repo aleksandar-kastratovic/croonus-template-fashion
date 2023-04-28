@@ -201,3 +201,13 @@
   background-color: #e5e7eb;
   margin: 3px 23px;
 }
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 100% !important;
+}
+
+.placeholder input::placeholder {
+  font-size: 14px;
+}
+.placeholder textarea::placeholder {
+  font-size: 14px;
+}

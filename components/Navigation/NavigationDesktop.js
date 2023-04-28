@@ -12,7 +12,7 @@ import User from "../../assets/Icons/user.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import Search from "../../assets/Icons/search.png";
-const NavigationDesktop = ({ category }) => {
+const NavigationDesktop = () => {
   const pathname = usePathname();
   const { push: navigate, asPath } = useRouter();
   const [categories, setCategories] = useState([]);
@@ -20,7 +20,12 @@ const NavigationDesktop = ({ category }) => {
   const [cartCount, setCartCount] = useState(0);
   const [cart, , wishList] = useCartContext();
   const [wishListCount, setWishListCount] = useState(0);
-
+  let category = false;
+  if (pathname === "/") {
+    category = false;
+  } else {
+    category = true;
+  }
   useEffect(() => {
     const getCategories = async () => {
       const data = await get("/categories/product/tree").then((response) =>
@@ -375,7 +380,13 @@ const NavigationDesktop = ({ category }) => {
               {activeSubSubCategory?.map((category) => {
                 return (
                   <div className=" text-black text-sm hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium">
-                    <Link href={`/kategorije/${category?.slug_path}`}>
+                    <Link
+                      href={`/kategorije/${category?.slug_path}`}
+                      onClick={() => {
+                        setOpen(false);
+                        setVisible(false);
+                      }}
+                    >
                       {category?.name}
                     </Link>
                   </div>
