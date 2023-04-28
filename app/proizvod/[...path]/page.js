@@ -48,7 +48,6 @@ const ProductDetailPage = async ({ params: { path } }) => {
   const newProducts = await getNewProducts();
   return (
     <div className="4xl:container mx-auto">
-      <NavigationDesktop category={true} />
       <ProductDetails
         product={product}
         productGallery={productGallery}

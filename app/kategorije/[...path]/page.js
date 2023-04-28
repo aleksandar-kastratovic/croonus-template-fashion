@@ -21,7 +21,6 @@ const Category = async ({ params: { path } }) => {
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
   return (
     <>
-      <NavigationDesktop category={true} />
       <CategoryPage filter={filters} singleCategory={singleCategory} />
     </>
   );

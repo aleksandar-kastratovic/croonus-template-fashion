@@ -57,7 +57,6 @@ const Home = async () => {
   const indexBanner = await getIndexBanner();
   return (
     <>
-      <NavigationDesktop color={false} initiallyOpen={true} />
       <div className="4xl:container mx-auto block relative overflow-hidden">
         <div
           className="relative 2xl:h-[1000px] 3xl:h-[1057px] block"

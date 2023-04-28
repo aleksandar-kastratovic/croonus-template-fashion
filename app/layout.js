@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
           />
         </head>
         <body className="4xl:container mx-auto">
+          <NavigationDesktop />
           {children}
           <Footer />
         </body>
