@@ -21,7 +21,7 @@ const Thumb = ({ data, slider, loading }) => {
       const [imageIndex, setImageIndex] = imageIndexes[index]; // Access the correct state for the current product
       return (
         <SwiperSlide key={product?.basic_data?.id} className="">
-          <div className=" w-full  item">
+          <div className="w-full item">
             <Link
               href={`/proizvod/${product?.slug}`}
               scroll={true}
@@ -44,7 +44,7 @@ const Thumb = ({ data, slider, loading }) => {
                     -35%
                   </span>
                 </div>
-                <div className="absolute z-[6] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
+                <div className="absolute z-[100] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
                   <div>
                     <Image
                       className="cursor-pointer rotate-180"
@@ -81,7 +81,7 @@ const Thumb = ({ data, slider, loading }) => {
               </div>
             </Link>
 
-            <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
+            <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
               <div className="flex flex-col items-center justify-center w-full">
                 <h1 className="text-[0.938rem] font-semibold text-center">
                   Izaberi veličinu
