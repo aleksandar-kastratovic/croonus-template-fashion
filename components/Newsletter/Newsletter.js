@@ -49,14 +49,16 @@ const Newsletter = () => {
   return (
     <>
       {view === "subscribe" && (
-        <div className="w-full flex flex-col items-center justify-center mt-[6.25rem]">
-          <h1 className="text-[2.5rem] font-bold">Ostvari 10% popusta</h1>
-          <p className="text-[1rem] font-normal mt-[1.15rem]">
+        <div className="w-full max-md:w-[95%] max-md:mx-auto flex flex-col items-center justify-center max-md:mt-[3rem] max-md:text-center md:mt-[6.25rem]">
+          <h1 className="max-md:text-[1.5rem] text-[2.5rem] font-bold">
+            Ostvari 10% popusta
+          </h1>
+          <p className="text-[1rem] max-md:text-[0.85rem] font-normal mt-[1.15rem]">
             Prijavi se na naš bilten i dobićeš 10% popusta na sledeću kupovinu,
             pristup ekskluzivnim promocijama i još mnogo toga!
           </p>
 
-          <form className="mt-[3.125rem]  relative">
+          <form className="mt-[3.125rem] max-md:mt-[2rem] relative">
             <input
               type="email"
               id="email"
@@ -64,7 +66,7 @@ const Newsletter = () => {
               placeholder="Unesi svoj email"
               className={`${
                 error ? `border-red-500` : `border-[#e0e0e0]`
-              } peer border placeholder-transparent 2xl:w-[40.25rem] focus:border-[#e0e0e0] focus:outline-none focus:ring-0 h-[3.625rem]  rounded-lg  text-[#d1d1d1]`}
+              } peer border placeholder-transparent 2xl:w-[40.25rem] focus:border-[#e0e0e0] max-md:w-full focus:outline-none focus:ring-0 h-[3.625rem]  rounded-lg  text-[#d1d1d1]`}
               onChange={(e) => {
                 setSelected({ ...selected, email: e.target.value });
               }}
@@ -85,7 +87,7 @@ const Newsletter = () => {
                     : `max-w-[40.25rem] flex flex-col items-start -mt-[50rem] duration-[850ms] transition-all opacity-0`
                 }
               >
-                <h1 className="text-[1rem] font-normal mt-[1.15rem]">
+                <h1 className="text-[1rem] max-md:mt-[2rem] max-md:text-[0.85rem] font-normal mt-[1.15rem]">
                   Tvoj rođendan (nije obavezno)
                 </h1>
                 <div className="flex flex-row w-full items-center gap-6 mt-[1.15rem]">
@@ -182,11 +184,11 @@ const Newsletter = () => {
                     </label>
                   </div>
                 </div>
-                <div className="flex items-center justify-between w-full flex-row mt-5">
+                <div className="flex items-center max-md:flex-col justify-between w-full flex-row mt-5 max-md:text-center">
                   <h1 className="text-[1rem] font-normal">
                     Želiš da se pretplatiš na bilten za:
                   </h1>
-                  <div className="flex flex-row self-end ml-auto items-center gap-6">
+                  <div className="flex flex-row max-md:self-center self-end md:ml-auto max-md:mt-4 items-center gap-6">
                     <button
                       className={`${
                         selected.type === "zene"
@@ -260,12 +262,12 @@ const Newsletter = () => {
         </div>
       )}
       {view === "unsubscribe" && (
-        <div className="w-full flex flex-col items-center justify-center mt-[6.25rem]">
+        <div className="w-full max-md:text-center flex flex-col items-center justify-center mt-[6.25rem]">
           {" "}
-          <h1 className="text-[2.5rem] font-semibold">
+          <h1 className="text-[2.5rem] max-md:text-[1.7rem] max-md:text-center font-semibold">
             Želim da otkažem pretplatu na bilten
           </h1>
-          <h2 className="text-[1rem] font-normal mt-5">
+          <h2 className="text-[1rem] max-md:text-[0.85rem] font-normal mt-5">
             Navedi email na koji želiš da prestaneš da primaš naš bilten.
           </h2>
           <form className="mt-[3.125rem]  relative flex flex-col">
@@ -283,7 +285,7 @@ const Newsletter = () => {
               Unesite svoj email
             </label>
             <button
-              className="bg-[#e0e0e0] w-1/2 mx-auto mt-6 px-5 py-2 text-white uppercase hover:bg-black transition-all duration-300 rounded"
+              className="bg-[#e0e0e0] max-md:w-full w-1/2 mx-auto mt-6 px-5 py-2 text-white uppercase hover:bg-black transition-all duration-300 rounded"
               onClick={(e) => {
                 e.preventDefault();
               }}

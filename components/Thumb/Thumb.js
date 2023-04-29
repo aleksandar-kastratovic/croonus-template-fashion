@@ -44,7 +44,7 @@ const Thumb = ({ data, slider, loading }) => {
                     -35%
                   </span>
                 </div>
-                <div className="absolute z-[100] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
+                <div className="absolute max-md:hidden z-[100] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
                   <div>
                     <Image
                       className="cursor-pointer rotate-180"
@@ -110,7 +110,9 @@ const Thumb = ({ data, slider, loading }) => {
               </div>
             </div>
             <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
-              <h1 className="text-[0.813rem]">{product?.basic_data?.name}</h1>
+              <h1 className="text-[0.813rem] clamp">
+                {product?.basic_data?.name}
+              </h1>
               <div
                 onClick={() => {
                   addToWishlist(product?.basic_data?.id_product);
@@ -276,7 +278,9 @@ const Thumb = ({ data, slider, loading }) => {
             </div>
           </div>
           <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
-            <h1 className="text-[0.813rem]">{product?.basic_data?.name}</h1>
+            <h1 className="text-[0.813rem] clamp">
+              {product?.basic_data?.name}
+            </h1>
             <div
               onClick={() => {
                 addToWishlist(product?.basic_data?.id_product);

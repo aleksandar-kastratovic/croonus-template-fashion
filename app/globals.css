@@ -137,11 +137,22 @@
 .swiper-button-next::after {
   color: black !important;
 }
-.chevrons {
-  display: none;
+
+@media (min-width: 768px) {
+  .chevrons {
+    display: none;
+  }
+  .item:hover > .chevrons {
+    display: flex;
+  }
 }
-.item:hover > .chevrons {
-  display: flex;
+@media (max-width: 768px) {
+  .chevrons {
+    display: flex;
+  }
+  .item:hover > .chevrons {
+    display: flex;
+  }
 }
 
 .favorites:hover > .favorite {
@@ -210,4 +221,12 @@
 }
 .placeholder textarea::placeholder {
   font-size: 14px;
+}
+.clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  min-height: 24px;
 }

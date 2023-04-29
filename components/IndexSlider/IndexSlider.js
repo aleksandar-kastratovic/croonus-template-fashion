@@ -92,11 +92,11 @@ const IndexSlider = ({ banners }) => {
   return (
     <div
       data-aos="zoom-out"
-      className="absolute block 2xl:h-[1000px] 3xl:h-[1057px]"
+      className="absolute block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[860px] 2xl:h-[1000px] 3xl:h-[1057px]"
       ref={sliderRef}
     >
       <div className="relative h-full overflow-hidden">
-        <div className="flex items-center justify-between w-full max-h-[1057px]">
+        <div className="flex items-center max-sm:h-[400px] justify-between w-full max-h-[1057px]">
           {banners.map((banner, index) => {
             const isActive = currentSlide?.index === index;
 
@@ -111,30 +111,30 @@ const IndexSlider = ({ banners }) => {
                     : "absolute overflow-hidden max-h-[1057px] opacity-0 duration-[400ms] transition-all ease-in"
                 }
               >
-                <div className="relative">
+                <div className="relative max-sm:h-[400px]">
                   <Image
                     src={banner?.image}
                     alt={banner?.title}
                     width={1920}
                     height={1080}
-                    className="bg-fixed object-cover"
+                    className="bg-fixed max-sm:h-full object-cover"
                   />
                   <div className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40">
-                    <div className="absolute flex flex-col items-center justify-center gap-[33px] top-[40%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute flex flex-col items-center justify-center max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                       {banner?.title && (
-                        <h1 className="text-white text-xl font-bold ">
+                        <h1 className="text-white max-sm:text-base text-xl font-bold ">
                           {banner?.title}
                         </h1>
                       )}
                       {banner?.subtitle && (
-                        <h1 className="text-white text-4xl font-bold uppercase">
+                        <h1 className="text-white max-sm:text-xl text-4xl font-bold uppercase">
                           {banner?.subtitle}
                         </h1>
                       )}
 
                       {banner?.button && (
                         <Link href={`/${banner?.url}`}>
-                          <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 border border-white">
+                          <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-4 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white">
                             {banner?.button}
                           </button>
                         </Link>
@@ -148,7 +148,7 @@ const IndexSlider = ({ banners }) => {
         </div>
       </div>
       <div className="relative">
-        <div className="absolute lg:-top-72 xl:-top-48 2xl:-top-20  w-full flex items-center justify-center z-[50]">
+        <div className="absolute max-sm:-top-[1rem] md:-top-[2rem] xl:-top-[2rem] 2xl:-top-20  w-full flex items-center justify-center z-[50]">
           {banners.map((banner, index) => (
             <div
               key={index}
