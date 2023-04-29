@@ -12,12 +12,12 @@ const RecommendedCategories = ({ categories }) => {
   return (
     <div
       data-aos="fade-left"
-      className="grid grid-cols-1 lg:grid-cols-2 gap-[1.25rem] mt-[1.25rem] mx-[1.25rem]"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-[1.25rem] mt-[1.25rem] mx-[1.25rem] max-sm:w-[95%] max-sm:mx-auto"
     >
       {categories?.map((category, index) => {
         return (
           <div className="col-span-1" key={index}>
-            <div className="relative h-[630px]">
+            <div className="relative lg:h-[630px]">
               <Image
                 src={category?.images?.image}
                 alt={category.slug}
@@ -30,7 +30,7 @@ const RecommendedCategories = ({ categories }) => {
                   <h1 className="max-lg:text-[3.5rem] text-[5rem] 2xl:text-[8.5rem] font-light text-white uppercase">
                     {category?.basic_data?.name}
                   </h1>
-                  <p className="self-end text-right text-white text-[1.5rem] -mt-8">
+                  <p className="sm:self-end max-sm:text-center max-sm:self-center sm:text-right text-white text-[1.5rem] md:-mt-8">
                     {category?.basic_data?.short_description}
                   </p>
                 </div>

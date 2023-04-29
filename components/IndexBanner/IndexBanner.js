@@ -9,9 +9,9 @@ const IndexBanner = ({ banner }) => {
   return (
     <div
       data-aos="fade-up-left"
-      className="block mx-[20px] mt-[7.5rem] transition-all duration-500 "
+      className="block max-sm:w-[95%] max-sm:mx-auto mx-[20px] max-sm:mt-[5rem] mt-[7.5rem] transition-all duration-500 "
     >
-      <div className="relative h-[630px]">
+      <div className="relative max-sm:h-[400px] md:h-[630px]">
         <Image
           src={banner[0]?.image}
           alt={banner[0]?.title}
@@ -19,14 +19,14 @@ const IndexBanner = ({ banner }) => {
           height={1080}
           className="object-cover h-full"
         />
-        <div className="absolute flex flex-col items-center justify-center gap-10 top-[55%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute flex flex-col items-center justify-center max-sm:gap-0 gap-10 top-[55%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           {banner[0]?.title && (
-            <h1 className="text-white text-[8.875rem] font-light uppercase leading-[4.625rem]">
+            <h1 className="text-white max-sm:text-[5rem] text-[8.875rem] font-light uppercase sm:leading-[4.625rem]">
               {banner[0]?.title}
             </h1>
           )}
           {banner[0]?.text && (
-            <h1 className="text-white text-[1.438rem] font-light self-end leading-[2.625rem]">
+            <h1 className="text-white text-[1.438rem] font-light max-sm:self-center sm:self-end leading-[2.625rem]">
               {banner[0]?.text}
             </h1>
           )}
