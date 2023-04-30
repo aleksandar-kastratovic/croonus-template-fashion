@@ -58,12 +58,12 @@ const CategoryPage = ({ filter, singleCategory }) => {
   return (
     <>
       <div className="4xl:container mx-auto">
-        <div className="px-[3%] mt-[9rem] flex items-center justify-between">
+        <div className="px-[3%] max-md:mt-[2rem] mt-[9rem] flex items-center justify-between">
           <h1 className="font-bold text-[1.313rem] text-[#191919]">
             {singleCategory?.basic_data?.name}
           </h1>
           <div
-            className="border-2 2xl:w-[243px] 2xl:h-[50px] border-[#171717] flex items-center gap-[30px] pl-[14px] cursor-pointer"
+            className="border-2 max-[365px]:w-[200px] w-[243px] h-[50px] border-[#171717] flex items-center gap-[30px] pl-[14px] cursor-pointer"
             onClick={() => setOpenFilter(true)}
           >
             <Image src={FilterIcon} alt="Filter" width={30} height={30} />
@@ -73,7 +73,7 @@ const CategoryPage = ({ filter, singleCategory }) => {
           </div>
         </div>
         <div className="mx-[0.625rem] mt-[4.125rem]">
-          <div className="grid grid-cols-4 gap-[11px]">
+          <div className="grid max-md:grid-cols-1 gap-y-[40px] grid-cols-4 gap-[11px]">
             {loading ? (
               <div className="h-full col-span-1 w-full bg-[#eeeee0] object-cover animate-pulse"></div>
             ) : (

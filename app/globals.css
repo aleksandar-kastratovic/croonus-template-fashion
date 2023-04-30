@@ -148,10 +148,10 @@
 }
 @media (max-width: 768px) {
   .chevrons {
-    display: flex;
+    display: none;
   }
   .item:hover > .chevrons {
-    display: flex;
+    display: none;
   }
 }
 
