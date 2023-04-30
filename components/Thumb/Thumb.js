@@ -28,7 +28,7 @@ const Thumb = ({ data, slider, loading }) => {
               className="relative z-[5]"
             >
               {" "}
-              <div className="h-[575px] item relative">
+              <div className="max-md:h-[400px] md:h-[450px] lg:h-[575px] item relative">
                 {product?.image[0] && (
                   <Image
                     src={convertHttpToHttps(product?.image[imageIndex])}
@@ -192,7 +192,7 @@ const Thumb = ({ data, slider, loading }) => {
       // const [imageIndex, setImageIndex] = imageIndexes[index];
       return (
         <div className="col-span-1 relative item">
-          <div className="h-[575px] item relative">
+          <div className="max-md:h-[400px] md:h-[450px] lg:h-[575px] item relative">
             {loading ? (
               <div className="h-full w-full bg-[#eeeee0] object-cover animate-pulse"></div>
             ) : (
