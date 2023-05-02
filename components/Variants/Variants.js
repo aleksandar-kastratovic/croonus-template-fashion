@@ -273,7 +273,7 @@ export default function Variants({
   };
 
   return (
-    <div className="flex flex-col-reverse gap-[60px] max-lg:w-full  ">
+    <div className="flex flex-col-reverse max-md:gap-7 gap-[60px] max-lg:w-full  ">
       {variantOptions?.map((item) => {
         return (
           <div className="flex flex-col items-start gap-[1.5rem]">

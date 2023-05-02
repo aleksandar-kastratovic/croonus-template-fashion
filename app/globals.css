@@ -137,7 +137,26 @@
 .swiper-button-next::after {
   color: black !important;
 }
-
+.swiper-pagination {
+  width: 16px !important;
+}
+.swiper-pagination-vertical.swiper-pagination-bullets,
+.swiper-vertical > .swiper-pagination-bullets {
+  right: var(--swiper-pagination-right, 8px);
+  left: var(--swiper-pagination-left, auto);
+  top: 50%;
+  transform: translate3d(0px, -50%, 0);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.swiper-pagination-bullet-active {
+  height: 20px;
+}
+.swiper-pagination-bullet-active {
+  height: 20px !important;
+  border-radius: 5px !important;
+}
 @media (min-width: 768px) {
   .chevrons {
     display: none;
