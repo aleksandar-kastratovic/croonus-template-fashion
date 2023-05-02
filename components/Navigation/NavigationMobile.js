@@ -157,14 +157,15 @@ const NavigationMobile = () => {
             : `text-white md:hidden bg-transparent visible sticky top-[60px] z-[4000] transition-all duration-500 opacity-100 flex items-center justify-center`
         }
       >
-        <form className="w-[95%] mx-auto mt-12 py-2 flex items-center absolute">
-          <input
+        <form className="w-[95%] mx-auto h-12 mt-12 py-2 flex items-center absolute">
+          <div
             type="text"
-            className="w-full bg-transparent focus:border-white focus:outline-none focus:ring-0 placeholder:text-white text-white text-xs border-white border  rounded-lg py-2 pl-8 mix-blend-difference placeholder:text-xs"
+            className="w-full h-full bg-transparent focus:border-white focus:outline-none focus:ring-0 placeholder:text-white text-white text-xs border-white border  rounded-lg py-2 pl-8 mix-blend-difference placeholder:text-xs"
             placeholder="Pretraga"
             onChange={(e) => setSearchTerm(e.target.value)}
-            onClick={() => setSearchOpen(true)}
+            onMouseDown={() => setSearchOpen(true)}
           />
+          <h1 className="absolute left-8 text-sm">Pretraga</h1>
           <i className="text-xs text-white fa-solid fa-search absolute left-2 top-5"></i>
         </form>
       </div>

@@ -238,7 +238,7 @@ const Newsletter = () => {
                 </div>
                 <div className="self-center flex flex-col justify-self-center mx-auto mt-7">
                   <button
-                    className="bg-[#e0e0e0] px-5 py-2 text-white uppercase hover:bg-black transition-all duration-300 rounded"
+                    className="bg-[#191919] px-5 py-2 text-white uppercase hover:bg-opacity-80 transition-all duration-300 rounded"
                     onClick={(e) => {
                       e.preventDefault();
                       handleSubmit();
@@ -285,7 +285,7 @@ const Newsletter = () => {
               Unesite svoj email
             </label>
             <button
-              className="bg-[#e0e0e0] max-md:w-full w-1/2 mx-auto mt-6 px-5 py-2 text-white uppercase hover:bg-black transition-all duration-300 rounded"
+              className="bg-[#191919] max-md:w-full w-1/2 mx-auto mt-6 px-5 py-2 text-white uppercase hover:bg-opacity-80 transition-all duration-300 rounded"
               onClick={(e) => {
                 e.preventDefault();
               }}

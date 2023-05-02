@@ -134,7 +134,7 @@ const IndexSlider = ({ banners }) => {
 
                       {banner?.button && (
                         <Link href={`/${banner?.url}`}>
-                          <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-4 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white">
+                          <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-2 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white max-sm:w-[250px]">
                             {banner?.button}
                           </button>
                         </Link>

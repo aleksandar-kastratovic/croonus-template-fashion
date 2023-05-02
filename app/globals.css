@@ -113,23 +113,28 @@
   background-color: white !important;
   border-radius: 50% !important;
   padding: 2.2rem !important;
-  color: black !important;
+  top: 40% !important;
+  color: rgba(0, 0, 0, 0.716) !important;
   width: 56px !important;
   transform: scale(0.7) !important;
-  box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.284) !important;
-  left: -10px !important;
+  box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+  left: -6px !important;
   z-index: 500 !important;
   fill: black !important;
   position: absolute !important;
+  opacity: 0.8;
 }
 .swiper-button-next {
   background-color: white !important;
+  opacity: 0.8;
   border-radius: 50% !important;
   padding: 2.2rem !important;
-  color: black !important;
+  color: rgba(0, 0, 0, 0.716) !important;
   transform: scale(0.7) !important;
-  right: -10px !important;
-  box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.284) !important;
+  right: -6px !important;
+  top: 40% !important;
+
+  box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
   fill: black !important;
   z-index: 500 !important;
 }
