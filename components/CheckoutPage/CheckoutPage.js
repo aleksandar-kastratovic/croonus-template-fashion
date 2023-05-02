@@ -307,7 +307,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       id="personal"
                       onChange={formChangeHandler}
                       checked={formData.type === "personal"}
-                      className="h-3 w-3 text-croonus-1 focus:ring-0"
+                      className="h-3 w-3 text-[#191919] focus:ring-0"
                     />
                     <label htmlFor="personal">Fizičko lice</label>
                   </div>
@@ -319,7 +319,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       value="company"
                       onChange={formChangeHandler}
                       checked={formData.type === "company"}
-                      className="h-3 w-3 text-croonus-1 focus:ring-0"
+                      className="h-3 w-3 text-[#191919] focus:ring-0"
                     />
                     <label htmlFor="company">Pravno lice</label>
                   </div>
@@ -784,7 +784,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                                 value={option.id}
                                 id={"delivery" + option.id}
                                 onChange={formChangeHandler}
-                                className="h-3 w-3 focus:ring-0 focus:outline-none focus:border-none text-croonus-1"
+                                className="h-3 w-3 focus:ring-0 focus:outline-none focus:border-none text-[#191919]"
                               />
                               <label htmlFor={"delivery" + option.id}>
                                 {option.name}
@@ -818,7 +818,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                                 value={option.id}
                                 id={"payment" + option.id}
                                 onChange={formChangeHandler}
-                                className="h-3 w-3 focus:ring-0 focus:outline-none focus:border-none text-croonus-1"
+                                className="h-3 w-3 focus:ring-0 focus:outline-none focus:border-none text-[#191919]"
                               />
                               <label htmlFor={"payment" + option.id}>
                                 {option.name}
@@ -891,7 +891,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-end justify-end mx-[5rem]">
+            <div className="flex flex-col max-md:items-center max-md:justify-center items-end justify-end max-md:w-[95%] max-md:mx-auto md:mx-[5rem]">
               <div className="mt-2 flex gap-3 py-3 relative">
                 <input
                   type="radio"
@@ -899,9 +899,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                   name="agreed"
                   onChange={formChangeHandler}
                   value={formData.agreed === "1" ? "" : "1"}
-                  className="focus:ring-0 focus:border-none focus:outline-none text-croonus-1"
+                  className="focus:ring-0 focus:border-none focus:outline-none text-[#191919] bg-[#191919]"
                 />
-                <label htmlFor="agreed">
+                <label htmlFor="agreed" className="max-md:text-xs">
                   Saglasan sam sa opštim uslovima korišćenja PAZARI ONLINE
                   SHOP-a.
                 </label>
