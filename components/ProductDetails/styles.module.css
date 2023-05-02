@@ -58,8 +58,6 @@
 
 @media (max-width: 768px) {
   .mySwiper {
-    box-sizing: border-box;
-    max-height: 120px;
-    width: 100%;
+    display: none;
   }
 }

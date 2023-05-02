@@ -130,12 +130,12 @@ const ProductInfo = ({ product, desc }) => {
                   : currencyFormat(product?.data?.item?.price?.price?.original)}
               </h1>
               <p
-                className="mt-[2.438rem] max-w-[90%] text-sm font-regular"
+                className="mt-[2.438rem] max-md:mt-[1.5rem] max-w-[90%] text-sm font-regular"
                 dangerouslySetInnerHTML={{ __html: desc?.description }}
               ></p>
             </div>
             {product?.product_type === "variant" && (
-              <div className="py-[2.75rem]">
+              <div className="py-[2.75rem] max-md:py-[1.5rem]">
                 <Variants
                   firstVariantOption={false}
                   product={product}
@@ -149,7 +149,7 @@ const ProductInfo = ({ product, desc }) => {
               <Image src={Measure} alt="measure" width={30} height={20} />
               <span className="text-[13px] font-bold">Pomoć za veličine</span>
             </div>
-            <div className="mt-[4.188rem] flex items-center gap-[31px] ">
+            <div className="mt-[4.188rem] max-md:mt-[2rem] flex items-center gap-[31px] ">
               <button
                 disabled={
                   productVariant === null || productVariant.length === 0
@@ -177,7 +177,36 @@ const ProductInfo = ({ product, desc }) => {
                 />
               </div>
             </div>
-            <div className="mt-[5.125rem]">
+            <div className="md:hidden mt-5 flex items-center gap-[10px] justify-between py-5 ">
+              <div className="flex flex-col items-center text-center justify-center">
+                <Image
+                  src={FreeDelivery}
+                  alt="free delivery"
+                  width={30}
+                  height={30}
+                />
+                <p className="text-sm regular">Besplatna dostava</p>
+              </div>
+              <div className="flex flex-col items-center text-center justify-center">
+                <Image
+                  src={Calendar}
+                  alt="free delivery"
+                  width={30}
+                  height={30}
+                />
+                <p className="text-sm regular">2 dana isporuka</p>
+              </div>
+              <div className="flex flex-col items-center text-center justify-center">
+                <Image
+                  src={DeliveryStatus}
+                  alt="free delivery"
+                  width={30}
+                  height={30}
+                />
+                <p className="text-sm regular">Povrat do 14 dana</p>
+              </div>
+            </div>
+            <div className="mt-[5.125rem] max-md:mt-[2rem] max-md:flex max-md:items-center max-md:justify-center max-md:w-full">
               <ul className="flex flex-row gap-[47px] text-[13px] relative separate">
                 <div
                   className="relative cursor-pointer"
@@ -199,7 +228,7 @@ const ProductInfo = ({ product, desc }) => {
                 </div>
               </ul>
             </div>
-            <div className="fixed z-[100] max-w-[114px] right-0 top-[30%] flex flex-col gap-[30px] px-5 py-[37px] bg-white drop-shadow-2xl rounded-l-lg">
+            <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 top-[30%] flex flex-col gap-[30px] px-5 py-[37px] bg-white drop-shadow-2xl rounded-l-lg">
               <div className="flex flex-col items-center text-center justify-center">
                 <Image
                   src={FreeDelivery}
@@ -232,14 +261,14 @@ const ProductInfo = ({ product, desc }) => {
           <div
             className={
               deliveryModal
-                ? `fixed scale-100 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center`
-                : `fixed scale-0 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center`
+                ? `max-md:z-[20000] fixed max-md:mx-auto max-md:overflow-y-scroll scale-100 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center`
+                : `max-md:z-[20000] fixed max-md:mx-auto max-md:overflow-y-scroll scale-0 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center`
             }
           >
             <div
               className={`
           
-              bg-white rounded-lg p-[40px] flex flex-col w-[890px] h-[490px]`}
+              bg-white rounded-lg max-md:overflow-y-scroll  p-[40px] flex flex-col md:w-[890px] md:h-[490px]`}
             >
               <div className="flex items-center justify-between">
                 <h1 className="text-[20px] font-bold">Dostava</h1>

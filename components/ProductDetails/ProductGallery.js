@@ -4,7 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
-import { FreeMode, Thumbs } from "swiper";
+import "swiper/css/pagination";
+import { FreeMode, Pagination, Thumbs } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 const ProductGallery = ({ productGallery }) => {
@@ -80,7 +81,6 @@ const ProductGallery = ({ productGallery }) => {
     );
   }
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  console.log(thumbsSwiper);
   const productImage = productGallery?.map((image, index) => {
     return (
       <SwiperSlide key={index}>
@@ -95,7 +95,7 @@ const ProductGallery = ({ productGallery }) => {
           src={image?.image}
           width={2000}
           height={2000}
-          className="cursor-pointer"
+          className="cursor-pointer max-md:hidden"
         />
       </SwiperSlide>
     );
@@ -105,15 +105,38 @@ const ProductGallery = ({ productGallery }) => {
       <Swiper
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Thumbs]}
+        pagination={true}
+        modules={[FreeMode, Thumbs, Pagination]}
         className={`${classes.mySwiper2} mySwiper2`}
+        breakpoints={{
+          320: {
+            direction: "vertical",
+            slidesPerView: 1,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+              enabled: true,
+              bulletClass: "swiper-pagination-bullet",
+              bulletActiveClass: "swiper-pagination-bullet-active",
+            },
+          },
+          768: {
+            direction: "horizontal",
+            slidesPerView: 1,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+              enabled: false,
+            },
+          },
+        }}
       >
         {productImage}
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
-        slidesPerView={4}
+        slidesPerView={0}
         autoplay={{
           delay: 500,
           disableOnInteraction: false,
@@ -121,17 +144,22 @@ const ProductGallery = ({ productGallery }) => {
         breakpoints={{
           320: {
             direction: "horizontal",
-            slidesPerView: 4,
+            slidesPerView: 0,
+            thumbs: {
+              enabled: false,
+            },
+            modules: [],
           },
           768: {
             direction: "vertical",
             slidesPerView: 4,
+            enabled: true,
+            modules: [FreeMode, Thumbs],
           },
         }}
         freeMode={true}
         watchSlidesProgress={true}
-        modules={[FreeMode, Thumbs]}
-        className={`${classes.mySwiper} mySwiper `}
+        className={`${classes.mySwiper} mySwiper max-md:hidden`}
       >
         {" "}
         {thumbImage}
