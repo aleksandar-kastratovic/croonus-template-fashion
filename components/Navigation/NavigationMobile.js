@@ -137,22 +137,24 @@ const NavigationMobile = () => {
               />
             </div>
             <Image src={User} width={33} height={33} />
-            <div className="relative">
-              <Image src={Cart} width={33} height={33} />
-              {cartCount > 0 && (
-                <span className="absolute text-white text-xs -top-1 right-0 bg-[#e10000] px-1 py-0 rounded-full">
-                  {cartCount}
-                </span>
-              )}
-            </div>
+            <Link href="/korpa">
+              <div className="relative">
+                <Image src={Cart} width={33} height={33} />
+                {cartCount > 0 && (
+                  <span className="absolute text-white text-xs -top-1 right-0 bg-[#e10000] px-1 py-0 rounded-full">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+            </Link>
           </div>
         </div>{" "}
       </div>
       <div
         className={
           searchVisible
-            ? `text-white md:hidden bg-transparent  invisible sticky top-[60px] transition-all duration-500 opacity-0 z-[2222000] flex items-center justify-center`
-            : `text-white md:hidden bg-transparent visible sticky top-[60px] z-[2022200] transition-all duration-500 opacity-100 flex items-center justify-center`
+            ? `text-white md:hidden bg-transparent  invisible sticky top-[60px] transition-all duration-500 opacity-0 z-[4000] flex items-center justify-center`
+            : `text-white md:hidden bg-transparent visible sticky top-[60px] z-[4000] transition-all duration-500 opacity-100 flex items-center justify-center`
         }
       >
         <form className="w-[95%] mx-auto mt-12 py-2 flex items-center absolute">
