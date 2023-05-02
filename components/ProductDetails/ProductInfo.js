@@ -19,7 +19,11 @@ const ProductInfo = ({ product, desc }) => {
   const router = useRouter();
   const path = useParams();
   const id = path?.path;
-
+  useEffect(() => {
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
   const [newURL, setNewURL] = useState(null);
   useEffect(() => {
     if (newURL) {

@@ -7,7 +7,7 @@ import Link from "next/link";
 import Burger from "../../assets/Icons/burger.png";
 import Logo from "../../assets/Logo/pazari-logo-dark.png";
 import Search from "../../assets/Icons/search.png";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import User from "../../assets/Icons/user.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import Wishlist from "../../assets/Icons/heart.png";
@@ -15,6 +15,7 @@ import Thumb from "../Thumb/Thumb";
 const NavigationMobile = () => {
   const router = useRouter();
   const [cart, , wishList] = useCartContext();
+  const pathname = usePathname();
 
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -121,21 +122,33 @@ const NavigationMobile = () => {
           </Link>
           <div className="relative flex items-center gap-4">
             {" "}
-            <div
-              className={
-                searchVisible
-                  ? `visible transition-all duration-500 opacity-100`
-                  : `invisible transition-all duration-500 opacity-0`
-              }
-            >
-              <Image
-                src={Search}
-                id="search"
-                width={22}
-                height={22}
-                onClick={() => setSearchOpen(true)}
-              />
-            </div>
+            {pathname === "/" ? (
+              <div
+                className={
+                  searchVisible
+                    ? `visible transition-all duration-500 opacity-100`
+                    : `invisible transition-all duration-500 opacity-0`
+                }
+              >
+                <Image
+                  src={Search}
+                  id="search"
+                  width={22}
+                  height={22}
+                  onClick={() => setSearchOpen(true)}
+                />
+              </div>
+            ) : (
+              <div>
+                <Image
+                  src={Search}
+                  id="search"
+                  width={22}
+                  height={22}
+                  onClick={() => setSearchOpen(true)}
+                />
+              </div>
+            )}
             <Image src={User} width={33} height={33} />
             <Link href="/korpa">
               <div className="relative">
@@ -153,8 +166,12 @@ const NavigationMobile = () => {
       <div
         className={
           searchVisible
-            ? `text-white md:hidden bg-transparent  invisible sticky top-[60px] transition-all duration-500 opacity-0 z-[4000] flex items-center justify-center`
-            : `text-white md:hidden bg-transparent visible sticky top-[60px] z-[4000] transition-all duration-500 opacity-100 flex items-center justify-center`
+            ? `text-white ${
+                pathname === "/" ? `flex items-center justify-center` : `hidden`
+              } md:hidden bg-transparent  invisible sticky top-[60px] transition-all duration-500 opacity-0 z-[4000] `
+            : `text-white ${
+                pathname === "/" ? `flex items-center justify-center` : `hidden`
+              } md:hidden bg-transparent visible sticky top-[60px] z-[4000] transition-all duration-500 opacity-100 `
         }
       >
         <form className="w-[95%] mx-auto h-12 mt-12 py-2 flex items-center absolute">
@@ -278,13 +295,15 @@ const NavigationMobile = () => {
             activeCategory?.data?.map((category) => {
               return (
                 <div
-                  className="flex flex-row items-center justify-between gap-5"
+                  className="flex flex-row w-full items-center justify-between gap-5"
                   key={category?.id}
                 >
                   {category?.children?.length > 0 ? (
-                    <h1
+                    <div
                       className={`${
-                        activeCategory.firstCategory ? `uppercase` : ``
+                        activeCategory.firstCategory
+                          ? `uppercase flex flex-row w-full items-center justify-between`
+                          : ``
                       } text-[0.9rem]`}
                       onClick={() => {
                         setLastActiveCategory({
@@ -301,13 +320,18 @@ const NavigationMobile = () => {
                         exActiveIds.push(category?.id);
                       }}
                     >
-                      {category?.name}
-                    </h1>
+                      <h1>{category?.name}</h1>
+                      {category?.children?.length > 0 && (
+                        <i className="fas fa-chevron-right"></i>
+                      )}
+                    </div>
                   ) : (
                     <Link
                       href={`/kategorije/${category?.slug_path}`}
                       className={`${
-                        activeCategory.firstCategory ? `uppercase` : ``
+                        activeCategory.firstCategory
+                          ? `uppercase w-full`
+                          : `w-full`
                       } text-[0.9rem]`}
                       onClick={() => {
                         setMenuOpen(false);
@@ -326,10 +350,6 @@ const NavigationMobile = () => {
                     >
                       {category?.name}
                     </Link>
-                  )}
-
-                  {category?.children?.length > 0 && (
-                    <i className="fas fa-chevron-right"></i>
                   )}
                 </div>
               );
