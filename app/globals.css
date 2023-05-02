@@ -124,6 +124,12 @@
   position: absolute !important;
   opacity: 0.8;
 }
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets
+  .swiper-pagination-bullet {
+  margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 4px);
+  background: #171717 !important;
+}
 .swiper-button-next {
   background-color: white !important;
   opacity: 0.8;

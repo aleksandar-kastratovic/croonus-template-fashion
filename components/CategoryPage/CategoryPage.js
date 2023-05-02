@@ -6,6 +6,11 @@ import Thumb from "../Thumb/Thumb";
 import { list, post } from "@/app/api/api";
 import Filters from "../Filters/Filters";
 const CategoryPage = ({ filter, singleCategory }) => {
+  useEffect(() => {
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
   const [openFilter, setOpenFilter] = useState(false);
   const [productData, setProductData] = useState({
     products: [],
