@@ -108,7 +108,7 @@ const NavigationDesktop = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [category, background]);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -119,8 +119,10 @@ const NavigationDesktop = () => {
         if (open && scrollY > 0) {
           setVisible(true);
         } else {
-          if (scrollY === 0) {
+          if (scrollY === 0 && pathname === "/") {
             setVisible(true);
+          } else {
+            if (scrollY >= 0 && pathname !== "/") setVisible(false);
           }
         }
       }
@@ -131,7 +133,7 @@ const NavigationDesktop = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [open, visible, background]);
+  }, [open, visible, background, pathname]);
   useEffect(() => {
     setVisible(true);
   }, [open]);
