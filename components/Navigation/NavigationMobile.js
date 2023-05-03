@@ -21,6 +21,7 @@ const NavigationMobile = () => {
   const [products, setProducts] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const getCartCount = useCallback(() => {
     get("/cart/badge-count")
       .then((response) => {
@@ -31,6 +32,18 @@ const NavigationMobile = () => {
   useEffect(() => {
     getCartCount();
   }, [getCartCount, cart]);
+
+  const getWishlistCount = useCallback(() => {
+    get("/wishlist/badge-count")
+      .then((response) => {
+        setWishlistCount(response?.payload?.summary?.items_count ?? 0);
+      })
+      .catch((error) => console.warn(error));
+  }, []);
+  useEffect(() => {
+    getWishlistCount();
+  }, [getWishlistCount, wishList]);
+
   useEffect(() => {
     const getCategories = async () => {
       const getCategories = await get("/categories/product/tree").then((res) =>
@@ -205,7 +218,7 @@ const NavigationMobile = () => {
             const isActive = activeCategory?.parentCategory === category?.id;
             return (
               <div
-                className="flex flex-row items-center gap-5"
+                className="flex flex-row items-center justify-between gap-5"
                 key={category?.id}
               >
                 <h1
@@ -229,7 +242,21 @@ const NavigationMobile = () => {
                 </h1>
               </div>
             );
-          })}
+          })}{" "}
+          <div
+            className="self-end justify-self-end ml-auto relative"
+            onClick={() => {
+              setMenuOpen(false);
+            }}
+          >
+            <Link href="/lista-zelja">
+              {" "}
+              <Image src={Wishlist} width={20} height={20} className="py-1 " />
+            </Link>
+            <span className="absolute -top-2 -right-1 bg-[#e10000] rounded-full text-white px-1 text-xs">
+              {wishlistCount}
+            </span>
+          </div>
         </div>
         <div className="mt-5 w-[95%] mx-auto relative h-[200px] ">
           <Image

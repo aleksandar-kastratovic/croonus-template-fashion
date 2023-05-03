@@ -56,12 +56,12 @@ const Footer = () => {
           <div className="flex flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Korisnička podrška</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
-              <span>Kako kupiti</span>
-              <span>Reklamacije</span>
-              <span>Povraćaj sredstava</span>
-              <span>Zamena za isti artikal</span>
-              <span>Zamena za drugi artikal</span>
-              <span>Pravo na odustajanje</span>
+              <Link href="/kako-kupiti">Kako kupiti</Link>
+              <Link href="/reklamacije">Reklamacije</Link>
+              <Link href="/kako-kupiti">Povraćaj sredstava</Link>
+              <Link href="/kako-kupiti">Zamena za isti artikal</Link>
+              <Link href="/kako-kupiti">Zamena za drugi artikal</Link>
+              <Link href="/pravo-na-odustajanje">Pravo na odustajanje</Link>
             </div>
           </div>
           <div className="flex flex-col self-start gap-[40px]">
@@ -176,21 +176,36 @@ const Footer = () => {
       </div>
       <div className="mx-[5rem] max-md:flex-col max-md:gap-10 max-md:w-[95%] max-md:mx-auto py-[1.25rem] flex items-center justify-between">
         <div className="flex max-md:flex-wrap items-center gap-2">
-          <p className="text-[0.813rem] font-normal text-[#191919]">
+          <Link
+            href="/uslovi-koriscenja"
+            className="text-[0.813rem] font-normal text-[#191919]"
+          >
             Uslovi korišćenja •
-          </p>
-          <p className="text-[0.813rem] font-normal text-[#191919]">
+          </Link>
+          <Link
+            href="/zastita-privatnosti"
+            className="text-[0.813rem] font-normal text-[#191919]"
+          >
             Zaštita privatnosti •
-          </p>
-          <p className="text-[0.813rem] font-normal text-[#191919]">
+          </Link>
+          <Link
+            href="/isporuka"
+            className="text-[0.813rem] font-normal text-[#191919]"
+          >
             Isporuka •
-          </p>
-          <p className="text-[0.813rem] font-normal text-[#191919]">
+          </Link>
+          <Link
+            href="/najcesca-pitanja"
+            className="text-[0.813rem] font-normal text-[#191919]"
+          >
             Najčešća pitanja •
-          </p>
-          <p className="text-[0.813rem] font-normal text-[#191919]">
+          </Link>
+          <Link
+            href="/kolacici"
+            className="text-[0.813rem] font-normal text-[#191919]"
+          >
             Politika o 'Kolačićima'
-          </p>
+          </Link>
         </div>
         <p className="text-[0.813rem] font-normal text-[#191919]">
           &copy; 2023 Pazari.rs | Sva prava zadržana. Powered by{" "}
