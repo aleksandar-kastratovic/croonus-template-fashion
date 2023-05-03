@@ -15,7 +15,25 @@ const fetchSingleCategory = async (slug) => {
   ).then((res) => res?.payload);
   return fetchSingleCategory;
 };
-
+export async function generateMetadata({ params: { path } }) {
+  const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
+  return {
+    title: `${singleCategory.basic_data?.name} - Pazari.rs - Farmerke, Muške farmerke, Muška odeća`,
+    description: "Dobrodošli na Pazari.rs Online Shop",
+    keywords: [
+      "pazari",
+      "online",
+      "shop",
+      "pazari.rs",
+      "farmerke",
+      "trenerke",
+      "dukserice",
+      "pazari obuca",
+      "obuca",
+      "pazari online",
+    ],
+  };
+}
 const Category = async ({ params: { path } }) => {
   const filters = await fetchFilters(path[path?.length - 1]);
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
