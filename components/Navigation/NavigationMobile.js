@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useCartContext } from "@/app/api/cartContext";
 import Link from "next/link";
-import Burger from "../../assets/Icons/burger.png";
+import Burger from "../../assets/Icons/hamburger.png";
 import Logo from "../../assets/Logo/pazari-logo-dark.png";
 import Search from "../../assets/Icons/search.png";
 import { useRouter, usePathname } from "next/navigation";
@@ -116,7 +116,7 @@ const NavigationMobile = () => {
             <Image src={Burger} width={30} height={30} />
           </div>
           <Link href="/">
-            <div className="">
+            <div className="pr-20">
               <Image src={Logo} width={100} height={50} />
             </div>
           </Link>
