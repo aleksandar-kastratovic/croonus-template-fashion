@@ -28,7 +28,7 @@ const Thumb = ({ data, slider, loading }) => {
                 <Link
                   href={`/proizvod/${product?.slug}`}
                   scroll={true}
-                  className="relative z-[5]"
+                  className="relative z-[100]"
                 >
                   {" "}
                   <Image
@@ -46,39 +46,37 @@ const Thumb = ({ data, slider, loading }) => {
                   -35%
                 </span>
               </div>
-              <div className="absolute max-md:hidden z-[5] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
-                <div>
-                  <Image
-                    className="cursor-pointer rotate-180"
-                    src={Chevron}
-                    alt="chevron"
-                    width={15}
-                    height={15}
-                    onClick={() => {
-                      if (imageIndex === 0) {
-                        setImageIndex(product?.image.length - 1);
-                      } else {
-                        setImageIndex(imageIndex - 1);
-                      }
-                    }}
-                  />
-                </div>
-                <div>
-                  <Image
-                    className="cursor-pointer rotate-0"
-                    src={Chevron}
-                    alt="chevron"
-                    width={15}
-                    height={15}
-                    onClick={() => {
-                      if (imageIndex === product?.image.length - 1) {
-                        setImageIndex(0);
-                      } else {
-                        setImageIndex(imageIndex + 1);
-                      }
-                    }}
-                  />
-                </div>
+              <div className="absolute chevrons z-[100] flex flex-col items-center justify-center bg-transparent h-full right-2 top-0 ">
+                <Image
+                  className="w-[20px] chevimg h-[20px] cursor-pointer rotate-0"
+                  src={Chevron}
+                  alt="chevron"
+                  width={15}
+                  height={15}
+                  onClick={() => {
+                    if (imageIndex === product?.image.length - 1) {
+                      setImageIndex(0);
+                    } else {
+                      setImageIndex(imageIndex + 1);
+                    }
+                  }}
+                />
+              </div>
+              <div className="absolute chevrons z-[100] flex flex-col items-center justify-center bg-transparent h-full left-2 top-0 ">
+                <Image
+                  className="w-[20px] chevimg h-[20px] cursor-pointer rotate-180"
+                  src={Chevron}
+                  alt="chevron"
+                  width={15}
+                  height={15}
+                  onClick={() => {
+                    if (imageIndex === 0) {
+                      setImageIndex(product?.image.length - 1);
+                    } else {
+                      setImageIndex(imageIndex - 1);
+                    }
+                  }}
+                />
               </div>
             </div>
             <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
@@ -170,7 +168,7 @@ const Thumb = ({ data, slider, loading }) => {
           modules={[Navigation]}
           fadeEffect={{ crossFade: true }}
           loop={true}
-          className="mySwiper w-full select-none"
+          className="mySwiper3 w-full select-none"
           breakpoints={{
             640: {
               slidesPerView: 2,

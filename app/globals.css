@@ -209,6 +209,10 @@
   .item:hover > .chevrons {
     display: flex;
   }
+  .chevimg {
+    width: 20px !important;
+    height: 20px !important;
+  }
 }
 @media (max-width: 768px) {
   .chevrons {
@@ -218,7 +222,12 @@
     display: none;
   }
 }
-
+.mySwiper .swiper-slide {
+  opacity: 0.4;
+}
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
 .favorites:hover > .favorite {
   filter: invert(1);
 }
