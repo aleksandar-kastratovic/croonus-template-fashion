@@ -9,12 +9,15 @@ import { Navigation } from "swiper";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import Chevron from "../../assets/Icons/right-chevron.png";
 import Wishlist from "../../assets/Icons/heart.png";
-import { useGlobalAddToWishList } from "@/app/api/globals";
+import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
+import { get } from "@/app/api/api";
 const Thumb = ({ data, slider, loading }) => {
   if (slider) {
     const addToWishlist = useGlobalAddToWishList();
+    const addToCart = useGlobalAddToCart();
+    const [productVariant, setProductVariant] = useState(null);
 
     const imageIndexes = data?.map(() => useState(0)); // Create array of image index states
     const products = data?.map((product, index) => {
@@ -93,7 +96,55 @@ const Thumb = ({ data, slider, loading }) => {
                             {item2?.values.map((item3) => {
                               return (
                                 <>
-                                  <div className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border">
+                                  <div
+                                    className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border"
+                                    onClick={async () => {
+                                      const productVariantGet = async () => {
+                                        const res = await get(
+                                          `/product-details/basic-data/${product?.basic_data?.id_product}`
+                                        );
+                                        const data = res?.payload?.data;
+                                        if (data?.variant_items) {
+                                          const clickedVariant =
+                                            data.variant_items.find(
+                                              (variantItem) => {
+                                                return variantItem.variant_key_array.some(
+                                                  (variantKey) => {
+                                                    return (
+                                                      variantKey.value_key ===
+                                                      item3.key
+                                                    );
+                                                  }
+                                                );
+                                              }
+                                            );
+                                          setProductVariant(
+                                            clickedVariant?.basic_data
+                                              ?.id_product
+                                          );
+                                          addToCart(
+                                            clickedVariant?.basic_data
+                                              ?.id_product,
+                                            1,
+                                            false
+                                          );
+                                          toast.success(
+                                            `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
+                                            {
+                                              position: "top-center",
+                                              autoClose: 3000,
+                                              hideProgressBar: false,
+                                              closeOnClick: true,
+                                              pauseOnHover: true,
+                                              draggable: true,
+                                              progress: undefined,
+                                            }
+                                          );
+                                        }
+                                      };
+                                      await productVariantGet();
+                                    }}
+                                  >
                                     {item3?.name}
                                   </div>
                                 </>
@@ -190,8 +241,9 @@ const Thumb = ({ data, slider, loading }) => {
     );
   } else {
     // const imageIndexes = data?.map(() => useState(0));
-
+    const [productVariant, setProductVariant] = useState(null);
     const addToWishlist = useGlobalAddToWishList();
+    const addToCart = useGlobalAddToCart();
     const products = data?.map((product, index) => {
       // const [imageIndex, setImageIndex] = imageIndexes[index];
       return (
@@ -267,7 +319,54 @@ const Thumb = ({ data, slider, loading }) => {
                           {item2?.values.map((item3) => {
                             return (
                               <>
-                                <div className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border">
+                                <div
+                                  className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border"
+                                  onClick={async () => {
+                                    const productVariantGet = async () => {
+                                      const res = await get(
+                                        `/product-details/basic-data/${product?.basic_data?.id_product}`
+                                      );
+                                      const data = res?.payload?.data;
+                                      if (data?.variant_items) {
+                                        const clickedVariant =
+                                          data.variant_items.find(
+                                            (variantItem) => {
+                                              return variantItem.variant_key_array.some(
+                                                (variantKey) => {
+                                                  return (
+                                                    variantKey.value_key ===
+                                                    item3.key
+                                                  );
+                                                }
+                                              );
+                                            }
+                                          );
+                                        setProductVariant(
+                                          clickedVariant?.basic_data?.id_product
+                                        );
+                                        addToCart(
+                                          clickedVariant?.basic_data
+                                            ?.id_product,
+                                          1,
+                                          false
+                                        );
+                                        toast.success(
+                                          `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
+                                          {
+                                            position: "top-center",
+                                            autoClose: 3000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }
+                                    };
+                                    await productVariantGet();
+                                  }}
+                                >
                                   {item3?.name}
                                 </div>
                               </>
