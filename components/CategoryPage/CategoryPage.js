@@ -64,21 +64,21 @@ const CategoryPage = ({ filter, singleCategory }) => {
     <>
       <div className="4xl:container mx-auto">
         <div className="px-[3%] max-md:mt-[2rem] mt-[9rem] flex items-center justify-between">
-          <h1 className="font-bold text-[1.313rem] text-[#191919]">
+          <h1 className="font-bold text-[1.313rem] max-md:text-[1rem] text-[#191919]">
             {singleCategory?.basic_data?.name}
           </h1>
           <div
-            className="border-2 max-[365px]:w-[200px] w-[243px] h-[50px] border-[#171717] flex items-center gap-[30px] pl-[14px] cursor-pointer"
+            className="border-2 max-md:border max-[365px]:w-[150px] max-md:h-[40px] max-md:w-[132px] w-[243px] h-[50px] border-[#171717] flex items-center md:gap-[30px] pl-[14px] cursor-pointer"
             onClick={() => setOpenFilter(true)}
           >
-            <Image src={FilterIcon} alt="Filter" width={30} height={30} />
-            <h1 className="uppercase font-bold text-[13.74px] text-[#191919]">
+            <Image src={FilterIcon} alt="Filter" width={20} height={20} />
+            <h1 className="uppercase max-md:pl-4 font-bold text-[13.74px] text-[#191919]">
               Filteri
             </h1>
           </div>
         </div>
         <div className="mx-[0.625rem] mt-[4.125rem]">
-          <div className="grid max-md:grid-cols-1 gap-y-[40px] grid-cols-4 gap-[11px]">
+          <div className="grid max-md:grid-cols-2 gap-y-[40px] grid-cols-4 gap-[11px]">
             {loading ? (
               <div className="h-full col-span-1 w-full bg-[#eeeee0] object-cover animate-pulse"></div>
             ) : (
@@ -94,7 +94,7 @@ const CategoryPage = ({ filter, singleCategory }) => {
       <div
         className={
           openFilter
-            ? `fixed overflow-y-auto flex flex-col justify-between z-[100] top-0 right-0 bg-white shadow-lg translate-x-0 transition-all duration-500 h-screen w-[26.125rem]`
+            ? `fixed overflow-y-auto flex flex-col justify-between z-[100] top-0 right-0 bg-white shadow-lg translate-x-0 transition-all duration-500 h-screen max-md:w-screen w-[26.125rem]`
             : `
       fixed flex flex-col justify-between z-[100] top-0 right-0 bg-white shadow-lg translate-x-full transition-all duration-500 h-screen w-[26.125rem]`
         }

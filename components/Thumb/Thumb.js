@@ -192,7 +192,7 @@ const Thumb = ({ data, slider, loading }) => {
       // const [imageIndex, setImageIndex] = imageIndexes[index];
       return (
         <div className="col-span-1 relative item">
-          <div className="max-md:h-[400px] md:h-[450px] lg:h-[575px] item relative">
+          <div className="max-md:h-[240px] md:h-[450px] lg:h-[575px] item relative">
             {loading ? (
               <div className="h-full w-full bg-[#eeeee0] object-cover animate-pulse"></div>
             ) : (
@@ -210,7 +210,7 @@ const Thumb = ({ data, slider, loading }) => {
             )}
 
             <div className="absolute bottom-2 left-4">
-              <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
+              <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
                 -35%
               </span>
             </div>
@@ -278,10 +278,10 @@ const Thumb = ({ data, slider, loading }) => {
             </div>
           </div>
           <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
-            <h1 className="text-[0.813rem] clamp">
+            <h1 className="text-[0.813rem] max-md:leading-4 clamp">
               {product?.basic_data?.name}
             </h1>
-            <div
+            {/* <div
               onClick={() => {
                 addToWishlist(product?.basic_data?.id_product);
                 toast.success(
@@ -306,13 +306,13 @@ const Thumb = ({ data, slider, loading }) => {
                 height={15}
                 className="favorite"
               />
-            </div>
+            </div> */}
           </div>
-          <div className="mt-0 flex items-center gap-[10px]">
-            <h1 className="bg-[#f8ce5d] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
+          <div className="mt-0  max-md:mt-2 flex max-md:items-start max-md:flex-col max-md:gap-1 items-center gap-[10px]">
+            <h1 className="bg-[#f8ce5d] max-md:text-[0.7rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
               {currencyFormat(product?.price?.price?.original)}
             </h1>
-            <span className="text-[0.813rem] font-semibold text-[#818181]">
+            <span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">
               {" "}
               {currencyFormat(product?.price?.price?.original)}
             </span>
