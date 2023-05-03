@@ -28,7 +28,7 @@ const Thumb = ({ data, slider, loading }) => {
               className="relative z-[5]"
             >
               {" "}
-              <div className="max-md:h-[400px] md:h-[450px] lg:h-[575px] item relative">
+              <div className="max-md:h-[250px] md:h-[450px] lg:h-[575px] item relative">
                 {product?.image[0] && (
                   <Image
                     src={convertHttpToHttps(product?.image[imageIndex])}
@@ -40,7 +40,7 @@ const Thumb = ({ data, slider, loading }) => {
                 )}
 
                 <div className="absolute bottom-2 left-4">
-                  <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
+                  <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
                     -35%
                   </span>
                 </div>
@@ -109,8 +109,8 @@ const Thumb = ({ data, slider, loading }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
-              <h1 className="text-[0.813rem] clamp">
+            <div className="mt-[0.813rem] max-md:text-left flex max-md:items-start items-center justify-between relative z-[50]">
+              <h1 className="text-[0.813rem] max-md:text-[0.75rem] clamp max-md:leading-4">
                 {product?.basic_data?.name}
               </h1>
               <div
@@ -129,7 +129,7 @@ const Thumb = ({ data, slider, loading }) => {
                     }
                   );
                 }}
-                className="hover:bg-red-500 rounded-full p-1 favorites"
+                className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites"
               >
                 <Image
                   src={Wishlist}
@@ -140,11 +140,11 @@ const Thumb = ({ data, slider, loading }) => {
                 />
               </div>
             </div>
-            <div className="mt-0 flex items-center gap-[10px]">
-              <h1 className="bg-[#f8ce5d] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
+            <div className="mt-0 max-md:text-left max-md:items-start max-md:mt-1.5 flex max-md:flex-col items-center max-md:gap-1 gap-[10px]">
+              <h1 className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
                 {currencyFormat(product?.price?.price?.original)}
               </h1>
-              <span className="text-[0.813rem] font-semibold text-[#818181]">
+              <span className="text-[0.813rem] max-md:text-[0.75rem] font-semibold text-[#818181]">
                 {" "}
                 {currencyFormat(product?.price?.price?.original)}
               </span>
@@ -158,7 +158,7 @@ const Thumb = ({ data, slider, loading }) => {
       <>
         <ToastContainer />
         <Swiper
-          slidesPerView={1}
+          slidesPerView={2}
           spaceBetween={10}
           navigation={true}
           modules={[Navigation]}
@@ -281,7 +281,7 @@ const Thumb = ({ data, slider, loading }) => {
             <h1 className="text-[0.813rem] max-md:leading-4 clamp">
               {product?.basic_data?.name}
             </h1>
-            {/* <div
+            <div
               onClick={() => {
                 addToWishlist(product?.basic_data?.id_product);
                 toast.success(
@@ -297,7 +297,7 @@ const Thumb = ({ data, slider, loading }) => {
                   }
                 );
               }}
-              className="hover:bg-red-500 rounded-full p-1 favorites"
+              className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites"
             >
               <Image
                 src={Wishlist}
@@ -306,7 +306,7 @@ const Thumb = ({ data, slider, loading }) => {
                 height={15}
                 className="favorite"
               />
-            </div> */}
+            </div>
           </div>
           <div className="mt-0  max-md:mt-2 flex max-md:items-start max-md:flex-col max-md:gap-1 items-center gap-[10px]">
             <h1 className="bg-[#f8ce5d] max-md:text-[0.7rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
