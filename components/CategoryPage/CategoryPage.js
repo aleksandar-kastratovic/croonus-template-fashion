@@ -94,9 +94,9 @@ const CategoryPage = ({ filter, singleCategory }) => {
       <div
         className={
           openFilter
-            ? `fixed overflow-y-auto flex flex-col justify-between z-[100] top-0 right-0 bg-white shadow-lg translate-x-0 transition-all duration-500 h-screen max-md:w-screen w-[26.125rem]`
+            ? `fixed overflow-y-auto flex flex-col justify-between z-[6000] top-0 right-0 bg-white shadow-lg translate-x-0 transition-all duration-500 h-screen max-md:w-screen w-[26.125rem]`
             : `
-      fixed flex flex-col justify-between z-[100] top-0 right-0 bg-white shadow-lg translate-x-full transition-all duration-500 h-screen w-[26.125rem]`
+      fixed flex flex-col justify-between z-[6000] top-0 right-0 bg-white shadow-lg translate-x-full transition-all duration-500 h-screen w-[26.125rem]`
         }
       >
         <div>
@@ -107,7 +107,7 @@ const CategoryPage = ({ filter, singleCategory }) => {
               </h1>
               <div className="self-end">
                 <i
-                  className="fas fa-x ml-auto text-[#a3a3a3] cursor-pointer text-xl"
+                  className="fas fa-times ml-auto text-[#a3a3a3] cursor-pointer text-xl"
                   onClick={() => setOpenFilter(false)}
                 ></i>
               </div>

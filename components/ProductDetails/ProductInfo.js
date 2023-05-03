@@ -117,7 +117,7 @@ const ProductInfo = ({ product, desc }) => {
         <>
           <div className="max-md:col-span-4 mt-[2rem] md:col-span-2 ">
             <div className="flex flex-col ">
-              <h1 className="text-[1.563rem] font-bold">
+              <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold">
                 {productVariant === null || productVariant.length === 0
                   ? product?.data?.item?.basic_data?.name
                   : productVariant?.basic_data?.name}

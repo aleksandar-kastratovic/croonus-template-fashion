@@ -113,10 +113,10 @@
   background-color: white !important;
   border-radius: 50% !important;
   padding: 2.2rem !important;
-  top: 40% !important;
+  top: 33% !important;
   color: rgba(0, 0, 0, 0.716) !important;
   width: 56px !important;
-  transform: scale(0.7) !important;
+  transform: scale(0.5) !important;
   box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
   left: -6px !important;
   z-index: 500 !important;
@@ -136,9 +136,9 @@
   border-radius: 50% !important;
   padding: 2.2rem !important;
   color: rgba(0, 0, 0, 0.716) !important;
-  transform: scale(0.7) !important;
+  transform: scale(0.5) !important;
   right: -6px !important;
-  top: 40% !important;
+  top: 33% !important;
 
   box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
   fill: black !important;
@@ -198,7 +198,7 @@
 .slider .rs-slider-progress-bar {
   left: 0%;
   width: 100%;
-  background-color: #030303;
+  background-color: #171717;
   border-radius: 3px 0 0 3px;
   height: 5px;
   position: absolute;
@@ -211,8 +211,8 @@
   top: 0%;
 }
 .rs-slider-handle:before {
-  background-color: #6ba8eb;
-  border: 1px solid #6ba8eb;
+  background-color: #171717;
+  border: 1px solid #171717;
   border-radius: 10px;
   content: "";
   top: -12px;

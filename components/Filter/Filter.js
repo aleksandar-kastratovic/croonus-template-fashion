@@ -182,7 +182,7 @@ const FilterRange = ({ filter, onChange, selected }) => {
           onChangeCommitted={onRangeChange}
         />
       </div>
-      <div className={classes.valueHolder}>
+      <div className={`${classes.valueHolder} max-md:text-center`}>
         <span>od: {selectedValue[0]}</span>
         <span> do: {selectedValue[1]}</span>
       </div>
