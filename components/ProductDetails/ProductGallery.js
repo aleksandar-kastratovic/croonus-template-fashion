@@ -29,13 +29,13 @@ const ProductGallery = ({ productGallery }) => {
           position: "relative",
           zIndex: 100,
         }}
-        className="h-full  object-cover"
+        className="h-full w-full object-cover"
       >
         <Image
           src={src}
           width={2000}
           height={2000}
-          className="h-full  object-cover"
+          className="h-full w-full object-cover"
           onMouseEnter={(e) => {
             const elem = e.currentTarget;
             const { width, height } = elem.getBoundingClientRect();
@@ -83,7 +83,7 @@ const ProductGallery = ({ productGallery }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const productImage = productGallery?.map((image, index) => {
     return (
-      <SwiperSlide key={index}>
+      <SwiperSlide key={index} className="w-full">
         <ImageMagnifier src={image?.image} width={2000} height={2000} />
       </SwiperSlide>
     );
