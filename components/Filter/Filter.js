@@ -103,7 +103,7 @@ const FilterIn = ({
   };
   return (
     <>
-      {(filter?.params?.items ?? []).slice(0, filterNumber).map((item) => (
+      {(filter?.params?.items ?? []).map((item) => (
         <>
           <div
             key={item.id}
@@ -135,14 +135,6 @@ const FilterIn = ({
           </div>
         </>
       ))}
-      {allFiltersLoaded ? null : (
-        <div className="mt-[0.813rem] flex cursor-pointer items-center gap-1">
-          <span onClick={handleFilterNumber} className="text-[0.75rem] ">
-            Prikaži više
-          </span>
-          <i className="fa-solid fa-chevron-down text-xs"></i>{" "}
-        </div>
-      )}
     </>
   );
 };
@@ -192,15 +184,10 @@ const FilterRange = ({ filter, onChange, selected }) => {
 
 const FilterWithinTree = ({ filter }) => {
   const router = useRouter();
-  const [filterNumber, setFilterNumber] = useState(3);
-  const numFiltersLoaded = Math.min(filterNumber, filter?.params?.items.length);
-  const allFiltersLoaded = numFiltersLoaded === filter?.params?.items.length;
-  const handleFilterNumber = () => {
-    setFilterNumber(filterNumber + 3);
-  };
+
   return (
     <>
-      {(filter?.params?.items ?? []).slice(0, filterNumber).map((item) => (
+      {(filter?.params?.items ?? []).map((item) => (
         <>
           <div
             key={item.id}
@@ -216,14 +203,6 @@ const FilterWithinTree = ({ filter }) => {
           </div>
         </>
       ))}
-      {allFiltersLoaded ? null : (
-        <div className="mt-[0.813rem] flex cursor-pointer items-center gap-1">
-          <span onClick={handleFilterNumber} className="text-[0.75rem] ">
-            Prikaži više
-          </span>
-          <i className="fa-solid fa-chevron-down text-xs"></i>{" "}
-        </div>
-      )}
     </>
   );
 };

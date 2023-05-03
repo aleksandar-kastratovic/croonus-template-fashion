@@ -75,7 +75,7 @@ const Newsletter = () => {
             ></input>
             <label
               htmlFor="email"
-              className={` absolute left-[1.25rem] text-[#d1d1d1] text-sm transition-all duration-300 peer-placeholder-shown:text-base  peer-placeholder-shown:top-4 peer-placeholder-shown:text-[#d1d1d1] peer-focus:-top-[0.6rem] peer-focus:bg-white  peer-focus:text-[#e0e0e0] peer-focus:px-1 peer-focus:text-sm`}
+              className={` absolute left-[1.25rem] text-[#d1d1d1] text-base transition-all duration-300 peer-placeholder-shown:text-base  peer-placeholder-shown:top-4 peer-placeholder-shown:text-[#d1d1d1] peer-focus:-top-[0.6rem] peer-focus:bg-white  peer-focus:text-[#e0e0e0] peer-focus:px-1 peer-focus:text-sm`}
             >
               Unesite svoj email
             </label>
@@ -96,7 +96,7 @@ const Newsletter = () => {
                       id="day"
                       name="day"
                       placeholder="Dan"
-                      className="peer border w-full placeholder-transparent  focus:border-[#e0e0e0] focus:outline-none focus:ring-0 h-[3.625rem] border-[#e0e0e0] rounded-lg  text-black"
+                      className="peer border placeholder:text-base w-full placeholder-transparent  focus:border-[#e0e0e0] focus:outline-none focus:ring-0 h-[3.625rem] border-[#e0e0e0] rounded-lg  text-black"
                       onChange={(e) => {
                         setSelected({ ...selected, day: e.target.value });
                       }}
@@ -141,7 +141,7 @@ const Newsletter = () => {
                         selected.day === ""
                           ? `left-[1.25rem] top-[1.2rem]`
                           : `-top-[0.6rem] left-[1.25rem] bg-white px-1`
-                      } text-[#d1d1d1] text-sm transition-all duration-300 peer-placeholder-shown:text-base  peer-placeholder-shown:top-10 peer-placeholder-shown:text-[#d1d1d1] peer-focus:-top-[0.6rem] peer-focus:bg-white  peer-focus:text-[#e0e0e0] peer-focus:px-1 peer-focus:text-sm`}
+                      } text-[#d1d1d1] text-base transition-all duration-300 peer-placeholder-shown:text-base  peer-placeholder-shown:top-10 peer-placeholder-shown:text-[#d1d1d1] peer-focus:-top-[0.6rem] peer-focus:bg-white  peer-focus:text-[#e0e0e0] peer-focus:px-1 peer-focus:text-sm`}
                     >
                       Dan{" "}
                     </label>
@@ -178,7 +178,7 @@ const Newsletter = () => {
                         selected.month === ""
                           ? `left-[1.25rem] top-[1.2rem]`
                           : `-top-[0.6rem] left-[1.25rem] bg-white px-1`
-                      } absolute  text-[#d1d1d1] text-sm transition-all duration-300 peer-placeholder-shown:text-base  peer-placeholder-shown:top-10 peer-placeholder-shown:text-[#d1d1d1] peer-focus:-top-[0.6rem] peer-focus:bg-white  peer-focus:text-[#e0e0e0] peer-focus:px-1 peer-focus:text-sm`}
+                      } absolute  text-[#d1d1d1] text-base transition-all duration-300 peer-placeholder-shown:text-base  peer-placeholder-shown:top-10 peer-placeholder-shown:text-[#d1d1d1] peer-focus:-top-[0.6rem] peer-focus:bg-white  peer-focus:text-[#e0e0e0] peer-focus:px-1 peer-focus:text-sm`}
                     >
                       Mesec{" "}
                     </label>
@@ -192,9 +192,9 @@ const Newsletter = () => {
                     <button
                       className={`${
                         selected.type === "zene"
-                          ? `border-black border font-medium text-black`
+                          ? `border-black  border font-medium text-black`
                           : `text-[#d1d1d1]`
-                      } rounded-3xl px-10 py-2 border-[#e0e0e0] border  flex items-center justify-center`}
+                      } rounded-3xl px-10 py-2 w-[150px] border-[#e0e0e0] border  flex items-center justify-center`}
                       value={selected.type}
                       onClick={(e) => {
                         e.preventDefault();
@@ -221,9 +221,9 @@ const Newsletter = () => {
                 </div>
                 <div className="flex items-center gap-2 mt-6">
                   <input
-                    type="radio"
+                    type="checkbox"
                     id="terms"
-                    className="h-4 w-4 text-[#d1d1d1] focus:outline-none focus:ring-0"
+                    className="h-4 w-4 rounded text-green-500 focus:outline-none focus:ring-0"
                     required
                     value={selected.terms}
                     onChange={(e) => {

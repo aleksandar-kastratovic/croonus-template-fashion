@@ -43,10 +43,11 @@
   max-height: 878px;
   width: 25%;
   height: 100%;
+  opacity: 0.4;
 }
 
-.mySwiper .swiper-slide-thumb-active {
-  opacity: 1;
+.swiper-slide-thumb-active {
+  opacity: 0.4;
 }
 
 .swiper-slide img {

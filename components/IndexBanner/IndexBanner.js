@@ -19,7 +19,7 @@ const IndexBanner = ({ banner }) => {
           height={1080}
           className="object-cover h-full"
         />
-        <div className="absolute flex flex-col items-center justify-center max-sm:gap-0 gap-10 top-[55%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute z-10 flex flex-col items-center justify-center max-sm:gap-0 gap-10 top-[55%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           {banner[0]?.title && (
             <h1 className="text-white max-sm:text-[5rem] text-[8.875rem] font-light uppercase sm:leading-[4.625rem]">
               {banner[0]?.title}
@@ -31,6 +31,7 @@ const IndexBanner = ({ banner }) => {
             </h1>
           )}
         </div>
+        <div className="absolute h-full w-full top-0 left-0 hover:bg-black transition-all duration-500 hover:bg-opacity-30"></div>
       </div>
     </div>
   );

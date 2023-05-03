@@ -12,6 +12,24 @@ const deliveryOptions = async () => {
   );
   return deliveryOptions;
 };
+export const metadata = () => {
+  return {
+    title: "Korpa - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na Pazari.rs Online Shop",
+    keywords: [
+      "pazari",
+      "online",
+      "shop",
+      "pazari.rs",
+      "farmerke",
+      "trenerke",
+      "dukserice",
+      "pazari obuca",
+      "obuca",
+      "pazari online",
+    ],
+  };
+};
 const Cart = async () => {
   const paymentoptions = await paymentOptions();
   const deliveryoptions = await deliveryOptions();

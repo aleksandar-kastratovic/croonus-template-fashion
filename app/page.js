@@ -31,9 +31,9 @@ const getIndexBanner = async () => {
   return getIndexBanner;
 };
 
-export async function generateMetadata() {
+export const metadata = () => {
   return {
-    title: "Pazari.rs Online Shop",
+    title: "Početna - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na Pazari.rs Online Shop",
     keywords: [
       "pazari",
@@ -48,7 +48,7 @@ export async function generateMetadata() {
       "pazari online",
     ],
   };
-}
+};
 
 const Home = async () => {
   const banners = await getBanners();

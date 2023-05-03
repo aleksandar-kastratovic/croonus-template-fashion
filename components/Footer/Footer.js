@@ -46,9 +46,40 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex max-md:mt-10 items-center gap-[1.938rem]">
-          <Image src={Instagram} width={30} height={30} alt="Instagram" />
-          <Image src={Youtube} width={30} height={30} alt="Instagram" />
-          <Image src={Facebook} width={30} height={30} alt="Instagram" />
+          <a
+            href="https://www.instagram.com/pazarishop/?hl=en"
+            target={"_blank"}
+          >
+            <Image
+              src={Instagram}
+              width={30}
+              height={30}
+              alt="Instagram"
+              className="hover:scale-110 transition-all duration-300"
+            />
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UCP3vHNQyS-6mJTX_l-VfaZw"
+            target={"_blank"}
+          >
+            {" "}
+            <Image
+              src={Youtube}
+              width={30}
+              height={30}
+              alt="Instagram"
+              className="hover:scale-110 transition-all duration-300"
+            />
+          </a>
+          <a href="https://www.facebook.com/pazarishop/" target={"_blank"}>
+            <Image
+              src={Facebook}
+              width={30}
+              height={30}
+              alt="Instagram"
+              className="hover:scale-110 transition-all duration-300"
+            />
+          </a>
         </div>
       </div>
       <div className="mx-[5rem] max-md:w-[95%] max-md:mx-auto py-[2.75rem] mt-[1.75rem] max-md:flex-col flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
@@ -56,33 +87,83 @@ const Footer = () => {
           <div className="flex flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Korisnička podrška</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
-              <Link href="/kako-kupiti">Kako kupiti</Link>
-              <Link href="/reklamacije">Reklamacije</Link>
-              <Link href="/kako-kupiti">Povraćaj sredstava</Link>
-              <Link href="/kako-kupiti">Zamena za isti artikal</Link>
-              <Link href="/kako-kupiti">Zamena za drugi artikal</Link>
-              <Link href="/pravo-na-odustajanje">Pravo na odustajanje</Link>
+              <Link
+                className="cursor-pointer hover:text-[#e10000]"
+                href="/kako-kupiti"
+              >
+                Kako kupiti
+              </Link>
+              <Link
+                className="cursor-pointer hover:text-[#e10000]"
+                href="/reklamacije"
+              >
+                Reklamacije
+              </Link>
+              <Link
+                className="cursor-pointer hover:text-[#e10000]"
+                href="/kako-kupiti"
+              >
+                Povraćaj sredstava
+              </Link>
+              <Link
+                className="cursor-pointer hover:text-[#e10000]"
+                href="/kako-kupiti"
+              >
+                Zamena za isti artikal
+              </Link>
+              <Link
+                className="cursor-pointer hover:text-[#e10000]"
+                href="/kako-kupiti"
+              >
+                Zamena za drugi artikal
+              </Link>
+              <Link
+                className="cursor-pointer hover:text-[#e10000]"
+                href="/pravo-na-odustajanje"
+              >
+                Pravo na odustajanje
+              </Link>
             </div>
           </div>
           <div className="flex flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">O nama</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
-              <span>Više o kompaniji Pazari</span>
-              <span>Join Life</span>
-              <span>Ponude za posao</span>
-              <span>Štampa</span>
-              <span>Naše prodavnice</span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Više o kompaniji Pazari
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Join Life
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Ponude za posao
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Štampa
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Naše prodavnice
+              </span>
             </div>
           </div>
           <div className="flex max-md:mt-10 flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Možda te interesuje</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
-              <span>StreetStyle</span>
-              <span>Farmerice</span>
-              <span>Trenerke</span>
-              <span>Zimske jakne</span>
-              <span>Obuća</span>
-              <span>Outlet</span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                StreetStyle
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Farmerice
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Trenerke
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Zimske jakne
+              </span>
+              <span className="cursor-pointer hover:text-[#e10000]">Obuća</span>
+              <span className="cursor-pointer hover:text-[#e10000]">
+                Outlet
+              </span>
             </div>
           </div>
         </div>
@@ -161,12 +242,12 @@ const Footer = () => {
               />
             </div>
           </div>
-          <p className="text-[0.813rem] font-normal text-[#191919]">
+          <p className="text-[0.813rem] font-normal text-[#191919] ">
             Cene na sajtu su iskazane u dinarima sa uračunatim porezom, a
             plaćanje se vrši isključivo u dinarima. Isporuka se vrši SAMO na
             teritoriji Republike Srbije.
           </p>
-          <p className="text-[0.813rem] font-normal text-[#191919]">
+          <p className="text-[0.813rem] font-normal text-[#191919] ">
             Nastojimo da budemo što precizniji u opisu proizvoda, prikazu slika
             i samih cena, ali ne možemo garantovati da su sve informacije
             kompletne i bez grešaka. Svi artikli prikazani na sajtu su deo naše
@@ -178,38 +259,43 @@ const Footer = () => {
         <div className="flex max-md:flex-wrap items-center gap-2">
           <Link
             href="/uslovi-koriscenja"
-            className="text-[0.813rem] font-normal text-[#191919]"
+            className="text-[0.813rem] font-normal text-[#191919] hover:text-[#e10000] cursor-pointer"
           >
             Uslovi korišćenja •
           </Link>
           <Link
             href="/zastita-privatnosti"
-            className="text-[0.813rem] font-normal text-[#191919]"
+            className="text-[0.813rem] font-normal text-[#191919] hover:text-[#e10000] cursor-pointer"
           >
             Zaštita privatnosti •
           </Link>
           <Link
             href="/isporuka"
-            className="text-[0.813rem] font-normal text-[#191919]"
+            className="text-[0.813rem] font-normal text-[#191919] hover:text-[#e10000] cursor-pointer"
           >
             Isporuka •
           </Link>
           <Link
             href="/najcesca-pitanja"
-            className="text-[0.813rem] font-normal text-[#191919]"
+            className="text-[0.813rem] font-normal text-[#191919] hover:text-[#e10000] cursor-pointer"
           >
             Najčešća pitanja •
           </Link>
           <Link
             href="/kolacici"
-            className="text-[0.813rem] font-normal text-[#191919]"
+            className="text-[0.813rem] font-normal text-[#191919] hover:text-[#e10000] cursor-pointer"
           >
             Politika o 'Kolačićima'
           </Link>
         </div>
-        <p className="text-[0.813rem] font-normal text-[#191919]">
-          &copy; 2023 Pazari.rs | Sva prava zadržana. Powered by{" "}
-          <a href="https://www.croonus.com" target={"_blank"}>
+        <p className="text-[0.813rem] font-normal text-[#191919] ">
+          &copy; {new Date().getFullYear()} Pazari.rs | Sva prava zadržana.
+          Powered by{" "}
+          <a
+            href="https://www.croonus.com"
+            target={"_blank"}
+            className="hover:text-[#e10000] cursor-pointer"
+          >
             Croonus Technologies
           </a>
         </p>

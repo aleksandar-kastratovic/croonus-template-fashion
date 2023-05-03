@@ -375,8 +375,8 @@ export default function Variants({
                                     x.attribute_key == item.attribute.key &&
                                     x.value_key == value.key
                                 )
-                                  ? `bg-[#191919] text-white`
-                                  : `border border-[#838482] `
+                                  ? `bg-[#191919] hover:border-[#191919] text-white`
+                                  : `border hover:border-[#191919] border-[#838482] `
                               } w-[2.5rem] h-[2.5rem] rounded-full`
                             : `hidden`
                         }
