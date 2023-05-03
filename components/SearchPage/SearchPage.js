@@ -21,8 +21,8 @@ const SearchPage = () => {
   return (
     <>
       {returnedProducts?.length > 0 ? (
-        <div className="mt-[1.2rem] gap-y-[20px] gap-x-5 lg:mt-[9rem] mx-[0.625rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <h1 className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 font-bold text-[1.5rem] py-3">
+        <div className="mt-[1.2rem] gap-y-[20px] gap-x-5 lg:mt-[9rem] mx-[0.625rem] grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <h1 className="col-span-2 md:col-span-2 lg:col-span-3 xl:col-span-4 font-bold text-[1.5rem] py-3">
             Rezultati pretrage za termin "{search}"
           </h1>
           <Thumb data={returnedProducts} slider={false} />
