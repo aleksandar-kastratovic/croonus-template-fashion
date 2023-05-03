@@ -44,7 +44,7 @@ const Thumb = ({ data, slider, loading }) => {
                     -35%
                   </span>
                 </div>
-                <div className="absolute max-md:hidden z-[100] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
+                <div className="absolute max-md:hidden z-[100000] px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
                   <div>
                     <Image
                       className="cursor-pointer rotate-180"

@@ -894,7 +894,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
             <div className="flex flex-col max-md:items-center max-md:justify-center items-end justify-end max-md:w-[95%] max-md:mx-auto md:mx-[5rem]">
               <div className="mt-2 flex gap-3 py-3 relative">
                 <input
-                  type="radio"
+                  type="checkbox"
                   id="agreed"
                   name="agreed"
                   onChange={formChangeHandler}
