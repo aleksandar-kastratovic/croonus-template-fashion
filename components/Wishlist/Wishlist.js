@@ -4,6 +4,7 @@ import { list } from "@/app/api/api";
 import { useEffect, useState } from "react";
 import { useCartContext } from "@/app/api/cartContext";
 import WishlistItems from "../WishlistItems/WishlistItems";
+import Link from "next/link";
 const WishlistPage = () => {
   const [wishlistData, setWishlistData] = useState([]);
   const [, , wishlist] = useCartContext();
@@ -31,10 +32,15 @@ const WishlistPage = () => {
           ))}
         </div>
       ) : (
-        <div className="mt-[1.2rem] lg:mt-[9rem] flex flex-col items-center justify-center py-5 text-center">
+        <div className="mt-[1.2rem] lg:mt-[15rem] flex flex-col items-center justify-center py-5 text-center">
           <div className="rounded-lg border p-10">
             <h1 className="text-lg font-medium">Vaša lista želja je prazna!</h1>{" "}
             <p>Kada dodate artikle u listu želja, oni će se pojaviti ovde.</p>
+            <Link href="/">
+              <button className="bg-[#2bc48a] mt-10 px-10 font-medium text-white hover:bg-opacity-80 py-4">
+                Vrati se na početnu stranu
+              </button>
+            </Link>
           </div>
         </div>
       )}

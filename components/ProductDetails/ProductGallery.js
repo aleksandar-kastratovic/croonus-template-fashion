@@ -137,10 +137,7 @@ const ProductGallery = ({ productGallery }) => {
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={0}
-        autoplay={{
-          delay: 500,
-          disableOnInteraction: false,
-        }}
+        autoplay={true}
         breakpoints={{
           320: {
             direction: "horizontal",

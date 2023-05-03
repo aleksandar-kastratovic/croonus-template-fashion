@@ -1,4 +1,22 @@
-"use client";
+export const metadata = () => {
+  return {
+    title:
+      "Uslovi korišćenja - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na Pazari.rs Online Shop",
+    keywords: [
+      "pazari",
+      "online",
+      "shop",
+      "pazari.rs",
+      "farmerke",
+      "trenerke",
+      "dukserice",
+      "pazari obuca",
+      "obuca",
+      "pazari online",
+    ],
+  };
+};
 const UsloviKoriscenja = () => {
   return (
     <div className="mt-[1.2rem] md:mt-[9rem] w-[95%] mx-auto md:w-[60%]">

@@ -84,7 +84,7 @@ const NavigationDesktop = () => {
   });
   const [activeSubSubCategory, setActiveSubSubCategory] = useState();
   const [background, setBackground] = useState("transparent");
-  console.log(category);
+
   useEffect(() => {
     if (category) {
       setBackground("white");
@@ -135,6 +135,14 @@ const NavigationDesktop = () => {
   useEffect(() => {
     setVisible(true);
   }, [open]);
+
+  useEffect(() => {
+    if (categories) {
+      setIsActive(categories[0]?.id);
+      setActiveCategory(categories[0]);
+    }
+  }, [categories]);
+
   return (
     <>
       <div
@@ -180,15 +188,25 @@ const NavigationDesktop = () => {
                 return (
                   <div
                     key={category?.id}
-                    className={
-                      isActiveCategory && !open
-                        ? "px-5 py-1 rounded cursor-pointer hover:bg-white hover:text-black bg-white uppercase text-black text-[.8rem]"
-                        : (open && isActiveCategory) || background === "white"
-                        ? "px-5 py-1 rounded cursor-pointer hover:bg-black hover:text-white text-white uppercase  text-[.8rem] bg-black"
-                        : `px-5 py-1 rounded cursor-pointer hover:bg-black hover:text-white ${
-                            open ? `text-black` : `text-white`
-                          } uppercase  text-[.8rem]`
-                    }
+                    className={`uppercase ${
+                      (isActiveCategory && !open && background === "transparent"
+                        ? `bg-white text-black`
+                        : isActiveCategory && !open && background === "white"
+                        ? `bg-black text-white`
+                        : !isActiveCategory &&
+                          !open &&
+                          background === "transparent" &&
+                          `text-white`) ||
+                      ((open &&
+                        isActiveCategory &&
+                        background === "transparent") ||
+                      (open && isActiveCategory && background === "white")
+                        ? `bg-black text-white`
+                        : `text-black`) ||
+                      (open && isActiveCategory && background === "white"
+                        ? `bg-red-500 text-white`
+                        : `bg-red-500 text-white`)
+                    } px-5 py-1 text-[0.8rem] rounded cursor-pointer`}
                     onClick={() => {
                       setIsActive(category?.id);
                       setActiveCategory(category);
@@ -295,7 +313,7 @@ const NavigationDesktop = () => {
         onMouseLeave={() => setOpen(false)}
       >
         <div
-          className={`bg-[${background}] flex items-center gap-20 sticky top-5 w-full `}
+          className={`bg-${background} flex items-center gap-20 sticky top-5 w-full `}
         ></div>
         <div
           className={
