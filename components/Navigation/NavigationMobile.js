@@ -122,6 +122,14 @@ const NavigationMobile = () => {
       window.removeEventListener("scroll", handleScrollIconDisappear);
     };
   }, []);
+
+  useEffect(() => {
+    if (pathname?.includes("/korpa/")) {
+      getCartCount();
+      router?.refresh();
+    }
+  }, [pathname]);
+
   return (
     <>
       <div className="md:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
@@ -188,7 +196,10 @@ const NavigationMobile = () => {
               } md:hidden bg-transparent visible sticky top-[60px] z-[4000] transition-all duration-500 opacity-100 `
         }
       >
-        <form className="w-[95%] mx-auto h-12 mt-12 py-2 flex items-center absolute">
+        <form
+          className="w-[95%] mx-auto h-12 mt-12 py-2 flex items-center absolute"
+          onClick={() => setSearchOpen(true)}
+        >
           <div
             type="text"
             className="w-full h-full bg-transparent focus:border-white focus:outline-none focus:ring-0 placeholder:text-white text-white text-xs border-white border  rounded-lg py-2 pl-8 mix-blend-difference placeholder:text-xs"

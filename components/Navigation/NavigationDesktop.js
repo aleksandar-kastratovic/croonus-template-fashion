@@ -146,6 +146,13 @@ const NavigationDesktop = () => {
       setActiveCategory(categories[0]);
     }
   }, [categories]);
+  const router = useRouter();
+  useEffect(() => {
+    if (pathname?.includes("/korpa/")) {
+      getCartCount();
+      router?.refresh();
+    }
+  }, [pathname]);
 
   return (
     <>

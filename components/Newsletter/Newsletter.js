@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { post } from "@/app/api/api";
 import { toast } from "react-toastify";
+
 const Newsletter = () => {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState("subscribe");
@@ -66,7 +67,7 @@ const Newsletter = () => {
               placeholder="Unesi svoj email"
               className={`${
                 error ? `border-red-500` : `border-[#e0e0e0]`
-              } peer border placeholder-transparent 2xl:w-[40.25rem] focus:border-[#e0e0e0] max-md:w-full focus:outline-none focus:ring-0 h-[3.625rem]  rounded-lg  text-[#d1d1d1]`}
+              } peer border placeholder-transparent w-full 2xl:w-[40.25rem] focus:border-[#e0e0e0] max-md:w-full focus:outline-none focus:ring-0 h-[3.625rem]  rounded-lg  text-[#d1d1d1]`}
               onChange={(e) => {
                 setSelected({ ...selected, email: e.target.value });
               }}
@@ -276,7 +277,7 @@ const Newsletter = () => {
               id="email"
               name="email"
               placeholder="Unesi svoj email"
-              className={` peer border placeholder-transparent 2xl:w-[38.25rem] focus:border-[#e0e0e0] focus:outline-none focus:ring-0 h-[3.625rem]  rounded-lg border-[#e0e0e0] text-[#d1d1d1]`}
+              className={` peer border placeholder-transparent max-2xl:w-full 2xl:w-[38.25rem] focus:border-[#e0e0e0] focus:outline-none focus:ring-0 h-[3.625rem]  rounded-lg border-[#e0e0e0] text-[#d1d1d1]`}
             ></input>
             <label
               htmlFor="email"
@@ -285,7 +286,7 @@ const Newsletter = () => {
               Unesite svoj email
             </label>
             <button
-              className="bg-[#191919] max-md:w-full w-1/2 mx-auto mt-6 px-5 py-2 text-white uppercase hover:bg-opacity-80 transition-all duration-300 rounded"
+              className="bg-[#191919] max-md:w-full min-[1537px]:w-1/2 mx-auto mt-6 px-5 py-2 text-white uppercase hover:bg-opacity-80 transition-all duration-300 rounded"
               onClick={(e) => {
                 e.preventDefault();
               }}
