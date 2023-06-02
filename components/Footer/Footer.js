@@ -12,14 +12,15 @@ import Image8 from "../../assets/Icons/american.png";
 import Instagram from "../../assets/Icons/instagram.png";
 import Youtube from "../../assets/Icons/youtube.png";
 import Facebook from "../../assets/Icons/facebook.png";
+
 const Footer = () => {
   return (
     <div className="max-md:mt-[3rem] mt-[7.75rem] bg-[#f7f7f7]">
-      <div className="mx-[5rem] max-md:flex-col py-[2.625rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white">
+      <div className="mx-[5rem] max-xl:flex-col py-[2.625rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white">
         <div>
           <Image src={Logo} width={214} height={45} alt="Pazari Logo" />
         </div>
-        <div className="flex max-md:flex-col max-md:gap-[2rem] max-md:mt-10 items-center gap-[5.625rem]">
+        <div className="flex max-xl:flex-col max-xl:gap-[2rem] max-xl:mt-10 items-center gap-[5.625rem]">
           <div className="flex flex-col font-bold items-center text-center justify-center gap-1">
             <h1 className="text-[#171717] uppercase text-[0.813rem]">
               Besplatna dostava za
@@ -45,7 +46,7 @@ const Footer = () => {
             </h1>
           </div>
         </div>
-        <div className="flex max-md:mt-10 items-center gap-[1.938rem]">
+        <div className="flex max-xl:mt-10 items-center gap-[1.938rem]">
           <a
             href="https://www.instagram.com/pazarishop/?hl=en"
             target={"_blank"}
@@ -82,8 +83,8 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <div className="mx-[5rem] max-md:w-[95%] max-md:mx-auto py-[2.75rem] mt-[1.75rem] max-md:flex-col flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
-        <div className="flex items-center max-md:justify-between max-md:flex-wrap max-md:w-full 2xl:gap-[150px] 3xl:gap-[220px]">
+      <div className="mx-[5rem] max-md:w-[95%] max-md:mx-auto py-[2.75rem] mt-[1.75rem] max-xl:flex-col flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
+        <div className="flex items-center max-md:justify-between max-md:flex-wrap max-md:w-full md:gap-[100px] 2xl:gap-[150px] 3xl:gap-[220px]">
           <div className="flex flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Korisnička podrška</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
@@ -145,7 +146,7 @@ const Footer = () => {
               </span>
             </div>
           </div>
-          <div className="flex max-md:mt-10 flex-col self-start gap-[40px]">
+          <div className="flex max-[493px]:mt-10 flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Možda te interesuje</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
               <span className="cursor-pointer hover:text-[#e10000]">
@@ -167,7 +168,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col max-md:mt-10 self-start gap-[1.25rem] 2xl:max-w-[450px] 3xl:max-w-[578px]">
+        <div className="flex max-xl:mt-5 flex-col max-md:mt-10 self-start gap-[1.25rem] max-xl:w-full xl:max-w-[450px] 2xl:max-w-[450px] 3xl:max-w-[578px]">
           <div className="flex items-center gap-1 ">
             <div>
               <Image
