@@ -1,5 +1,6 @@
 import { get, post } from "@/app/api/api";
 import CategoryPage from "@/components/CategoryPage/CategoryPage";
+import { Suspense } from "react";
 
 const fetchFilters = async (slug) => {
   return await post(`/products/category/filters/${slug}`).then(
@@ -40,11 +41,7 @@ const Category = async ({ params: { path } }) => {
   const filters = await fetchFilters(path[path?.length - 1]);
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
 
-  return (
-    <>
-      <CategoryPage filter={filters} singleCategory={singleCategory} />
-    </>
-  );
+  return <CategoryPage filter={filters} singleCategory={singleCategory} />;
 };
 
 export default Category;

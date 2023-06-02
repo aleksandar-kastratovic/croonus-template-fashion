@@ -105,7 +105,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           </div>
         </div>
         <div className="mx-[0.625rem] mt-[4.125rem]">
-          <div className="grid max-md:grid-cols-2 gap-y-[40px] grid-cols-4 gap-[11px]">
+          <div className="grid max-md:grid-cols-2 gap-y-[40px] md:grid-cols-3 2xl:grid-cols-4 gap-[11px]">
             {loading ? (
               <div className="h-full col-span-1 w-full bg-[#eeeee0] object-cover animate-pulse"></div>
             ) : (
@@ -165,6 +165,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                 setSelectedFilters([]);
                 setTempSelectedFilters([]);
                 setChangeFilters(true);
+                setSort({ field: "", direction: "" });
               }}
             >
               Obriši

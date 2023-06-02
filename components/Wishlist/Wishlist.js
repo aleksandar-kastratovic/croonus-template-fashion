@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useCartContext } from "@/app/api/cartContext";
 import WishlistItems from "../WishlistItems/WishlistItems";
 import Link from "next/link";
+
 const WishlistPage = () => {
   const [wishlistData, setWishlistData] = useState([]);
   const [, , wishlist] = useCartContext();
