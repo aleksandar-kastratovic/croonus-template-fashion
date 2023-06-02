@@ -12,6 +12,7 @@ import User from "../../assets/Icons/user.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import Thumb from "../Thumb/Thumb";
+
 const NavigationMobile = () => {
   const router = useRouter();
   const [cart, , wishList] = useCartContext();
@@ -320,7 +321,7 @@ const NavigationMobile = () => {
           </div>
         )}
 
-        <div className="mt-5 w-[95%] mx-auto flex flex-col gap-5">
+        <div className="mt-5 w-[95%] overflow-y-auto mx-auto flex flex-col gap-5">
           {activeCategory?.data?.length > 0 &&
             activeCategory?.data?.map((category) => {
               return (
@@ -333,7 +334,7 @@ const NavigationMobile = () => {
                       className={`${
                         activeCategory.firstCategory
                           ? `uppercase flex flex-row w-full items-center justify-between`
-                          : ``
+                          : `uppercase flex flex-row w-full items-center justify-between`
                       } text-[0.9rem]`}
                       onClick={() => {
                         setLastActiveCategory({
