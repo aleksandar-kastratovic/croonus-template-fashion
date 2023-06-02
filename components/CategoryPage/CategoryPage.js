@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import FilterIcon from "../../assets/Icons/filter.png";
 import Thumb from "../Thumb/Thumb";
@@ -109,11 +109,13 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
             {loading ? (
               <div className="h-full col-span-1 w-full bg-[#eeeee0] object-cover animate-pulse"></div>
             ) : (
-              <Thumb
-                data={productData?.products}
-                slider={false}
-                loading={loading}
-              />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Thumb
+                  data={productData?.products}
+                  slider={false}
+                  loading={loading}
+                />
+              </Suspense>
             )}
           </div>
         </div>
