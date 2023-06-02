@@ -1,34 +1,27 @@
 import { get, list } from "@/app/api/api";
-import NavigationDesktop from "@/components/Navigation/NavigationDesktop";
 import ProductDetails from "@/components/ProductDetails/ProductDetails";
 import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
 
 const getProduct = async (slug) => {
-  const getProduct = await get(`/product-details/basic-data/${slug}`).then(
+  return await get(`/product-details/basic-data/${slug}`).then(
     (res) => res?.payload
   );
-  return getProduct;
 };
 
 const getProductGallery = async (slug) => {
-  const getProductGallery = await get(`/product-details/gallery/${slug}`).then(
+  return await get(`/product-details/gallery/${slug}`).then(
     (res) => res?.payload?.gallery
   );
-  return getProductGallery;
 };
 
 const getProductLongDescription = async (slug) => {
-  const getProductLongDescription = await get(
-    `/product-details/description/${slug}`
-  ).then((res) => res?.payload);
-  return getProductLongDescription;
+  return await get(`/product-details/description/${slug}`).then(
+    (res) => res?.payload
+  );
 };
 
 const getNewProducts = async () => {
-  const getNewProducts = await list("/products/new-in/list").then(
-    (res) => res?.payload?.items
-  );
-  return getNewProducts;
+  return await list("/products/new-in/list").then((res) => res?.payload?.items);
 };
 
 export async function generateMetadata({ params: { path } }) {

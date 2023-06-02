@@ -13,6 +13,7 @@ import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
 import { get } from "@/app/api/api";
+
 const Thumb = ({ data, slider, loading }) => {
   if (slider) {
     const addToWishlist = useGlobalAddToWishList();
@@ -33,7 +34,6 @@ const Thumb = ({ data, slider, loading }) => {
                   scroll={true}
                   className="relative z-[100]"
                 >
-                  {" "}
                   <Image
                     src={convertHttpToHttps(product?.image[imageIndex])}
                     alt={product?.basic_data?.name}
@@ -82,13 +82,13 @@ const Thumb = ({ data, slider, loading }) => {
                 />
               </div>
             </div>
-            <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
-              <div className="flex flex-col items-center justify-center w-full">
-                <h1 className="text-[0.938rem] font-semibold text-center">
-                  Izaberi veličinu
-                </h1>
-                <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
-                  {product?.variant_options?.length > 0 ? (
+            {product?.variant_options?.length > 0 ? (
+              <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
+                <div className="flex flex-col items-center justify-center w-full">
+                  <h1 className="text-[0.938rem] font-semibold text-center">
+                    Izaberi veličinu
+                  </h1>
+                  <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
                     <>
                       {product?.variant_options?.slice(0, 1).map((item2) => {
                         return (
@@ -154,10 +154,10 @@ const Thumb = ({ data, slider, loading }) => {
                         );
                       })}
                     </>
-                  ) : null}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
             <div className="mt-[0.813rem] max-md:text-left flex max-md:items-start items-center justify-between relative z-[50]">
               <Link
                 href={`/proizvod/${product?.slug}`}
@@ -240,12 +240,10 @@ const Thumb = ({ data, slider, loading }) => {
       </>
     );
   } else {
-    // const imageIndexes = data?.map(() => useState(0));
     const [productVariant, setProductVariant] = useState(null);
     const addToWishlist = useGlobalAddToWishList();
     const addToCart = useGlobalAddToCart();
     const products = data?.map((product, index) => {
-      // const [imageIndex, setImageIndex] = imageIndexes[index];
       return (
         <div className="col-span-1 relative item">
           <div className="max-md:h-[240px] md:h-[450px] lg:h-[575px] item relative">
@@ -305,13 +303,13 @@ const Thumb = ({ data, slider, loading }) => {
               />
             </div>
           </div> */}
-          <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
-            <div className="flex flex-col items-center justify-center w-full">
-              <h1 className="text-[0.938rem] font-semibold text-center">
-                Izaberi veličinu
-              </h1>
-              <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
-                {product?.variant_options?.length > 0 ? (
+          {product?.variant_options?.length > 0 ? (
+            <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
+              <div className="flex flex-col items-center justify-center w-full">
+                <h1 className="text-[0.938rem] font-semibold text-center">
+                  Izaberi veličinu
+                </h1>
+                <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
                   <>
                     {product?.variant_options?.slice(0, 1).map((item2) => {
                       return (
@@ -376,10 +374,10 @@ const Thumb = ({ data, slider, loading }) => {
                       );
                     })}
                   </>
-                ) : null}
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
           <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
             <h1 className="text-[0.813rem] max-md:leading-4 clamp">
               {product?.basic_data?.name}

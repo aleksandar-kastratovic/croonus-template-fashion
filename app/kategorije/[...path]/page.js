@@ -1,20 +1,21 @@
-import { get, list, post } from "@/app/api/api";
+import { get, post } from "@/app/api/api";
 import CategoryPage from "@/components/CategoryPage/CategoryPage";
-import NavigationDesktop from "@/components/Navigation/NavigationDesktop";
 
 const fetchFilters = async (slug) => {
-  const fetchFilters = await post(`/products/category/filters/${slug}`).then(
+  return await post(`/products/category/filters/${slug}`).then(
     (res) => res?.payload
   );
-  return fetchFilters;
 };
 
 const fetchSingleCategory = async (slug) => {
-  const fetchSingleCategory = await get(
-    `/categories/product/single/${slug}`
-  ).then((res) => res?.payload);
-  return fetchSingleCategory;
+  return await get(`/categories/product/single/${slug}`).then(
+    (res) => res?.payload
+  );
 };
+const getCategories = async () => {
+  return await get("/categories/product/tree").then((res) => res?.payload);
+};
+
 export async function generateMetadata({ params: { path } }) {
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
   return {
@@ -34,9 +35,11 @@ export async function generateMetadata({ params: { path } }) {
     ],
   };
 }
+
 const Category = async ({ params: { path } }) => {
   const filters = await fetchFilters(path[path?.length - 1]);
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
+
   return (
     <>
       <CategoryPage filter={filters} singleCategory={singleCategory} />

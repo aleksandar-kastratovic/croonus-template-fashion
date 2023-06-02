@@ -4,50 +4,47 @@ import RecommendedCategories from "@/components/RecommendedCategories/Recommende
 import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
 import IndexBanner from "@/components/IndexBanner/IndexBanner";
 import Newsletter from "@/components/Newsletter/Newsletter";
-import { Suspense } from "react";
-import NavigationDesktop from "@/components/Navigation/NavigationDesktop";
+
 const getBanners = async () => {
-  const getBanners = await get("/banners/index_slider").then(
-    (res) => res?.payload
-  );
-  return getBanners;
+  return await get("/banners/index_slider").then((res) => res?.payload);
 };
 const getRecommendedCategories = async () => {
-  const getRecommendedCategories = await list(
-    "/categories/section/recommended"
-  ).then((res) => res?.payload);
-  return getRecommendedCategories;
-};
-const getNew = async () => {
-  const getNew = await list("/products/new-in/list").then(
-    (res) => res?.payload?.items
-  );
-  return getNew;
-};
-const getIndexBanner = async () => {
-  const getIndexBanner = await get("/banners/index_banner").then(
+  return await list("/categories/section/recommended").then(
     (res) => res?.payload
   );
-  return getIndexBanner;
+};
+const getNew = async () => {
+  return await list("/products/new-in/list").then((res) => res?.payload?.items);
+};
+const getIndexBanner = async () => {
+  return await get("/banners/index_banner").then((res) => res?.payload);
 };
 
-export const metadata = () => {
-  return {
-    title: "Početna - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
+export const metadata = {
+  title: "Početna - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
+  description: "Dobrodošli na Pazari.rs Online Shop",
+  keywords: [
+    "pazari",
+    "online",
+    "shop",
+    "pazari.rs",
+    "farmerke",
+    "trenerke",
+    "dukserice",
+    "pazari obuca",
+    "obuca",
+    "pazari online",
+  ],
+  robots: "index, follow",
+  og: {
+    title: "Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na Pazari.rs Online Shop",
-    keywords: [
-      "pazari",
-      "online",
-      "shop",
-      "pazari.rs",
-      "farmerke",
-      "trenerke",
-      "dukserice",
-      "pazari obuca",
-      "obuca",
-      "pazari online",
-    ],
-  };
+    type: "website",
+    url: "https://pazari.rs",
+    image: "https://pazari.rs/images/logo.png",
+    site_name: "Pazari.rs",
+    locale: "sr_RS",
+  },
 };
 
 const Home = async () => {
@@ -76,3 +73,5 @@ const Home = async () => {
 };
 
 export default Home;
+
+export const revalidate = 30;

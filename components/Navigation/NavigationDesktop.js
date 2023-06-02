@@ -162,18 +162,23 @@ const NavigationDesktop = () => {
         >
           <div
             className="flex items-center py-[1.5rem] gap-20 "
-            onMouseEnter={() => {
-              if (background === "white") {
-                setOpen(true);
-              }
-            }}
-            onMouseLeave={() => {
-              if (background === "white") {
-                setOpen(true);
-              }
-            }}
+            // onMouseEnter={() => {
+            //   if (background === "white") {
+            //     setOpen(true);
+            //   }
+            // }}
+            // onMouseLeave={() => {
+            //   if (background === "white") {
+            //     setOpen(true);
+            //   }
+            // }}
           >
-            <Link href="/">
+            <Link
+              href="/"
+              onMouseEnter={() => {
+                setOpen(true);
+              }}
+            >
               {open || background === "white" ? (
                 <Image src={LogoDark} width={110} height={110} alt="" />
               ) : (
@@ -182,7 +187,7 @@ const NavigationDesktop = () => {
             </Link>
             <div
               className="flex flex-row items-center gap-5 "
-              onMouseEnter={() => setOpen(true)}
+              // onMouseEnter={() => setOpen(true)}
             >
               {categories?.map((category, index) => {
                 const isActiveCategory = isActive === category?.id;
@@ -359,17 +364,31 @@ const NavigationDesktop = () => {
                           : `uppercase cursor-pointer text-lg hover:text-slate-500 hover:translate-x-5 transition-all duration-300 font-medium`
                       }
                     >
-                      <h1
-                        onClick={() => {
-                          setIsActiveSubcategory({
-                            id: category?.id,
-                            slug: category?.slug,
-                          });
-                          setActiveSubSubCategory(category?.children);
-                        }}
-                      >
-                        {category?.name}
-                      </h1>
+                      {category?.children?.length > 0 ? (
+                        <h1
+                          onClick={() => {
+                            setIsActiveSubcategory({
+                              id: category?.id,
+                              slug: category?.slug,
+                            });
+                            setActiveSubSubCategory(category?.children);
+                          }}
+                        >
+                          {category?.name}
+                        </h1>
+                      ) : (
+                        <Link
+                          href={`/kategorije/${category?.slug_path}`}
+                          onClick={() => {
+                            setOpen(false);
+                            setVisible(false);
+                            setBackground("white");
+                          }}
+                        >
+                          {category?.name}
+                        </Link>
+                      )}
+
                       <div
                         className={
                           isActiveCategory && open && activeSubSubCategory
@@ -405,6 +424,7 @@ const NavigationDesktop = () => {
                       onClick={() => {
                         setOpen(false);
                         setVisible(false);
+                        setBackground("white");
                       }}
                     >
                       {category?.name}

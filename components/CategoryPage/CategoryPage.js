@@ -1,21 +1,24 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import FilterIcon from "../../assets/Icons/filter.png";
 import Thumb from "../Thumb/Thumb";
 import { list, post } from "@/app/api/api";
 import Filters from "../Filters/Filters";
-const CategoryPage = ({ filter, singleCategory }) => {
+
+const CategoryPage = ({ filter, singleCategory, products }) => {
   useEffect(() => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
     }
   }, []);
+
   const [openFilter, setOpenFilter] = useState(false);
   const [productData, setProductData] = useState({
     products: [],
     pagination: {},
   });
+
   const [sort, setSort] = useState({ field: "", direction: "" });
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
@@ -24,6 +27,7 @@ const CategoryPage = ({ filter, singleCategory }) => {
   const [changeFilters, setChangeFilters] = useState(false);
   const [tempSelectedFilters, setTempSelectedFilters] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getProducts = async (limit, page, sort, selectedFilters) => {
       const getProductList = await list(
@@ -59,7 +63,30 @@ const CategoryPage = ({ filter, singleCategory }) => {
     }
     setChangeFilters(false);
   }, [changeFilters]);
+  useEffect(() => {
+    const updateProductsCountBasedOnTempSelectedFilters = async (
+      tempSelectedFilters
+    ) => {
+      const getProductList = await list(
+        `/products/category/list/${singleCategory?.id}`,
+        {
+          filters: tempSelectedFilters,
+        }
+      ).then((res) => {
+        setProductData({
+          products:
+            productData?.products?.length === 0 ||
+            tempSelectedFilters?.length === 0
+              ? res?.payload?.items
+              : productData?.products,
+          pagination: res?.payload?.pagination,
+        });
 
+        setLoading(false);
+      });
+    };
+    updateProductsCountBasedOnTempSelectedFilters(tempSelectedFilters);
+  }, [tempSelectedFilters]);
   return (
     <>
       <div className="4xl:container mx-auto">
