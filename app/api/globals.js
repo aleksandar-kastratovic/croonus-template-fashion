@@ -1,13 +1,13 @@
 "use client";
 import { useCartContext } from "./cartContext";
-import { post, deleteMethod } from "./api";
-import { toast } from "react-toastify";
+import { deleteMethod, post } from "./api";
+
 /**
  * Hook wrapper for global add to cart so context can be used
  */
 export const useGlobalAddToCart = (type = false) => {
   const [, mutateCart] = useCartContext();
-  const addToCart = (productId, quantity, fromCart = false) => {
+  return (productId, quantity, fromCart = false) => {
     post("/cart", {
       id_product: productId,
       quantity,
@@ -20,8 +20,6 @@ export const useGlobalAddToCart = (type = false) => {
       mutateCart();
     });
   };
-
-  return addToCart;
 };
 
 /**
@@ -30,7 +28,7 @@ export const useGlobalAddToCart = (type = false) => {
 export const useGlobalRemoveFromCart = () => {
   const [, mutateCart] = useCartContext();
 
-  const removeFromCart = (productId) => {
+  return (productId) => {
     post("/cart", {
       id_product: productId,
       quantity: 0,
@@ -44,8 +42,6 @@ export const useGlobalRemoveFromCart = () => {
       })
       .catch((error) => console.warn(error));
   };
-
-  return removeFromCart;
 };
 
 /**
@@ -54,7 +50,7 @@ export const useGlobalRemoveFromCart = () => {
 export const useGlobalAddToWishList = () => {
   const [, , , mutateWishList] = useCartContext();
 
-  const addToWishList = (productId) => {
+  return (productId) => {
     post("/wishlist", {
       id: null,
       id_product: productId,
@@ -66,8 +62,6 @@ export const useGlobalAddToWishList = () => {
       mutateWishList();
     });
   };
-
-  return addToWishList;
 };
 
 /**
@@ -76,7 +70,7 @@ export const useGlobalAddToWishList = () => {
 export const useGlobalRemoveFromWishlist = () => {
   const [, , , mutateWishList] = useCartContext();
 
-  const removeFromWishList = (id) => {
+  return (id) => {
     deleteMethod(`/wishlist/${id}`)
       .then((response) => {
         console.log(response);
@@ -84,6 +78,4 @@ export const useGlobalRemoveFromWishlist = () => {
       })
       .catch((error) => console.warn(error));
   };
-
-  return removeFromWishList;
 };

@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import { FreeMode, Pagination, Thumbs } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
+
 const ProductGallery = ({ productGallery }) => {
   function ImageMagnifier({
     src,
@@ -35,6 +36,7 @@ const ProductGallery = ({ productGallery }) => {
           src={src}
           width={2000}
           height={2000}
+          priority={true}
           className="h-full w-full object-cover"
           onMouseEnter={(e) => {
             const elem = e.currentTarget;
@@ -80,6 +82,7 @@ const ProductGallery = ({ productGallery }) => {
       </div>
     );
   }
+
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const productImage = productGallery?.map((image, index) => {
     return (
@@ -95,6 +98,7 @@ const ProductGallery = ({ productGallery }) => {
           src={image?.image}
           width={2000}
           height={2000}
+          priority={true}
           className="cursor-pointer max-md:hidden"
         />
       </SwiperSlide>
