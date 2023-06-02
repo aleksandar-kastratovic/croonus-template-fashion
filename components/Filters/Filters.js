@@ -45,7 +45,7 @@ const Filters = ({
                   <div
                     key={index}
                     className={
-                      isActive
+                      isActive && sort.field !== "" && sort.direction !== ""
                         ? `px-3 select-none border-2 border-croonus-2 cursor-pointer py-[10px] font-medium rounded-lg bg-croonus-2 text-white`
                         : `px-3 select-none cursor-pointer py-[10px] border-2 rounded-lg border-[#e8e8e8]`
                     }

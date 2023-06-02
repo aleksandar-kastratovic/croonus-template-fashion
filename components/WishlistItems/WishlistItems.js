@@ -11,6 +11,7 @@ import { useCartContext } from "@/app/api/cartContext";
 import { useGlobalAddToCart } from "@/app/api/globals";
 import { get, list } from "@/app/api/api";
 import CartProductBox from "../CartProductBox";
+
 const WishlistItems = ({ items, product, border }) => {
   const removeFromWishList = useGlobalRemoveFromWishlist();
   const globalAddToCart = useGlobalAddToCart();
@@ -46,14 +47,15 @@ const WishlistItems = ({ items, product, border }) => {
   return (
     <>
       <div className="col-span-1 relative item mt-[2rem] lg:mt-[9rem]">
-        <div className="max-md:h-[400px] md:h-[450px] lg:h-[575px] item relative">
+        <div className="max-md:h-[400px] md:h-[450px] lg:h-[500px] item relative">
           {product?.image[0] && (
             <Link href={`/proizvod/${product?.slug}`} scroll={true}>
               <Image
                 src={product?.image[0]}
                 alt={product?.basic_data?.name}
-                width={22000}
-                height={22000}
+                fill={true}
+                style={{ objectFit: "cover" }}
+                priority={true}
                 className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
               />
             </Link>
@@ -99,13 +101,13 @@ const WishlistItems = ({ items, product, border }) => {
               />
             </div>
           </div> */}
-        <div className="absolute rounded-lg py-5 left-3 bottom-[4.5rem] w-[95%] mx-auto bg-white chevrons">
-          <div className="flex flex-col items-center justify-center w-full">
-            <h1 className="text-[0.938rem] font-semibold text-center">
-              Izaberi veličinu
-            </h1>
-            <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
-              {product?.variant_options?.length > 0 ? (
+        {product?.variant_options?.length > 0 ? (
+          <div className="absolute rounded-lg py-5 left-3 bottom-[4.5rem] w-[95%] mx-auto bg-white chevrons">
+            <div className="flex flex-col items-center justify-center w-full">
+              <h1 className="text-[0.938rem] font-semibold text-center">
+                Izaberi veličinu
+              </h1>
+              <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
                 <>
                   {product?.variant_options?.slice(0, 1).map((item2) => {
                     return (
@@ -123,10 +125,10 @@ const WishlistItems = ({ items, product, border }) => {
                     );
                   })}
                 </>
-              ) : null}
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
         <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
           <h1 className="text-[0.813rem] clamp">{product?.basic_data?.name}</h1>
           <div

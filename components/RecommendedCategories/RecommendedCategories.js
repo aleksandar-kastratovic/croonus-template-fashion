@@ -27,7 +27,7 @@ const RecommendedCategories = ({ categories }) => {
               />
               <Link href={`/kategorije/${category?.slug_path}`}>
                 <div className="absolute h-full  top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center">
-                  <div className="relative z-[100] ">
+                  <div className="relative z-[54] ">
                     <h1 className="max-lg:text-[3.5rem] text-[5rem] 2xl:text-[8.5rem] font-light text-white uppercase">
                       {category?.basic_data?.name}
                     </h1>

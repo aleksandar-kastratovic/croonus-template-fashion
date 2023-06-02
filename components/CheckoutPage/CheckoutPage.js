@@ -244,8 +244,6 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
       };
       if (errors.length === 0) {
         setLoading(true);
-      } else {
-        setLoading(false);
       }
       post("/checkout/one-page", ret)
         .then((response) => {

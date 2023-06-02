@@ -12,6 +12,7 @@ import User from "../../assets/Icons/user.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import Search from "../../assets/Icons/search.png";
+
 const NavigationDesktop = () => {
   const pathname = usePathname();
   const { push: navigate, asPath } = useRouter();
@@ -62,6 +63,7 @@ const NavigationDesktop = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     navigate(`/search?search=${searchTerm}`);
+    setSearchTerm("");
   };
   const [isActive, setIsActive] = useState(categories[0]?.id);
   const [activeCategory, setActiveCategory] = useState();
@@ -233,7 +235,12 @@ const NavigationDesktop = () => {
                 width={20}
                 height={20}
                 alt=""
-                className={background === "white" ? "" : "invert"}
+                onClick={handleSearch}
+                className={
+                  background === "white"
+                    ? "cursor-pointer "
+                    : "cursor-pointer invert"
+                }
               />
               <form onSubmit={handleSearch} className="w-60">
                 <input
@@ -250,7 +257,7 @@ const NavigationDesktop = () => {
               </form>
             </div>
             <div className="flex items-center gap-5">
-              <Link href="/profil">
+              <Link href="/stranica-u-izradi">
                 <Image
                   src={User}
                   width={40}
@@ -412,13 +419,13 @@ const NavigationDesktop = () => {
             <div
               className={
                 open
-                  ? ` opacity-100 transition-all duration-500 flex flex-col gap-2`
+                  ? `opacity-100 h-[550px] overflow-y-auto overflow-x-hidden transition-all duration-500 flex flex-col gap-2`
                   : `invisible opacity-0 duration-500 transition-all flex flex-col gap-2`
               }
             >
               {activeSubSubCategory?.map((category) => {
                 return (
-                  <div className=" text-black text-sm hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium">
+                  <div className="text-black text-xs hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium">
                     <Link
                       href={`/kategorije/${category?.slug_path}`}
                       onClick={() => {

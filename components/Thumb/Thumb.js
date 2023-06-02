@@ -184,7 +184,7 @@ const Thumb = ({ data, slider, loading }) => {
                     }
                   );
                 }}
-                className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites"
+                className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
               >
                 <Image
                   src={Wishlist}
@@ -245,41 +245,32 @@ const Thumb = ({ data, slider, loading }) => {
     const addToCart = useGlobalAddToCart();
     const products = data?.map((product, index) => {
       return (
-        <Suspense
-          fallback={
-            <div
-              className={`col-span-1 h-full w-full bg-[#f8f8f8] animate-pulse`}
-            >
-              <div className="max-md:h-[240px] md:h-[450px] lg:h-[575px] bg-[#f8f8f8] animate-pulse"></div>
-            </div>
-          }
-        >
-          <div className="col-span-1 relative item">
-            <div className="max-md:h-[240px] md:h-[450px] lg:h-[575px] item relative">
-              {loading ? (
-                <div className="h-full w-full bg-[#eeeee0] object-cover animate-pulse"></div>
-              ) : (
-                product?.image[0] && (
-                  <Link href={`/proizvod/${product?.slug}`} scroll={true}>
-                    <Image
-                      src={convertHttpToHttps(product?.image[0])}
-                      alt={product?.basic_data?.name}
-                      width={22000}
-                      height={22000}
-                      priority={true}
-                      className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                    />
-                  </Link>
-                )
-              )}
+        <div className="col-span-1 relative item">
+          <div className="max-md:h-[240px] md:h-[450px] lg:h-[500px] item relative">
+            {loading ? (
+              <div className="h-full w-full bg-[#eeeee0] object-cover animate-pulse"></div>
+            ) : (
+              product?.image[0] && (
+                <Link href={`/proizvod/${product?.slug}`} scroll={true}>
+                  <Image
+                    src={convertHttpToHttps(product?.image[0])}
+                    alt={product?.basic_data?.name}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    priority={true}
+                    className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                  />
+                </Link>
+              )
+            )}
 
-              <div className="absolute bottom-2 left-4">
-                <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
-                  -35%
-                </span>
-              </div>
+            <div className="absolute bottom-2 left-4">
+              <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
+                -35%
+              </span>
             </div>
-            {/* <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
+          </div>
+          {/* <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
             <div>
               <Image
                 className="cursor-pointer rotate-180"
@@ -313,124 +304,125 @@ const Thumb = ({ data, slider, loading }) => {
               />
             </div>
           </div> */}
-            {product?.variant_options?.length > 0 ? (
-              <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
-                <div className="flex flex-col items-center justify-center w-full">
-                  <h1 className="text-[0.938rem] font-semibold text-center">
-                    Izaberi veličinu
-                  </h1>
-                  <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
-                    <>
-                      {product?.variant_options?.slice(0, 1).map((item2) => {
-                        return (
-                          <>
-                            {item2?.values.map((item3) => {
-                              return (
-                                <>
-                                  <div
-                                    className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border"
-                                    onClick={async () => {
-                                      const productVariantGet = async () => {
-                                        const res = await get(
-                                          `/product-details/basic-data/${product?.basic_data?.id_product}`
-                                        );
-                                        const data = res?.payload?.data;
-                                        if (data?.variant_items) {
-                                          const clickedVariant =
-                                            data.variant_items.find(
-                                              (variantItem) => {
-                                                return variantItem.variant_key_array.some(
-                                                  (variantKey) => {
-                                                    return (
-                                                      variantKey.value_key ===
-                                                      item3.key
-                                                    );
-                                                  }
-                                                );
-                                              }
-                                            );
-                                          setProductVariant(
-                                            clickedVariant?.basic_data
-                                              ?.id_product
-                                          );
-                                          addToCart(
-                                            clickedVariant?.basic_data
-                                              ?.id_product,
-                                            1,
-                                            false
-                                          );
-                                          toast.success(
-                                            `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
-                                            {
-                                              position: "top-center",
-                                              autoClose: 3000,
-                                              hideProgressBar: false,
-                                              closeOnClick: true,
-                                              pauseOnHover: true,
-                                              draggable: true,
-                                              progress: undefined,
+          {product?.variant_options?.length > 0 ? (
+            <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
+              <div className="flex flex-col items-center justify-center w-full">
+                <h1 className="text-[0.938rem] font-semibold text-center">
+                  Izaberi veličinu
+                </h1>
+                <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
+                  <>
+                    {product?.variant_options?.slice(0, 1).map((item2) => {
+                      return (
+                        <>
+                          {item2?.values.map((item3) => {
+                            return (
+                              <>
+                                <div
+                                  className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border"
+                                  onClick={async () => {
+                                    const productVariantGet = async () => {
+                                      const res = await get(
+                                        `/product-details/basic-data/${product?.basic_data?.id_product}`
+                                      );
+                                      const data = res?.payload?.data;
+                                      if (data?.variant_items) {
+                                        const clickedVariant =
+                                          data.variant_items.find(
+                                            (variantItem) => {
+                                              return variantItem.variant_key_array.some(
+                                                (variantKey) => {
+                                                  return (
+                                                    variantKey.value_key ===
+                                                    item3.key
+                                                  );
+                                                }
+                                              );
                                             }
                                           );
-                                        }
-                                      };
-                                      await productVariantGet();
-                                    }}
-                                  >
-                                    {item3?.name}
-                                  </div>
-                                </>
-                              );
-                            })}
-                          </>
-                        );
-                      })}
-                    </>
-                  </div>
+                                        setProductVariant(
+                                          clickedVariant?.basic_data?.id_product
+                                        );
+                                        addToCart(
+                                          clickedVariant?.basic_data
+                                            ?.id_product,
+                                          1,
+                                          false
+                                        );
+                                        toast.success(
+                                          `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
+                                          {
+                                            position: "top-center",
+                                            autoClose: 3000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                          }
+                                        );
+                                      }
+                                    };
+                                    await productVariantGet();
+                                  }}
+                                >
+                                  {item3?.name}
+                                </div>
+                              </>
+                            );
+                          })}
+                        </>
+                      );
+                    })}
+                  </>
                 </div>
               </div>
-            ) : null}
-            <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
-              <h1 className="text-[0.813rem] max-md:leading-4 clamp">
-                {product?.basic_data?.name}
-              </h1>
-              <div
-                onClick={() => {
-                  addToWishlist(product?.basic_data?.id_product);
-                  toast.success(
-                    `Proizvod ${product?.basic_data?.name} je dodat u listu želja!`,
-                    {
-                      position: "top-center",
-                      autoClose: 2000,
-                      hideProgressBar: false,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                      progress: undefined,
-                    }
-                  );
-                }}
-                className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites"
-              >
-                <Image
-                  src={Wishlist}
-                  alt="wishlist"
-                  width={15}
-                  height={15}
-                  className="favorite"
-                />
-              </div>
             </div>
-            <div className="mt-0  max-md:mt-2 flex max-md:items-start max-md:flex-col max-md:gap-1 items-center gap-[10px]">
-              <h1 className="bg-[#f8ce5d] max-md:text-[0.7rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
-                {currencyFormat(product?.price?.price?.original)}
-              </h1>
-              <span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">
-                {" "}
-                {currencyFormat(product?.price?.price?.original)}
-              </span>
+          ) : null}
+          <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
+            <Link
+              href={`/proizvod/${product?.slug}`}
+              className="text-[0.813rem] max-md:leading-4 clamp"
+            >
+              {product?.basic_data?.name}
+            </Link>
+            <div
+              onClick={() => {
+                addToWishlist(product?.basic_data?.id_product);
+                toast.success(
+                  `Proizvod ${product?.basic_data?.name} je dodat u listu želja!`,
+                  {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  }
+                );
+              }}
+              className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
+            >
+              <Image
+                src={Wishlist}
+                alt="wishlist"
+                width={15}
+                height={15}
+                className="favorite"
+              />
             </div>
           </div>
-        </Suspense>
+          <div className="mt-0  max-md:mt-2 flex max-md:items-start max-md:flex-col max-md:gap-1 items-center gap-[10px]">
+            <h1 className="bg-[#f8ce5d] max-md:text-[0.7rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
+              {currencyFormat(product?.price?.price?.original)}
+            </h1>
+            <span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">
+              {" "}
+              {currencyFormat(product?.price?.price?.original)}
+            </span>
+          </div>
+        </div>
       );
     });
     return (
