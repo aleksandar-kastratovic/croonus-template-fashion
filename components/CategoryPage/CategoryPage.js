@@ -20,14 +20,13 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   });
 
   const [sort, setSort] = useState({ field: "", direction: "" });
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(12);
+  const [page, setPage] = useState();
+  const [limit, setLimit] = useState(-1);
   const [availableFilters, setAvailableFilters] = useState(filter);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [changeFilters, setChangeFilters] = useState(false);
   const [tempSelectedFilters, setTempSelectedFilters] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const getProducts = async (limit, page, sort, selectedFilters) => {
       const getProductList = await list(
@@ -63,6 +62,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     }
     setChangeFilters(false);
   }, [changeFilters]);
+
   useEffect(() => {
     const updateProductsCountBasedOnTempSelectedFilters = async (
       tempSelectedFilters
@@ -71,6 +71,9 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         `/products/category/list/${singleCategory?.id}`,
         {
           filters: tempSelectedFilters,
+          limit: limit,
+          page: page,
+          sort: sort,
         }
       ).then((res) => {
         setProductData({
@@ -87,6 +90,29 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     };
     updateProductsCountBasedOnTempSelectedFilters(tempSelectedFilters);
   }, [tempSelectedFilters]);
+
+  const setNextPage = (currentPage) => {
+    setPage(currentPage + 1);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      if (windowPosition + windowHeight >= documentHeight - 80) {
+        setNextPage(page);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [page]);
+
   return (
     <>
       <div className="4xl:container mx-auto">
