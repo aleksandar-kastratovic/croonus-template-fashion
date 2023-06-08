@@ -63,7 +63,6 @@ export async function generateStaticParams() {
     });
   };
   recursiveChildren(categories, paths);
-
   return paths?.map((category) => ({
     params: {
       path: category?.toString(),
