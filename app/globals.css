@@ -1,317 +1,350 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Ubuntu:wght@300;400;500;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @layer base {
-  html,
-  body {
-    font-family: "Open Sans", sans-serif;
-  }
+    html,
+    body {
+        font-family: "Open Sans", sans-serif;
+    }
 }
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
 
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .translate3d {
-  transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
+
 .translate3dleft {
-  transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
 }
+
 .translate3dright {
-  transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
 }
 
 .line {
-  display: absolute;
-  content: " ";
-  min-width: 32px;
-  width: 100%;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.2);
-  opacity: 100;
-  transition: opacity 0.3s linear;
+    position: absolute;
+    content: " ";
+    min-width: 32px;
+    width: 50%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 100;
+    transition: opacity 0.3s linear;
+    right: -15px;
 }
+
 .bganimate {
-  position: relative;
-  overflow: hidden;
-  background-color: rgb(107 114 128);
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(107 114 128);
 }
 
 .bganimate::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0%;
-  background-color: white;
-  animation: progress-bar 5s linear forwards;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: white;
+    animation: progress-bar 5s linear forwards;
 }
 
 @keyframes progress-bar {
-  to {
-    width: 100%;
-  }
+    to {
+        width: 100%;
+    }
 }
+
 .wiggle:hover {
-  animation: wiggle 0.5s ease-in-out;
+    animation: wiggle 0.5s ease-in-out;
 }
 
 @keyframes wiggle {
-  0% {
-    transform: rotate(0);
-  }
-  25% {
-    transform: rotate(-20deg);
-  }
-  50% {
-    transform: rotate(0);
-  }
-  75% {
-    transform: rotate(20deg);
-  }
-  100% {
-    transform: rotate(0);
-  }
+    0% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-20deg);
+    }
+    50% {
+        transform: rotate(0);
+    }
+    75% {
+        transform: rotate(20deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
 }
+
 .swiper {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
+
 @media (max-width: 768px) {
-  .swiper-button-prev {
-    background-color: white !important;
-    border-radius: 50% !important;
-    padding: 2.2rem !important;
-    top: 33% !important;
-    color: rgba(0, 0, 0, 0.716) !important;
-    width: 56px !important;
-    transform: scale(0.5) !important;
-    box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
-    left: -6px !important;
-    z-index: 500 !important;
-    fill: black !important;
-    position: absolute !important;
-    opacity: 0.8;
-  }
-  .swiper-button-next {
-    background-color: white !important;
-    opacity: 0.8;
-    border-radius: 50% !important;
-    padding: 2.2rem !important;
-    color: rgba(0, 0, 0, 0.716) !important;
-    transform: scale(0.5) !important;
-    right: -6px !important;
-    top: 33% !important;
+    .swiper-button-prev {
+        background-color: white !important;
+        border-radius: 50% !important;
+        padding: 2.2rem !important;
+        top: 33% !important;
+        color: rgba(0, 0, 0, 0.716) !important;
+        width: 56px !important;
+        transform: scale(0.5) !important;
+        box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+        left: -6px !important;
+        z-index: 500 !important;
+        fill: black !important;
+        position: absolute !important;
+        opacity: 0.8;
+    }
 
-    box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
-    fill: black !important;
-    z-index: 500 !important;
-  }
+    .swiper-button-next {
+        background-color: white !important;
+        opacity: 0.8;
+        border-radius: 50% !important;
+        padding: 2.2rem !important;
+        color: rgba(0, 0, 0, 0.716) !important;
+        transform: scale(0.5) !important;
+        right: -6px !important;
+        top: 33% !important;
+
+        box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+        fill: black !important;
+        z-index: 500 !important;
+    }
 }
+
 @media (min-width: 768px) {
-  .swiper-button-prev {
-    background-color: white !important;
-    border-radius: 50% !important;
-    padding: 2.2rem !important;
-    top: 40% !important;
-    color: rgba(0, 0, 0, 0.716) !important;
-    width: 56px !important;
-    transform: scale(0.5) !important;
-    box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
-    left: -6px !important;
-    z-index: 500 !important;
-    fill: black !important;
-    position: absolute !important;
-    opacity: 0.8;
-  }
-  .swiper-button-next {
-    background-color: white !important;
-    opacity: 0.8;
-    border-radius: 50% !important;
-    padding: 2.2rem !important;
-    color: rgba(0, 0, 0, 0.716) !important;
-    transform: scale(0.5) !important;
-    right: -6px !important;
-    top: 40% !important;
+    .swiper-button-prev {
+        background-color: white !important;
+        border-radius: 50% !important;
+        padding: 2.2rem !important;
+        top: 40% !important;
+        color: rgba(0, 0, 0, 0.716) !important;
+        width: 56px !important;
+        transform: scale(0.5) !important;
+        box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+        left: -6px !important;
+        z-index: 500 !important;
+        fill: black !important;
+        position: absolute !important;
+        opacity: 0.8;
+    }
 
-    box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
-    fill: black !important;
-    z-index: 500 !important;
-  }
+    .swiper-button-next {
+        background-color: white !important;
+        opacity: 0.8;
+        border-radius: 50% !important;
+        padding: 2.2rem !important;
+        color: rgba(0, 0, 0, 0.716) !important;
+        transform: scale(0.5) !important;
+        right: -6px !important;
+        top: 40% !important;
+
+        box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+        fill: black !important;
+        z-index: 500 !important;
+    }
 }
+
 .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-horizontal.swiper-pagination-bullets
-  .swiper-pagination-bullet {
-  margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 4px);
-  background: #171717 !important;
+.swiper-pagination-bullet {
+    margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 4px);
+    background: #171717 !important;
 }
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  color: black !important;
+    color: black !important;
 }
+
 .swiper-pagination {
-  width: 16px !important;
+    width: 16px !important;
 }
+
 .swiper-pagination-vertical.swiper-pagination-bullets,
 .swiper-vertical > .swiper-pagination-bullets {
-  right: var(--swiper-pagination-right, 8px);
-  left: var(--swiper-pagination-left, auto);
-  top: 50%;
-  transform: translate3d(0px, -50%, 0);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.swiper-pagination-bullet-active {
-  height: 20px;
-}
-.swiper-pagination-bullet-active {
-  height: 20px !important;
-  border-radius: 5px !important;
-}
-@media (min-width: 768px) {
-  .chevrons {
-    display: none;
-  }
-  .item:hover > .chevrons {
+    right: var(--swiper-pagination-right, 8px);
+    left: var(--swiper-pagination-left, auto);
+    top: 50%;
+    transform: translate3d(0px, -50%, 0);
     display: flex;
-  }
-  .chevimg {
-    width: 20px !important;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.swiper-pagination-bullet-active {
+    height: 20px;
+}
+
+.swiper-pagination-bullet-active {
     height: 20px !important;
-  }
+    border-radius: 5px !important;
 }
+
+@media (min-width: 768px) {
+    .chevrons {
+        display: none;
+    }
+
+    .item:hover > .chevrons {
+        display: flex;
+    }
+
+    .chevimg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
 @media (max-width: 768px) {
-  .chevrons {
-    display: none;
-  }
-  .item:hover > .chevrons {
-    display: none;
-  }
+    .chevrons {
+        display: none;
+    }
+
+    .item:hover > .chevrons {
+        display: none;
+    }
 }
+
 .mySwiper .swiper-slide {
-  opacity: 0.4;
+    opacity: 0.4;
 }
+
 .mySwiper .swiper-slide-thumb-active {
-  opacity: 1;
+    opacity: 1;
 }
+
 .favorites:hover > .favorite {
-  filter: invert(1);
+    filter: invert(1);
 }
+
 .slider .rs-slider-bar {
-  background-color: black;
-  border-radius: 3px;
-  cursor: pointer;
-  height: 4px;
+    background-color: black;
+    border-radius: 3px;
+    cursor: pointer;
+    height: 4px;
 }
 
 .slider .rs-slider-progress-bar {
-  left: 0%;
-  width: 100%;
-  background-color: #171717;
-  border-radius: 3px 0 0 3px;
-  height: 5px;
-  position: absolute;
+    left: 0%;
+    width: 100%;
+    background-color: #171717;
+    border-radius: 3px 0 0 3px;
+    height: 5px;
+    position: absolute;
 }
 
 .rs-slider-handle {
-  left: 0%;
-  outline: none;
-  position: absolute;
-  top: 0%;
+    left: 0%;
+    outline: none;
+    position: absolute;
+    top: 0%;
 }
+
 .rs-slider-handle:before {
-  background-color: #171717;
-  border: 1px solid #171717;
-  border-radius: 10px;
-  content: "";
-  top: -12px;
-  cursor: pointer;
-  height: 32px;
-  margin-left: -6px;
-  position: absolute;
-  transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out,
+    background-color: #171717;
+    border: 1px solid #171717;
+    border-radius: 10px;
+    content: "";
+    top: -12px;
+    cursor: pointer;
+    height: 32px;
+    margin-left: -6px;
+    position: absolute;
+    transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out,
     transform 0.3s ease-in-out;
-  width: 32px;
+    width: 32px;
 }
+
 .rs-slider-progress-bar {
-  background-color: #3498ff;
-  border-radius: 3px 0 0 3px;
-  height: 3px;
-  position: absolute;
+    background-color: #3498ff;
+    border-radius: 3px 0 0 3px;
+    height: 3px;
+    position: absolute;
 }
+
 .rs-tooltip-arrow {
-  display: none;
+    display: none;
 }
 
 .separate > div:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: 16px;
-  background-color: #e5e7eb;
-  margin: 3px 23px;
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 16px;
+    background-color: #e5e7eb;
+    margin: 3px 23px;
 }
+
 .mySwiper .swiper-slide-thumb-active {
-  opacity: 100% !important;
+    opacity: 100% !important;
 }
 
 .placeholder input::placeholder {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 .placeholder textarea::placeholder {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (max-width: 768px) {
-  .clamp {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    min-height: 24px;
-  }
+    .clamp {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        min-height: 24px;
+    }
 }
+
 @media (min-width: 768px) {
-  .clamp {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    min-height: 24px;
-  }
+    .clamp {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        min-height: 24px;
+    }
 }

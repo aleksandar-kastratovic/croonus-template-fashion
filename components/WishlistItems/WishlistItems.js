@@ -61,11 +61,11 @@ const WishlistItems = ({ items, product, border }) => {
             </Link>
           )}
 
-          <div className="absolute bottom-2 left-4">
-            <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
-              -35%
-            </span>
-          </div>
+          {/*<div className="absolute bottom-2 left-4">*/}
+          {/*  <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">*/}
+          {/*    -35%*/}
+          {/*  </span>*/}
+          {/*</div>*/}
         </div>
         {/* <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
             <div>
@@ -156,13 +156,10 @@ const WishlistItems = ({ items, product, border }) => {
           </div>
         </div>
         <div className="mt-0 flex items-center gap-[10px]">
-          <h1 className="bg-[#f8ce5d] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
-            {currencyFormat(product?.price?.price?.original)}
+          <h1 className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max">
+            {currencyFormat(product?.price?.min?.price?.original)} -{" "}
+            {currencyFormat(product?.price?.max?.price?.original)}
           </h1>
-          <span className="text-[0.813rem] font-semibold text-[#818181]">
-            {" "}
-            {currencyFormat(product?.price?.price?.original)}
-          </span>
         </div>
       </div>
     </>
