@@ -32,7 +32,43 @@ export async function generateMetadata({ params: { path } }) {
     description:
       product?.data?.item?.basic_data?.short_description ??
       "Pazari online Shop",
-    ogImage: productImage[0]?.image,
+    openGraph: {
+      title: product?.data?.item?.basic_data?.name,
+      description:
+        product?.data?.item?.basic_data?.short_description ??
+        "Pazari online Shop",
+      images: [
+        {
+          url: productImage[0]?.image,
+          width: 800,
+          height: 600,
+          alt: product?.data?.item?.basic_data?.name,
+        },
+      ],
+      site_name: "Pazari.rs",
+    },
+    twitter: {
+      handle: "@pazarirs",
+      site: "@pazarirs",
+      cardType: "summary_large_image",
+    },
+    additionalMetaTags: [
+      {
+        name: "keywords",
+        content: [
+          "pazari",
+          "online",
+          "shop",
+          "pazari.rs",
+          "farmerke",
+          "trenerke",
+          "dukserice",
+          "pazari obuca",
+          "obuca",
+          "pazari online",
+        ].join(", "),
+      },
+    ],
   };
 }
 
