@@ -14,6 +14,7 @@ import Calendar from "../../assets/Icons/calendar.png";
 import FreeDelivery from "../../assets/Icons/package.png";
 import Cancel from "../../assets/Icons/cancel.png";
 import { notFound } from "next/navigation";
+
 const ProductInfo = ({ product, desc }) => {
   const [productVariant, setProductVariant] = useState(null);
   const router = useRouter();
@@ -27,10 +28,7 @@ const ProductInfo = ({ product, desc }) => {
   const [newURL, setNewURL] = useState(null);
   useEffect(() => {
     if (newURL) {
-      router.replace(`/proizvod/${newURL}`, undefined, {
-        shallow: true,
-        scroll: false,
-      });
+      window?.history?.replaceState(null, null, newURL);
     }
   }, [newURL]);
 
@@ -129,9 +127,19 @@ const ProductInfo = ({ product, desc }) => {
                   : product?.data?.item?.basic_data?.sku}
               </h2>
               <h1 className="mt-[2.125rem] text-[1.313rem] font-bold">
-                {productVariant
-                  ? currencyFormat(productVariant?.price?.price?.original)
-                  : currencyFormat(product?.data?.item?.price?.price?.original)}
+                {productVariant ? (
+                  currencyFormat(productVariant?.price?.price?.original)
+                ) : (
+                  <>
+                    {currencyFormat(
+                      product?.data?.item?.price?.min?.price?.original
+                    )}{" "}
+                    -{" "}
+                    {currencyFormat(
+                      product?.data?.item?.price?.max?.price?.original
+                    )}
+                  </>
+                )}
               </h1>
               <p
                 className="mt-[2.438rem] max-md:mt-[1.5rem] max-w-[90%] text-sm font-regular"

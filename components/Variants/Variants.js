@@ -2,11 +2,13 @@
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+
 export default function Variants({
   product,
   updateProductVariant,
   updateProductPrice,
   productSlug,
+  slug,
   handleURLChange,
   firstVariantOption,
 }) {
@@ -38,6 +40,19 @@ export default function Variants({
 
     handleVariantOptionChange();
   }, [selected]);
+
+  useEffect(() => {
+    const product = variant_items.find((item) => item.slug === productSlug);
+
+    if (product) {
+      updateProductVariant(product);
+
+      onChangeHandler(
+        product?.variant_key_array[0]?.attribute_key,
+        product?.variant_key_array[0]?.value_key
+      );
+    }
+  }, [productSlug]);
 
   // setuje prve opcije variant_options-a ukoliko je firstVariantOption true
   const handleVariantFirstOption = () => {

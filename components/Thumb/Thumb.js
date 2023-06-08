@@ -27,28 +27,28 @@ const Thumb = ({ data, slider, loading }) => {
         <SwiperSlide key={product?.basic_data?.id} className="">
           <div className="w-full item">
             {" "}
-            <div className="max-md:h-[250px] md:h-[450px] lg:h-[575px] item relative">
+            <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
               {product?.image[0] && (
                 <Link
                   href={`/proizvod/${product?.slug}`}
                   scroll={true}
-                  className="relative z-[100]"
+                  className=" z-[100]"
                 >
                   <Image
                     src={convertHttpToHttps(product?.image[imageIndex])}
                     alt={product?.basic_data?.name}
-                    width={22000}
-                    height={22000}
+                    fill
+                    priority
                     className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
                   />{" "}
                 </Link>
               )}
 
-              <div className="absolute bottom-2 left-4">
-                <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
-                  -35%
-                </span>
-              </div>
+              {/*<div className="absolute bottom-2 left-4">*/}
+              {/*  <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">*/}
+              {/*    -35%*/}
+              {/*  </span>*/}
+              {/*</div>*/}
               <div className="absolute chevrons z-[100] flex flex-col items-center justify-center bg-transparent h-full right-2 top-0 ">
                 <Image
                   className="w-[20px] chevimg h-[20px] cursor-pointer rotate-0"
@@ -196,13 +196,10 @@ const Thumb = ({ data, slider, loading }) => {
               </div>
             </div>
             <div className="mt-0 max-md:text-left max-md:items-start max-md:mt-1.5 flex max-md:flex-col items-center max-md:gap-1 gap-[10px]">
-              <h1 className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
-                {currencyFormat(product?.price?.price?.original)}
+              <h1 className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max">
+                {currencyFormat(product?.price?.min?.price?.original)} -{" "}
+                {currencyFormat(product?.price?.max?.price?.original)}
               </h1>
-              <span className="text-[0.813rem] max-md:text-[0.75rem] font-semibold text-[#818181]">
-                {" "}
-                {currencyFormat(product?.price?.price?.original)}
-              </span>
             </div>
           </div>
         </SwiperSlide>
@@ -264,11 +261,11 @@ const Thumb = ({ data, slider, loading }) => {
               )
             )}
 
-            <div className="absolute bottom-2 left-4">
-              <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">
-                -35%
-              </span>
-            </div>
+            {/*<div className="absolute bottom-2 left-4">*/}
+            {/*  <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">*/}
+            {/*    -35%*/}
+            {/*  </span>*/}
+            {/*</div>*/}
           </div>
           {/* <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
             <div>
@@ -414,13 +411,14 @@ const Thumb = ({ data, slider, loading }) => {
             </div>
           </div>
           <div className="mt-0  max-md:mt-2 flex max-md:items-start max-md:flex-col max-md:gap-1 items-center gap-[10px]">
-            <h1 className="bg-[#f8ce5d] max-md:text-[0.7rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-[6rem]">
-              {currencyFormat(product?.price?.price?.original)}
+            <h1 className="bg-[#f8ce5d] max-md:text-[0.7rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max">
+              {currencyFormat(product?.price?.min?.price?.original)} -{" "}
+              {currencyFormat(product?.price?.max?.price?.original)}
             </h1>
-            <span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">
-              {" "}
-              {currencyFormat(product?.price?.price?.original)}
-            </span>
+            {/*<span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">*/}
+            {/*  {" "}*/}
+            {/*  {currencyFormat(product?.price?.price?.original)}*/}
+            {/*</span>*/}
           </div>
         </div>
       );
