@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import Image from "next/image";
 import FilterIcon from "../../assets/Icons/filter.png";
 import Thumb from "../Thumb/Thumb";
@@ -7,48 +7,39 @@ import { list, post } from "@/app/api/api";
 import Filters from "../Filters/Filters";
 
 const CategoryPage = ({ filter, singleCategory, products }) => {
-  useEffect(() => {
-    if (window.scrollY > 0) {
-      window.scrollTo(0, 0);
-    }
-  }, []);
-
-  const [openFilter, setOpenFilter] = useState(false);
   const [productData, setProductData] = useState({
     products: [],
     pagination: {},
   });
-
+  const [openFilter, setOpenFilter] = useState(false);
   const [sort, setSort] = useState({ field: "", direction: "" });
-  const [page, setPage] = useState();
-  const [limit, setLimit] = useState(-1);
+  const [page, setPage] = useState(1); // Start from page 1
+  const [limit, setLimit] = useState(12);
   const [availableFilters, setAvailableFilters] = useState(filter);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [changeFilters, setChangeFilters] = useState(false);
   const [tempSelectedFilters, setTempSelectedFilters] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const getProducts = async (limit, page, sort, selectedFilters) => {
-      const getProductList = await list(
-        `/products/category/list/${singleCategory?.id}`,
-        {
-          limit: limit,
-          sort: sort,
-          page: page,
-          filters: selectedFilters,
-        }
-      ).then((res) => {
-        setProductData({
-          products: res?.payload?.items,
-          pagination: res?.payload?.pagination,
-        });
-
-        setLoading(false);
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await list(`/products/category/list/${singleCategory?.id}`, {
+        limit,
+        sort,
+        page,
+        filters: selectedFilters,
       });
-
-      return getProductList;
+      const newProducts = res?.payload?.items || [];
+      const newPagination = res?.payload?.pagination || {};
+      setProductData((prevData) => ({
+        products: [...prevData.products, ...newProducts], // Append new products to existing ones
+        pagination: newPagination,
+      }));
+      setLoading(false);
     };
-    getProducts(limit, page, sort, selectedFilters);
+
+    fetchData();
   }, [limit, sort, page, selectedFilters]);
 
   useEffect(() => {
@@ -67,51 +58,46 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     const updateProductsCountBasedOnTempSelectedFilters = async (
       tempSelectedFilters
     ) => {
-      const getProductList = await list(
-        `/products/category/list/${singleCategory?.id}`,
-        {
-          filters: tempSelectedFilters,
-          limit: limit,
-          page: page,
-          sort: sort,
-        }
-      ).then((res) => {
-        setProductData({
-          products:
-            productData?.products?.length === 0 ||
-            tempSelectedFilters?.length === 0
-              ? res?.payload?.items
-              : productData?.products,
-          pagination: res?.payload?.pagination,
-        });
-
-        setLoading(false);
+      const res = await list(`/products/category/list/${singleCategory?.id}`, {
+        filters: tempSelectedFilters,
+        limit,
+        page,
+        sort,
       });
+
+      setProductData((prevData) => ({
+        products:
+          prevData.products.length === 0 || tempSelectedFilters.length === 0
+            ? res?.payload?.items
+            : prevData.products,
+        pagination: res?.payload?.pagination,
+      }));
+
+      setLoading(false);
     };
+
     updateProductsCountBasedOnTempSelectedFilters(tempSelectedFilters);
   }, [tempSelectedFilters]);
 
-  const setNextPage = (currentPage) => {
-    setPage(currentPage + 1);
-  };
-
   useEffect(() => {
     const handleScroll = () => {
-      const windowPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
+      const buffer = 200; // Adjust the buffer value according to your needs
 
-      if (windowPosition + windowHeight >= documentHeight - 80) {
-        setNextPage(page);
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - buffer &&
+        !loading &&
+        productData.pagination.total_pages > page
+      ) {
+        setPage((prevPage) => prevPage + 1);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [page]);
+  }, [loading, page, productData.pagination.total_pages]);
 
   return (
     <>
