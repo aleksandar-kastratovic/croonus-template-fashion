@@ -26,11 +26,13 @@ const getNewProducts = async () => {
 
 export async function generateMetadata({ params: { path } }) {
   const product = await getProduct(path[path?.length - 1]);
+  const productImage = await getProductGallery(path[path?.length - 1]);
   return {
     title: product?.data?.item?.basic_data?.name,
     description:
       product?.data?.item?.basic_data?.short_description ??
       "Pazari online Shop",
+    ogImage: productImage[0]?.image,
   };
 }
 
