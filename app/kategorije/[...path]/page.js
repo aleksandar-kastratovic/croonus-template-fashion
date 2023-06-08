@@ -41,7 +41,34 @@ const Category = async ({ params: { path } }) => {
   const filters = await fetchFilters(path[path?.length - 1]);
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
 
-  return <CategoryPage filter={filters} singleCategory={singleCategory} />;
+  return (
+    <Suspense fallback={<>loading</>}>
+      {" "}
+      <CategoryPage filter={filters} singleCategory={singleCategory} />
+    </Suspense>
+  );
 };
 
 export default Category;
+
+export async function generateStaticParams() {
+  const categories = await get("/categories/product/tree").then(
+    (res) => res?.payload
+  );
+  let paths = [];
+  const recursiveChildren = (categories, paths) => {
+    categories?.forEach((category) => {
+      paths?.push(category?.slug_path.toString());
+      recursiveChildren(category?.children, paths);
+    });
+  };
+  recursiveChildren(categories, paths);
+
+  return paths?.map((category) => ({
+    params: {
+      path: category?.toString(),
+    },
+  }));
+}
+
+export const revalidate = 30;
