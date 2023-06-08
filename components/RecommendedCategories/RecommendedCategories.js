@@ -23,6 +23,7 @@ const RecommendedCategories = ({ categories }) => {
                 alt={category.slug}
                 width={2400}
                 height={2400}
+                priority={true}
                 className="object-cover h-full bg-fixed"
               />
               <Link href={`/kategorije/${category?.slug_path}`}>
