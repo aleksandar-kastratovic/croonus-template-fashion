@@ -15,6 +15,11 @@ import { currencyFormat } from "@/helpers/functions";
 import { get } from "@/app/api/api";
 
 const Thumb = ({ data, slider, loading }) => {
+  const [swiper, setSwiper] = useState(null);
+  const onSwiperRightClick = () => {
+    swiper.slideNext();
+  };
+
   if (slider) {
     const addToWishlist = useGlobalAddToWishList();
     const addToCart = useGlobalAddToCart();
@@ -88,12 +93,12 @@ const Thumb = ({ data, slider, loading }) => {
                   <h1 className="text-[0.938rem] font-semibold text-center">
                     Izaberi veličinu
                   </h1>
-                  <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
+                  <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
                     <>
                       {product?.variant_options?.slice(0, 1).map((item2) => {
                         return (
                           <>
-                            {item2?.values.map((item3) => {
+                            {item2?.values?.map((item3) => {
                               return (
                                 <>
                                   <div
@@ -197,8 +202,15 @@ const Thumb = ({ data, slider, loading }) => {
             </div>
             <div className="mt-0 max-md:text-left max-md:items-start max-md:mt-1.5 flex max-md:flex-col items-center max-md:gap-1 gap-[10px]">
               <h1 className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max">
-                {currencyFormat(product?.price?.min?.price?.original)} -{" "}
-                {currencyFormat(product?.price?.max?.price?.original)}
+                {product?.price?.min?.price?.original ===
+                product?.price?.max?.price?.original ? (
+                  <>{currencyFormat(product?.price?.max?.price?.original)}</>
+                ) : (
+                  <>
+                    {currencyFormat(product?.price?.min?.price?.original)} -{" "}
+                    {currencyFormat(product?.price?.max?.price?.original)}
+                  </>
+                )}
               </h1>
             </div>
           </div>
@@ -240,6 +252,7 @@ const Thumb = ({ data, slider, loading }) => {
     const [productVariant, setProductVariant] = useState(null);
     const addToWishlist = useGlobalAddToWishList();
     const addToCart = useGlobalAddToCart();
+
     const products = data?.map((product, index) => {
       return (
         <div className="col-span-1 relative item">
@@ -302,76 +315,94 @@ const Thumb = ({ data, slider, loading }) => {
             </div>
           </div> */}
           {product?.variant_options?.length > 0 ? (
-            <div className="absolute rounded-lg py-5 left-3 bottom-[4rem] w-[95%] mx-auto bg-white chevrons">
+            <div className="absolute sm:rounded-lg py-5 left-3 max-sm:bottom-[3.9rem] sm:bottom-[4rem] max-sm:w-full max-sm:left-0 w-[95%] mx-auto bg-white chevrons">
               <div className="flex flex-col items-center justify-center w-full">
                 <h1 className="text-[0.938rem] font-semibold text-center">
                   Izaberi veličinu
                 </h1>
-                <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">
-                  <>
-                    {product?.variant_options?.slice(0, 1).map((item2) => {
+                <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
+                  <Swiper
+                    slidesPerView={3}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 3,
+                      },
+                      1024: {
+                        slidesPerView: 3,
+                      },
+                      1300: {
+                        slidesPerView: 4,
+                      },
+                      1680: {
+                        slidesPerView: 5,
+                      },
+                    }}
+                    className="variantsSwiper"
+                    loop={true}
+                    modules={[Navigation]}
+                    rewind={true}
+                    navigation={true}
+                    style={{ width: "100%", display: "block" }}
+                    onSwiper={(swiper) => {
+                      setSwiper(swiper);
+                      swiper.slideNext();
+                    }}
+                  >
+                    {product?.variant_options[0]?.values?.map((item3) => {
                       return (
-                        <>
-                          {item2?.values.map((item3) => {
-                            return (
-                              <>
-                                <div
-                                  className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border"
-                                  onClick={async () => {
-                                    const productVariantGet = async () => {
-                                      const res = await get(
-                                        `/product-details/basic-data/${product?.basic_data?.id_product}`
-                                      );
-                                      const data = res?.payload?.data;
-                                      if (data?.variant_items) {
-                                        const clickedVariant =
-                                          data.variant_items.find(
-                                            (variantItem) => {
-                                              return variantItem.variant_key_array.some(
-                                                (variantKey) => {
-                                                  return (
-                                                    variantKey.value_key ===
-                                                    item3.key
-                                                  );
-                                                }
-                                              );
-                                            }
+                        <SwiperSlide key={Math.random()}>
+                          <div
+                            className="max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border"
+                            onClick={async () => {
+                              const productVariantGet = async () => {
+                                const res = await get(
+                                  `/product-details/basic-data/${product?.basic_data?.id_product}`
+                                );
+                                const data = res?.payload?.data;
+                                if (data?.variant_items) {
+                                  const clickedVariant =
+                                    data.variant_items.find((variantItem) => {
+                                      return variantItem.variant_key_array.some(
+                                        (variantKey) => {
+                                          return (
+                                            variantKey.value_key === item3.key
                                           );
-                                        setProductVariant(
-                                          clickedVariant?.basic_data?.id_product
-                                        );
-                                        addToCart(
-                                          clickedVariant?.basic_data
-                                            ?.id_product,
-                                          1,
-                                          false
-                                        );
-                                        toast.success(
-                                          `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
-                                          {
-                                            position: "top-center",
-                                            autoClose: 3000,
-                                            hideProgressBar: false,
-                                            closeOnClick: true,
-                                            pauseOnHover: true,
-                                            draggable: true,
-                                            progress: undefined,
-                                          }
-                                        );
-                                      }
-                                    };
-                                    await productVariantGet();
-                                  }}
-                                >
-                                  {item3?.name}
-                                </div>
-                              </>
-                            );
-                          })}
-                        </>
+                                        }
+                                      );
+                                    });
+                                  setProductVariant(
+                                    clickedVariant?.basic_data?.id_product
+                                  );
+                                  addToCart(
+                                    clickedVariant?.basic_data?.id_product,
+                                    1,
+                                    false
+                                  );
+                                  toast.success(
+                                    `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
+                                    {
+                                      position: "top-center",
+                                      autoClose: 3000,
+                                      hideProgressBar: false,
+                                      closeOnClick: true,
+                                      pauseOnHover: true,
+                                      draggable: true,
+                                      progress: undefined,
+                                    }
+                                  );
+                                }
+                              };
+                              await productVariantGet();
+                            }}
+                          >
+                            {item3?.name}{" "}
+                          </div>
+                        </SwiperSlide>
                       );
                     })}
-                  </>
+                  </Swiper>
+
+                  <p onClick={() => onSwiperRightClick()}>&nbsp;</p>
                 </div>
               </div>
             </div>
@@ -411,9 +442,19 @@ const Thumb = ({ data, slider, loading }) => {
             </div>
           </div>
           <div className="mt-0  max-md:mt-2 flex max-md:items-start max-md:flex-col max-md:gap-1 items-center gap-[10px]">
-            <h1 className="bg-[#f8ce5d] max-md:text-[0.7rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max">
-              {currencyFormat(product?.price?.min?.price?.original)} -{" "}
-              {currencyFormat(product?.price?.max?.price?.original)}
+            <h1
+              className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max"
+              onClick={() => onSwiperRightClick()}
+            >
+              {product?.price?.min?.price?.original ===
+              product?.price?.max?.price?.original ? (
+                <>{currencyFormat(product?.price?.max?.price?.original)}</>
+              ) : (
+                <>
+                  {currencyFormat(product?.price?.min?.price?.original)} -{" "}
+                  {currencyFormat(product?.price?.max?.price?.original)}
+                </>
+              )}
             </h1>
             {/*<span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">*/}
             {/*  {" "}*/}

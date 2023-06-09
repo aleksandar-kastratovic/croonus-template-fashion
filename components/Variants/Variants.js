@@ -306,7 +306,7 @@ export default function Variants({
               key={item.id}
               id={item.id}
               name={item.attribute.key}
-              className="max-md:px-0 flex flex-row gap-[1.25rem]"
+              className="max-md:px-0 flex flex-row gap-[1.25rem] flex-wrap"
               onChange={(e) => {
                 onChangeHandler(item.attribute.key, e.target.value);
                 handleVariantOptionChange();

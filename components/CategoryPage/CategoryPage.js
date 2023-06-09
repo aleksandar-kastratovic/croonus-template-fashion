@@ -81,7 +81,8 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const buffer = 200; // Adjust the buffer value according to your needs
+      const bufferPercentage = 1; // Adjust the buffer percentage according to your needs
+      const buffer = Math.floor(window.innerHeight * bufferPercentage);
 
       if (
         window.innerHeight + window.scrollY >=
@@ -97,8 +98,29 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [loading, page, productData.pagination.total_pages]);
+  }, [loading, page, productData?.pagination?.total_pages]);
 
+  // Simulated API request to fetch new products
+  useEffect(() => {
+    const fetchNewProducts = async () => {
+      setLoading(true);
+      const res = await list(`/products/category/list/${singleCategory?.id}`, {
+        limit,
+        sort,
+        page,
+        filters: selectedFilters,
+      });
+      const newProducts = res?.payload?.items || [];
+      const newPagination = res?.payload?.pagination || {};
+      setProductData((prevData) => ({
+        products: [...prevData.products, ...newProducts], // Append new products to existing ones
+        pagination: newPagination,
+      }));
+      setLoading(false);
+    };
+
+    fetchNewProducts();
+  }, [page]);
   return (
     <>
       <div className="4xl:container mx-auto">
