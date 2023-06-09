@@ -182,12 +182,7 @@ const NavigationDesktop = () => {
             //   }
             // }}
           >
-            <Link
-              href="/"
-              onMouseEnter={() => {
-                setOpen(true);
-              }}
-            >
+            <Link href="/">
               {open || background === "white" ? (
                 <Image src={LogoDark} width={110} height={110} alt="" />
               ) : (
@@ -203,6 +198,9 @@ const NavigationDesktop = () => {
 
                 return (
                   <div
+                    onMouseEnter={() => {
+                      setOpen(true);
+                    }}
                     key={category?.id}
                     className={`uppercase ${
                       (isActiveCategory && !open && background === "transparent"
