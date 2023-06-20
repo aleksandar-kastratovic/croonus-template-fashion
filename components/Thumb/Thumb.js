@@ -466,21 +466,17 @@ const Thumb = ({ data, slider }) => {
       return (
         <div className="col-span-1 relative item">
           <div className="max-md:h-[240px] md:h-[450px] lg:h-[500px] item relative">
-            {loading ? (
-              <div className="h-full w-full bg-[#eeeee0] object-cover animate-pulse"></div>
-            ) : (
-              product?.image[0] && (
-                <Link href={`/proizvod/${product?.slug}`} scroll={true}>
-                  <Image
-                    src={convertHttpToHttps(product?.image[0])}
-                    alt={product?.basic_data?.name}
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority={true}
-                    className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                  />
-                </Link>
-              )
+            {product?.image[0] && (
+              <Link href={`/proizvod/${product?.slug}`} scroll={true}>
+                <Image
+                  src={convertHttpToHttps(product?.image[0])}
+                  alt={product?.basic_data?.name}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  priority={true}
+                  className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                />
+              </Link>
             )}
 
             {/*<div className="absolute bottom-2 left-4">*/}
