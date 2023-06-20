@@ -154,6 +154,22 @@ const NavigationDesktop = () => {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    const handleMouseOutsideOfBrowserViewport = (event) => {
+      if (event.clientY <= 0) {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseOutsideOfBrowserViewport);
+    return () => {
+      window.removeEventListener(
+        "mousemove",
+        handleMouseOutsideOfBrowserViewport
+      );
+    };
+  }, []);
+
   return (
     <>
       <div
