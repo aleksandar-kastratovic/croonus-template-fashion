@@ -94,8 +94,8 @@ const Filters = ({
                 <div
                   className={
                     isOpen
-                      ? `mt-0  py-[1rem] transition-all duration-[750ms]`
-                      : `-mt-52 py-[1rem]  transition-all duration-[750ms] `
+                      ? `mt-0 translate-y-0 block h-auto py-[1rem] transition-all duration-[750ms]`
+                      : `-translate-y-full hidden py-[1rem] h-min transition-all duration-[750ms] `
                   }
                 >
                   <Filter
