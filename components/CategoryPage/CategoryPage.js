@@ -113,7 +113,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       const newProducts = res?.payload?.items || [];
       const newPagination = res?.payload?.pagination || {};
       setProductData((prevData) => ({
-        products: [...prevData.products, ...newProducts], // Append new products to existing ones
+        products: [...prevData?.products, ...newProducts], // Append new products to existing ones
         pagination: newPagination,
       }));
       setLoading(false);
