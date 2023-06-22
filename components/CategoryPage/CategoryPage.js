@@ -22,24 +22,24 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (limit, sort, page, filters) => {
       setLoading(true);
       const res = await list(`/products/category/list/${singleCategory?.id}`, {
-        limit,
-        sort,
-        page,
+        limit: limit,
+        sort: sort,
+        page: page,
         filters: selectedFilters,
       });
       const newProducts = res?.payload?.items || [];
       const newPagination = res?.payload?.pagination || {};
       setProductData((prevData) => ({
-        products: [...prevData.products, ...newProducts], // Append new products to existing ones
+        products: [...prevData.products, ...newProducts],
         pagination: newPagination,
       }));
       setLoading(false);
     };
 
-    fetchData();
+    fetchData(limit, sort, page, selectedFilters);
   }, [limit, sort, page, selectedFilters]);
 
   useEffect(() => {
@@ -79,9 +79,10 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     updateProductsCountBasedOnTempSelectedFilters(tempSelectedFilters);
   }, [tempSelectedFilters]);
 
+  //infinite scroll
   useEffect(() => {
     const handleScroll = () => {
-      const bufferPercentage = 1; // Adjust the buffer percentage according to your needs
+      const bufferPercentage = 2.2;
       const buffer = Math.floor(window.innerHeight * bufferPercentage);
 
       if (
@@ -100,27 +101,6 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     };
   }, [loading, page, productData?.pagination?.total_pages]);
 
-  // Simulated API request to fetch new products
-  useEffect(() => {
-    const fetchNewProducts = async () => {
-      setLoading(true);
-      const res = await list(`/products/category/list/${singleCategory?.id}`, {
-        limit,
-        sort,
-        page,
-        filters: selectedFilters,
-      });
-      const newProducts = res?.payload?.items || [];
-      const newPagination = res?.payload?.pagination || {};
-      setProductData((prevData) => ({
-        products: [...prevData?.products, ...newProducts], // Append new products to existing ones
-        pagination: newPagination,
-      }));
-      setLoading(false);
-    };
-
-    fetchNewProducts();
-  }, [page]);
   return (
     <>
       <div className="4xl:container mx-auto">
@@ -140,17 +120,13 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         </div>
         <div className="mx-[0.625rem] mt-[4.125rem]">
           <div className="grid max-md:grid-cols-2 gap-y-[40px] md:grid-cols-3 2xl:grid-cols-4 gap-[11px]">
-            {loading ? (
-              <div className="h-full col-span-1 w-full bg-[#eeeee0] object-cover animate-pulse"></div>
-            ) : (
-              <Suspense fallback={<div>Loading...</div>}>
-                <Thumb
-                  data={productData?.products}
-                  slider={false}
-                  loading={loading}
-                />
-              </Suspense>
-            )}
+
+              <Thumb
+                data={productData?.products}
+                slider={false}
+                loading={loading}
+              />
+
           </div>
         </div>
       </div>

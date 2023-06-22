@@ -41,12 +41,7 @@ const Category = async ({ params: { path } }) => {
   const filters = await fetchFilters(path[path?.length - 1]);
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
 
-  return (
-    <Suspense fallback={<>loading</>}>
-      {" "}
-      <CategoryPage filter={filters} singleCategory={singleCategory} />
-    </Suspense>
-  );
+  return <CategoryPage filter={filters} singleCategory={singleCategory} />;
 };
 
 export default Category;
