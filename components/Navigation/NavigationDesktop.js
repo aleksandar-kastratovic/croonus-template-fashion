@@ -113,29 +113,19 @@ const NavigationDesktop = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    function handleScroll() {
+    const handleScroll = () => {
       const scrollY = window.scrollY;
-      if (scrollY > 0 && !open) {
-        setVisible(false);
-      } else {
-        if (open && scrollY > 0) {
-          setVisible(true);
-        } else {
-          if (scrollY === 0 && pathname === "/") {
-            setVisible(true);
-          } else {
-            if (scrollY >= 0 && pathname !== "/") setVisible(false);
-          }
-        }
-      }
-    }
+      setVisible((scrollY === 0 && pathname === "/") || (open && scrollY > 0));
+      pathname?.includes("/kategorija" || "/proizvod") && setVisible(false);
+    };
 
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [open, visible, background, pathname]);
+  }, [open, pathname]);
+
   useEffect(() => {
     setVisible(true);
   }, [open]);
@@ -169,6 +159,13 @@ const NavigationDesktop = () => {
       );
     };
   }, []);
+
+  useEffect(() => {
+    if (pathname?.includes("/kategorija" || "/proizvod")) {
+      setOpen(false);
+      setVisible(false);
+    }
+  }, [pathname]);
 
   return (
     <>

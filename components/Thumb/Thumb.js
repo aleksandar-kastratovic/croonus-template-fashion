@@ -464,6 +464,7 @@ const Thumb = ({ data, slider }) => {
 
     const products = data?.map((product, index) => {
       return (
+
         <div className="col-span-1 relative item">
           <div className="max-md:h-[240px] md:h-[450px] lg:h-[500px] item relative">
             {product?.image[0] && (
