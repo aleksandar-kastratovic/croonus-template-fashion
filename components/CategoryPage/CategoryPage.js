@@ -20,7 +20,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [changeFilters, setChangeFilters] = useState(false);
   const [tempSelectedFilters, setTempSelectedFilters] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [isBeingFiltered, setIsBeingFiltered] = useState(false);
   useEffect(() => {
     const fetchData = async (limit, sort, page, filters) => {
       setLoading(true);
@@ -30,16 +30,40 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         page: page,
         filters: selectedFilters,
       });
-      const newProducts = res?.payload?.items || [];
-      const newPagination = res?.payload?.pagination || {};
-      setProductData((prevData) => ({
-        products: [...prevData.products, ...newProducts],
-        pagination: newPagination,
-      }));
+      const newProducts = res?.payload?.items;
+      const newPagination = res?.payload?.pagination;
+      if (isBeingFiltered) {
+        setProductData({
+          products: newProducts,
+          pagination: newPagination,
+        });
+        setIsBeingFiltered(false);
+      } else {
+        setProductData((prevData) => {
+          // If isBeingFiltered is false, combine the previous products with new products after filtering duplicates
+          const uniqueProductIds = new Set(
+            prevData.products.map((product) => product.id)
+          );
+          const filteredNewProducts = newProducts.filter(
+            (product) => !uniqueProductIds.has(product.id)
+          );
+
+          return {
+            products: [...prevData.products, ...filteredNewProducts],
+            pagination: newPagination,
+          };
+        });
+      }
+
       setLoading(false);
     };
 
-    fetchData(limit, sort, page, selectedFilters);
+    fetchData(
+      limit,
+      sort,
+      selectedFilters?.length > 0 ? 1 : page,
+      selectedFilters
+    );
   }, [limit, sort, page, selectedFilters]);
 
   useEffect(() => {
@@ -54,35 +78,35 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     setChangeFilters(false);
   }, [changeFilters]);
 
-  useEffect(() => {
-    const updateProductsCountBasedOnTempSelectedFilters = async (
-      tempSelectedFilters
-    ) => {
-      const res = await list(`/products/category/list/${singleCategory?.id}`, {
-        filters: tempSelectedFilters,
-        limit,
-        page,
-        sort,
-      });
-
-      setProductData((prevData) => ({
-        products:
-          prevData.products.length === 0 || tempSelectedFilters.length === 0
-            ? res?.payload?.items
-            : prevData.products,
-        pagination: res?.payload?.pagination,
-      }));
-
-      setLoading(false);
-    };
-
-    updateProductsCountBasedOnTempSelectedFilters(tempSelectedFilters);
-  }, [tempSelectedFilters]);
+  // useEffect(() => {
+  //   const updateProductsCountBasedOnTempSelectedFilters = async (
+  //     tempSelectedFilters
+  //   ) => {
+  //     const res = await list(`/products/category/list/${singleCategory?.id}`, {
+  //       filters: tempSelectedFilters,
+  //       limit,
+  //       page,
+  //       sort,
+  //     });
+  //
+  //     setProductData((prevData) => ({
+  //       products:
+  //         prevData.products.length === 0 || tempSelectedFilters.length === 0
+  //           ? res?.payload?.items
+  //           : prevData.products,
+  //       pagination: res?.payload?.pagination,
+  //     }));
+  //
+  //     setLoading(false);
+  //   };
+  //
+  //   updateProductsCountBasedOnTempSelectedFilters(tempSelectedFilters);
+  // }, [tempSelectedFilters]);
 
   //infinite scroll
   useEffect(() => {
     const handleScroll = () => {
-      const bufferPercentage = 2.2;
+      const bufferPercentage = 1.5;
       const buffer = Math.floor(window.innerHeight * bufferPercentage);
 
       if (
@@ -100,7 +124,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [loading, page, productData?.pagination?.total_pages]);
-
+  console.log(productData.products, selectedFilters);
   return (
     <>
       <div className="4xl:container mx-auto">
@@ -120,13 +144,33 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         </div>
         <div className="mx-[0.625rem] mt-[4.125rem]">
           <div className="grid max-md:grid-cols-2 gap-y-[40px] md:grid-cols-3 2xl:grid-cols-4 gap-[11px]">
-
+            {loading ? (
+              <>
+                {Array.from({ length: 12 }).map((_, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="max-md:h-[250px] h-[500px] w-full col-span-1 bg-slate-300 object-cover animate-pulse"
+                    />
+                  );
+                })}
+              </>
+            ) : productData?.products?.length > 0 ? (
               <Thumb
-                data={productData?.products}
+                data={productData?.products ?? productsFromSection}
                 slider={false}
                 loading={loading}
               />
-
+            ) : (
+              <div
+                className={`col-span-2 md:col-span-2 lg:col-span-3 2xl:col-span-4 flex items-center justify-center text-center`}
+              >
+                <h1 className={`text-center text-[1rem] font-normal`}>
+                  Nijedan proizvod ne odgovara zadatim kriterijumima, ili
+                  izabrana kategorija trenutno ne sadrži nijedan proizvod.
+                </h1>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -175,7 +219,8 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                 setSelectedFilters([]);
                 setTempSelectedFilters([]);
                 setChangeFilters(true);
-                setSort({ field: "", direction: "" });
+                setSort({ field: "", direction: "" });                setOpenFilter(false);
+
               }}
             >
               Obriši
@@ -187,9 +232,10 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                 setSelectedFilters(tempSelectedFilters);
                 setChangeFilters(true);
                 setOpenFilter(false);
+                setIsBeingFiltered(true);
               }}
             >
-              Prikaži rezultate ({productData.pagination?.total_items})
+              Prikaži rezultate
             </button>
           </div>
         </div>

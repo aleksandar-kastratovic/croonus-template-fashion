@@ -410,7 +410,7 @@
 
 .variantsSwiper .swiper-wrapper {
   position: relative;
-  width: 100%;
+  width: max-content;
   height: 100%;
   z-index: 1;
   display: flex;
@@ -421,5 +421,14 @@
   );
   box-sizing: content-box;
   align-items: center !important;
-  /*justify-content: center !important;*/
+  justify-content: center !important;
+  margin: auto;
+}
+
+.hidescrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
+  display: none !important;
 }

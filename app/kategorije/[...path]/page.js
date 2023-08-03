@@ -17,7 +17,7 @@ const getCategories = async () => {
   return await get("/categories/product/tree").then((res) => res?.payload);
 };
 
-export async function generateMetadata({ params: { path } }) {
+export async function generateMetadata({ params: { path } }, { searchParams }) {
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
   return {
     title: `${singleCategory?.basic_data?.name} - Pazari.rs - Farmerke, Muške farmerke, Muška odeća`,
@@ -59,9 +59,7 @@ export async function generateStaticParams() {
   };
   recursiveChildren(categories, paths);
   return paths?.map((category) => ({
-    params: {
-      path: category?.toString(),
-    },
+    path: category?.split("/"),
   }));
 }
 

@@ -77,12 +77,14 @@ const ProductDetailPage = async ({ params: { path } }) => {
   const productGallery = await getProductGallery(path[path?.length - 1]);
   const desc = await getProductLongDescription(path[path?.length - 1]);
   const newProducts = await getNewProducts();
+
   return (
     <div className="4xl:container mx-auto">
       <ProductDetails
         product={product}
         productGallery={productGallery}
         desc={desc}
+        path={path[path?.length - 1]}
       />
       <RecommendedProducts products={newProducts} />
     </div>

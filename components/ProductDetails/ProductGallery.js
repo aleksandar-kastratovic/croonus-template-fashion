@@ -153,7 +153,7 @@ const ProductGallery = ({ productGallery }) => {
           },
           768: {
             direction: "vertical",
-            slidesPerView: 4,
+            slidesPerView: 4.25,
             enabled: true,
             modules: [FreeMode, Thumbs],
           },

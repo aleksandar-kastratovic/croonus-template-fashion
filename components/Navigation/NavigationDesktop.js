@@ -60,11 +60,12 @@ const NavigationDesktop = () => {
     getCartCount();
   }, [getCartCount, cart, cartCount]);
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    navigate(`/search?search=${searchTerm}`);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    router.push(`/search?search=${searchTerm}`);
     setSearchTerm("");
   };
+  console.log(searchTerm);
   const [isActive, setIsActive] = useState(categories[0]?.id);
   const [activeCategory, setActiveCategory] = useState();
   const [height, setHeight] = useState(0);
@@ -96,7 +97,7 @@ const NavigationDesktop = () => {
       if (category) {
         setBackground("white");
       } else {
-        if (window.scrollY > 1 && !category) {
+        if (window.scrollY > 0 && !category) {
           setBackground("white");
         } else {
           setBackground("transparent");
@@ -116,7 +117,9 @@ const NavigationDesktop = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setVisible((scrollY === 0 && pathname === "/") || (open && scrollY > 0));
-      pathname?.includes("/kategorija" || "/proizvod") && setVisible(false);
+      pathname?.includes("/kategorija" || "/proizvod") &&
+        setVisible(false) &&
+        setOpen(false);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -167,6 +170,41 @@ const NavigationDesktop = () => {
     }
   }, [pathname]);
 
+  const [searchData, setSearchData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (searchTerm?.length > 0) {
+      const getData = async (search) => {
+        await list(`/products/search/list`, {
+          search: search,
+        }).then((response) => {
+          setSearchData(response?.payload);
+          setLoading(false);
+        });
+      };
+      getData(searchTerm);
+    }
+  }, [searchTerm]);
+
+  const searchRef = useRef(null);
+  const searchImgRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target) &&
+        !searchImgRef.current.contains(event.target)
+      ) {
+        setSearchTerm("");
+        setSearchData([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchRef]);
+
   return (
     <>
       <div
@@ -176,50 +214,63 @@ const NavigationDesktop = () => {
         id="navigation"
       >
         <div
-          className={`absolute top-0  ${
+          className={`absolute top-0 h-[4.719rem] ${
             background === "white" ? `bg-opacity-90 backdrop-blur` : `pt-8`
           } px-[3%] z-[54] flex items-center justify-between w-full bg-${
             category ? `white` : `${background}`
           }  transition-all duration-500`}
         >
           <div
-            className="flex items-center py-[1.5rem] gap-20 "
-            // onMouseEnter={() => {
-            //   if (background === "white") {
-            //     setOpen(true);
-            //   }
-            // }}
-            // onMouseLeave={() => {
-            //   if (background === "white") {
-            //     setOpen(true);
-            //   }
-            // }}
+            className="flex items-center gap-20 "
+            onMouseEnter={() => {
+              if (background === "white") {
+                setOpen(true);
+              }
+            }}
           >
             <Link href="/">
               {open || background === "white" ? (
-                <Image src={LogoDark} width={110} height={110} alt="" />
+                <Image
+                  onClick={() => {
+                    setOpen(false);
+                    setVisible(false);
+                  }}
+                  src={LogoDark}
+                  width={110}
+                  height={110}
+                  alt=""
+                />
               ) : (
-                <Image src={LogoLight} width={110} height={110} alt="" />
+                <Image
+                  onClick={() => {
+                    setOpen(false);
+                    setVisible(false);
+                  }}
+                  src={LogoLight}
+                  width={110}
+                  height={110}
+                  alt=""
+                />
               )}
             </Link>
             <div
               className="flex flex-row items-center gap-5 "
-              // onMouseEnter={() => setOpen(true)}
+              onMouseEnter={() => setOpen(true)}
             >
               {categories?.map((category, index) => {
                 const isActiveCategory = isActive === category?.id;
 
                 return (
                   <div
-                    onMouseEnter={() => {
+                    onClick={() => {
                       setOpen(true);
                     }}
                     key={category?.id}
                     className={`uppercase ${
                       (isActiveCategory && !open && background === "transparent"
-                        ? `bg-white text-black`
+                        ? `text-white`
                         : isActiveCategory && !open && background === "white"
-                        ? `bg-black text-white`
+                        ? `text-black`
                         : !isActiveCategory &&
                           !open &&
                           background === "transparent" &&
@@ -234,7 +285,7 @@ const NavigationDesktop = () => {
                         ? `bg-red-500 text-white`
                         : `bg-red-500 text-white`)
                     } px-5 py-1 text-[0.8rem] rounded cursor-pointer`}
-                    onClick={() => {
+                    onMouseEnter={() => {
                       setIsActive(category?.id);
                       setActiveCategory(category);
                       setActiveSubSubCategory();
@@ -247,8 +298,9 @@ const NavigationDesktop = () => {
             </div>
           </div>
           <div className="flex items-center gap-10">
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 relative">
               <Image
+                ref={searchImgRef}
                 src={Search}
                 width={20}
                 height={20}
@@ -260,7 +312,12 @@ const NavigationDesktop = () => {
                     : "cursor-pointer invert"
                 }
               />
-              <form onSubmit={handleSearch} className="w-60">
+              <form
+                onSubmit={handleSearch}
+                className={`${
+                  searchTerm?.length > 0 ? `w-[25rem]` : `w-60`
+                } transition-all duration-500 relative`}
+              >
                 <input
                   type="text"
                   placeholder="PRETRAGA"
@@ -269,9 +326,66 @@ const NavigationDesktop = () => {
                       ? "border-b-black text-black"
                       : "border-b-white focus:border-b-white placeholder:text-white text-white"
                   }  focus:ring-0 placeholder:text-sm text-sm p-0   focus:outline-none`}
-                  onChange={(event) => setSearchTerm(event.target.value)}
+                  onChange={(event) => {
+                    setSearchTerm(event.target.value);
+                    setLoading(true);
+                  }}
                   value={searchTerm}
                 />
+                <div
+                  ref={searchRef}
+                  className={`${
+                    searchTerm?.length > 0
+                      ? `absolute flex flex-col h-[420px] hidescrollbar overflow-y-auto bg-white top-[30px] right-0 w-full border rounded-b-lg`
+                      : `hidden`
+                  } `}
+                >
+                  {!loading &&
+                    searchData?.items?.slice(0, 10)?.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={`py-2 hover:bg-croonus-2 hover:text-white transition-all duration-500`}
+                        >
+                          <Link
+                            onClick={() => {
+                              setSearchTerm("");
+                              setSearchData([]);
+                            }}
+                            className={`text-[0.9rem] block px-2 h-full w-full`}
+                            href={`/proizvod/${item?.slug_path}`}
+                          >
+                            {item?.basic_data?.name}
+                          </Link>
+                        </div>
+                      );
+                    })}
+                  {loading && (
+                    <div className="flex h-full flex-1 items-center justify-center">
+                      <i
+                        className={`text-4xl fa fa-solid fa-spinner fa-spin`}
+                      ></i>
+                    </div>
+                  )}
+                  {!loading && (
+                    <div
+                      className={`sticky bottom-0 w-full bg-croonus-2 py-2 mt-auto text-center hover:bg-opacity-80`}
+                    >
+                      <button
+                        onClick={() => {
+                          handleSearch();
+                          setSearchData([]);
+                        }}
+                        className={`text-white w-full h-full font-light text-center`}
+                      >
+                        Prikaži sve rezultate (
+                        {searchData?.pagination?.total_items > 10 &&
+                          `još ${searchData?.pagination?.total_items - 10}`}
+                        )
+                      </button>
+                    </div>
+                  )}
+                </div>
               </form>
             </div>
             <div className="flex items-center gap-5">
@@ -326,23 +440,28 @@ const NavigationDesktop = () => {
       <div
         className={
           open
-            ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
-                background === "white" ? `py-4` : `pt-8`
+            ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px] transition-all duration-500 4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
+                background === "white" ? `py-4  transition-all duration-500` : `pt-8 transition-all duration-500`
               } gap-[162px] bg-white transition-all duration-500`
-            : `max-md:hidden fixed ${
-                background === "white" ? `invisible` : ``
+            : `max-md:hidden opacity-0 transition-all duration-500 fixed ${
+                background === "white" ? `invisible transition-all duration-500` : `transition-all duration-500`
               } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
-                background === "white" ? `py-4` : `pt-8`
+                background === "white" ? `py-4 transition-all duration-500` : `pt-8 transition-all duration-500`
               } gap-[162px] bg-transparent transition-all duration-500`
         }
         onMouseEnter={() => {
-          if (background === "white") {
+          if (background === "white" && category) {
             null;
           } else {
             setOpen(true);
           }
         }}
-        onMouseLeave={() => setOpen(false)}
+        onMouseLeave={() => {
+          for (let i = 0; i < 100; i++) {
+            clearTimeout(i);
+          }
+          setOpen(false);
+        }}
       >
         <div
           className={`bg-${background} flex items-center gap-20 sticky top-5 w-full `}
