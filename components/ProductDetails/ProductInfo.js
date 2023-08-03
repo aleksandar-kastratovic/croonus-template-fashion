@@ -15,11 +15,10 @@ import FreeDelivery from "../../assets/Icons/package.png";
 import Cancel from "../../assets/Icons/cancel.png";
 import { notFound } from "next/navigation";
 
-const ProductInfo = ({ product, desc }) => {
+const ProductInfo = ({ product, desc, path }) => {
   const [productVariant, setProductVariant] = useState(null);
   const router = useRouter();
-  const path = useParams();
-  const id = path?.path;
+console.log("test",product)
   useEffect(() => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
@@ -42,7 +41,7 @@ const ProductInfo = ({ product, desc }) => {
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();
-
+console.log(productVariant)
   const addToWishlist = (e) => {
     if (product.product_type === "single") {
       globalAddToWishList(product.data.item.basic_data?.id_product);
@@ -151,7 +150,7 @@ const ProductInfo = ({ product, desc }) => {
                 <Variants
                   firstVariantOption={false}
                   product={product}
-                  productSlug={id}
+                  productSlug={path}
                   handleURLChange={handleURLChange}
                   updateProductVariant={updateProductVariant}
                 />

@@ -42,17 +42,19 @@ export default function Variants({
   }, [selected]);
 
   useEffect(() => {
-    const product = variant_items.find((item) => item.slug === productSlug);
+    if (variant_items.length > 0) {
+      const product = variant_items.find((item) => item.slug === productSlug);
+      if (product) {
+        updateProductVariant(product);
 
-    if (product) {
-      updateProductVariant(product);
-
-      onChangeHandler(
-        product?.variant_key_array[0]?.attribute_key,
-        product?.variant_key_array[0]?.value_key
-      );
+        onChangeHandler(
+          product?.variant_key_array[0]?.attribute_key,
+          product?.variant_key_array[0]?.value_key
+        );
+        setSelected(product?.variant_key_array);
+      }
     }
-  }, [productSlug]);
+  }, [productSlug, variant_items]);
 
   // setuje prve opcije variant_options-a ukoliko je firstVariantOption true
   const handleVariantFirstOption = () => {
@@ -81,7 +83,7 @@ export default function Variants({
   const getSelectedItem = (slug) => {
     let t_item = null;
     variant_items?.map((item) => {
-      if (item.slug == slug) {
+      if (item.slug === slug) {
         t_item = item;
       }
     });
@@ -144,7 +146,7 @@ export default function Variants({
     let options = getSelectedVariants(selected, variant_items);
     let product = [];
 
-    if (options.length == 1) {
+    if (options.length === 1) {
       product = options[0];
     }
 

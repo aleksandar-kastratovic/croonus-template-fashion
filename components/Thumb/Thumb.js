@@ -179,7 +179,7 @@ const Thumb = ({ data, slider }) => {
               </Swiper>
               {product?.variant_options?.length > 0 ? (
                 <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[10px] w-[95%] mx-auto bg-white chevrons">
-                  <div className="flex flex-col items-center justify-center w-full">
+                  <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
                     <h1 className="text-[0.938rem] font-semibold text-center">
                       Izaberi veličinu
                     </h1>
@@ -464,7 +464,6 @@ const Thumb = ({ data, slider }) => {
 
     const products = data?.map((product, index) => {
       return (
-
         <div className="col-span-1 relative item">
           <div className="max-md:h-[240px] md:h-[450px] lg:h-[500px] item relative">
             {product?.image[0] && (
@@ -522,7 +521,7 @@ const Thumb = ({ data, slider }) => {
           </div> */}
           {product?.variant_options?.length > 0 ? (
             <div className="absolute sm:rounded-lg py-5 left-3 max-sm:bottom-[3.9rem] sm:bottom-[4rem] max-sm:w-full max-sm:left-0 w-[95%] mx-auto bg-white chevrons">
-              <div className="flex flex-col items-center justify-center w-full">
+              <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
                 <h1 className="text-[0.938rem] font-semibold text-center">
                   Izaberi veličinu
                 </h1>
@@ -547,7 +546,12 @@ const Thumb = ({ data, slider }) => {
                     loop={true}
                     modules={[Navigation]}
                     rewind={true}
-                    navigation={true}
+                    navigation={
+                      product?.variant_options[0]?.values?.length >
+                      swiper?.slides?.length
+                        ? true
+                        : false
+                    }
                     style={{ width: "100%", display: "block" }}
                     onSwiper={(swiper) => {
                       setSwiper(swiper);
