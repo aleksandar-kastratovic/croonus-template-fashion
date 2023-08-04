@@ -256,6 +256,7 @@ const NavigationDesktop = () => {
             <div
               className="flex flex-row items-center gap-5 "
               onMouseEnter={() => setOpen(true)}
+              onMouseLeave={() => setOpen(false)}
             >
               {categories?.map((category, index) => {
                 const isActiveCategory = isActive === category?.id;
@@ -443,7 +444,7 @@ const NavigationDesktop = () => {
             ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px] transition-all duration-500 4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
                 background === "white" ? `py-4  transition-all duration-500` : `pt-8 transition-all duration-500`
               } gap-[162px] bg-white transition-all duration-500`
-            : `max-md:hidden opacity-0 transition-all duration-500 fixed ${
+            : `max-md:hidden -translate-x-[150%] transition-all duration-500 fixed ${
                 background === "white" ? `invisible transition-all duration-500` : `transition-all duration-500`
               } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
                 background === "white" ? `py-4 transition-all duration-500` : `pt-8 transition-all duration-500`

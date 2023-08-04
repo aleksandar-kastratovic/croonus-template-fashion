@@ -219,8 +219,8 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                 setSelectedFilters([]);
                 setTempSelectedFilters([]);
                 setChangeFilters(true);
-                setSort({ field: "", direction: "" });                setOpenFilter(false);
-
+                setSort({ field: "", direction: "" });
+                setOpenFilter(false);
               }}
             >
               Obriši
