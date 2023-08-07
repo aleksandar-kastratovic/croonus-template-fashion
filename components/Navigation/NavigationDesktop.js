@@ -326,7 +326,7 @@ const NavigationDesktop = () => {
                     background === "white"
                       ? "border-b-black text-black"
                       : "border-b-white focus:border-b-white placeholder:text-white text-white"
-                  }  focus:ring-0 placeholder:text-sm text-sm p-0   focus:outline-none`}
+                  }  focus:ring-0 placeholder:text-sm text-sm p-0 focus:border-b-black  focus:outline-none`}
                   onChange={(event) => {
                     setSearchTerm(event.target.value);
                     setLoading(true);
@@ -442,18 +442,23 @@ const NavigationDesktop = () => {
         className={
           open
             ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px] transition-all duration-500 4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${
-                background === "white" ? `py-4  transition-all duration-500` : `pt-8 transition-all duration-500`
+                background === "white"
+                  ? `py-4  transition-all duration-500`
+                  : `pt-8 transition-all duration-500`
               } gap-[162px] bg-white transition-all duration-500`
             : `max-md:hidden -translate-x-[150%] transition-all duration-500 fixed ${
-                background === "white" ? `invisible transition-all duration-500` : `transition-all duration-500`
+                background === "white"
+                  ? `invisible transition-all duration-500`
+                  : `transition-all duration-500`
               } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${
-                background === "white" ? `py-4 transition-all duration-500` : `pt-8 transition-all duration-500`
+                background === "white"
+                  ? `py-4 transition-all duration-500`
+                  : `pt-8 transition-all duration-500`
               } gap-[162px] bg-transparent transition-all duration-500`
         }
         onMouseEnter={() => {
           if (background === "white" && category) {
             setOpen(true);
-
           } else {
             setOpen(true);
           }
@@ -467,7 +472,41 @@ const NavigationDesktop = () => {
       >
         <div
           className={`bg-${background} flex items-center gap-20 sticky top-5 w-full `}
-        ></div>
+        >
+          <Link href={`/`}>
+            <Image
+              onClick={() => {
+                setOpen(false);
+                setVisible(false);
+              }}
+              src={LogoDark}
+              width={110}
+              height={110}
+              alt=""
+            />
+          </Link>
+          <div className="flex flex-row gap-5">
+            {categories?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onMouseEnter={() => {
+                    setIsActive(item?.id);
+                    setActiveCategory(item);
+                    setActiveSubSubCategory();
+                  }}
+                >
+                  <Link
+                    href={`/kategorije/${item?.slug_path}`}
+                    className="uppercase px-5 py-1 text-[0.8rem] hover:bg-black hover:text-white px-5 rounded cursor-pointer hover:translate-x-5 hover:text-slate-500 transition-all duration-300 font-medium"
+                  >
+                    {item?.name}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
         <div
           className={
             visible
