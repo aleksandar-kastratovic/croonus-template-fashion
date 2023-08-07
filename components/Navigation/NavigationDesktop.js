@@ -222,11 +222,11 @@ const NavigationDesktop = () => {
         >
           <div
             className="flex items-center gap-20 "
-            onMouseEnter={() => {
-              if (background === "white") {
-                setOpen(true);
-              }
-            }}
+            // onMouseEnter={() => {
+            //   if (background === "white") {
+            //     setOpen(true);
+            //   }
+            // }}
           >
             <Link href="/">
               {open || background === "white" ? (
@@ -441,18 +441,19 @@ const NavigationDesktop = () => {
       <div
         className={
           open
-            ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px] transition-all duration-500 4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
+            ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px] transition-all duration-500 4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${
                 background === "white" ? `py-4  transition-all duration-500` : `pt-8 transition-all duration-500`
               } gap-[162px] bg-white transition-all duration-500`
             : `max-md:hidden -translate-x-[150%] transition-all duration-500 fixed ${
                 background === "white" ? `invisible transition-all duration-500` : `transition-all duration-500`
-              } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[52]  flex flex-col px-[3%] ${
+              } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${
                 background === "white" ? `py-4 transition-all duration-500` : `pt-8 transition-all duration-500`
               } gap-[162px] bg-transparent transition-all duration-500`
         }
         onMouseEnter={() => {
           if (background === "white" && category) {
-            null;
+            setOpen(true);
+
           } else {
             setOpen(true);
           }
