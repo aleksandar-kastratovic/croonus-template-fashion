@@ -263,7 +263,7 @@ const NavigationMobile = () => {
           >
             <Link href="/lista-zelja">
               {" "}
-              <Image src={Wishlist} width={20} height={20} className="py-1 " />
+              Lista želja
             </Link>
             <span className="absolute -top-2 -right-1 bg-[#e10000] rounded-full text-white px-1 text-xs">
               {wishlistCount}

@@ -31,7 +31,7 @@ const Thumb = ({ data, slider }) => {
     const [productVariant, setProductVariant] = useState(null);
     const [selected, setSelected] = useState([]);
     const [idProduct, setIdProduct] = useState(null);
-
+    const [navigationEnabled, setNavigationEnabled] = useState(false);
     useEffect(() => {
       const setVariantColorOption = (data) => {
         const selectedOptions = new Set();
@@ -71,13 +71,13 @@ const Thumb = ({ data, slider }) => {
             res?.code === 200 &&
             selected?.length === 2
           ) {
-            const variantItems = res.payload.data.variant_items;
+            const variantItems = res?.payload?.data?.variant_items;
             const variant = variantItems?.find((item) =>
-              item.variant_key_array.every((variantKey) =>
-                selected.some(
+              item?.variant_key_array?.every((variantKey) =>
+                selected?.some(
                   (selection) =>
-                    selection.attribute_key === variantKey.attribute_key &&
-                    selection.value_key === variantKey.value_key
+                    selection?.attribute_key === variantKey?.attribute_key &&
+                    selection?.value_key === variantKey?.value_key
                 )
               )
             );
@@ -137,19 +137,22 @@ const Thumb = ({ data, slider }) => {
 
       return (
         <SwiperSlide key={product?.basic_data?.id} className="">
-          <div className="w-full item">
+          <div
+            className="w-full item"
+            onMouseEnter={() => setNavigationEnabled(true)}
+            onMouseLeave={() => setNavigationEnabled(false)}
+          >
             {" "}
             <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
               <Swiper
                 modules={[Navigation]}
                 // onSwiper={(swiper) => setSwiper(swiper)}
-                navigation={true}
+                navigation={navigationEnabled}
                 breakpoints={{
-                  0: {
-                    navigation: { enabled: false },
-                  },
-                  640: {
-                    navigation: { enabled: false },
+                  320: {
+                    navigation: {
+                      enabled: false,
+                    },
                   },
                   1024: {
                     navigation: {
@@ -160,7 +163,7 @@ const Thumb = ({ data, slider }) => {
                 className={`productSwiper relative`}
                 onSwiper={(swiper) => setSwiper(swiper)}
               >
-                {product?.image.map((image, index) => (
+                {product?.image?.map((image, index) => (
                   <SwiperSlide key={index}>
                     <Link
                       href={`/proizvod/${product?.slug}`}
@@ -220,8 +223,9 @@ const Thumb = ({ data, slider }) => {
                             variantOptionSize?.attribute?.key;
                           const isSelected = selected?.find(
                             (selection) =>
-                              selection.attribute_key === variantAttributeKey &&
-                              selection.value_key === item3?.key
+                              selection?.attribute_key ===
+                                variantAttributeKey &&
+                              selection?.value_key === item3?.key
                           );
                           return (
                             <SwiperSlide key={Math.random()}>
@@ -236,9 +240,9 @@ const Thumb = ({ data, slider }) => {
                                   if (product?.variant_options?.length > 1) {
                                     setSelected((prevSelected) => {
                                       const filteredSelections =
-                                        prevSelected.filter(
+                                        prevSelected?.filter(
                                           (selection) =>
-                                            selection.attribute_key !==
+                                            selection?.attribute_key !==
                                             variantAttributeKey
                                         );
 
@@ -261,12 +265,12 @@ const Thumb = ({ data, slider }) => {
                                       const data = res?.payload?.data;
                                       if (data?.variant_items) {
                                         const clickedVariant =
-                                          data.variant_items.find(
+                                          data?.variant_items?.find(
                                             (variantItem) => {
-                                              return variantItem.variant_key_array.some(
+                                              return variantItem?.variant_key_array?.some(
                                                 (variantKey) => {
                                                   return (
-                                                    variantKey.value_key ===
+                                                    variantKey?.value_key ===
                                                     item3.key
                                                   );
                                                 }
@@ -406,13 +410,15 @@ const Thumb = ({ data, slider }) => {
                           setIdProduct(product?.basic_data?.id_product);
                         }}
                       >
-                        <Image
-                          src={item3?.image}
-                          alt=""
-                          className="rounded-full"
-                          fill
-                          style={{ objectFit: "cover" }}
-                        />
+                        {item3?.image && (
+                          <Image
+                            src={item3?.image}
+                            alt=""
+                            className="rounded-full"
+                            fill
+                            style={{ objectFit: "cover" }}
+                          />
+                        )}
                       </div>
                     );
                   })}

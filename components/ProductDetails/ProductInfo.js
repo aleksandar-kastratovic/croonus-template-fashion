@@ -16,10 +16,10 @@ import Cancel from "../../assets/Icons/cancel.png";
 import { notFound } from "next/navigation";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 
-const ProductInfo = ({ product, desc, path }) => {
+const ProductInfo = ({ product, desc, path, isNewURL, setIsNewURL }) => {
   const [productVariant, setProductVariant] = useState(null);
   const router = useRouter();
-  console.log("test", product);
+
   useEffect(() => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
@@ -39,10 +39,17 @@ const ProductInfo = ({ product, desc, path }) => {
   const handleURLChange = (newURL) => {
     setNewURL(newURL);
   };
+
+  useEffect(() => {
+    if (newURL !== null) {
+      setIsNewURL(true);
+    }
+  }, [newURL]);
+
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();
-  console.log(productVariant);
+
   const addToWishlist = (e) => {
     if (product.product_type === "single") {
       globalAddToWishList(product.data.item.basic_data?.id_product);
