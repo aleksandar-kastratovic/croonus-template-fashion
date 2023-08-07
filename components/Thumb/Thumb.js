@@ -350,18 +350,18 @@ const Thumb = ({ data, slider }) => {
                 />
               </div>
             </div>
-            <div className="mt-0 max-md:text-left max-md:items-start max-md:mt-1.5 flex max-md:flex-col items-center max-md:gap-1 gap-[10px]">
-              <h1 className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max">
-                {product?.price?.min?.price?.original ===
-                product?.price?.max?.price?.original ? (
-                  <>{currencyFormat(product?.price?.max?.price?.original)}</>
-                ) : (
-                  <>
-                    {currencyFormat(product?.price?.min?.price?.original)} -{" "}
-                    {currencyFormat(product?.price?.max?.price?.original)}
-                  </>
-                )}
-              </h1>
+            <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
+              <div className={`bg-[#f8ce5d] px-2 font-bold text-center`}>
+                <ProductPrice
+                  price={product?.price}
+                  inventory={product?.inventory}
+                />
+              </div>
+              {product?.price?.discount?.active && (
+                <span className={`line-through`}>
+                  {currencyFormat(product?.price?.price?.original)}
+                </span>
+              )}
             </div>
             <div
               className={`flex flex-row items-start gap-3 mt-2 max-lg:hidden`}
@@ -657,13 +657,13 @@ const Thumb = ({ data, slider }) => {
               <ProductPrice
                 price={product?.price}
                 inventory={product?.inventory}
-              />{console.log(product)}
+              />
             </div>
-              {product?.price?.discount?.active && (<span className={`line-through`}>{currencyFormat(product?.price?.price?.original)}</span>)}
-            {/*<span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">*/}
-            {/*  {" "}*/}
-            {/*  {currencyFormat(product?.price?.price?.original)}*/}
-            {/*</span>*/}
+            {product?.price?.discount?.active && (
+              <span className={`line-through`}>
+                {currencyFormat(product?.price?.price?.original)}
+              </span>
+            )}
           </div>
         </div>
       );
