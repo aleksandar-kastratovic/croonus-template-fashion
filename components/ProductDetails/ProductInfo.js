@@ -14,11 +14,12 @@ import Calendar from "../../assets/Icons/calendar.png";
 import FreeDelivery from "../../assets/Icons/package.png";
 import Cancel from "../../assets/Icons/cancel.png";
 import { notFound } from "next/navigation";
+import ProductPrice from "@/components/ProductPrice/ProductPrice";
 
 const ProductInfo = ({ product, desc, path }) => {
   const [productVariant, setProductVariant] = useState(null);
   const router = useRouter();
-console.log("test",product)
+  console.log("test", product);
   useEffect(() => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
@@ -41,7 +42,7 @@ console.log("test",product)
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();
-console.log(productVariant)
+  console.log(productVariant);
   const addToWishlist = (e) => {
     if (product.product_type === "single") {
       globalAddToWishList(product.data.item.basic_data?.id_product);
@@ -125,21 +126,29 @@ console.log(productVariant)
                   ? productVariant?.basic_data?.sku
                   : product?.data?.item?.basic_data?.sku}
               </h2>
-              <h1 className="mt-[2.125rem] text-[1.313rem] font-bold">
-                {productVariant ? (
-                  currencyFormat(productVariant?.price?.price?.original)
-                ) : (
-                  <>
+              <div
+                className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
+              >
+                <ProductPrice
+                  price={
+                    productVariant?.id
+                      ? productVariant?.price
+                      : product?.data?.item?.price
+                  }
+                  inventory={
+                    productVariant?.id
+                      ? productVariant?.inventory
+                      : product?.data?.item?.inventory
+                  }
+                />
+                {product?.data?.item?.price?.discount?.active && (
+                  <span className="text-[#636363] text-[1rem] line-through">
                     {currencyFormat(
-                      product?.data?.item?.price?.min?.price?.original
-                    )}{" "}
-                    -{" "}
-                    {currencyFormat(
-                      product?.data?.item?.price?.max?.price?.original
+                      product?.data?.item?.price?.price?.original
                     )}
-                  </>
+                  </span>
                 )}
-              </h1>
+              </div>
               <p
                 className="mt-[2.438rem] max-md:mt-[1.5rem] max-w-[90%] text-sm font-regular"
                 dangerouslySetInnerHTML={{ __html: desc?.description }}

@@ -13,6 +13,7 @@ import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
 import { get } from "@/app/api/api";
+import ProductPrice from "@/components/ProductPrice/ProductPrice";
 
 const Thumb = ({ data, slider }) => {
   const [swiper, setSwiper] = useState(null);
@@ -349,18 +350,18 @@ const Thumb = ({ data, slider }) => {
                 />
               </div>
             </div>
-            <div className="mt-0 max-md:text-left max-md:items-start max-md:mt-1.5 flex max-md:flex-col items-center max-md:gap-1 gap-[10px]">
-              <h1 className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max">
-                {product?.price?.min?.price?.original ===
-                product?.price?.max?.price?.original ? (
-                  <>{currencyFormat(product?.price?.max?.price?.original)}</>
-                ) : (
-                  <>
-                    {currencyFormat(product?.price?.min?.price?.original)} -{" "}
-                    {currencyFormat(product?.price?.max?.price?.original)}
-                  </>
-                )}
-              </h1>
+            <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
+              <div className={`bg-[#f8ce5d] px-2 font-bold text-center`}>
+                <ProductPrice
+                  price={product?.price}
+                  inventory={product?.inventory}
+                />
+              </div>
+              {product?.price?.discount?.active && (
+                <span className={`line-through`}>
+                  {currencyFormat(product?.price?.price?.original)}
+                </span>
+              )}
             </div>
             <div
               className={`flex flex-row items-start gap-3 mt-2 max-lg:hidden`}
@@ -651,25 +652,18 @@ const Thumb = ({ data, slider }) => {
               />
             </div>
           </div>
-          <div className="mt-0  max-md:mt-2 flex max-md:items-start max-md:flex-col max-md:gap-1 items-center gap-[10px]">
-            <h1
-              className="bg-[#f8ce5d] max-md:text-[0.75rem] text-[0.813rem] font-bold text-center min-w-[5.938rem] max-w-max"
-              onClick={() => onSwiperRightClick()}
-            >
-              {product?.price?.min?.price?.original ===
-              product?.price?.max?.price?.original ? (
-                <>{currencyFormat(product?.price?.max?.price?.original)}</>
-              ) : (
-                <>
-                  {currencyFormat(product?.price?.min?.price?.original)} -{" "}
-                  {currencyFormat(product?.price?.max?.price?.original)}
-                </>
-              )}
-            </h1>
-            {/*<span className="text-[0.813rem] font-semibold text-[#818181] max-md:text-[0.7rem]">*/}
-            {/*  {" "}*/}
-            {/*  {currencyFormat(product?.price?.price?.original)}*/}
-            {/*</span>*/}
+          <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
+            <div className={`bg-[#f8ce5d] px-2 font-bold text-center`}>
+              <ProductPrice
+                price={product?.price}
+                inventory={product?.inventory}
+              />
+            </div>
+            {product?.price?.discount?.active && (
+              <span className={`line-through`}>
+                {currencyFormat(product?.price?.price?.original)}
+              </span>
+            )}
           </div>
         </div>
       );

@@ -278,6 +278,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
         .catch((error) => console.warn(error));
     }
   };
+  console.log("cart", cartData);
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha
@@ -860,7 +861,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       Ukupna vrednost korpe:{" "}
                     </span>
                     <span className="mr-3 text-sm font-medium max-xl:text-sm">
-                      {currencyFormat(cartCost)}
+                      {currencyFormat(cartData?.summary?.totals?.with_vat)}
                     </span>
                   </div>
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1 max-xl:text-base">
@@ -868,7 +869,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       Iznos dodatnog popusta u korpi:{" "}
                     </span>
                     <span className="mr-3 text-sm font-medium max-xl:text-sm">
-                      0,00 RSD
+                      {currencyFormat(
+                        cartData?.summary?.totals?.items_discount_amount
+                      )}
                     </span>
                   </div>
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
@@ -876,7 +879,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       Iznos koštanja transporta:{" "}
                     </span>
                     <span className="mr-3 text-sm font-medium max-xl:text-sm">
-                      0,00 RSD
+                      {currencyFormat(
+                        cartData?.summary?.options?.delivery?.amount
+                      )}
                     </span>
                   </div>{" "}
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">

@@ -23,7 +23,9 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [isBeingFiltered, setIsBeingFiltered] = useState(false);
   useEffect(() => {
     const fetchData = async (limit, sort, page, filters) => {
-      setLoading(true);
+      if (page < 2) {
+        setLoading(true);
+      }
       const res = await list(`/products/category/list/${singleCategory?.id}`, {
         limit: limit,
         sort: sort,
@@ -221,6 +223,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                 setChangeFilters(true);
                 setSort({ field: "", direction: "" });
                 setOpenFilter(false);
+                setPage(1);
               }}
             >
               Obriši
