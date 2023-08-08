@@ -152,16 +152,16 @@ const Footer = () => {
               <span className="cursor-pointer hover:text-[#e10000]">
                 StreetStyle
               </span>
-              <span className="cursor-pointer hover:text-[#e10000]">
+              <Link href={`/kategorije/muska-odeca/farmerice`} className="cursor-pointer hover:text-[#e10000]">
                 Farmerice
-              </span>
-              <span className="cursor-pointer hover:text-[#e10000]">
+              </Link>
+              <Link href={`/kategorije/muska-odeca/komplet-trenerke`} className="cursor-pointer hover:text-[#e10000]">
                 Trenerke
-              </span>
-              <span className="cursor-pointer hover:text-[#e10000]">
+              </Link>
+              <Link href={`/kategorije/muska-odeca/zimske-jakne`} className="cursor-pointer hover:text-[#e10000]">
                 Zimske jakne
-              </span>
-              <span className="cursor-pointer hover:text-[#e10000]">Obuća</span>
+              </Link>
+              <Link href={`/kategorije/muska-obuca`} className="cursor-pointer hover:text-[#e10000]">Obuća</Link>
               <span className="cursor-pointer hover:text-[#e10000]">
                 Outlet
               </span>

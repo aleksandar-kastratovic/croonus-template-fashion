@@ -204,7 +204,7 @@
 .swiper-vertical > .swiper-pagination-bullets {
   right: var(--swiper-pagination-right, 8px);
   left: var(--swiper-pagination-left, auto);
-  top: 50%;
+  top: 59% !important;
   transform: translate3d(0px, -50%, 0);
   display: flex;
   flex-direction: column;
