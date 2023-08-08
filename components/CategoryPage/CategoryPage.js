@@ -144,6 +144,79 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
             </h1>
           </div>
         </div>
+        <div
+          className={`${
+            tempSelectedFilters?.length > 0
+              ? `mx-[3%] mt-[4.125rem] flex flex-wrap items-center gap-[0.25rem]`
+              : `hidden`
+          }`}
+        >
+          {tempSelectedFilters?.map((filter) => {
+            const splitFilter = filter?.column?.split("|");
+            const filterName = splitFilter[1];
+            return (
+              <div
+                className={`font-normal bg-croonus-2  text-white text-[0.65rem] relative max-md:text-[0.7rem]  rounded-lg flex items-center gap-2`}
+              >
+                <div className={`flex items-center gap-2  px-1`}>
+                  <h1>
+                    {filterName?.charAt(0).toUpperCase() + filterName?.slice(1)}
+                    :
+                  </h1>
+                  <span>
+                    {filter?.value?.selected?.map((item, index, arr) => {
+                      const isLastItem = index === arr.length - 1;
+                      return `${filterName === "cena" ? item + "RSD" : item}${
+                        isLastItem ? "" : ","
+                      }`;
+                    })}
+                  </span>
+                </div>
+                <div
+                  onClick={() => {
+                    const newSelectedFilters = tempSelectedFilters.filter(
+                      (item) => item.column !== filter.column
+                    );
+                    setTempSelectedFilters(newSelectedFilters);
+                    setSelectedFilters(newSelectedFilters);
+                    setChangeFilters(true);
+                    if (tempSelectedFilters.length === 1) {
+                      window.history.replaceState(
+                        null,
+                        "",
+                        singleCategory
+                          ? `/kategorije/${singleCategory.slug_path}`
+                          : `/sekcija/${slug}`
+                      );
+                    }
+                  }}
+                  className={`bg-croonus-2 cursor-pointer  self-stretch h-full flex-1 right-0  rounded-r-lg flex items-center flex-col justify-center`}
+                >
+                  <i
+                    className={`fa fa-solid  fa-trash text-[0.65rem] text-white cursor-pointer py-[0.35rem] px-1 hover:text-red-500`}
+                    onClick={() => {
+                      const newSelectedFilters = tempSelectedFilters.filter(
+                        (item) => item.column !== filter.column
+                      );
+                      setTempSelectedFilters(newSelectedFilters);
+                      setSelectedFilters(newSelectedFilters);
+                      setChangeFilters(true);
+                      if (tempSelectedFilters.length === 1) {
+                        window.history.replaceState(
+                          null,
+                          "",
+                          singleCategory
+                            ? `/kategorije/${singleCategory.slug_path}`
+                            : `/sekcija/${slug}`
+                        );
+                      }
+                    }}
+                  ></i>
+                </div>
+              </div>
+            );
+          })}
+        </div>
         <div className="mx-[0.625rem] mt-[4.125rem]">
           <div className="grid max-md:grid-cols-2 gap-y-[40px] md:grid-cols-3 2xl:grid-cols-4 gap-[11px]">
             {loading ? (

@@ -83,7 +83,7 @@ const Filters = ({
                 }
                 key={filter?.key}
               >
-                <h1 className="text-[0.938rem] font-bold">{filter?.name}</h1>
+                <h1 className="text-[0.938rem] font-bold">{filter?.attribute?.name}</h1>
                 <div>
                   <h1 className={`text-[#171717] font-bold `}>
                     {isOpen ? `-` : `+`}

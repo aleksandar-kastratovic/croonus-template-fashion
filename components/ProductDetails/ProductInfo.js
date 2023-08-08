@@ -41,11 +41,11 @@ const ProductInfo = ({ product, desc, path, isNewURL, setIsNewURL }) => {
   };
 
   useEffect(() => {
-    if (newURL !== null) {
+    if (newURL != null) {
       setIsNewURL(true);
     }
   }, [newURL]);
-
+console.log(product)
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();

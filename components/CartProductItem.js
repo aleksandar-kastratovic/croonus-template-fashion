@@ -27,6 +27,9 @@ const CartProductItem = ({ item }) => {
   const per_item = item?.product?.price?.per_item;
   const total = item?.product?.price?.cost;
   const currency = item?.product?.price?.currency;
+
+  const [sureCheck, setSureCheck] = useState(false);
+
   return (
     <>
       <div className="col-span-2 grid grid-cols-3 gap-x-10 mt-1 relative">
@@ -68,11 +71,37 @@ const CartProductItem = ({ item }) => {
         </div>
         <span
           className="absolute -top-4 right-2 cursor-pointer"
-          onClick={() => removeFromCart(item?.product?.id)}
+          onClick={() => setSureCheck(true)}
         >
           X
         </span>
       </div>
+      {sureCheck && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center"
+          onClick={() => setSureCheck(false)}
+        >
+          <div className="bg-white p-5 rounded-lg">
+            <span className="text-[15px] font-bold">
+              Da li ste sigurni da želite da uklonite proizvod iz korpe?
+            </span>
+            <div className="flex items-center gap-4 justify-center mt-5">
+              <button
+                className="bg-[#E5E5E5] hover:bg-red-500 hover:text-white px-5 py-2 rounded-lg"
+                onClick={() => setSureCheck(false)}
+              >
+                Ne
+              </button>
+              <button
+                className="bg-[#E5E5E5] hover:bg-green-500 hover:text-white px-5 py-2 rounded-lg"
+                onClick={() => removeFromCart(item?.product?.id)}
+              >
+                Da
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

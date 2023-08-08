@@ -297,7 +297,7 @@ export default function Variants({
             <label
               htmlFor={item.id}
               className={
-                item.attribute.name === "Boja"
+                item.attribute.name === "Boje"
                   ? `hidden`
                   : `max-lg:text-left text-[0.938rem] font-bold max-md:font-normal min-w-[5.619rem]`
               }
@@ -324,7 +324,7 @@ export default function Variants({
                 }
               }}
             >
-              {item?.attribute?.name === "Boja"
+              {item?.attribute?.name === "Boje"
                 ? item.values.map((value) => {
                     let display = value.display;
                     return (
