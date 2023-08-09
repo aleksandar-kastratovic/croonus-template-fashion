@@ -77,7 +77,7 @@ const Thumb = ({ data, slider }) => {
               )
             )
           );
-          variant?.basic_data?.name === undefined
+          !variant?.basic_data?.name
             ? toast.error(`Došlo je do greške, molimo Vas pokušajte ponovo.`, {
                 position: "top-center",
                 autoClose: 3000,
@@ -105,15 +105,6 @@ const Thumb = ({ data, slider }) => {
             status: false,
           });
           return variant;
-        } else {
-          toast.error("Došlo je do greške, molimo Vas pokušajte ponovo.", {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
         }
       };
       getVariant(selected);
@@ -457,12 +448,12 @@ const Thumb = ({ data, slider }) => {
     const addToCart = useGlobalAddToCart();
 
     const products = data?.map((product, index) => {
-        const variantOptionSize = product?.variant_options?.find((variant) => {
-            return variant?.attribute?.slug === "size";
-        });
-        const variantOptionColor = product?.variant_options?.find((variant) => {
-            return variant?.attribute?.slug === "color";
-        });
+      const variantOptionSize = product?.variant_options?.find((variant) => {
+        return variant?.attribute?.slug === "size";
+      });
+      const variantOptionColor = product?.variant_options?.find((variant) => {
+        return variant?.attribute?.slug === "color";
+      });
       return (
         <div className="col-span-1 relative item">
           <div className="max-md:h-[240px] md:h-[450px] lg:h-[500px] item relative">
@@ -663,61 +654,61 @@ const Thumb = ({ data, slider }) => {
                 {currencyFormat(product?.price?.price?.original)}
               </span>
             )}
-          </div>          <div className={`flex flex-row items-start gap-3 mt-2 max-lg:hidden`}>
+          </div>{" "}
+          <div className={`flex flex-row items-start gap-3 mt-2 max-lg:hidden`}>
             {loading?.status &&
             loading?.id === product?.basic_data?.id_product ? (
-                <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
+              <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
             ) : (
-                <>
-                    {variantOptionColor?.values?.map((item3) => {
-                        const variantAttributeKey =
-                            variantOptionColor?.attribute?.key;
-                        const isSelected = selected.find(
-                            (item) =>
-                                item?.attribute_key === variantAttributeKey &&
-                                item?.value_key === item3?.key
-                        );
+              <>
+                {variantOptionColor?.values?.map((item3) => {
+                  const variantAttributeKey =
+                    variantOptionColor?.attribute?.key;
+                  const isSelected = selected.find(
+                    (item) =>
+                      item?.attribute_key === variantAttributeKey &&
+                      item?.value_key === item3?.key
+                  );
 
-                        return (
-                            <div
-                                key={item3?.key}
-                                className={`max-sm:scale-[0.8] ${
-                                    isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                                } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
-                                onClick={() => {
-                                    setSelected((prevSelected) => {
-                                        // Remove previous selections with the same variantAttributeKey
-                                        const filteredSelections = prevSelected.filter(
-                                            (selection) =>
-                                                selection.attribute_key !== variantAttributeKey
-                                        );
-                                        return [
-                                            ...filteredSelections,
-                                            {
-                                                attribute_key: variantAttributeKey,
-                                                value_key: item3?.key,
-                                            },
-                                        ];
-                                    });
-                                    setIdProduct(product?.basic_data?.id_product);
-                                }}
-                            >
-                                {item3?.image && (
-                                    <Image
-                                        src={item3?.image}
-                                        alt=""
-                                        className="rounded-full"
-                                        fill
-                                        style={{ objectFit: "cover" }}
-                                    />
-                                )}
-                            </div>
-                        );
-                    })}
-                </>
+                  return (
+                    <div
+                      key={item3?.key}
+                      className={`max-sm:scale-[0.8] ${
+                        isSelected ? `border border-[#242424] p-[0.5px]` : ``
+                      } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                      onClick={() => {
+                        setSelected((prevSelected) => {
+                          // Remove previous selections with the same variantAttributeKey
+                          const filteredSelections = prevSelected.filter(
+                            (selection) =>
+                              selection.attribute_key !== variantAttributeKey
+                          );
+                          return [
+                            ...filteredSelections,
+                            {
+                              attribute_key: variantAttributeKey,
+                              value_key: item3?.key,
+                            },
+                          ];
+                        });
+                        setIdProduct(product?.basic_data?.id_product);
+                      }}
+                    >
+                      {item3?.image && (
+                        <Image
+                          src={item3?.image}
+                          alt=""
+                          className="rounded-full"
+                          fill
+                          style={{ objectFit: "cover" }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </>
             )}
-        </div>
-
+          </div>
         </div>
       );
     });
