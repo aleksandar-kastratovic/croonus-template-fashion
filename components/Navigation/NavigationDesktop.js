@@ -65,8 +65,7 @@ const NavigationDesktop = () => {
     router.push(`/search?search=${searchTerm}`);
     setSearchTerm("");
   };
-  console.log(searchTerm);
-  const [isActive, setIsActive] = useState(categories[0]?.id);
+  const [isActive, setIsActive] = useState(categories[0]?.id ?? null);
   const [activeCategory, setActiveCategory] = useState();
   const [height, setHeight] = useState(0);
 

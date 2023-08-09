@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import "swiper/css/free-mode";
@@ -9,7 +9,7 @@ import { FreeMode, Pagination, Thumbs } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
-const ProductGallery = ({ productGallery }) => {
+const ProductGallery = ({ productGallery, leadingPicture }) => {
   function ImageMagnifier({
     src,
     width,
@@ -82,7 +82,6 @@ const ProductGallery = ({ productGallery }) => {
       </div>
     );
   }
-
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const productImage = productGallery?.map((image, index) => {
     return (
@@ -104,6 +103,19 @@ const ProductGallery = ({ productGallery }) => {
       </SwiperSlide>
     );
   });
+
+  const [newImage, setNewImage] = useState(0);
+  const [swiper, setSwiper] = useState(null);
+
+  useEffect(() => {
+    if (leadingPicture) {
+      const newImage = productGallery?.findIndex(
+        (item) => item?.image === leadingPicture
+      );
+      swiper?.slideTo(newImage);
+    }
+  }, [leadingPicture]);
+
   return (
     <div className="col-span-2 max-md:col-span-4 max-md:h-[450px] md:flex md:flex-row-reverse gap-5 md:max-h-[380px] lg:max-h-[550px] xl:max-h-[680px] 2xl:max-h-[720px] 3xl:max-h-[878px]">
       <Swiper
@@ -111,6 +123,8 @@ const ProductGallery = ({ productGallery }) => {
         thumbs={{ swiper: thumbsSwiper }}
         pagination={true}
         modules={[FreeMode, Thumbs, Pagination]}
+        initialSlide={leadingPicture ? newImage : 0}
+        onSwiper={(swiper) => setSwiper(swiper)}
         className={`${classes.mySwiper2} mySwiper2`}
         breakpoints={{
           320: {

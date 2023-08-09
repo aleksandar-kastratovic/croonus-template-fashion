@@ -16,10 +16,18 @@ import Cancel from "../../assets/Icons/cancel.png";
 import { notFound } from "next/navigation";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 
-const ProductInfo = ({ product, desc, path, isNewURL, setIsNewURL }) => {
+const ProductInfo = ({
+  product,
+  desc,
+  path,
+  isNewURL,
+  setIsNewURL,
+  setVariantKey,
+  variantKey,
+}) => {
   const [productVariant, setProductVariant] = useState(null);
-  const router = useRouter();
 
+  const router = useRouter();
   useEffect(() => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
@@ -29,6 +37,7 @@ const ProductInfo = ({ product, desc, path, isNewURL, setIsNewURL }) => {
   useEffect(() => {
     if (newURL) {
       window?.history?.replaceState(null, null, newURL);
+      setVariantKey(productVariant?.variant_key);
     }
   }, [newURL]);
 
@@ -45,7 +54,7 @@ const ProductInfo = ({ product, desc, path, isNewURL, setIsNewURL }) => {
       setIsNewURL(true);
     }
   }, [newURL]);
-console.log(product)
+  console.log(product);
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();

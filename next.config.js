@@ -7,7 +7,7 @@ const nextConfig = {
     API_URL: process.env.API_URL,
   },
   images: {
-    domains: ["api.pazarishop.croonus.com"],
+    domains: ["api.pazarishop.croonus.com", "192.168.1.174"],
   },
 };
 

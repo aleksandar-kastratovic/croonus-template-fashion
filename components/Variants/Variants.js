@@ -352,7 +352,7 @@ export default function Variants({
                               : `hidden`
                           }
                         >
-                          {value?.image && (
+                          {value?.product_image && (
                             <div
                               className={`${
                                 selected.find(
@@ -364,12 +364,16 @@ export default function Variants({
                                   : ``
                               } h-[85px] w-[65px]`}
                             >
-                              <Image
-                                src={convertHttpToHttps(value?.image)}
-                                width={65}
-                                height={85}
-                                className="h-full object-cover"
-                              />
+                              {value?.product_image && (
+                                <Image
+                                  src={convertHttpToHttps(
+                                    value?.product_image ?? value?.image
+                                  )}
+                                  width={65}
+                                  height={85}
+                                  className="h-full object-cover"
+                                />
+                              )}
                             </div>
                           )}
                         </button>
