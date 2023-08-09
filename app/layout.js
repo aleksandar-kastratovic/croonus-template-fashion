@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         </head>
         <body className="4xl:container mx-auto">
           <NavigationDesktop />
-          <NavigationMobile />
+          {/*<NavigationMobile />*/}
           {children}
           <Footer />
         </body>

@@ -95,9 +95,9 @@ const NavigationMobile = () => {
   }, [menuOpen]);
   useEffect(() => {
     setActiveCategory({
-      id: categories[0]?.id,
-      data: categories[0]?.children,
-      parentCategory: categories[0]?.id,
+      id: categories[0]?.id ?? 0,
+      data: categories[0]?.children ?? [],
+      parentCategory: categories[0]?.id ?? 0,
     });
     setActiveImage(categories[0]?.image);
   }, [categories]);
@@ -261,10 +261,7 @@ const NavigationMobile = () => {
               setMenuOpen(false);
             }}
           >
-            <Link href="/lista-zelja">
-              {" "}
-              Lista želja
-            </Link>
+            <Link href="/lista-zelja"> Lista želja</Link>
             <span className="absolute -top-2 -right-1 bg-[#e10000] rounded-full text-white px-1 text-xs">
               {wishlistCount}
             </span>
