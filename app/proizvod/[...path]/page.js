@@ -32,21 +32,25 @@ export async function generateMetadata({ params: { path } }) {
     description:
       product?.data?.item?.basic_data?.short_description ??
       "Pazari online Shop",
+
     openGraph: {
       title: product?.data?.item?.basic_data?.name,
       description:
         product?.data?.item?.basic_data?.short_description ??
         "Pazari online Shop",
+
       images: [
         {
-          url: productImage[0]?.image,
+          url: productImage?.image ?? "",
           width: 800,
           height: 600,
-          alt: product?.data?.item?.basic_data?.name,
+          alt: product?.data?.item?.basic_data?.name ?? "",
         },
       ],
+
       site_name: "Pazari.rs",
     },
+
     twitter: {
       handle: "@pazarirs",
       site: "@pazarirs",

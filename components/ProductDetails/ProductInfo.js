@@ -24,6 +24,7 @@ const ProductInfo = ({
   setIsNewURL,
   setVariantKey,
   variantKey,
+  setColor,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
 
@@ -37,24 +38,24 @@ const ProductInfo = ({
   useEffect(() => {
     if (newURL) {
       window?.history?.replaceState(null, null, newURL);
-      setVariantKey(productVariant?.variant_key);
     }
   }, [newURL]);
 
   const updateProductVariant = (newProduct) => {
     setProductVariant(newProduct);
   };
-
   const handleURLChange = (newURL) => {
     setNewURL(newURL);
   };
 
+  const [selectedColor, setSelectedColor] = useState(null);
+
   useEffect(() => {
-    if (newURL != null) {
-      setIsNewURL(true);
+    if (selectedColor !== null) {
+      setColor(selectedColor);
     }
-  }, [newURL]);
-  console.log(product);
+  }, [selectedColor]);
+
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();
@@ -132,13 +133,11 @@ const ProductInfo = ({
           <div className="max-md:col-span-4 mt-[2rem] md:col-span-2 ">
             <div className="flex flex-col ">
               <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold">
-                {productVariant === null || productVariant.length === 0
-                  ? product?.data?.item?.basic_data?.name
-                  : productVariant?.basic_data?.name}
+                {product?.data?.item?.basic_data?.name}
               </h1>
               <h2 className="mt-[1.063rem] text-[#636363] text-[0.688rem]">
                 Šifra:&nbsp;
-                {productVariant
+                {productVariant?.id
                   ? productVariant?.basic_data?.sku
                   : product?.data?.item?.basic_data?.sku}
               </h2>
@@ -178,6 +177,7 @@ const ProductInfo = ({
                   productSlug={path}
                   handleURLChange={handleURLChange}
                   updateProductVariant={updateProductVariant}
+                  setSelectedColor={setSelectedColor}
                 />
               </div>
             )}

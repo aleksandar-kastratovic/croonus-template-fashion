@@ -438,3 +438,24 @@
   opacity: var(--swiper-pagination-bullet-opacity, 1);
   background: black !important;
 }
+/* Add this to your CSS stylesheet */
+.button-with-tooltip {
+  position: relative; /* Set the button to be a positioned container */
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  bottom: -27px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* background-color: rgba(0, 0, 0, 0.8); */
+  color: black;
+  padding: 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.button-with-tooltip:hover .tooltip {
+  display: block; /* Display the tooltip when button is hovered */
+}

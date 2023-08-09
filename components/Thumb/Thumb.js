@@ -197,11 +197,11 @@ const Thumb = ({ data, slider }) => {
                       }}
                       className="variantsSwiper"
                       loop={true}
+                      dir={"ltr"}
                       modules={[Navigation]}
-                      rewind={true}
                       navigation={
                         variantOptionSize?.values?.length >
-                        swiper?.params?.slidesPerView
+                        swiper?.slides?.length
                       }
                       style={{ width: "100%", display: "block" }}
                       onSwiper={(swiper) => {
@@ -453,6 +453,20 @@ const Thumb = ({ data, slider }) => {
     const [productVariant, setProductVariant] = useState(null);
     const addToWishlist = useGlobalAddToWishList();
     const addToCart = useGlobalAddToCart();
+    const [initialSlide, setInitialSlide] = useState(0);
+    const [image, setImage] = useState({
+      image: null,
+      id: null,
+    });
+    console.log("data", data);
+
+    useEffect(() => {
+      if (image) {
+        const imagesArray = data?.map((item) => {
+          return item?.image;
+        });
+      }
+    }, [image]);
 
     const products = data?.map((product, index) => {
       const variantOptionSize = product?.variant_options?.find((variant) => {
@@ -467,7 +481,11 @@ const Thumb = ({ data, slider }) => {
             {product?.image[0] && (
               <Link href={`/proizvod/${product?.slug}`} scroll={true}>
                 <Image
-                  src={convertHttpToHttps(product?.image[0])}
+                  src={convertHttpToHttps(
+                    image?.id === product?.basic_data?.id_product
+                      ? image?.image
+                      : product?.image[0]
+                  )}
                   alt={product?.basic_data?.name}
                   fill
                   style={{ objectFit: "cover" }}
@@ -518,7 +536,7 @@ const Thumb = ({ data, slider }) => {
             </div>
           </div> */}
           {product?.variant_options?.length > 0 ? (
-            <div className="absolute sm:rounded-lg py-5 left-3 max-sm:bottom-[3.9rem] sm:bottom-[6rem] max-sm:w-full max-sm:left-0 w-[95%] mx-auto bg-white chevrons">
+            <div className="absolute sm:rounded-lg py-5 left-3 max-sm:bottom-[3.9rem] sm:bottom-[5.7rem] max-sm:w-full lg:left-[1.5rem] max-sm:left-0 w-[90%] mx-auto bg-white chevrons">
               <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
                 <h1 className="text-[0.938rem] font-semibold text-center">
                   Izaberi veličinu
@@ -542,13 +560,11 @@ const Thumb = ({ data, slider }) => {
                     }}
                     className="variantsSwiper"
                     loop={true}
+                    dir={"ltr"}
                     modules={[Navigation]}
-                    rewind={true}
                     navigation={
                       product?.variant_options[0]?.values?.length >
                       swiper?.slides?.length
-                        ? true
-                        : false
                     }
                     style={{ width: "100%", display: "block" }}
                     onSwiper={(swiper) => {
@@ -699,6 +715,10 @@ const Thumb = ({ data, slider }) => {
                           ];
                         });
                         setIdProduct(product?.basic_data?.id_product);
+                        setImage({
+                          image: item3?.product_image,
+                          id: product?.basic_data?.id_product,
+                        });
                       }}
                     >
                       {item3?.image && (
