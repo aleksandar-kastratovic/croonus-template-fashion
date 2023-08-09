@@ -78,7 +78,7 @@ const CartProductItem = ({ item }) => {
       </div>
       {sureCheck && (
         <div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center"
+          className="fixed top-0 left-0 w-full h-full z-50 bg-black bg-opacity-50 flex items-center justify-center"
           onClick={() => setSureCheck(false)}
         >
           <div className="bg-white p-5 rounded-lg">

@@ -11,6 +11,7 @@ export default function Variants({
   slug,
   handleURLChange,
   firstVariantOption,
+  setSelectedColor,
 }) {
   let variant_options = product?.data?.variant_options; // niz svih variant_options
   let variant_items = product?.data?.variant_items; // niz svih varijanti proizvoda
@@ -341,6 +342,7 @@ export default function Variants({
                               handleURLChange(variant_product?.slug);
                               product_slug = variant_product?.slug;
                             }
+                            setSelectedColor(value.key);
                           }}
                           key={value.id}
                           value={value.key}
@@ -348,9 +350,10 @@ export default function Variants({
                           style={{ display: value.display }}
                           className={
                             display === "show"
-                              ? `block text-[0.875rem]`
+                              ? `block text-[0.875rem] button-with-tooltip`
                               : `hidden`
                           }
+                          aria-label={value.name}
                         >
                           {value?.product_image && (
                             <div
@@ -375,7 +378,9 @@ export default function Variants({
                                 />
                               )}
                             </div>
-                          )}
+                          )}{" "}
+                          <span className="tooltip">{value.name}</span>{" "}
+                          {/* Tooltip content */}
                         </button>
                       </div>
                     );

@@ -9,7 +9,7 @@ import { FreeMode, Pagination, Thumbs } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
-const ProductGallery = ({ productGallery, leadingPicture }) => {
+const ProductGallery = ({ productGallery, color }) => {
   function ImageMagnifier({
     src,
     width,
@@ -108,13 +108,15 @@ const ProductGallery = ({ productGallery, leadingPicture }) => {
   const [swiper, setSwiper] = useState(null);
 
   useEffect(() => {
-    if (leadingPicture) {
-      const newImage = productGallery?.findIndex(
-        (item) => item?.image === leadingPicture
-      );
-      swiper?.slideTo(newImage);
-    }
-  }, [leadingPicture]);
+    setTimeout(() => {
+      if (color) {
+        const newImage = productGallery?.findIndex((item) =>
+          item?.variant_key?.includes(color)
+        );
+        swiper?.slideTo(newImage);
+      }
+    }, 500);
+  }, [color]);
 
   return (
     <div className="col-span-2 max-md:col-span-4 max-md:h-[450px] md:flex md:flex-row-reverse gap-5 md:max-h-[380px] lg:max-h-[550px] xl:max-h-[680px] 2xl:max-h-[720px] 3xl:max-h-[878px]">
@@ -123,7 +125,7 @@ const ProductGallery = ({ productGallery, leadingPicture }) => {
         thumbs={{ swiper: thumbsSwiper }}
         pagination={true}
         modules={[FreeMode, Thumbs, Pagination]}
-        initialSlide={leadingPicture ? newImage : 0}
+        initialSlide={color ? newImage : 0}
         onSwiper={(swiper) => setSwiper(swiper)}
         className={`${classes.mySwiper2} mySwiper2`}
         breakpoints={{

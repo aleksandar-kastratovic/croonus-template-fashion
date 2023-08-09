@@ -278,7 +278,6 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
         .catch((error) => console.warn(error));
     }
   };
-
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha
