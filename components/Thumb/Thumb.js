@@ -5,7 +5,8 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper";
+import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import Chevron from "../../assets/Icons/right-chevron.png";
 import Wishlist from "../../assets/Icons/heart.png";
@@ -129,8 +130,10 @@ const Thumb = ({ data, slider }) => {
           {" "}
           <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
             <Swiper
-              modules={[Navigation]}
+              modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
+              pagination={true}
+              direction={"vertical"}
               navigation={navigationEnabled}
               breakpoints={{
                 320: {
@@ -142,6 +145,10 @@ const Thumb = ({ data, slider }) => {
                   navigation: {
                     enabled: true,
                   },
+                  pagination: {
+                    enabled: false,
+                  },
+                  direction: "horizontal",
                 },
               }}
               className={`productSwiper relative`}

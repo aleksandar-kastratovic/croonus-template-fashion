@@ -267,16 +267,6 @@ const NavigationMobile = () => {
             </span>
           </div>
         </div>
-        {activeImage && (
-          <div className="mt-5 w-[95%] mx-auto relative h-[200px] ">
-            <Image
-              src={activeImage}
-              className="rounded h-full object-cover"
-              width={2000}
-              height={2000}
-            />
-          </div>
-        )}
 
         {generateBreadcrumbs && generateBreadcrumbs.split("/").length > 1 && (
           <div className="w-[95%] mx-auto mt-5">
