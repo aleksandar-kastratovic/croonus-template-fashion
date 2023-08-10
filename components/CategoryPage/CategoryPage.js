@@ -129,7 +129,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   console.log(productData.products, selectedFilters);
   return (
     <>
-      <div className="4xl:container mx-auto">
+      <div className="">
         <div className="px-[3%] max-md:mt-[2rem] mt-[9rem] flex items-center justify-between">
           <h1 className="font-bold text-[1.313rem] max-md:text-[1rem] text-[#191919]">
             {singleCategory?.basic_data?.name}

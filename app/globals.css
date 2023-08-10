@@ -459,3 +459,35 @@
 .button-with-tooltip:hover .tooltip {
   display: block; /* Display the tooltip when button is hovered */
 }
+
+.categoryImageSwiper .swiper-pagination-vertical.swiper-pagination-bullets,
+.categoryImageSwiper
+  .swiper-vertical
+  > .categoryImageSwiper
+  .swiper-pagination-bullets {
+  right: 2px;
+  left: auto !important;
+  bottom: auto !important;
+  top: 50% !important;
+  justify-content: center;
+  align-items: center;
+  margin: auto 0;
+  transform: translate3d(0px, -50%, 0);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.categoryImageSwiper .swiper-pagination-bullet {
+  width: 4px !important;
+  height: 4px !important;
+  display: inline-block;
+  border-radius: var(--swiper-pagination-bullet-border-radius, 50%);
+  background: var(--swiper-pagination-bullet-inactive-color, #000);
+  opacity: var(--swiper-pagination-bullet-inactive-opacity, 0.2);
+}
+
+.categoryImageSwiper .swiper-pagination-bullet-active {
+  opacity: var(--swiper-pagination-bullet-opacity, 1);
+  background: #000000 !important;
+}

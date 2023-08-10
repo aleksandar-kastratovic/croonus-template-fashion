@@ -499,7 +499,7 @@ const Thumb = ({ data, slider }) => {
                   direction: "horizontal",
                 },
               }}
-              className={`productSwiper relative`}
+              className={`categoryImageSwiper relative`}
               onSwiper={(swiper) => setSwiper(swiper)}
             >
               {product?.image?.map((item, index) => (

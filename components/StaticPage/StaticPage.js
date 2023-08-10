@@ -30,7 +30,7 @@ const StaticPage = ({ slug }) => {
   };
 
   return (
-    <div className={`4xl:container mx-auto`}>
+    <div className={``}>
       {staticData?.map((item) => {
         switch (item?.type) {
           case "multiple_images":

@@ -83,7 +83,7 @@ const ProductDetailPage = async ({ params: { path } }) => {
   const newProducts = await getNewProducts();
 
   return (
-    <div className="4xl:container mx-auto">
+    <div className="">
       <ProductDetails
         product={product}
         productGallery={productGallery}
