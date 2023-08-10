@@ -154,7 +154,6 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             slidesPerView: 1,
             pagination: {
               el: ".swiper-pagination",
-              clickable: true,
               enabled: false,
             },
           },
