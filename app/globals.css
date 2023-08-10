@@ -491,3 +491,33 @@
   opacity: var(--swiper-pagination-bullet-opacity, 1);
   background: #000000 !important;
 }
+
+.categoryImageSwiper .swiper-button-next {
+  background: transparent !important;
+  opacity: 0.8;
+  border-radius: 50% !important;
+  padding: 2.2rem !important;
+  color: rgba(0, 0, 0, 0.716) !important;
+  transform: scale(0.5) !important;
+  right: -6px !important;
+  top: 40% !important;
+  box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+  fill: black !important;
+  z-index: 500 !important;
+}
+
+.categoryImageSwiper .swiper-button-prev {
+  background-color: transparent !important;
+  border-radius: 50% !important;
+  padding: 2.2rem !important;
+  top: 40% !important;
+  color: rgba(0, 0, 0, 0.716) !important;
+  width: 56px !important;
+  transform: scale(0.5) !important;
+  box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+  left: -6px !important;
+  z-index: 500 !important;
+  fill: black !important;
+  position: absolute !important;
+  opacity: 0.8;
+}

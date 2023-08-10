@@ -328,7 +328,7 @@ export default function Variants({
                 ? item.values.map((value) => {
                     let display = value.display;
                     return (
-                      <div className="flex flex-row items-center gap-2">
+                      <div>
                         <button
                           onClick={(e) => {
                             e.preventDefault();
