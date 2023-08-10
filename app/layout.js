@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
             href="https://unpkg.com/aos@next/dist/aos.css"
           />
         </head>
-        <body className="4xl:container mx-auto">
+        <body className="">
           <NavigationDesktop />
           <NavigationMobile />
           {children}

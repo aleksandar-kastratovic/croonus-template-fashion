@@ -54,7 +54,7 @@ const Home = async () => {
   const indexBanner = await getIndexBanner();
   return (
     <>
-      <div className="4xl:container mx-auto block relative overflow-hidden">
+      <div className="block relative overflow-hidden">
         <div
           className="relative max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[860px] 2xl:h-[1000px] 3xl:h-[1057px] block"
           id="slider"
