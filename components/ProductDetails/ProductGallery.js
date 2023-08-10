@@ -54,7 +54,7 @@ const ProductGallery = ({ productGallery, color }) => {
           onMouseLeave={() => {
             setShowMagnifier(false);
           }}
-          alt={src.alt}
+          alt={`Pazari Shop`}
         />
 
         <div
@@ -95,6 +95,7 @@ const ProductGallery = ({ productGallery, color }) => {
       <SwiperSlide key={index}>
         <Image
           src={image?.image}
+          alt={`Pazari Shop`}
           width={2000}
           height={2000}
           priority={true}
