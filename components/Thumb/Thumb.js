@@ -476,30 +476,192 @@ const Thumb = ({ data, slider }) => {
       });
       return (
         <div className="col-span-1 relative item">
-          <div className="max-md:h-[240px] md:h-[450px] lg:h-[500px] item relative">
-            {product?.image[0] && (
-              <Link href={`/proizvod/${product?.slug}`} scroll={true}>
-                <Image
-                  src={convertHttpToHttps(
-                    image?.id === product?.basic_data?.id_product
-                      ? image?.image
-                      : product?.image[0]
-                  )}
-                  alt={product?.basic_data?.name}
-                  fill
-                  style={{ objectFit: "cover" }}
-                  priority={true}
-                  className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                />
-              </Link>
-            )}
+          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
+            <Swiper
+              modules={[Navigation, Pagination]}
+              // onSwiper={(swiper) => setSwiper(swiper)}
+              pagination={true}
+              direction={"vertical"}
+              navigation={navigationEnabled}
+              breakpoints={{
+                320: {
+                  navigation: {
+                    enabled: false,
+                  },
+                },
+                1024: {
+                  navigation: {
+                    enabled: true,
+                  },
+                  pagination: {
+                    enabled: false,
+                  },
+                  direction: "horizontal",
+                },
+              }}
+              className={`productSwiper relative`}
+              onSwiper={(swiper) => setSwiper(swiper)}
+            >
+              {product?.image?.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <Link
+                    href={`/proizvod/${product?.slug}`}
+                    scroll={true}
+                    className="z-[100]"
+                  >
+                    <Image
+                      src={convertHttpToHttps(
+                        image?.id === product?.basic_data?.id_product
+                          ? image?.image
+                          : product?.image[0]
+                      )}
+                      alt={product?.basic_data?.name}
+                      fill
+                      style={{ objectFit: "cover" }}
+                      priority={true}
+                      className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                    />
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {product?.variant_options?.length > 0 ? (
+              <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[10px] w-[95%] mx-auto bg-white chevrons">
+                <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
+                  <h1 className="text-[0.938rem] font-semibold text-center">
+                    Izaberi veličinu
+                  </h1>
+                  <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
+                    <Swiper
+                      slidesPerView={3}
+                      breakpoints={{
+                        640: {
+                          slidesPerView: 3,
+                        },
+                        1024: {
+                          slidesPerView: 3,
+                        },
+                        1300: {
+                          slidesPerView: 4,
+                        },
+                        1680: {
+                          slidesPerView: 5,
+                        },
+                      }}
+                      className="variantsSwiper"
+                      loop={true}
+                      rewind={true}
+                      dir={"ltr"}
+                      modules={[Navigation]}
+                      navigation={
+                        variantOptionSize?.values?.length >
+                        swiper?.params?.slidesPerView
+                      }
+                      style={{ width: "100%", display: "block" }}
+                      onSwiper={(swiper) => {
+                        setSwiper(swiper);
+                      }}
+                    >
+                      {variantOptionSize?.values?.map((item3) => {
+                        const variantAttributeKey =
+                          variantOptionSize?.attribute?.key;
+                        const isSelected = selected?.find(
+                          (selection) =>
+                            selection?.attribute_key === variantAttributeKey &&
+                            selection?.value_key === item3?.key
+                        );
+                        return (
+                          <SwiperSlide key={Math.random()}>
+                            <div
+                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${
+                                isSelected &&
+                                variantAttributeKey === variantAttributeKey
+                                  ? `border-[#242424] bg-[#242424] text-white`
+                                  : ``
+                              }`}
+                              onClick={() => {
+                                if (product?.variant_options?.length > 1) {
+                                  setSelected((prevSelected) => {
+                                    const filteredSelections =
+                                      prevSelected?.filter(
+                                        (selection) =>
+                                          selection?.attribute_key !==
+                                          variantAttributeKey
+                                      );
 
-            {/*<div className="absolute bottom-2 left-4">*/}
-            {/*  <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">*/}
-            {/*    -35%*/}
-            {/*  </span>*/}
-            {/*</div>*/}
+                                    return [
+                                      ...filteredSelections,
+                                      {
+                                        attribute_key: variantAttributeKey,
+                                        value_key: item3?.key,
+                                      },
+                                    ];
+                                  });
+                                  setIdProduct(product?.basic_data?.id_product);
+                                } else {
+                                  const productVariantGet = async () => {
+                                    const res = await get(
+                                      `/product-details/basic-data/${product?.basic_data?.id_product}`
+                                    );
+                                    const data = res?.payload?.data;
+                                    if (data?.variant_items) {
+                                      const clickedVariant =
+                                        data?.variant_items?.find(
+                                          (variantItem) => {
+                                            return variantItem?.variant_key_array?.some(
+                                              (variantKey) => {
+                                                return (
+                                                  variantKey?.value_key ===
+                                                  item3.key
+                                                );
+                                              }
+                                            );
+                                          }
+                                        );
+                                      setProductVariant(
+                                        clickedVariant?.basic_data?.id_product
+                                      );
+                                      addToCart(
+                                        clickedVariant?.basic_data?.id_product,
+                                        1,
+                                        false
+                                      );
+                                      toast.success(
+                                        `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
+                                        {
+                                          position: "top-center",
+                                          autoClose: 3000,
+                                          hideProgressBar: false,
+                                          closeOnClick: true,
+                                          pauseOnHover: true,
+                                          draggable: true,
+                                          progress: undefined,
+                                        }
+                                      );
+                                    }
+                                  };
+                                  productVariantGet();
+                                }
+                              }}
+                            >
+                              {item3?.name}
+                            </div>
+                          </SwiperSlide>
+                        );
+                      })}
+                    </Swiper>
+
+                    <p onClick={() => onSwiperRightClick()}>&nbsp;</p>
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
+          {/*<div className="absolute bottom-2 left-4">*/}
+          {/*  <span className="text-[0.75rem] max-md:text-[0.65rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">*/}
+          {/*    -35%*/}
+          {/*  </span>*/}
+          {/*</div>*/}
           {/* <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
             <div>
               <Image

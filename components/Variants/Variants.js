@@ -43,16 +43,15 @@ export default function Variants({
   }, [selected]);
 
   useEffect(() => {
+    setSelected([]);
     if (variant_items.length > 0) {
       const product = variant_items.find((item) => item.slug === productSlug);
       if (product) {
         updateProductVariant(product);
-
         onChangeHandler(
           product?.variant_key_array[0]?.attribute_key,
           product?.variant_key_array[0]?.value_key
         );
-        setSelected(product?.variant_key_array);
       }
     }
   }, [productSlug, variant_items]);
@@ -289,7 +288,7 @@ export default function Variants({
 
     setSelected(temp_selected);
   };
-
+  console.log(selected);
   return (
     <div className="flex flex-col-reverse max-md:gap-7 gap-[60px] max-lg:w-full  ">
       {variantOptions?.map((item) => {
@@ -310,20 +309,20 @@ export default function Variants({
               id={item.id}
               name={item.attribute.key}
               className="max-md:px-0 flex flex-row gap-[1.25rem] flex-wrap md:max-w-[80%]"
-              onChange={(e) => {
-                onChangeHandler(item.attribute.key, e.target.value);
-                handleVariantOptionChange();
-                variant_product = getProductVariant();
-                if (variant_product) {
-                  updateProductVariant(variant_product);
-                  updateProductPrice(variant_product?.price?.price?.original);
-                  handleURLChange(variant_product?.slug);
-                  product_slug = variant_product?.slug;
-                } else {
-                  updateProductVariant(null);
-                  updateProductPrice(null);
-                }
-              }}
+              // onChange={(e) => {
+              //   onChangeHandler(item.attribute.key, e.target.value);
+              //   handleVariantOptionChange();
+              //   variant_product = getProductVariant();
+              //   if (variant_product) {
+              //     updateProductVariant(variant_product);
+              //     updateProductPrice(variant_product?.price?.price?.original);
+              //     handleURLChange(variant_product?.slug);
+              //     product_slug = variant_product?.slug;
+              //   } else {
+              //     updateProductVariant(null);
+              //     updateProductPrice(null);
+              //   }
+              // }}
             >
               {item?.attribute?.name === "Boje"
                 ? item.values.map((value) => {
@@ -375,6 +374,7 @@ export default function Variants({
                                     )}
                                     width={65}
                                     height={85}
+                                    alt={`Pazari Shop`}
                                     priority={true}
                                     className="h-full object-cover"
                                   />

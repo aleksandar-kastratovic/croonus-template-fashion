@@ -9,7 +9,7 @@ import { FreeMode, Pagination, Thumbs } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
-const ProductGallery = ({ productGallery, color }) => {
+const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
   function ImageMagnifier({
     src,
     width,
@@ -54,7 +54,7 @@ const ProductGallery = ({ productGallery, color }) => {
           onMouseLeave={() => {
             setShowMagnifier(false);
           }}
-          alt={src.alt}
+          alt={`Pazari Shop`}
         />
 
         <div
@@ -95,6 +95,7 @@ const ProductGallery = ({ productGallery, color }) => {
       <SwiperSlide key={index}>
         <Image
           src={image?.image}
+          alt={`Pazari Shop`}
           width={2000}
           height={2000}
           priority={true}
@@ -108,16 +109,24 @@ const ProductGallery = ({ productGallery, color }) => {
   const [swiper, setSwiper] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (color) {
-        const newImage = productGallery?.findIndex((item) =>
-          item?.variant_key?.includes(color)
-        );
-        swiper?.slideTo(newImage);
-      }
-    }, 500);
+    if (color) {
+      const newImage = productGallery?.findIndex((item) =>
+        item?.variant_key?.includes(color)
+      );
+      setNewImage(newImage);
+
+      swiper?.slideTo(newImage);
+    }
   }, [color]);
-  console.log(swiper);
+
+  useEffect(() => {
+    if (productGallery?.length) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, [productGallery]);
+
   return (
     <div className="col-span-2 max-md:col-span-4 max-md:h-[450px] md:flex md:flex-row-reverse gap-5 md:max-h-[380px] lg:max-h-[550px] xl:max-h-[680px] 2xl:max-h-[720px] 3xl:max-h-[878px]">
       <Swiper
@@ -151,7 +160,13 @@ const ProductGallery = ({ productGallery, color }) => {
           },
         }}
       >
-        {productImage}
+        {loading ? (
+          <SwiperSlide>
+            <div className="h-full w-full bg-gray-200 animate-pulse"></div>
+          </SwiperSlide>
+        ) : (
+          <> {productImage}</>
+        )}
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
