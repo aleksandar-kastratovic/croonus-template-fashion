@@ -33,7 +33,7 @@ const WishlistPage = () => {
           ))}
         </div>
       ) : (
-        <div className="mt-[1.2rem] lg:mt-[15rem] flex flex-col items-center justify-center py-5 text-center">
+        <div className="mt-[1.2rem] max-sm:w-[95%] mx-autoa lg:mt-[15rem] flex flex-col items-center justify-center py-5 text-center">
           <div className="rounded-lg border p-10">
             <h1 className="text-lg font-medium">Vaša lista želja je prazna!</h1>{" "}
             <p>Kada dodate artikle u listu želja, oni će se pojaviti ovde.</p>
