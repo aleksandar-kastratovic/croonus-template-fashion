@@ -197,16 +197,16 @@ const Thumb = ({ data, slider }) => {
                       }}
                       className="variantsSwiper"
                       loop={true}
+                      rewind={true}
                       dir={"ltr"}
                       modules={[Navigation]}
                       navigation={
                         variantOptionSize?.values?.length >
-                        swiper?.slides?.length
+                        swiper?.params?.slidesPerView
                       }
                       style={{ width: "100%", display: "block" }}
                       onSwiper={(swiper) => {
                         setSwiper(swiper);
-                        swiper.slideNext();
                       }}
                     >
                       {variantOptionSize?.values?.map((item3) => {
@@ -458,7 +458,6 @@ const Thumb = ({ data, slider }) => {
       image: null,
       id: null,
     });
-    console.log("data", data);
 
     useEffect(() => {
       if (image) {
@@ -560,16 +559,17 @@ const Thumb = ({ data, slider }) => {
                     }}
                     className="variantsSwiper"
                     loop={true}
-                    dir={"ltr"}
+                    rewind={true}
+                    dir={"rlt"}
                     modules={[Navigation]}
+                    initialSlide={0}
                     navigation={
                       product?.variant_options[0]?.values?.length >
-                      swiper?.slides?.length
+                      swiper?.params?.slidesPerView
                     }
                     style={{ width: "100%", display: "block" }}
                     onSwiper={(swiper) => {
                       setSwiper(swiper);
-                      swiper.slideNext();
                     }}
                   >
                     {product?.variant_options[0]?.values?.map((item3) => {
@@ -678,7 +678,7 @@ const Thumb = ({ data, slider }) => {
               </span>
             )}
           </div>{" "}
-          <div className={`flex flex-row items-start gap-3 mt-2 max-lg:hidden`}>
+          <div className={`flex flex-row items-start gap-3 max-sm:gap-1 mt-2`}>
             {loading?.status &&
             loading?.id === product?.basic_data?.id_product ? (
               <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
@@ -698,7 +698,7 @@ const Thumb = ({ data, slider }) => {
                       key={item3?.key}
                       className={`max-sm:scale-[0.8] ${
                         isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                      } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                      } rounded-full  cursor-pointer flex items-center justify-center max-md:hidden text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
                       onClick={() => {
                         setSelected((prevSelected) => {
                           // Remove previous selections with the same variantAttributeKey
@@ -720,6 +720,33 @@ const Thumb = ({ data, slider }) => {
                           id: product?.basic_data?.id_product,
                         });
                       }}
+                    >
+                      {item3?.image && (
+                        <Image
+                          src={item3?.image}
+                          alt=""
+                          className="rounded-full"
+                          fill
+                          style={{ objectFit: "cover" }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+
+                {variantOptionColor?.values?.map((item3) => {
+                  const variantAttributeKey =
+                    variantOptionColor?.attribute?.key;
+                  const isSelected = selected.find(
+                    (item) =>
+                      item?.attribute_key === variantAttributeKey &&
+                      item?.value_key === item3?.key
+                  );
+
+                  return (
+                    <div
+                      key={item3?.key}
+                      className={`max-sm:scale-[0.8] rounded-full md:hidden cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] transition-all relative duration-500`}
                     >
                       {item3?.image && (
                         <Image
