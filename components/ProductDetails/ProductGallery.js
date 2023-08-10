@@ -117,7 +117,7 @@ const ProductGallery = ({ productGallery, color }) => {
       }
     }, 500);
   }, [color]);
-
+  console.log(swiper);
   return (
     <div className="col-span-2 max-md:col-span-4 max-md:h-[450px] md:flex md:flex-row-reverse gap-5 md:max-h-[380px] lg:max-h-[550px] xl:max-h-[680px] 2xl:max-h-[720px] 3xl:max-h-[878px]">
       <Swiper
@@ -180,7 +180,11 @@ const ProductGallery = ({ productGallery, color }) => {
         {" "}
         {thumbImage}
         <div
-          className={`absolute bottom-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
+          className={`absolute ${
+            productGallery?.length > swiper?.params?.slidesPerView
+              ? `block`
+              : `hidden`
+          } bottom-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
           onClick={() => {
             swiper?.slideNext();
           }}
@@ -188,7 +192,11 @@ const ProductGallery = ({ productGallery, color }) => {
           <i className={`fas fa-chevron-down`}></i>
         </div>
         <div
-          className={`absolute top-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
+          className={`absolute ${
+            productGallery?.length > swiper?.params?.slidesPerView
+              ? `block`
+              : `hidden`
+          } top-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
           onClick={() => {
             swiper?.slidePrev();
           }}

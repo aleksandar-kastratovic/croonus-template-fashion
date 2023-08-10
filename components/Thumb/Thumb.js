@@ -666,7 +666,7 @@ const Thumb = ({ data, slider }) => {
             </div>
           </div>
           <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
-            <div className={`bg-[#f8ce5d] px-2 font-bold text-center`}>
+            <div className={`bg-[#f8ce5d] px-2 mt-2 font-bold text-center`}>
               <ProductPrice
                 price={product?.price}
                 inventory={product?.inventory}
@@ -746,7 +746,7 @@ const Thumb = ({ data, slider }) => {
                   return (
                     <div
                       key={item3?.key}
-                      className={`max-sm:scale-[0.8] rounded-full md:hidden cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] transition-all relative duration-500`}
+                      className={`max-sm:scale-[0.8] border rounded-full md:hidden cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] transition-all relative duration-500`}
                     >
                       {item3?.image && (
                         <Image
