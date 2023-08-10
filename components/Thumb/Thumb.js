@@ -151,7 +151,7 @@ const Thumb = ({ data, slider }) => {
                   direction: "horizontal",
                 },
               }}
-              className={`productSwiper relative`}
+              className={`categoryImageSwiper relative`}
               onSwiper={(swiper) => setSwiper(swiper)}
             >
               {product?.image?.map((image, index) => (
@@ -763,7 +763,7 @@ const Thumb = ({ data, slider }) => {
                       key={item3?.key}
                       className={`max-sm:scale-[0.8] ${
                         isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                      } rounded-full  cursor-pointer flex items-center justify-center max-md:hidden text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                      } rounded-full  cursor-pointer flex flex-wrap items-center justify-center max-md:hidden text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
                       onClick={() => {
                         setSelected((prevSelected) => {
                           // Remove previous selections with the same variantAttributeKey
