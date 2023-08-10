@@ -502,18 +502,18 @@ const Thumb = ({ data, slider }) => {
               className={`productSwiper relative`}
               onSwiper={(swiper) => setSwiper(swiper)}
             >
-              {product?.image?.map((image, index) => (
+              {product?.image?.map((item, index) => (
                 <SwiperSlide key={index}>
                   <Link
                     href={`/proizvod/${product?.slug}`}
                     scroll={true}
-                    className="z-[100]"
+                    className="z-50"
                   >
                     <Image
                       src={convertHttpToHttps(
                         image?.id === product?.basic_data?.id_product
                           ? image?.image
-                          : product?.image[0]
+                          : item
                       )}
                       alt={product?.basic_data?.name}
                       fill
@@ -526,7 +526,7 @@ const Thumb = ({ data, slider }) => {
               ))}
             </Swiper>
             {product?.variant_options?.length > 0 ? (
-              <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[10px] w-[95%] mx-auto bg-white chevrons">
+              <div className="absolute z-50 rounded-lg py-5 left-3 bottom-[10px] w-[95%] mx-auto bg-white chevrons">
                 <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
                   <h1 className="text-[0.938rem] font-semibold text-center">
                     Izaberi veličinu
@@ -696,103 +696,6 @@ const Thumb = ({ data, slider }) => {
               />
             </div>
           </div> */}
-          {product?.variant_options?.length > 0 ? (
-            <div className="absolute sm:rounded-lg py-5 left-3 max-sm:bottom-[3.9rem] sm:bottom-[5.7rem] max-sm:w-full lg:left-[1.5rem] max-sm:left-0 w-[90%] mx-auto bg-white chevrons">
-              <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
-                <h1 className="text-[0.938rem] font-semibold text-center">
-                  Izaberi veličinu
-                </h1>
-                <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
-                  <Swiper
-                    slidesPerView={3}
-                    breakpoints={{
-                      640: {
-                        slidesPerView: 3,
-                      },
-                      1024: {
-                        slidesPerView: 3,
-                      },
-                      1300: {
-                        slidesPerView: 4,
-                      },
-                      1680: {
-                        slidesPerView: 5,
-                      },
-                    }}
-                    className="variantsSwiper"
-                    loop={true}
-                    rewind={true}
-                    dir={"rlt"}
-                    modules={[Navigation]}
-                    initialSlide={0}
-                    navigation={
-                      product?.variant_options[0]?.values?.length >
-                      swiper?.params?.slidesPerView
-                    }
-                    style={{ width: "100%", display: "block" }}
-                    onSwiper={(swiper) => {
-                      setSwiper(swiper);
-                    }}
-                  >
-                    {product?.variant_options[0]?.values?.map((item3) => {
-                      return (
-                        <SwiperSlide key={Math.random()}>
-                          <div
-                            className="max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border"
-                            onClick={async () => {
-                              const productVariantGet = async () => {
-                                const res = await get(
-                                  `/product-details/basic-data/${product?.basic_data?.id_product}`
-                                );
-                                const data = res?.payload?.data;
-                                if (data?.variant_items) {
-                                  const clickedVariant =
-                                    data.variant_items.find((variantItem) => {
-                                      return variantItem.variant_key_array.some(
-                                        (variantKey) => {
-                                          return (
-                                            variantKey.value_key === item3.key
-                                          );
-                                        }
-                                      );
-                                    });
-                                  setProductVariant(
-                                    clickedVariant?.basic_data?.id_product
-                                  );
-                                  addToCart(
-                                    clickedVariant?.basic_data?.id_product,
-                                    1,
-                                    false
-                                  );
-                                  toast.success(
-                                    `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
-                                    {
-                                      position: "top-center",
-                                      autoClose: 3000,
-                                      hideProgressBar: false,
-                                      closeOnClick: true,
-                                      pauseOnHover: true,
-                                      draggable: true,
-                                      progress: undefined,
-                                    }
-                                  );
-                                }
-                              };
-                              await productVariantGet();
-                            }}
-                          >
-                            {item3?.name}{" "}
-                          </div>
-                        </SwiperSlide>
-                      );
-                    })}
-                  </Swiper>
-
-                  <p onClick={() => onSwiperRightClick()}>&nbsp;</p>
-                </div>
-              </div>
-            </div>
-          ) : null}
           <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
             <Link
               href={`/proizvod/${product?.slug}`}
