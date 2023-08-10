@@ -1,7 +1,7 @@
 "use client";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
 export default function Variants({
   product,
@@ -309,7 +309,7 @@ export default function Variants({
               key={item.id}
               id={item.id}
               name={item.attribute.key}
-              className="max-md:px-0 flex flex-row gap-[1.25rem] flex-wrap"
+              className="max-md:px-0 flex flex-row gap-[1.25rem] flex-wrap md:max-w-[80%]"
               onChange={(e) => {
                 onChangeHandler(item.attribute.key, e.target.value);
                 handleVariantOptionChange();
@@ -368,14 +368,17 @@ export default function Variants({
                               } h-[85px] w-[65px]`}
                             >
                               {value?.product_image && (
-                                <Image
-                                  src={convertHttpToHttps(
-                                    value?.product_image ?? value?.image
-                                  )}
-                                  width={65}
-                                  height={85}
-                                  className="h-full object-cover"
-                                />
+                                <Suspense fallback={<div>Loading...</div>}>
+                                  <Image
+                                    src={convertHttpToHttps(
+                                      value?.product_image ?? value?.image
+                                    )}
+                                    width={65}
+                                    height={85}
+                                    priority={true}
+                                    className="h-full object-cover"
+                                  />
+                                </Suspense>
                               )}
                             </div>
                           )}{" "}

@@ -157,7 +157,7 @@ const ProductGallery = ({ productGallery, color }) => {
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={0}
-        autoplay={true}
+        loop={true}
         breakpoints={{
           320: {
             direction: "horizontal",
@@ -175,11 +175,26 @@ const ProductGallery = ({ productGallery, color }) => {
           },
         }}
         freeMode={true}
-        watchSlidesProgress={true}
-        className={`${classes.mySwiper} mySwiper max-md:hidden`}
+        className={`${classes.mySwiper} mySwiper max-md:hidden !relative`}
       >
         {" "}
         {thumbImage}
+        <div
+          className={`absolute bottom-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
+          onClick={() => {
+            swiper?.slideNext();
+          }}
+        >
+          <i className={`fas fa-chevron-down`}></i>
+        </div>
+        <div
+          className={`absolute top-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
+          onClick={() => {
+            swiper?.slidePrev();
+          }}
+        >
+          <i className={`fas fa-chevron-up`}></i>
+        </div>
       </Swiper>
     </div>
   );
