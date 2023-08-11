@@ -18,9 +18,14 @@ export default function Variants({
   let product_slug = productSlug; // slug proizvoda koji se prikazuje
   let variant_product = null; // krajnji proizvod koji se prikazuje
 
-  const [selected, setSelected] = useState([]); // niz selektovanih variant_options
+  const [selected, setSelected] = useState([
+    {
+      attribute_key: variant_options[1]?.attribute?.key,
+      value_key: variant_options[1]?.values[0]?.key,
+    },
+  ]); // niz selektovanih variant_options
   const [variantOptions, setVariantOptions] = useState(variant_options); // niz variant_options koji se prikazuje
-
+  console.log(selected);
   useEffect(() => {
     // uzima item iz variant_items na osnovu slug-a
     let selected_item = getSelectedItem(product_slug);
@@ -43,7 +48,6 @@ export default function Variants({
   }, [selected]);
 
   useEffect(() => {
-    setSelected([]);
     if (variant_items.length > 0) {
       const product = variant_items.find((item) => item.slug === productSlug);
       if (product) {

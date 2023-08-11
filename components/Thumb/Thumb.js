@@ -28,7 +28,10 @@ const Thumb = ({ data, slider }) => {
   const [productVariant, setProductVariant] = useState(null);
   const [selected, setSelected] = useState([]);
   const [idProduct, setIdProduct] = useState(null);
-  const [navigationEnabled, setNavigationEnabled] = useState(false);
+  const [navigationEnabled, setNavigationEnabled] = useState({
+    enabled: false,
+    id: null,
+  });
   useEffect(() => {
     const setVariantColorOption = (data) => {
       const selectedOptions = new Set();
@@ -36,6 +39,7 @@ const Thumb = ({ data, slider }) => {
       data?.forEach((item) => {
         item?.variant_options?.forEach((item2) => {
           if (item2?.attribute?.slug === "color") {
+            selectedOptions.clear(); // Clear existing selections
             selectedOptions.add(
               JSON.stringify({
                 attribute_key: item2?.attribute?.key,
@@ -46,15 +50,13 @@ const Thumb = ({ data, slider }) => {
         });
       });
 
-      setSelected((prev) => [
-        ...prev,
-        ...Array.from(selectedOptions, (option) => JSON.parse(option)),
-      ]);
+      setSelected(Array.from(selectedOptions, (option) => JSON.parse(option)));
     };
 
     setVariantColorOption(data);
   }, []);
 
+  console.log(data);
   useEffect(() => {
     if (selected?.length === 2) {
       setLoading({
@@ -124,8 +126,18 @@ const Thumb = ({ data, slider }) => {
       <SwiperSlide key={product?.basic_data?.id} className="">
         <div
           className="w-full item"
-          onMouseEnter={() => setNavigationEnabled(true)}
-          onMouseLeave={() => setNavigationEnabled(false)}
+          onMouseEnter={() =>
+            setNavigationEnabled({
+              enabled: true,
+              id: product?.basic_data?.id_product,
+            })
+          }
+          onMouseLeave={() =>
+            setNavigationEnabled({
+              enabled: false,
+              id: null,
+            })
+          }
         >
           {" "}
           <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
@@ -134,7 +146,11 @@ const Thumb = ({ data, slider }) => {
               // onSwiper={(swiper) => setSwiper(swiper)}
               pagination={true}
               direction={"vertical"}
-              navigation={navigationEnabled}
+              loop={true}
+              navigation={
+                navigationEnabled.enabled === true &&
+                navigationEnabled.id === product?.basic_data?.id_product
+              }
               breakpoints={{
                 320: {
                   navigation: {
@@ -165,6 +181,9 @@ const Thumb = ({ data, slider }) => {
                       src={convertHttpToHttps(image)}
                       alt={product?.basic_data?.name}
                       fill
+                      sizes={
+                        "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                      }
                       priority
                       className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
                     />
@@ -399,6 +418,9 @@ const Thumb = ({ data, slider }) => {
                           alt=""
                           className="rounded-full"
                           fill
+                          sizes={
+                            "(max-width: 639px) 15px, (max-width: 767px) 15px, (max-width: 1023px) 15px, (max-width: 1279px) 15px, 15px"
+                          }
                           style={{ objectFit: "cover" }}
                         />
                       )}
@@ -482,7 +504,11 @@ const Thumb = ({ data, slider }) => {
               // onSwiper={(swiper) => setSwiper(swiper)}
               pagination={true}
               direction={"vertical"}
-              navigation={navigationEnabled}
+              loop={true}
+              navigation={
+                navigationEnabled.enabled === true &&
+                navigationEnabled.id === product?.basic_data?.id_product
+              }
               breakpoints={{
                 320: {
                   navigation: {
@@ -517,6 +543,9 @@ const Thumb = ({ data, slider }) => {
                       )}
                       alt={product?.basic_data?.name}
                       fill
+                      sizes={
+                        "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, 100vw"
+                      }
                       style={{ objectFit: "cover" }}
                       priority={true}
                       className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
@@ -763,7 +792,7 @@ const Thumb = ({ data, slider }) => {
                       key={item3?.key}
                       className={`max-sm:scale-[0.8] ${
                         isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                      } rounded-full  cursor-pointer flex flex-wrap items-center justify-center max-md:hidden text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                      } rounded-full  cursor-pointer flex flex-wrap items-center justify-center max-md:hidden text-center text-xs w-[10px] h-[10px] md:w-[15px] md:h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
                       onClick={() => {
                         setSelected((prevSelected) => {
                           // Remove previous selections with the same variantAttributeKey
@@ -792,6 +821,7 @@ const Thumb = ({ data, slider }) => {
                           alt=""
                           className="rounded-full"
                           fill
+                          sizes={"15px"}
                           style={{ objectFit: "cover" }}
                         />
                       )}
@@ -811,7 +841,7 @@ const Thumb = ({ data, slider }) => {
                   return (
                     <div
                       key={item3?.key}
-                      className={`max-sm:scale-[0.8] border rounded-full md:hidden cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] transition-all relative duration-500`}
+                      className={`max-sm:scale-[0.8] border rounded-full md:hidden cursor-pointer flex items-center justify-center text-center text-xs w-[10px] h-[10px] md:w-[15px] md:h-[15px] transition-all relative duration-500`}
                     >
                       {item3?.image && (
                         <Image
@@ -819,6 +849,7 @@ const Thumb = ({ data, slider }) => {
                           alt=""
                           className="rounded-full"
                           fill
+                          sizes={"15px"}
                           style={{ objectFit: "cover" }}
                         />
                       )}
