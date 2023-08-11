@@ -34,8 +34,10 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
       >
         <Image
           src={src}
-          width={2000}
-          height={2000}
+          fill
+          sizes={
+            "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, 25vw, 20vw"
+          }
           priority={true}
           className="h-full w-full object-cover"
           onMouseEnter={(e) => {
@@ -114,7 +116,6 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
         item?.variant_key?.includes(color)
       );
       setNewImage(newImage);
-
       swiper?.slideTo(newImage);
     }
   }, [color]);
@@ -126,7 +127,6 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
       }, 1000);
     }
   }, [productGallery]);
-
   return (
     <div className="col-span-2 max-md:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:max-h-[380px] lg:max-h-[550px] xl:max-h-[680px] 2xl:max-h-[720px] 3xl:max-h-[878px]">
       <Swiper
@@ -204,7 +204,12 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             swiper?.slideNext();
           }}
         >
-          <i className={`fas fa-chevron-down`}></i>
+          <i
+            className={`fas fa-chevron-down`}
+            onClick={() => {
+              swiper?.slideNext();
+            }}
+          ></i>
         </div>
         <div
           className={`absolute ${
@@ -216,7 +221,12 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             swiper?.slidePrev();
           }}
         >
-          <i className={`fas fa-chevron-up`}></i>
+          <i
+            className={`fas fa-chevron-up`}
+            onClick={() => {
+              swiper?.slidePrev();
+            }}
+          ></i>
         </div>
       </Swiper>
     </div>

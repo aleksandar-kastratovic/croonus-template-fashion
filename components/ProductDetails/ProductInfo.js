@@ -59,7 +59,7 @@ const ProductInfo = ({
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();
-
+  const [setVariant, setVariantOnOff] = useState(true);
   const addToWishlist = (e) => {
     if (product.product_type === "single") {
       globalAddToWishList(product.data.item.basic_data?.id_product);
@@ -125,7 +125,6 @@ const ProductInfo = ({
     };
     handleBodyScroll();
   }, [deliveryModal, infoModal, returnModal]);
-
   return (
     <>
       {product ? (
@@ -172,12 +171,16 @@ const ProductInfo = ({
             {product?.product_type === "variant" && (
               <div className="py-[2.75rem] max-md:py-[1.5rem]">
                 <Variants
-                  firstVariantOption={false}
+                  firstVariantOption={productVariant ? false : true}
                   product={product}
                   productSlug={path}
                   handleURLChange={handleURLChange}
                   updateProductVariant={updateProductVariant}
                   setSelectedColor={setSelectedColor}
+                  productVariant={productVariant}
+                  setVariant={setVariant}
+                  setVariantOnOff={setVariantOnOff}
+                  slug={path}
                 />
               </div>
             )}
@@ -185,7 +188,7 @@ const ProductInfo = ({
               <Image src={Measure} alt="measure" width={30} height={20} />
               <span className="text-[13px] font-bold">Pomoć za veličine</span>
             </div>
-            <div className="mt-[4.188rem] max-md:mt-[2rem] flex items-center gap-[31px] ">
+            <div className="mt-[4.188rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
                 disabled={
                   productVariant === null || productVariant.length === 0
@@ -199,7 +202,22 @@ const ProductInfo = ({
               >
                 Dodaj u korpu
               </button>
-
+              <button
+                disabled={
+                  productVariant === null || productVariant.length === 0
+                }
+                className={
+                  productVariant === null || productVariant.length === 0
+                    ? `w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold cursor-not-allowed relative`
+                    : `w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold`
+                }
+                onClick={() => {
+                  addToCart();
+                  router.push("/korpa");
+                }}
+              >
+                Kupi odmah
+              </button>
               <div
                 className="w-[39px] h-[35px] cursor-pointer"
                 onClick={addToWishlist}

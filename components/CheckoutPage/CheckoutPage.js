@@ -124,7 +124,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
 
   const cartItems = cartData.items ?? [];
   const cartCost = cartData.summary?.total ?? 0;
-  console.log(cartItems);
+
   const formChangeHandler = ({ target }) => {
     setErrors(errors.filter((item) => item != target.name));
 

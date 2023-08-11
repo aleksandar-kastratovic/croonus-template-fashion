@@ -56,7 +56,6 @@ const Thumb = ({ data, slider }) => {
     setVariantColorOption(data);
   }, []);
 
-  console.log(data);
   useEffect(() => {
     if (selected?.length === 2) {
       setLoading({
@@ -772,7 +771,7 @@ const Thumb = ({ data, slider }) => {
               </span>
             )}
           </div>{" "}
-          <div className={`flex flex-row items-start gap-3 max-sm:gap-1 mt-2`}>
+          <div className={`flex flex-row items-start gap-3 max-sm:gap-0 mt-2`}>
             {loading?.status &&
             loading?.id === product?.basic_data?.id_product ? (
               <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>

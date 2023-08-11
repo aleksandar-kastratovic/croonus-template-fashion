@@ -16,7 +16,6 @@ export const useGlobalAddToCart = (type = false) => {
       status: null,
       quantity_calc_type: type ? "replace" : "calc",
     }).then((response) => {
-      console.log(response);
       mutateCart();
     });
   };
@@ -37,7 +36,6 @@ export const useGlobalRemoveFromCart = () => {
       status: null,
     })
       .then((response) => {
-        console.log(response);
         mutateCart();
       })
       .catch((error) => console.warn(error));
@@ -73,7 +71,6 @@ export const useGlobalRemoveFromWishlist = () => {
   return (id) => {
     deleteMethod(`/wishlist/${id}`)
       .then((response) => {
-        console.log(response);
         mutateWishList();
       })
       .catch((error) => console.warn(error));
