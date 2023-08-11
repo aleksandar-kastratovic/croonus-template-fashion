@@ -12,27 +12,25 @@ export default function Variants({
   handleURLChange,
   firstVariantOption,
   setSelectedColor,
+  productVariant,
+  setVariant,
+  setVariantOnOff,
 }) {
   let variant_options = product?.data?.variant_options; // niz svih variant_options
   let variant_items = product?.data?.variant_items; // niz svih varijanti proizvoda
   let product_slug = productSlug; // slug proizvoda koji se prikazuje
   let variant_product = null; // krajnji proizvod koji se prikazuje
 
-  const [selected, setSelected] = useState([
-    {
-      attribute_key: variant_options[1]?.attribute?.key,
-      value_key: variant_options[1]?.values[0]?.key,
-    },
-  ]); // niz selektovanih variant_options
+  const [selected, setSelected] = useState([]); // niz selektovanih variant_options
+
   const [variantOptions, setVariantOptions] = useState(variant_options); // niz variant_options koji se prikazuje
-  console.log(selected);
   useEffect(() => {
     // uzima item iz variant_items na osnovu slug-a
     let selected_item = getSelectedItem(product_slug);
 
-    if (!selected_item) {
-      selected_item = handleVariantFirstOption();
-    }
+    // if (!selected_item) {
+    //   selected_item = handleVariantFirstOption();
+    // }
 
     // ako postoji item iz variant_items na osnovu slug-a i setuje se selected
     if (selected_item) {
@@ -56,17 +54,21 @@ export default function Variants({
           product?.variant_key_array[0]?.attribute_key,
           product?.variant_key_array[0]?.value_key
         );
+        onChangeHandler(
+          product?.variant_key_array[1]?.attribute_key,
+          product?.variant_key_array[1]?.value_key
+        );
       }
     }
   }, [productSlug, variant_items]);
 
   // setuje prve opcije variant_options-a ukoliko je firstVariantOption true
-  const handleVariantFirstOption = () => {
-    if (firstVariantOption && selected.length === 0) {
-      return variant_items[0];
-    }
-    return null;
-  };
+  // const handleVariantFirstOption = () => {
+  //   if (firstVariantOption && selected.length === 0) {
+  //     return variant_items[0];
+  //   }
+  //   return null;
+  // };
 
   //menja URL na osnovu selektovanih variant_options
   useEffect(() => {

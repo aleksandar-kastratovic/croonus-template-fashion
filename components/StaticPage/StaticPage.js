@@ -12,7 +12,6 @@ const StaticPage = ({ slug }) => {
     const getData = async () => {
       const getData = await list(`/static-pages/content/${slug}`).then(
         (res) => {
-          console.log(res);
           setData(res?.payload);
         }
       );

@@ -69,7 +69,7 @@ export async function generateMetadata({ params: { path } }) {
   };
 }
 
-const ProductDetailPage = async ({ params: { path } }) => {
+const ProductDetailPage = ({ params: { path } }) => {
   return (
     <Suspense fallback={<Loader />}>
       <ProductPage path={path[path?.length - 1]} />

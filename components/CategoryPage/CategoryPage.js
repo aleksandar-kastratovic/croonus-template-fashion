@@ -74,7 +74,6 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         filters: tempSelectedFilters,
       }).then((response) => {
         setAvailableFilters(response?.payload);
-        console.log(response.payload);
       });
     }
     setChangeFilters(false);
