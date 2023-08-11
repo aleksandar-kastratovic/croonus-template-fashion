@@ -126,20 +126,26 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [loading, page, productData?.pagination?.total_pages]);
-  console.log(productData.products, selectedFilters);
+
   return (
     <>
       <div className="">
-        <div className="px-[3%] max-md:mt-[2rem] mt-[9rem] flex items-center justify-between">
+        <div className="px-[3%] max-md:z-[51] bg-white max-md:mt-[2rem] mt-[9rem] flex items-center justify-between max-md:sticky max-md:top-[56px] max-md:py-2">
           <h1 className="font-bold text-[1.313rem] max-md:text-[1rem] text-[#191919]">
             {singleCategory?.basic_data?.name}
           </h1>
           <div
-            className="border-2 max-md:border max-[365px]:w-[150px] max-md:h-[40px] max-md:w-[132px] w-[243px] h-[50px] border-[#171717] flex items-center md:gap-[30px] pl-[14px] cursor-pointer"
+            className="border-2  max-md:border-none max-[365px]:w-[150px] max-md:h-[40px] max-md:w-[132px] w-[243px] h-[50px] border-[#171717] flex items-center md:gap-[30px] pl-[14px] cursor-pointer"
             onClick={() => setOpenFilter(true)}
           >
-            <Image src={FilterIcon} alt="Filter" width={20} height={20} />
-            <h1 className="uppercase max-md:pl-4 font-bold text-[13.74px] text-[#191919]">
+            <Image
+              src={FilterIcon}
+              alt="Filter"
+              width={20}
+              height={20}
+              className={`max-md:ml-auto`}
+            />
+            <h1 className="uppercase max-md:hidden max-md:pl-4 font-bold text-[13.74px] text-[#191919]">
               Filteri
             </h1>
           </div>
@@ -288,7 +294,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         <div className="sticky bottom-0 bg-white border-t border-t-[#ededed]">
           <div className="mx-[1.25rem] py-[2.813rem] flex gap-[20px] items-center">
             <button
-              className="w-[7.625rem] h-[3.188rem] text-sm font-bold border border-[#191919] text-[#191919] uppercase flex items-center justify-center text-center"
+              className="w-[7.625rem] h-[3.188rem] hover:text-white hover:bg-[#191919] transition-colors duration-500 text-sm font-bold border border-[#191919] text-[#191919] uppercase flex items-center justify-center text-center"
               onClick={(e) => {
                 e.preventDefault();
                 setSelectedFilters([]);
@@ -302,7 +308,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
               Obriši
             </button>
             <button
-              className="w-[237px] h-[3.188rem] text-sm font-bold border bg-[#191919] text-white uppercase flex items-center justify-center text-center"
+              className="w-[237px] h-[3.188rem] text-sm font-bold border bg-[#191919] hover:bg-opacity-80 text-white uppercase flex items-center justify-center text-center"
               onClick={(e) => {
                 e.preventDefault();
                 setSelectedFilters(tempSelectedFilters);

@@ -128,7 +128,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
   }, [productGallery]);
 
   return (
-    <div className="col-span-2 max-md:col-span-4 max-md:h-[450px] md:flex md:flex-row-reverse gap-5 md:max-h-[380px] lg:max-h-[550px] xl:max-h-[680px] 2xl:max-h-[720px] 3xl:max-h-[878px]">
+    <div className="col-span-2 max-md:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:max-h-[380px] lg:max-h-[550px] xl:max-h-[680px] 2xl:max-h-[720px] 3xl:max-h-[878px]">
       <Swiper
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
@@ -185,6 +185,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             direction: "vertical",
             slidesPerView: 4.25,
             enabled: true,
+            loop: true,
             modules: [FreeMode, Thumbs],
           },
         }}
