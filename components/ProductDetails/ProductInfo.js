@@ -195,8 +195,8 @@ const ProductInfo = ({
                 }
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#2bc48a] flex justify-center items-center uppercase text-white text-sm font-bold cursor-not-allowed relative`
-                    : `w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#2bc48a] flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#2bc48a] flex justify-center items-center uppercase text-white text-sm font-bold cursor-not-allowed relative`
+                    : `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#2bc48a] flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => addToCart()}
               >
@@ -208,8 +208,8 @@ const ProductInfo = ({
                 }
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold cursor-not-allowed relative`
-                    : `w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold cursor-not-allowed relative`
+                    : `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
                   addToCart();
