@@ -22,6 +22,17 @@ export default function Variants({
   let variant_product = null; // krajnji proizvod koji se prikazuje
 
   const [selected, setSelected] = useState([]); // niz selektovanih variant_options
+  useEffect(() => {
+    if (setVariant) {
+      setSelected([
+        {
+          attribute_key: variant_options[1]?.attribute?.key,
+          value_key: variant_options[1]?.values[0]?.key,
+        },
+      ]);
+      setVariantOnOff(false);
+    }
+  }, [setVariant]);
 
   const [variantOptions, setVariantOptions] = useState(variant_options); // niz variant_options koji se prikazuje
   useEffect(() => {

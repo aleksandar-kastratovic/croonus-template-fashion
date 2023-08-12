@@ -16,6 +16,7 @@ import Search from "../../assets/Icons/search.png";
 const NavigationDesktop = () => {
   const pathname = usePathname();
   const { push: navigate, asPath } = useRouter();
+
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [cartCount, setCartCount] = useState(0);
@@ -602,7 +603,13 @@ const NavigationDesktop = () => {
             >
               {activeSubSubCategory?.map((category) => {
                 return (
-                  <div className="text-black text-xs hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium">
+                  <div
+                    className={`${
+                      pathname?.includes(category?.slug)
+                        ? `text-[#e10000]`
+                        : `text-black`
+                    } text-xs hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium`}
+                  >
                     <Link
                       href={`/kategorije/${category?.slug_path}`}
                       onClick={() => {

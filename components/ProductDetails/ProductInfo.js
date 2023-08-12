@@ -125,6 +125,21 @@ const ProductInfo = ({
     };
     handleBodyScroll();
   }, [deliveryModal, infoModal, returnModal]);
+
+  const [text, setText] = useState("Dodaj u korpu");
+
+  const handleTextChange = () => {
+    if (product?.product_type === "variant" && !productVariant?.id) {
+      setText("Izaberite veličinu");
+    }
+  };
+
+  useEffect(() => {
+    if (product?.product_type === "variant" && productVariant?.id) {
+      setText("Dodaj u korpu");
+    }
+  }, [productVariant]);
+
   return (
     <>
       {product ? (
@@ -190,17 +205,30 @@ const ProductInfo = ({
             </div>
             <div className="mt-[4.188rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
-                disabled={
-                  productVariant === null || productVariant.length === 0
-                }
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#2bc48a] flex justify-center items-center uppercase text-white text-sm font-bold cursor-not-allowed relative`
-                    : `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#2bc48a] flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] ${
+                        text === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#2bc48a]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
+                    : `max-sm:w-[8.5rem] ${
+                        text === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#2bc48a]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
-                onClick={() => addToCart()}
+                onClick={() => {
+                  if (
+                    product?.product_type === "variant" &&
+                    productVariant?.id
+                  ) {
+                    addToCart();
+                  }
+                  handleTextChange();
+                }}
               >
-                Dodaj u korpu
+                {text}
               </button>
               <button
                 disabled={
