@@ -5,21 +5,20 @@ import { Suspense } from "react";
 import ProductPage from "@/components/ProductDetails/ProductPage";
 import Loader from "@/components/Loader";
 
-const getProduct = async (slug) => {
-  return await get(`/product-details/basic-data/${slug}`).then(
-    (res) => res?.payload?.data?.item?.basic_data
-  );
-};
-
-const getProductGallery = async (slug) => {
-  return await get(`/product-details/gallery/${slug}`).then(
-    (res) => res?.payload?.gallery[0]?.image
-  );
-};
+// const getProductGallery = async (slug) => {
+//   return await get(`/product-details/gallery/${slug}`).then(
+//     (res) => res?.payload?.gallery[0]?.image
+//   );
+// };
 
 export async function generateMetadata({ params: { path } }) {
+  const getProduct = async (slug) => {
+    return await get(`/product-details/basic-data/${slug}`).then((res) => {
+      return res?.payload?.data?.item?.basic_data;
+    });
+  };
   const product = await getProduct(path[path?.length - 1]);
-  const productImage = await getProductGallery(path[path?.length - 1]);
+  // const productImage = await getProductGallery(path[path?.length - 1]);
   return {
     title: product?.name,
     description: product?.short_description ?? "Pazari online Shop",
@@ -27,16 +26,6 @@ export async function generateMetadata({ params: { path } }) {
     openGraph: {
       title: product?.name,
       description: product?.short_description ?? "Pazari online Shop",
-
-      images: [
-        {
-          url: productImage ?? "",
-          width: 800,
-          height: 600,
-          alt: product?.name ?? "",
-        },
-      ],
-
       site_name: "Pazari.rs",
     },
 

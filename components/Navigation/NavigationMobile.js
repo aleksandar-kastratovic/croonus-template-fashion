@@ -361,6 +361,10 @@ const NavigationMobile = () => {
                         activeCategory.firstCategory
                           ? `uppercase w-full`
                           : `w-full`
+                      } ${
+                        pathname?.includes(category?.slug)
+                          ? `text-[#e10000]`
+                          : `text-black`
                       } text-[0.9rem]`}
                       onClick={() => {
                         setMenuOpen(false);
