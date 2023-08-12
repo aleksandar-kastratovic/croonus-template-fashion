@@ -46,6 +46,7 @@ export default function Variants({
     // ako postoji item iz variant_items na osnovu slug-a i setuje se selected
     if (selected_item) {
       setSelected(selected_item.variant_key_array);
+      setSelectedColor(selected_item.variant_key_array[1]?.value_key);
     }
 
     if (selected_item) {
