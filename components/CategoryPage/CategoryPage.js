@@ -33,6 +33,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         filters: selectedFilters,
       });
       const newProducts = res?.payload?.items;
+      console.log("test", res?.payload?.items);
       const newPagination = res?.payload?.pagination;
       if (isBeingFiltered) {
         setProductData({
@@ -287,6 +288,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
               setChangeFilters={setChangeFilters}
               setSort={setSort}
               sort={sort}
+              setIsBeingFiltered={setIsBeingFiltered}
             />
           </div>
         </div>
