@@ -12,6 +12,7 @@ const Filters = ({
   tempSelectedFilters,
   sort,
   setSort,
+  setIsBeingFiltered,
 }) => {
   const [openIndex, setOpenIndex] = useState({ key: null });
   const [activeSort, setActiveSort] = useState({ label: "" });
@@ -60,6 +61,7 @@ const Filters = ({
                         field: item?.field,
                         direction: item?.direction,
                       });
+                      setIsBeingFiltered(true);
                     }}
                   >
                     <p className="font-light text-[13px]">{item?.label}</p>
@@ -83,7 +85,9 @@ const Filters = ({
                 }
                 key={filter?.key}
               >
-                <h1 className="text-[0.938rem] font-bold">{filter?.attribute?.name}</h1>
+                <h1 className="text-[0.938rem] font-bold">
+                  {filter?.attribute?.name}
+                </h1>
                 <div>
                   <h1 className={`text-[#171717] font-bold `}>
                     {isOpen ? `-` : `+`}
