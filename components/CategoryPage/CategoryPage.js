@@ -13,7 +13,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   });
   const [openFilter, setOpenFilter] = useState(false);
   const [sort, setSort] = useState({ field: "", direction: "" });
-  const [page, setPage] = useState(1); // Start from page 1
+  const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
   const [availableFilters, setAvailableFilters] = useState(filter);
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -33,7 +33,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         filters: selectedFilters,
       });
       const newProducts = res?.payload?.items;
-      console.log("test", res?.payload?.items);
+      console.log(res?.payload?.items);
       const newPagination = res?.payload?.pagination;
       if (isBeingFiltered) {
         setProductData({
@@ -45,10 +45,10 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         setProductData((prevData) => {
           // If isBeingFiltered is false, combine the previous products with new products after filtering duplicates
           const uniqueProductIds = new Set(
-            prevData.products.map((product) => product.id)
+            prevData.products.map((product) => product.basic_data?.id_product)
           );
           const filteredNewProducts = newProducts.filter(
-            (product) => !uniqueProductIds.has(product.id)
+            (product) => !uniqueProductIds.has(product?.basic_data?.id_product)
           );
 
           return {
@@ -186,6 +186,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                     setTempSelectedFilters(newSelectedFilters);
                     setSelectedFilters(newSelectedFilters);
                     setChangeFilters(true);
+                    setIsBeingFiltered(true);
                     if (tempSelectedFilters.length === 1) {
                       window.history.replaceState(
                         null,

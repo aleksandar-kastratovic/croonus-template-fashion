@@ -32,29 +32,29 @@ const Thumb = ({ data, slider }) => {
     enabled: false,
     id: null,
   });
-  useEffect(() => {
-    const setVariantColorOption = (data) => {
-      const selectedOptions = new Set();
-
-      data?.forEach((item) => {
-        item?.variant_options?.forEach((item2) => {
-          if (item2?.attribute?.slug === "color") {
-            selectedOptions.clear(); // Clear existing selections
-            selectedOptions.add(
-              JSON.stringify({
-                attribute_key: item2?.attribute?.key,
-                value_key: item2?.values[0]?.key,
-              })
-            );
-          }
-        });
-      });
-
-      setSelected(Array.from(selectedOptions, (option) => JSON.parse(option)));
-    };
-
-    setVariantColorOption(data);
-  }, []);
+  // useEffect(() => {
+  //   const setVariantColorOption = (data) => {
+  //     const selectedOptions = new Set();
+  //
+  //     data?.forEach((item) => {
+  //       item?.variant_options?.forEach((item2) => {
+  //         if (item2?.attribute?.slug === "color") {
+  //           selectedOptions.clear(); // Clear existing selections
+  //           selectedOptions.add(
+  //             JSON.stringify({
+  //               attribute_key: item2?.attribute?.key,
+  //               value_key: item2?.values[0]?.key,
+  //             })
+  //           );
+  //         }
+  //       });
+  //     });
+  //
+  //     setSelected(Array.from(selectedOptions, (option) => JSON.parse(option)));
+  //   };
+  //
+  //   setVariantColorOption(data);
+  // }, []);
 
   useEffect(() => {
     if (selected?.length === 2) {
@@ -496,7 +496,15 @@ const Thumb = ({ data, slider }) => {
         return variant?.attribute?.slug === "color";
       });
       return (
-        <div className="col-span-1 relative item">
+        <div
+          className="col-span-1 relative item"
+          onMouseEnter={() => {
+            setNavigationEnabled({
+              enabled: true,
+              id: product?.basic_data?.id_product,
+            });
+          }}
+        >
           <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
             <Swiper
               modules={[Navigation, Pagination]}
@@ -504,6 +512,7 @@ const Thumb = ({ data, slider }) => {
               pagination={true}
               direction={"vertical"}
               loop={true}
+              initialSlide={0}
               navigation={
                 navigationEnabled.enabled === true &&
                 navigationEnabled.id === product?.basic_data?.id_product
@@ -528,7 +537,7 @@ const Thumb = ({ data, slider }) => {
               onSwiper={(swiper) => setSwiper(swiper)}
             >
               {product?.image?.map((item, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide>
                   <Link
                     href={`/proizvod/${product?.slug}`}
                     scroll={true}
@@ -809,8 +818,8 @@ const Thumb = ({ data, slider }) => {
                         });
                         setIdProduct(product?.basic_data?.id_product);
                         setImage({
-                          image: item3?.product_image,
                           id: product?.basic_data?.id_product,
+                          image: item3?.product_image,
                         });
                       }}
                     >

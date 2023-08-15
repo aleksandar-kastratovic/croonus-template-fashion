@@ -5,7 +5,7 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import "swiper/css/pagination";
-import { FreeMode, Pagination, Thumbs } from "swiper";
+import { FreeMode, Navigation, Pagination, Thumbs } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
@@ -133,8 +133,9 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
         pagination={true}
-        modules={[FreeMode, Thumbs, Pagination]}
+        modules={[FreeMode, Thumbs, Pagination, Navigation]}
         initialSlide={color ? newImage : 0}
+        navigation={true}
         onSwiper={(swiper) => setSwiper(swiper)}
         className={`${classes.mySwiper2} mySwiper2`}
         breakpoints={{
@@ -148,6 +149,9 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
               bulletClass: "swiper-pagination-bullet",
               bulletActiveClass: "swiper-pagination-bullet-active",
             },
+            navigation: {
+              enabled: false,
+            },
           },
           768: {
             direction: "horizontal",
@@ -155,6 +159,9 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             pagination: {
               el: ".swiper-pagination",
               enabled: false,
+            },
+            navigation: {
+              enabled: true,
             },
           },
         }}

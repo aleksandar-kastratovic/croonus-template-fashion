@@ -5,13 +5,17 @@ import { Suspense } from "react";
 import ProductPage from "@/components/ProductDetails/ProductPage";
 import Loader from "@/components/Loader";
 
-// const getProductGallery = async (slug) => {
-//   return await get(`/product-details/gallery/${slug}`).then(
-//     (res) => res?.payload?.gallery[0]?.image
-//   );
-// };
+const ProductDetailPage = async ({ params: { path } }) => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <ProductPage path={path[path?.length - 1]} />
+    </Suspense>
+  );
+};
 
-export async function generateMetadata({ params: { path } }) {
+export default ProductDetailPage;
+
+export const generateMetadata = async ({ params: { path } }) => {
   const getProduct = async (slug) => {
     return await get(`/product-details/basic-data/${slug}`).then((res) => {
       return res?.payload?.data?.item?.basic_data;
@@ -52,14 +56,4 @@ export async function generateMetadata({ params: { path } }) {
       },
     ],
   };
-}
-
-const ProductDetailPage = ({ params: { path } }) => {
-  return (
-    <Suspense fallback={<Loader />}>
-      <ProductPage path={path[path?.length - 1]} />
-    </Suspense>
-  );
 };
-
-export default ProductDetailPage;

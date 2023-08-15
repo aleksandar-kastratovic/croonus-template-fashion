@@ -400,8 +400,19 @@ export default function Variants({
                               )}
                             </div>
                           )}{" "}
-                          <span className="tooltip">{value.name}</span>{" "}
-                          {/* Tooltip content */}
+                          <div
+                            className={`tooltip ${
+                              selected.find(
+                                (x) =>
+                                  x.attribute_key == item.attribute.key &&
+                                  x.value_key == value.key
+                              )
+                                ? `bg-green-500 flex items-center gap-2 text-left text-white`
+                                : `bg-[#191919]`
+                            } transition-all duration-500 !text-xs`}
+                          >
+                            {value.name}
+                          </div>
                         </button>
                       </div>
                     );
