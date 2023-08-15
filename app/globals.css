@@ -522,3 +522,17 @@
   position: absolute !important;
   opacity: 0.8;
 }
+
+.productdetailsnav {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mySwiper2 .swiper-button-next,
+  .mySwiper2 .swiper-button-prev {
+    display: none !important;
+  }
+  .swiper-nav-button {
+    display: none !important;
+  }
+}
