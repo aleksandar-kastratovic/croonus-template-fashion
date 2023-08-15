@@ -7,16 +7,11 @@ import { useParams, usePathname } from "next/navigation";
 
 const ProductDetails = ({ product, productGallery, desc, path }) => {
   const [rawGallery, setRawGallery] = useState(productGallery);
-  const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(false);
   const filteredImages = productGallery?.filter((image) => {
     return !image?.variant_key;
   });
-
-  useEffect(() => {
-    setGallery(filteredImages);
-  }, []);
-
+  const [gallery, setGallery] = useState(filteredImages);
   const [color, setColor] = useState(null);
 
   useEffect(() => {

@@ -380,7 +380,7 @@ export default function Variants({
                                     x.attribute_key == item.attribute.key &&
                                     x.value_key == value.key
                                 )
-                                  ? `border-2 border-[#838482] `
+                                  ? `border-2 border-[#2bc48a] `
                                   : ``
                               } h-[85px] w-[65px]`}
                             >
@@ -407,7 +407,7 @@ export default function Variants({
                                   x.attribute_key == item.attribute.key &&
                                   x.value_key == value.key
                               )
-                                ? `bg-green-500 flex items-center gap-2 text-left text-white`
+                                ? `bg-[#2bc48a] flex items-center gap-2 text-left text-white`
                                 : `bg-[#191919]`
                             } transition-all duration-500 !text-xs`}
                           >

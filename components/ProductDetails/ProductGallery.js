@@ -136,23 +136,10 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
         modules={[FreeMode, Thumbs, Pagination, Navigation]}
         initialSlide={color ? newImage : 0}
         navigation={true}
+        loop={true}
         onSwiper={(swiper) => setSwiper(swiper)}
         className={`${classes.mySwiper2} mySwiper2`}
         breakpoints={{
-          320: {
-            direction: "vertical",
-            slidesPerView: 1,
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true,
-              enabled: true,
-              bulletClass: "swiper-pagination-bullet",
-              bulletActiveClass: "swiper-pagination-bullet-active",
-            },
-            navigation: {
-              enabled: false,
-            },
-          },
           768: {
             direction: "horizontal",
             slidesPerView: 1,
@@ -163,6 +150,26 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             navigation: {
               enabled: true,
             },
+            modules: [FreeMode, Thumbs, Navigation],
+          },
+          0: {
+            direction: "vertical",
+            slidesPerView: 1,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+              enabled: true,
+              bulletClass: "swiper-pagination-bullet",
+              bulletActiveClass: "swiper-pagination-bullet-active",
+            },
+            navigation: {
+              el: ".swiper-nav-button",
+              clickable: true,
+              enabled: false,
+              bulletClass: "swiper-pagination-bullet",
+              bulletActiveClass: "swiper-pagination-bullet-active",
+            },
+            modules: [FreeMode, Thumbs, Pagination],
           },
         }}
       >
@@ -171,11 +178,11 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             <div className="h-full w-full bg-gray-200 animate-pulse"></div>
           </SwiperSlide>
         ) : (
-          <> {productImage}</>
+          productImage
         )}
       </Swiper>
       <Swiper
-        onSwiper={setThumbsSwiper}
+        onSwiper={(swiper) => setThumbsSwiper(swiper)}
         spaceBetween={10}
         slidesPerView={0}
         loop={true}
@@ -193,6 +200,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             slidesPerView: 4.25,
             enabled: true,
             loop: true,
+            allowSlidePrev: true,
             modules: [FreeMode, Thumbs],
           },
         }}
@@ -208,13 +216,13 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
               : `hidden`
           } bottom-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
           onClick={() => {
-            swiper?.slideNext();
+            swiper?.slideTo(swiper?.params?.slidesPerView - 1);
           }}
         >
           <i
             className={`fas fa-chevron-down`}
             onClick={() => {
-              swiper?.slideNext();
+              swiper?.slideTo(swiper?.params?.slidesPerView - 1);
             }}
           ></i>
         </div>

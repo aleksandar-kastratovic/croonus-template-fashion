@@ -14,7 +14,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [openFilter, setOpenFilter] = useState(false);
   const [sort, setSort] = useState({ field: "", direction: "" });
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(12);
+  const [limit, setLimit] = useState(8);
   const [availableFilters, setAvailableFilters] = useState(filter);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [changeFilters, setChangeFilters] = useState(false);
@@ -125,7 +125,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [loading, page, productData?.pagination?.total_pages]);
+  }, [page, loading, productData.pagination.total_pages]);
 
   return (
     <>
@@ -186,7 +186,6 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                     setTempSelectedFilters(newSelectedFilters);
                     setSelectedFilters(newSelectedFilters);
                     setChangeFilters(true);
-                    setIsBeingFiltered(true);
                     if (tempSelectedFilters.length === 1) {
                       window.history.replaceState(
                         null,
@@ -208,6 +207,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                       setTempSelectedFilters(newSelectedFilters);
                       setSelectedFilters(newSelectedFilters);
                       setChangeFilters(true);
+                      setIsBeingFiltered(true);
                       if (tempSelectedFilters.length === 1) {
                         window.history.replaceState(
                           null,
