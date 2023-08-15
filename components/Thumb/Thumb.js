@@ -505,7 +505,7 @@ const Thumb = ({ data, slider }) => {
             });
           }}
         >
-          <div className="item relative">
+          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
             <Swiper
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
@@ -543,24 +543,21 @@ const Thumb = ({ data, slider }) => {
                     scroll={true}
                     className="z-50"
                   >
-                    {" "}
-                    <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] relative">
-                      <Image
-                        src={convertHttpToHttps(
-                          image?.id === product?.basic_data?.id_product
-                            ? image?.image
-                            : item
-                        )}
-                        alt={product?.basic_data?.name}
-                        fill
-                        sizes={
-                          "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, 100vw"
-                        }
-                        style={{ objectFit: "cover" }}
-                        priority={true}
-                        className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                      />
-                    </div>
+                    <Image
+                      src={convertHttpToHttps(
+                        image?.id === product?.basic_data?.id_product
+                          ? image?.image
+                          : item
+                      )}
+                      alt={product?.basic_data?.name}
+                      fill
+                      sizes={
+                        "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, 100vw"
+                      }
+                      style={{ objectFit: "cover" }}
+                      priority={true}
+                      className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                    />
                   </Link>
                 </SwiperSlide>
               ))}
