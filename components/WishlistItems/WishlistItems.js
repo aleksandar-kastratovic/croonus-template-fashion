@@ -48,7 +48,7 @@ const WishlistItems = ({ items, product, border }) => {
   return (
     <>
       <div className="col-span-1 relative item mt-[2rem] lg:mt-[9rem]">
-        <div className="max-md:h-[240px] md:h-[450px] lg:h-[500px] item relative">
+        <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
           {product?.image[0] && (
             <Link href={`/proizvod/${product?.slug}`} scroll={true}>
               <Image
@@ -156,19 +156,19 @@ const WishlistItems = ({ items, product, border }) => {
             />
           </div>
         </div>
-          <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
-              <div className={`bg-[#f8ce5d] px-2 font-bold text-center`}>
-                  <ProductPrice
-                      price={product?.price}
-                      inventory={product?.inventory}
-                  />
-              </div>
-              {product?.price?.discount?.active && (
-                  <span className={`line-through`}>
-                {currencyFormat(product?.price?.price?.original)}
-              </span>
-              )}
+        <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
+          <div className={`bg-[#f8ce5d] px-2 font-bold text-center`}>
+            <ProductPrice
+              price={product?.price}
+              inventory={product?.inventory}
+            />
           </div>
+          {product?.price?.discount?.active && (
+            <span className={`line-through`}>
+              {currencyFormat(product?.price?.price?.original)}
+            </span>
+          )}
+        </div>
       </div>
     </>
   );

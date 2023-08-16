@@ -597,7 +597,7 @@ const NavigationDesktop = () => {
             <div
               className={
                 open
-                  ? `opacity-100 h-[550px] overflow-y-auto overflow-x-hidden transition-all duration-500 flex flex-col gap-2`
+                  ? `opacity-100 h-[550px] overflow-y-auto overflow-x-hidden transition-all duration-500 flex flex-col gap-2 w-[150px]`
                   : `invisible opacity-0 duration-500 transition-all flex flex-col gap-2`
               }
             >

@@ -278,6 +278,17 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
         .catch((error) => console.warn(error));
     }
   };
+
+  const [checkoutSummary, setCheckoutSummary] = useState([]);
+  useEffect(() => {
+    const getSummary = async () => {
+      return await get(`/checkout/summary`).then((response) => {
+        setCheckoutSummary(response?.payload);
+      });
+    };
+    getSummary();
+  }, []);
+
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha
@@ -860,7 +871,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       Ukupna vrednost korpe:{" "}
                     </span>
                     <span className="mr-3 text-sm font-medium max-xl:text-sm">
-                      {currencyFormat(cartData?.summary?.totals?.with_vat)}
+                      {currencyFormat(
+                        checkoutSummary?.summary?.totals?.with_vat
+                      )}
                     </span>
                   </div>
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1 max-xl:text-base">
@@ -869,7 +882,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     </span>
                     <span className="mr-3 text-sm font-medium max-xl:text-sm">
                       {currencyFormat(
-                        cartData?.summary?.totals?.items_discount_amount
+                        checkoutSummary?.summary?.totals?.items_discount_amount
                       )}
                     </span>
                   </div>
@@ -879,16 +892,18 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     </span>
                     <span className="mr-3 text-sm font-medium max-xl:text-sm">
                       {currencyFormat(
-                        cartData?.summary?.options?.delivery?.amount
+                        checkoutSummary?.summary?.totals?.delivery_amount
                       )}
                     </span>
                   </div>{" "}
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
                     <span className="text-sm font-medium max-xl:text-sm">
-                      Ukupna vrednost korpe:
+                      Ukupna vrednost korpe sa popustom:
                     </span>
                     <span className="mr-3 text-xl font-medium max-xl:text-sm">
-                      {currencyFormat(cartCost)}
+                      {currencyFormat(
+                        checkoutSummary?.summary?.totals?.with_vat
+                      )}
                     </span>
                   </div>
                 </div>
