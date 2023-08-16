@@ -33,7 +33,6 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         filters: selectedFilters,
       });
       const newProducts = res?.payload?.items;
-      console.log(res?.payload?.items);
       const newPagination = res?.payload?.pagination;
       if (isBeingFiltered) {
         setProductData({
@@ -43,19 +42,20 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
         setIsBeingFiltered(false);
       } else {
         setProductData((prevData) => {
-          // If isBeingFiltered is false, combine the previous products with new products after filtering duplicates
           const uniqueProductIds = new Set(
-            prevData.products.map((product) => product.basic_data?.id_product)
+            prevData?.products?.map(
+              (product) => product?.basic_data?.id_product
+            )
           );
-          const filteredNewProducts = newProducts.filter(
-            (product) => !uniqueProductIds.has(product?.basic_data?.id_product)
+          const filteredNewProducts = newProducts?.filter(
+            (product) => !uniqueProductIds?.has(product?.basic_data?.id_product)
           );
-
           return {
-            products: [...prevData.products, ...filteredNewProducts],
+            products: [...prevData?.products, ...filteredNewProducts],
             pagination: newPagination,
           };
         });
+        setIsBeingFiltered(false);
       }
 
       setLoading(false);

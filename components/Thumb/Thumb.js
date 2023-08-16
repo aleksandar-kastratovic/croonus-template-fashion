@@ -538,11 +538,7 @@ const Thumb = ({ data, slider }) => {
             >
               {product?.image?.map((item, index) => (
                 <SwiperSlide>
-                  <Link
-                    href={`/proizvod/${product?.slug}`}
-                    scroll={true}
-                    className="z-50"
-                  >
+                  <Link href={`/proizvod/${product?.slug}`} className="z-50">
                     <Image
                       src={convertHttpToHttps(
                         image?.id === product?.basic_data?.id_product
@@ -552,7 +548,7 @@ const Thumb = ({ data, slider }) => {
                       alt={product?.basic_data?.name}
                       fill
                       sizes={
-                        "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, 100vw"
+                        "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, (min-width: 1600px) 50vw"
                       }
                       style={{ objectFit: "cover" }}
                       priority={true}
@@ -767,15 +763,15 @@ const Thumb = ({ data, slider }) => {
               />
             </div>
           </div>
-          <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
-            <div className={`bg-[#f8ce5d] px-2 mt-2 font-bold text-center`}>
+          <div className=" flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
+            <div className={`bg-[#f8ce5d] px-2  font-bold text-center`}>
               <ProductPrice
                 price={product?.price}
                 inventory={product?.inventory}
               />
             </div>
             {product?.price?.discount?.active && (
-              <span className={`line-through`}>
+              <span className={`line-through `}>
                 {currencyFormat(product?.price?.price?.original)}
               </span>
             )}
@@ -827,6 +823,7 @@ const Thumb = ({ data, slider }) => {
                         <Image
                           src={item3?.image}
                           alt=""
+                          priority={true}
                           className="rounded-full"
                           fill
                           sizes={"15px"}
