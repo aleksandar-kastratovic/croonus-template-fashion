@@ -287,7 +287,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
       });
     };
     getSummary();
-  }, []);
+  }, [cartItems]);
 
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
@@ -876,9 +876,19 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       )}
                     </span>
                   </div>
+                  <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
+                    <span className="text-sm font-medium max-xl:text-sm">
+                      Ukupna vrednost korpe sa popustom:
+                    </span>
+                    <span className="mr-3 text-sm font-medium max-xl:text-sm">
+                      {currencyFormat(
+                        checkoutSummary?.summary?.totals?.items_discount
+                      )}
+                    </span>
+                  </div>
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1 max-xl:text-base">
                     <span className="text-sm font-medium max-xl:text-sm">
-                      Iznos dodatnog popusta u korpi:{" "}
+                      Iznos popusta u korpi:{" "}
                     </span>
                     <span className="mr-3 text-sm font-medium max-xl:text-sm">
                       {currencyFormat(
@@ -895,17 +905,15 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                         checkoutSummary?.summary?.totals?.delivery_amount
                       )}
                     </span>
-                  </div>{" "}
+                  </div>
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
                     <span className="text-sm font-medium max-xl:text-sm">
-                      Ukupna vrednost korpe sa popustom:
+                      Ukupno za naplatu:
                     </span>
-                    <span className="mr-3 text-xl font-medium max-xl:text-sm">
-                      {currencyFormat(
-                        checkoutSummary?.summary?.totals?.with_vat
-                      )}
+                    <span className="mr-3 text-xl font-semibold max-xl:text-sm">
+                      {currencyFormat(checkoutSummary?.summary?.totals?.total)}
                     </span>
-                  </div>
+                  </div>{" "}
                 </div>
               </div>
             </div>
@@ -941,7 +949,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
               {cartCost < 6000 && (
                 <h1 className="text-base text-[#e10000] mt-3 font-bold">
                   Do besplatne dostave nedostaje ti još{" "}
-                  {currencyFormat(6000 - cartCost)}
+                  {currencyFormat(
+                    6000 - checkoutSummary?.summary?.totals?.total
+                  )}
                 </h1>
               )}
               {cartCost > 6000 && (

@@ -25,21 +25,20 @@ const PlusMinusInputOne = ({ className, amount, setCount }) => {
     <div className="bg-[#fbfbfb] px-3 border max-md:h-full py-0.5 border-[#eaeaea] max-md:border-[#919191]">
       <div className="flex items-center w-full">
         <span
-          className="cursor-pointer text-lg select-none"
+          className="cursor-pointer flex-1 text-lg select-none"
           onClick={onMinusHandler}
         >
           -
         </span>
-
         <input
           maxLength="2"
           type="number"
           value={amount}
           onChange={onInputChange}
-          className="w-12 text-center bg-[#fbfbfb] focus:border-none focus:outline-none focus:ring-0 select-none font-bold border-none"
+          className="w-12 text-center  no-spinners mx-auto flex-1 bg-[#fbfbfb] focus:border-none focus:outline-none p-0 focus:ring-0 select-none text-sm border-none"
         ></input>
         <span
-          className="cursor-pointer text-lg select-none"
+          className="cursor-pointer flex-1 text-lg select-none"
           onClick={onPlusHandler}
         >
           +{" "}
