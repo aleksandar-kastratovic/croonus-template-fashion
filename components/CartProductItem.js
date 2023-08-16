@@ -13,7 +13,6 @@ const CartProductItem = ({ item }) => {
   const [productAmount, setProductAmount] = useState(
     Number(item.cart.quantity)
   );
-
   const removeFromCart = useGlobalRemoveFromCart();
 
   const addToCart = useGlobalAddToCart(true);
@@ -27,7 +26,6 @@ const CartProductItem = ({ item }) => {
   const per_item = item?.product?.price?.per_item;
   const total = item?.product?.price?.cost;
   const currency = item?.product?.price?.currency;
-
   const [sureCheck, setSureCheck] = useState(false);
 
   return (
@@ -58,7 +56,11 @@ const CartProductItem = ({ item }) => {
             </span>
             <div className="flex items-center gap-3 max-md:hidden">
               <span>Količina</span>
-              {productAmount}
+              <PlusMinusInputOne
+                setCount={setProductAmount}
+                count={productAmount}
+                amount={productAmount}
+              />
             </div>
             <div className="flex items-center gap-3 md:hidden">
               <span>Količina:</span>

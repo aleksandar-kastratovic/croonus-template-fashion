@@ -522,7 +522,15 @@
   position: absolute !important;
   opacity: 0.8;
 }
-
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-spinners {
+  appearance: none;
+  -moz-appearance: textfield; /* Firefox */
+}
 .productdetailsnav {
   display: none !important;
 }
