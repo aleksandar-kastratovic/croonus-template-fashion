@@ -59,10 +59,10 @@ const LandingPage = ({ slug }) => {
 
   return (
     <>
-      {data?.conditions && data?.basic_data && data.thumb ? (
+      {data ? (
         <div className={`w-[93.5%] mx-auto`}>
           <div className={`mt-[3rem] md:mt-[9rem] pb-10`}>
-            <div className={`flex items-center flex-col justify-center`}>
+            <div className={`flex items-start flex-col justify-center`}>
               {loadingBasicData ? (
                 <div className="h-[50px] mb-4 w-full bg-slate-300 object-cover animate-pulse"></div>
               ) : (
@@ -79,11 +79,12 @@ const LandingPage = ({ slug }) => {
                   </>
                 ) : (
                   data?.basic_data?.image && (
-                    <div className={`h-[250px] md:h-[400px] relative`}>
+                    <div className={`relative`}>
                       <Image
                         src={data?.basic_data?.image}
                         alt={``}
-                        fill
+                        width={1920}
+                        height={400}
                         priority
                         quality={100}
                         style={{ objectFit: "cover" }}
@@ -106,7 +107,8 @@ const LandingPage = ({ slug }) => {
                   >
                     <div
                       className={`${
-                        data?.basic_data?.gallery?.length > 0 && `col-span-1`
+                        data?.basic_data?.gallery?.length > 0 &&
+                        `col-span-1 deffont`
                       }`}
                       dangerouslySetInnerHTML={{
                         __html: data?.basic_data?.description,

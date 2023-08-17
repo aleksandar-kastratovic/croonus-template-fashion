@@ -531,7 +531,7 @@ const NavigationDesktop = () => {
                 : `text-white flex flex-row gap-10 transition-all duration-500`
             }
           >
-            <div className="h-full flex flex-col gap-10">
+            <div className="h-full flex flex-col gap-10 min-w-[230px]">
               <div className="flex flex-col gap-1 mix-blend-difference">
                 <Link
                   onClick={() => {

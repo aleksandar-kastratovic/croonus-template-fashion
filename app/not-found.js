@@ -22,7 +22,7 @@ export const metadata = () => {
 };
 const notFound = () => {
   return (
-    <div className="w-full lg:mt-[13rem] max-md:mt-[13rem] flex flex-col items-center justify-center max-md:w-[95%] mx-auto pt-[500px]">
+    <div className="w-full lg:mt-[13rem] max-md:mt-[13rem] flex flex-col items-center justify-center max-md:w-[95%] mx-auto">
       <div className="border flex flex-col items-center justify-center gap-5 text-center border-[#f8f8f8] rounded-3xl p-10">
         <Image src={Image1} alt="404" width={100} height={100} />
         <h1 className="font-bold text-[18px]">
