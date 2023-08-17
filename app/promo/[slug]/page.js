@@ -9,3 +9,8 @@ const PromoPage = async ({ params: { slug } }) => {
 };
 
 export default PromoPage;
+
+export const metadata = {
+  title: "Promocije",
+  description: "Promocije",
+};

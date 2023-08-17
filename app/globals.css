@@ -9,7 +9,12 @@
     font-family: "Open Sans", sans-serif;
   }
 }
-
+.deffont {
+  font-family: "Open Sans", sans-serif !important;
+}
+.deffont p {
+    font-family: "Open Sans", sans-serif !important;
+}
 .swiper-slide {
   text-align: center;
   font-size: 18px;
