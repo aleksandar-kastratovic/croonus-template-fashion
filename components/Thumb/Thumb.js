@@ -512,7 +512,9 @@ const Thumb = ({ data, slider }) => {
               pagination={true}
               direction={"vertical"}
               loop={true}
-              initialSlide={0}
+              initialSlide={product?.image?.findIndex(
+                (item) => item === product?.image[0]
+              )}
               navigation={
                 navigationEnabled.enabled === true &&
                 navigationEnabled.id === product?.basic_data?.id_product
@@ -536,27 +538,29 @@ const Thumb = ({ data, slider }) => {
               className={`categoryImageSwiper relative`}
               onSwiper={(swiper) => setSwiper(swiper)}
             >
-              {product?.image?.map((item, index) => (
-                <SwiperSlide>
-                  <Link href={`/proizvod/${product?.slug}`} className="z-50">
-                    <Image
-                      src={convertHttpToHttps(
-                        image?.id === product?.basic_data?.id_product
-                          ? image?.image
-                          : item
-                      )}
-                      alt={product?.basic_data?.name}
-                      fill
-                      sizes={
-                        "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, (min-width: 1600px) 50vw"
-                      }
-                      style={{ objectFit: "cover" }}
-                      priority={true}
-                      className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                    />
-                  </Link>
-                </SwiperSlide>
-              ))}
+              {product?.image?.map((item, index) => {
+                return (
+                  <SwiperSlide>
+                    <Link href={`/proizvod/${product?.slug}`} className="z-50">
+                      <Image
+                        src={convertHttpToHttps(
+                          image?.id === product?.basic_data?.id_product
+                            ? image?.image
+                            : item
+                        )}
+                        alt={product?.basic_data?.name}
+                        fill
+                        sizes={
+                          "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, (min-width: 1600px) 50vw"
+                        }
+                        style={{ objectFit: "cover" }}
+                        priority={true}
+                        className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                      />
+                    </Link>
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
             {product?.variant_options?.length > 0 ? (
               <div className="absolute z-50 rounded-lg py-5 left-3 bottom-[10px] w-[95%] mx-auto bg-white chevrons">

@@ -1,5 +1,5 @@
 import { get, list, post } from "@/app/api/api";
-import CategoryPage from "@/components/CategoryPage/CategoryPage"
+import CategoryPage from "@/components/CategoryPage/CategoryPage";
 
 const fetchFilters = async (slug) => {
   const fetchFilters = await post(`/products/section/filters/${slug}`).then(

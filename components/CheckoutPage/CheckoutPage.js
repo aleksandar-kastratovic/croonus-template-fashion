@@ -950,7 +950,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                 <h1 className="text-base text-[#e10000] mt-3 font-bold">
                   Do besplatne dostave nedostaje ti još{" "}
                   {currencyFormat(
-                    6000 - checkoutSummary?.summary?.totals?.total
+                    6000 - checkoutSummary?.summary?.totals?.items_discount
                   )}
                 </h1>
               )}

@@ -14,7 +14,9 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [openFilter, setOpenFilter] = useState(false);
   const [sort, setSort] = useState({ field: "", direction: "" });
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(
+    productData?.pagination?.items_per_page ?? 8
+  );
   const [availableFilters, setAvailableFilters] = useState(filter);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [changeFilters, setChangeFilters] = useState(false);
@@ -67,7 +69,13 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       selectedFilters?.length > 0 ? 1 : page,
       selectedFilters
     );
-  }, [limit, sort, page, selectedFilters]);
+  }, [
+    limit,
+    sort,
+    page,
+    productData?.pagination?.selected_page,
+    selectedFilters,
+  ]);
 
   useEffect(() => {
     if (changeFilters) {
@@ -108,24 +116,23 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   //infinite scroll
   useEffect(() => {
     const handleScroll = () => {
-      const bufferPercentage = 1.5;
+      const bufferPercentage = 1;
       const buffer = Math.floor(window.innerHeight * bufferPercentage);
 
       if (
         window.innerHeight + window.scrollY >=
           document.body.offsetHeight - buffer &&
-        !loading &&
-        productData.pagination.total_pages > page
+        productData.pagination.total_pages >
+          productData.pagination?.selected_page
       ) {
-        setPage((prevPage) => prevPage + 1);
+        setPage(page + 1);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [page, loading, productData.pagination.total_pages]);
+  }, [loading, productData, page]);
 
   return (
     <>
