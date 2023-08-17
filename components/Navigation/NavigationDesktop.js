@@ -205,6 +205,16 @@ const NavigationDesktop = () => {
     };
   }, [searchRef]);
 
+  const [landingPagesList, setLandingPagesList] = useState([]);
+
+  useEffect(() => {
+    const getLandingPages = async () => {
+      const data = await list(`/landing-pages/list`).then((response) =>
+        setLandingPagesList(response?.payload)
+      );
+    };
+    getLandingPages();
+  }, []);
   return (
     <>
       <div
@@ -524,17 +534,27 @@ const NavigationDesktop = () => {
             <div className="h-full flex flex-col gap-10">
               <div className="flex flex-col gap-1 mix-blend-difference">
                 <Link
-                  href="/"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  href="/novo"
                   className="uppercase  hover:translate-x-5 hover:text-slate-500 transition-all duration-300 text-lg  font-medium"
                 >
                   Novo
                 </Link>
-                <Link
-                  href="/"
-                  className="uppercase text-red-500 hover:translate-x-5 hover:text-slate-500 transition-all duration-300 text-lg  font-medium"
-                >
-                  Promocije: do 50% popusta
-                </Link>
+                {landingPagesList?.items?.map((item, index) => {
+                  return (
+                    <Link
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                      href={`/promo/${item?.slug}`}
+                      className="uppercase text-red-500 hover:translate-x-5 hover:text-slate-500 transition-all duration-300 text-lg  font-medium"
+                    >
+                      {item?.name}
+                    </Link>
+                  );
+                })}
               </div>
               <div className="flex flex-col gap-1 mix-blend-difference">
                 {activeCategory?.children?.map((category) => {

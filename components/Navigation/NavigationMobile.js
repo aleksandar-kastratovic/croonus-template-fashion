@@ -129,7 +129,16 @@ const NavigationMobile = () => {
       router?.refresh();
     }
   }, [pathname]);
+  const [landingPagesList, setLandingPagesList] = useState([]);
 
+  useEffect(() => {
+    const getLandingPages = async () => {
+      const data = await list(`/landing-pages/list`).then((response) =>
+        setLandingPagesList(response?.payload)
+      );
+    };
+    getLandingPages();
+  }, []);
   return (
     <>
       <div className="md:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
@@ -388,14 +397,36 @@ const NavigationMobile = () => {
               );
             })}
         </div>
-        <div className="flex  flex-col mt-10 w-[95%] mx-auto gap-3">
+        <div className="flex flex-col mt-10 w-[95%] mx-auto gap-3">
+          {landingPagesList?.items?.map((item, index) => {
+            return (
+              <Link
+                onClick={() => {
+                  setMenuOpen(false);
+                }}
+                href={`/promo/${item?.slug}`}
+                className="text-red-500 text-[1.2rem] uppercase animate-pulse"
+              >
+                {item?.name}
+              </Link>
+            );
+          })}
           <Link
-            href="/"
-            className="text-red-500 text-[1.2rem] uppercase animate-pulse"
+            onClick={() => {
+              setMenuOpen(false);
+            }}
+            href={`/novo`}
+            className={`text-[1.2rem] uppercase`}
           >
-            Promocije: do 50% popusta
+            Novo
           </Link>
-          <Link href="/" className="text-[1.2rem] uppercase">
+          <Link
+            onClick={() => {
+              setMenuOpen(false);
+            }}
+            href="/"
+            className="text-[1.2rem] uppercase"
+          >
             Outlet{" "}
           </Link>
         </div>
