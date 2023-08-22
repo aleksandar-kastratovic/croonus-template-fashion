@@ -1,19 +1,20 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { post } from "@/app/api/api";
+import { useState } from "react";
+import { post as POST } from "@/app/api/api";
 import { toast } from "react-toastify";
 
 const Newsletter = () => {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState("subscribe");
   const [selected, setSelected] = useState({
+    terms: false,
+    type: "",
+    month: "",
     email: "",
     day: "",
-    month: "",
-    type: "",
-    terms: false,
   });
+
   const [error, setError] = useState(false);
   const handleSubmit = async () => {
     const terms = document.getElementById("terms");
@@ -21,18 +22,18 @@ const Newsletter = () => {
       toast.warn("Morate prihvatiti Politiku privatnosti", {
         position: "top-center",
         autoClose: 2000,
+        progress: undefined,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
       });
       if (selected?.email === "") {
         setError(true);
       }
       return;
     } else {
-      const res = await post("/newsletter", selected).then(
+      const res = await POST("/newsletter", selected).then(
         (response) => response?.payload
       );
       toast.success(res?.message, {
@@ -47,6 +48,7 @@ const Newsletter = () => {
       setSelected({ email: "", day: "", month: "", type: "", terms: false });
     }
   };
+
   return (
     <>
       {view === "subscribe" && (
@@ -58,12 +60,13 @@ const Newsletter = () => {
             Prijavi se na naš bilten i dobićeš 10% popusta na sledeću kupovinu,
             pristup ekskluzivnim promocijama i još mnogo toga!
           </p>
-
           <form className="mt-[3.125rem] max-md:mt-[2rem] relative">
             <input
               type="email"
               id="email"
               name="email"
+              required
+              pattern={/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
               placeholder="Unesi svoj email"
               className={`${
                 error ? `border-red-500` : `border-[#e0e0e0]`

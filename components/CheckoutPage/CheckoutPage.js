@@ -63,6 +63,10 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
     gcaptcha: token,
     delivery: null,
     payment: null,
+    height: "",
+    weight: "",
+    foot_size: "",
+    product_size_agreement: null,
   });
 
   const required = [
@@ -74,6 +78,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
     "zip_code",
     "object_number",
     "town",
+    "height",
+    "weight",
+    "product_size_agreement",
     "agreed",
     "shipping_first_name",
     "shipping_last_name",
@@ -99,18 +106,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
   const errorCheck = "Morate prihvatiti uslove";
 
   const [errors, setErrors] = useState([]);
-  useEffect(() => {
-    if (errors.length > 0) {
-      toast.error("Morate popuniti sva obavezna polja", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      });
-      return;
-    }
-  });
+
   const getCart = useCallback(() => {
     list("/cart")
       .then((response) => {
@@ -157,7 +153,6 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
     }
     if (err.length > 0) {
       setErrors(err);
-      console.log(err);
     } else {
       const ret = {
         customer_type_billing: formData.type,
@@ -226,7 +221,15 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
         municipality_name_billing: "",
         id_country_billing: null,
         country_name_billing: "Srbija",
-        note_billing: formData.note,
+        note_billing:
+          formData.note +
+          `Informacije: Visina: ${formData?.height} ; Težina: ${
+            formData?.weight
+          } ; Gazište: ${
+            formData?.foot_size
+          } ; Saglasnost za slanje veličine: ${
+            formData?.product_size_agreement ? "Da" : "Ne"
+          }`,
 
         delivery_method: formData.delivery,
         delivery_method_options: [],
@@ -237,7 +240,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
         promo_code: null,
         promo_code_options: [],
 
-        note: formData.note,
+        note:
+          formData.note +
+          `Visina: ${formData?.height} ; Težina: ${formData?.weight} ; Gazište: ${formData?.foot_size}`,
         gcaptcha: token,
 
         accept_rules: 1,
@@ -245,6 +250,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
       if (errors.length === 0) {
         setLoading(true);
       }
+
       post("/checkout/one-page", ret)
         .then((response) => {
           const creditCardForm = response?.payload?.payment_provider_data?.form;
@@ -278,7 +284,6 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
         .catch((error) => console.warn(error));
     }
   };
-
   const [checkoutSummary, setCheckoutSummary] = useState([]);
   useEffect(() => {
     const getSummary = async () => {
@@ -335,196 +340,288 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                   </div>
                 </div>
                 {formData.type === "personal" && (
-                  <div className="mt-4 grid grid-cols-2 gap-x-10 pb-4 max-xl:text-base ">
-                    <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-start-1 xl:col-end-2">
-                      <div className="flex flex-col gap-2  ">
-                        <label htmlFor="name" className="hidden">
-                          Ime:{" "}
-                          <span className="snap-mandatory text-red-500">*</span>
-                        </label>
-                        <input
-                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                            errors.includes("first_name")
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-none focus:border-none"
-                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                          type="text"
-                          id="name"
-                          name="first_name"
-                          placeholder="Ime*"
-                          value={formData.first_name}
-                          onChange={formChangeHandler}
-                        />
-                      </div>
+                  <>
+                    <div className="mt-4 grid grid-cols-2 gap-x-10 pb-4 max-xl:text-base border-b">
+                      <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-start-1 xl:col-end-2">
+                        <div className="flex flex-col gap-2  ">
+                          <label htmlFor="name" className="hidden">
+                            Ime:{" "}
+                            <span className="snap-mandatory text-red-500">
+                              *
+                            </span>
+                          </label>
+                          <input
+                            className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                              errors.includes("first_name")
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-none focus:border-none"
+                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                            type="text"
+                            id="name"
+                            name="first_name"
+                            placeholder="Ime*"
+                            value={formData.first_name}
+                            onChange={formChangeHandler}
+                          />
+                        </div>
 
-                      <div className="flex flex-col gap-2">
-                        <label htmlFor="surname" className="hidden">
-                          Prezime:{" "}
-                          <span className="snap-mandatory text-red-500">*</span>
-                        </label>
-                        <input
-                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                            errors.includes("last_name")
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-none focus:border-none"
-                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                          type="text"
-                          id="surname"
-                          name="last_name"
-                          placeholder="Prezime*"
-                          value={formData.last_name}
-                          onChange={formChangeHandler}
-                        />
-                      </div>
+                        <div className="flex flex-col gap-2">
+                          <label htmlFor="surname" className="hidden">
+                            Prezime:{" "}
+                            <span className="snap-mandatory text-red-500">
+                              *
+                            </span>
+                          </label>
+                          <input
+                            className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                              errors.includes("last_name")
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-none focus:border-none"
+                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                            type="text"
+                            id="surname"
+                            name="last_name"
+                            placeholder="Prezime*"
+                            value={formData.last_name}
+                            onChange={formChangeHandler}
+                          />
+                        </div>
 
-                      <div className="flex flex-col gap-2">
-                        <label htmlFor="email" className="hidden">
-                          Email:
-                          <span className="snap-mandatory text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="email"
-                          id="email"
-                          value={formData.email}
-                          onChange={formChangeHandler}
-                          className={`ml-2 h-[58px] max-sm:text-sm rounded-md ${
-                            errors.includes("email")
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-none focus:border-none"
-                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                          placeholder="Email*"
-                        />
+                        <div className="flex flex-col gap-2">
+                          <label htmlFor="email" className="hidden">
+                            Email:
+                            <span className="snap-mandatory text-red-500">
+                              *
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            name="email"
+                            id="email"
+                            value={formData.email}
+                            onChange={formChangeHandler}
+                            className={`ml-2 h-[58px] max-sm:text-sm rounded-md ${
+                              errors.includes("email")
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-none focus:border-none"
+                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                            placeholder="Email*"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-span-1 xl:col-start-2 xl:col-end-3">
+                        <div className="flex flex-col gap-2 max-xl:mt-2">
+                          <label htmlFor="phone" className="hidden">
+                            Telefon:
+                            <span className="snap-mandatory text-red-500">
+                              *
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            name="phone"
+                            id="phone"
+                            value={formData.phone}
+                            onChange={formChangeHandler}
+                            className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                              errors.includes("phone")
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-none focus:border-none"
+                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                            placeholder="Telefon*"
+                          />
+                        </div>
+                        <div className="xl:grid xl:grid-cols-2 xl:gap-x-3">
+                          <div className="flex flex-col gap-2 max-xl:mt-2">
+                            <label htmlFor="address" className="hidden">
+                              Adresa dostave:
+                              <span className="snap-mandatory text-red-500">
+                                *
+                              </span>
+                            </label>
+                            <input
+                              type="text"
+                              name="address"
+                              id="address"
+                              value={formData.address}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                errors.includes("address")
+                                  ? "border-red-500 focus:border-red-500"
+                                  : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                              placeholder="Adresa dostave*"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-2 max-xl:mt-2">
+                            <label htmlFor="object_number" className="hidden">
+                              Broj{" "}
+                              <span className="snap-mandatory text-red-500">
+                                *
+                              </span>
+                            </label>
+                            <input
+                              type="text"
+                              name="object_number"
+                              id="object_number"
+                              value={formData.object_number}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                errors.includes("object_number")
+                                  ? "border-red-500 focus:border-red-500"
+                                  : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                              placeholder="Broj*"
+                            />
+                          </div>
+                        </div>
+                        <div className="xl:grid xl:grid-cols-2 xl:gap-x-3">
+                          <div className="flex flex-col gap-2 max-xl:mt-2">
+                            <label htmlFor="zip_code" className="hidden">
+                              Poštanski broj:
+                              <span className="snap-mandatory text-red-500">
+                                *
+                              </span>
+                            </label>
+                            <input
+                              type="text"
+                              name="zip_code"
+                              id="zip_code"
+                              value={formData.zip_code}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                errors.includes("zip_code")
+                                  ? "border-red-500 focus:border-red-500"
+                                  : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                              placeholder="Poštanski broj*"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-2 max-xl:mt-2">
+                            <label htmlFor="town" className="hidden">
+                              Grad{" "}
+                              <span className="snap-mandatory text-red-500">
+                                *
+                              </span>
+                            </label>
+                            <input
+                              type="text"
+                              name="town"
+                              id="town"
+                              value={formData.town}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                errors.includes("town")
+                                  ? "border-red-500 focus:border-red-500"
+                                  : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                              placeholder="Grad*"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                          <label htmlFor="note" className="hidden">
+                            Napomena:
+                          </label>
+                          <textarea
+                            type="text"
+                            name="note"
+                            rows="2"
+                            id="note"
+                            value={formData.note}
+                            onChange={formChangeHandler}
+                            className="ml-2 max-sm:text-sm rounded-md border-none focus:border-none focus:ring-0 bg-[#f5f5f7] max-xl:mx-3"
+                            placeholder="Napomena"
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-span-1 xl:col-start-2 xl:col-end-3">
+                    <div
+                      className={`grid max-xl:grid-cols-1 grid-cols-2 gap-x-10 gap-y-5 pb-4 mt-5 xl:mt-[0.7rem]`}
+                    >
                       <div className="flex flex-col gap-2 max-xl:mt-2">
-                        <label htmlFor="phone" className="hidden">
-                          Telefon:
-                          <span className="snap-mandatory text-red-500">*</span>
+                        <label htmlFor="height" className="text-[14px] ml-2">
+                          Molimo unesite Vašu visinu
                         </label>
                         <input
                           type="text"
-                          name="phone"
-                          id="phone"
-                          value={formData.phone}
+                          name="height"
+                          id="height"
+                          value={formData.height}
                           onChange={formChangeHandler}
                           className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                            errors.includes("phone")
+                            errors.includes("height")
                               ? "border-red-500 focus:border-red-500"
                               : "border-none focus:border-none"
                           }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                          placeholder="Telefon*"
+                          placeholder="Visina*"
                         />
-                      </div>
-                      <div className="xl:grid xl:grid-cols-2 xl:gap-x-3">
-                        <div className="flex flex-col gap-2 max-xl:mt-2">
-                          <label htmlFor="address" className="hidden">
-                            Adresa dostave:
-                            <span className="snap-mandatory text-red-500">
-                              *
-                            </span>
-                          </label>
-                          <input
-                            type="text"
-                            name="address"
-                            id="address"
-                            value={formData.address}
-                            onChange={formChangeHandler}
-                            className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                              errors.includes("address")
-                                ? "border-red-500 focus:border-red-500"
-                                : "border-none focus:border-none"
-                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                            placeholder="Adresa dostave*"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-2 max-xl:mt-2">
-                          <label htmlFor="object_number" className="hidden">
-                            Broj{" "}
-                            <span className="snap-mandatory text-red-500">
-                              *
-                            </span>
-                          </label>
-                          <input
-                            type="text"
-                            name="object_number"
-                            id="object_number"
-                            value={formData.object_number}
-                            onChange={formChangeHandler}
-                            className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                              errors.includes("object_number")
-                                ? "border-red-500 focus:border-red-500"
-                                : "border-none focus:border-none"
-                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                            placeholder="Broj*"
-                          />
-                        </div>
-                      </div>
-                      <div className="xl:grid xl:grid-cols-2 xl:gap-x-3">
-                        <div className="flex flex-col gap-2 max-xl:mt-2">
-                          <label htmlFor="zip_code" className="hidden">
-                            Poštanski broj:
-                            <span className="snap-mandatory text-red-500">
-                              *
-                            </span>
-                          </label>
-                          <input
-                            type="text"
-                            name="zip_code"
-                            id="zip_code"
-                            value={formData.zip_code}
-                            onChange={formChangeHandler}
-                            className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                              errors.includes("zip_code")
-                                ? "border-red-500 focus:border-red-500"
-                                : "border-none focus:border-none"
-                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                            placeholder="Poštanski broj*"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-2 max-xl:mt-2">
-                          <label htmlFor="town" className="hidden">
-                            Grad{" "}
-                            <span className="snap-mandatory text-red-500">
-                              *
-                            </span>
-                          </label>
-                          <input
-                            type="text"
-                            name="town"
-                            id="town"
-                            value={formData.town}
-                            onChange={formChangeHandler}
-                            className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                              errors.includes("town")
-                                ? "border-red-500 focus:border-red-500"
-                                : "border-none focus:border-none"
-                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                            placeholder="Grad*"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <label htmlFor="note" className="hidden">
-                          Napomena:
+                      </div>{" "}
+                      <div className="flex flex-col gap-2 max-xl:mt-2">
+                        <label htmlFor="weight" className="text-[14px] ml-2">
+                          Molimo unesite Vašu težinu
                         </label>
-                        <textarea
+                        <input
                           type="text"
-                          name="note"
-                          rows="2"
-                          id="note"
-                          value={formData.note}
+                          name="weight"
+                          id="weight"
+                          value={formData.weight}
                           onChange={formChangeHandler}
-                          className="ml-2 max-sm:text-sm rounded-md border-none focus:border-none focus:ring-0 bg-[#f5f5f7] max-xl:mx-3"
-                          placeholder="Napomena"
+                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                            errors.includes("weight")
+                              ? "border-red-500 focus:border-red-500"
+                              : "border-none focus:border-none"
+                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                          placeholder="Težina*"
                         />
+                      </div>
+                      <div className="flex flex-col gap-2 max-xl:mt-2">
+                        <label htmlFor="foot_size" className="text-[14px] ml-2">
+                          U slučaju da kupujete neki model od naše obuće molimo
+                          unesite Vašu dužinu gazišta u centimetrima (opciono)
+                        </label>
+                        <input
+                          type="text"
+                          name="foot_size"
+                          id="foot_size"
+                          value={formData.foot_size}
+                          onChange={formChangeHandler}
+                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                            errors.includes("foot_size")
+                              ? "border-red-500 focus:border-red-500"
+                              : "border-none focus:border-none"
+                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                          placeholder="Gazište"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2 max-xl:mt-2">
+                        <label htmlFor="foot_size" className="text-[14px] ml-2">
+                          Da li ste saglasni da pošaljemo veličinu proizvoda
+                          shodno Vašoj visini i težini koju ste naveli?
+                        </label>
+                        <select
+                          name="product_size_agreement"
+                          id="product_size_agreement"
+                          value={formData.product_size_agreement}
+                          onChange={formChangeHandler}
+                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                            errors.includes("product_size_agreement")
+                              ? "border-red-500 focus:border-red-500"
+                              : "border-none focus:border-none"
+                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                        >
+                          <option value="">Izaberite</option>
+                          <option value={true}>Da</option>
+                          <option value={false}>Ne</option>
+                        </select>
                       </div>
                     </div>
-                  </div>
+                  </>
                 )}
                 {formData.type === "company" && (
-                  <div className="mt-4 grid grid-cols-2 gap-x-10 pb-4 max-xl:text-base">
+                    <>
+                  <div className="mt-4 grid grid-cols-2 gap-x-10 pb-4 max-xl:text-base border-b">
                     <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-start-1 xl:col-end-2">
                       <div className="flex flex-col gap-2">
                         <label htmlFor="company_name" className="hidden">
@@ -767,6 +864,87 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       </div>
                     </div>
                   </div>
+                      <div
+                          className={`grid max-xl:grid-cols-1 grid-cols-2 gap-x-10 gap-y-5 pb-4 mt-5 xl:mt-[0.7rem]`}
+                      >
+                        <div className="flex flex-col gap-2 max-xl:mt-2">
+                          <label htmlFor="height" className="text-[14px] ml-2">
+                            Molimo unesite Vašu visinu
+                          </label>
+                          <input
+                              type="text"
+                              name="height"
+                              id="height"
+                              value={formData.height}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                  errors.includes("height")
+                                      ? "border-red-500 focus:border-red-500"
+                                      : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                              placeholder="Visina*"
+                          />
+                        </div>{" "}
+                        <div className="flex flex-col gap-2 max-xl:mt-2">
+                          <label htmlFor="weight" className="text-[14px] ml-2">
+                            Molimo unesite Vašu težinu
+                          </label>
+                          <input
+                              type="text"
+                              name="weight"
+                              id="weight"
+                              value={formData.weight}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                  errors.includes("weight")
+                                      ? "border-red-500 focus:border-red-500"
+                                      : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                              placeholder="Težina*"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-2 max-xl:mt-2">
+                          <label htmlFor="foot_size" className="text-[14px] ml-2">
+                            U slučaju da kupujete neki model od naše obuće molimo
+                            unesite Vašu dužinu gazišta u centimetrima (opciono)
+                          </label>
+                          <input
+                              type="text"
+                              name="foot_size"
+                              id="foot_size"
+                              value={formData.foot_size}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                  errors.includes("foot_size")
+                                      ? "border-red-500 focus:border-red-500"
+                                      : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                              placeholder="Gazište"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-2 max-xl:mt-2">
+                          <label htmlFor="foot_size" className="text-[14px] ml-2">
+                            Da li ste saglasni da pošaljemo veličinu proizvoda
+                            shodno Vašoj visini i težini koju ste naveli?
+                          </label>
+                          <select
+                              name="product_size_agreement"
+                              id="product_size_agreement"
+                              value={formData.product_size_agreement}
+                              onChange={formChangeHandler}
+                              className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
+                                  errors.includes("product_size_agreement")
+                                      ? "border-red-500 focus:border-red-500"
+                                      : "border-none focus:border-none"
+                              }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                          >
+                            <option value="">Izaberite</option>
+                            <option value={true}>Da</option>
+                            <option value={false}>Ne</option>
+                          </select>
+                        </div>
+                      </div>
+                    </>
                 )}
               </div>
               {cartItems.length > 0 && (

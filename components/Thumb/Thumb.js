@@ -113,7 +113,7 @@ const Thumb = ({ data, slider }) => {
     }
   }, [selected, idProduct]);
 
-  const products = data?.map((product, index) => {
+  const products = (data ?? []).map((product, index) => {
     const variantOptionSize = product?.variant_options?.find((variant) => {
       return variant?.attribute?.slug === "size";
     });

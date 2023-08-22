@@ -17,7 +17,7 @@ const IndexBanner = ({ banner }) => {
         <div className="relative max-sm:h-[400px] md:h-[630px]">
           <Image
             src={banner[0]?.image}
-            alt={banner[0]?.title}
+            alt={banner[0]?.title ?? ""}
             width={1920}
             height={1080}
             className="object-cover h-full w-full"

@@ -447,7 +447,9 @@
 .button-with-tooltip {
   position: relative; /* Set the button to be a positioned container */
 }
-
+.buttontooltip {
+  position: relative; /* Set the button to be a positioned container */
+}
 .tooltip {
   display: none;
   position: absolute;
@@ -462,10 +464,29 @@
   font-size: 0.8rem;
 }
 
+
+.tooltip2 {
+  display: none;
+  position: absolute;
+  top: -93px;
+  left: 0;
+   background-color: #2bc48a;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  width: 97%;
+}
+
+
+
+
 .button-with-tooltip:hover .tooltip {
   display: block; /* Display the tooltip when button is hovered */
 }
-
+.buttontooltip:hover .tooltip2 {
+  display: block; /* Display the tooltip when button is hovered */
+}
 .categoryImageSwiper .swiper-pagination-vertical.swiper-pagination-bullets,
 .categoryImageSwiper
   .swiper-vertical
