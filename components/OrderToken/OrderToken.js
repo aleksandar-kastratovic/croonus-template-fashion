@@ -18,7 +18,7 @@ const OrderSuccess = ({ order }) => {
     if (order?.credit_card?.payment_status?.toLowerCase() === "approved") {
       conditions = (
         <div
-          className={`grid grid-cols-2 w-[95%] lg:w-[90%] mx-auto gap-x-10 gap-y-10 md:divide-y md:divide-gray-200`}
+          className={`grid grid-cols-2  mt-0 lg:mt-[9rem] w-[95%] lg:w-[90%] mx-auto gap-x-10 gap-y-10 md:divide-y md:divide-gray-200`}
         >
           <div className="flex items-center col-span-2 md:col-span-1 px-5 md:px-10 justify-center text-center relative">
             <div
@@ -27,15 +27,14 @@ const OrderSuccess = ({ order }) => {
             <div className="flex items-center justify-center text-center ">
               <div className="flex flex-col items-center gap-4 lg:p-[3.5rem]">
                 <div>
-                  <Image src={Image1} alt="Reflekta" width={130} height={130} />
+                  <Image src={Image1} alt="Reflekta" width={200} height={200} />
                 </div>
                 <span className="text-lg font-medium">
                   BROJ PORUDŽBENICE: {order?.slug}
                 </span>
                 <span>
                   Uspešno ste izvršili plaćanje, račun Vaše platne kartice je
-                  zadužen! SLEDI OBRADA PORUDŽBENICE NAKON ČEGA ĆETE DOBITI SVE
-                  POTREBNE INFORMACIJE PUTEM E-MAILA KOJIM STE SE REGISTROVALI.
+                  zadužen!
                 </span>
                 <span>Podaci o transakciji:</span>
                 <span className="text-lg font-medium">
@@ -88,9 +87,11 @@ const OrderSuccess = ({ order }) => {
             </div>
           </div>
           <div
-            className={`col-span-2 md:col-span-1 grid gap-y-[1.5rem] gap-x-[5.5rem] grid-cols-2 py-10 h-fit max-md:mt-5`}
+            className={`col-span-2 h-min md:col-span-1 grid gap-y-[1.5rem] gap-x-[1.5rem] grid-cols-2 md:py-10 max-md:mt-5`}
           >
-            <div className={`col-span-2 xl:col-span-1 relative flex flex-col`}>
+            <div
+              className={`col-span-2 xl:col-span-1 relative flex flex-col bg-[#f0f0f080] rounded-lg p-[2rem] h-[245px]`}
+            >
               <h1
                 className={`font-semibold text- border-b-2 border-b-gray-300`}
               >
@@ -107,7 +108,9 @@ const OrderSuccess = ({ order }) => {
                 </span>
               </p>
             </div>
-            <div className={`col-span-2 xl:col-span-1 relative flex flex-col`}>
+            <div
+              className={`col-span-2 xl:col-span-1 relative flex flex-col bg-[#f0f0f080] rounded-lg p-[2rem] h-[245px]`}
+            >
               <h1
                 className={`font-semibold text- border-b-2 border-b-gray-300`}
               >
@@ -115,25 +118,36 @@ const OrderSuccess = ({ order }) => {
               </h1>
               <p className={`mt-2 text-sm`}>
                 Ime i prezime: &nbsp;
-                <span>
+                <span className={`font-semibold`}>
                   {order?.billing_address?.first_name}{" "}
                   {order?.billing_address?.last_name}
                 </span>
               </p>
               <p className={`mt-2 text-sm`}>
                 E-mail adresa:
-                <span> {order?.billing_address?.email}</span>
+                <span className={`font-semibold`}>
+                  {" "}
+                  {order?.billing_address?.email}
+                </span>
               </p>
               <p className={`mt-2 text-sm`}>
                 Adresa korisnika:
-                <span> {order?.billing_address?.address}</span>
+                <span className={`font-semibold`}>
+                  {" "}
+                  {order?.billing_address?.address}
+                </span>
               </p>
               <p className={`mt-2 text-sm`}>
                 Adresa dostave:
-                <span> {order?.shipping_address?.address}</span>
+                <span className={`font-semibold`}>
+                  {" "}
+                  {order?.shipping_address?.address}
+                </span>
               </p>
             </div>
-            <div className={`col-span-2 xl:col-span-1 relative flex flex-col`}>
+            <div
+              className={`col-span-2 xl:col-span-1 relative flex flex-col bg-[#f0f0f080] rounded-lg p-[2rem] h-[245px] overflow-y-auto scrollCustom`}
+            >
               <h1
                 className={`font-semibold text- border-b-2 border-b-gray-300`}
               >
@@ -154,13 +168,13 @@ const OrderSuccess = ({ order }) => {
                           height={100}
                         />
                       </div>
-                      <div className={`flex flex-col`}>
+                      <div className={`flex flex-col gap-y-1`}>
                         <h1 className={`text-sm font-semibold`}>
                           {item?.basic_data?.name}
                         </h1>
                         <p className={`text-xs`}>{item?.basic_data?.sku}</p>
                         <p
-                          className={`mt-2 font-semibold text-sm bg-[#2bc48a] w-fit p-1 text-white`}
+                          className={`bg-[#f8ce5d] px-2 w-fit text-xs mt-2 font-bold text-center`}
                         >
                           {currencyFormat(item?.price?.total_with_vat)}
                         </p>
@@ -171,7 +185,7 @@ const OrderSuccess = ({ order }) => {
               })}
             </div>
             <div
-              className={`col-span-2 xl:col-span-1 relative flex flex-col pb-7 max-md:mb-5`}
+              className={`col-span-2 xl:col-span-1 relative flex flex-col pb-7 bg-[#f0f0f080] rounded-lg p-[2rem] h-[245px] max-md:mb-5`}
             >
               <h1
                 className={`font-semibold text- border-b-2 border-b-gray-300`}
@@ -180,15 +194,15 @@ const OrderSuccess = ({ order }) => {
               </h1>
               <p className={`mt-2 text-sm`}>
                 Naziv:
-                <span className={``}> {process.env.NAME}</span>
+                <span className={`font-semibold`}> {process.env.NAME}</span>
               </p>
               <p className={`mt-2 text-sm`}>
                 PIB:
-                <span>{process.env.PIB}</span>
+                <span className={`font-semibold`}>{process.env.PIB}</span>
               </p>
               <p className={`mt-2 text-sm`}>
                 Adresa:
-                <span>{process.env.ADDRESS}</span>
+                <span className={`font-semibold`}>{process.env.ADDRESS}</span>
               </p>
             </div>
           </div>
@@ -196,12 +210,8 @@ const OrderSuccess = ({ order }) => {
       );
     } else {
       conditions = (
-        <div className="flex items-center justify-center py-10 text-center ">
+        <div className="flex mt-0 lg:mt-[9rem] items-center justify-center py-10 text-center ">
           <div className="flex flex-col items-center gap-4 rounded-2xl border border-white p-6">
-            <div>
-              <Image src={Image2} alt="Reflekta" width={130} height={130} />
-            </div>
-
             <span className="text-lg font-medium">
               Plaćanje neuspešno, račun vaše platne kartice nije zadužen!
             </span>
