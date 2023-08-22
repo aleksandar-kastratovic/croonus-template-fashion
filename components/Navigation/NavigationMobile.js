@@ -144,11 +144,11 @@ const NavigationMobile = () => {
       <div className="md:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
         <div className="w-[95%] py-3 mx-auto flex justify-between items-center">
           <div onClick={() => setMenuOpen(true)}>
-            <Image src={Burger} width={30} height={30} />
+            <Image alt={``} src={Burger} width={30} height={30} />
           </div>
           <Link href="/">
             <div className="pr-20">
-              <Image src={Logo} width={100} height={50} />
+              <Image alt={``} src={Logo} width={100} height={50} />
             </div>
           </Link>
           <div className="relative flex items-center gap-4">
