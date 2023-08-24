@@ -102,19 +102,19 @@ const Footer = () => {
               </Link>
               <Link
                 className="cursor-pointer hover:text-[#e10000]"
-                href="/kako-kupiti"
+                href="/povracaj-sredstava"
               >
                 Povraćaj sredstava
               </Link>
               <Link
                 className="cursor-pointer hover:text-[#e10000]"
-                href="/kako-kupiti"
+                href="/zamena-za-isti-artikal"
               >
                 Zamena za isti artikal
               </Link>
               <Link
                 className="cursor-pointer hover:text-[#e10000]"
-                href="/kako-kupiti"
+                href="/zamena-za-drugi-artikal"
               >
                 Zamena za drugi artikal
               </Link>
@@ -129,42 +129,58 @@ const Footer = () => {
           <div className="flex flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">O nama</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
-              <span className="cursor-pointer hover:text-[#e10000]">
+              <Link
+                href={`/stranica-u-izradi`}
+                className="cursor-pointer hover:text-[#e10000]"
+              >
                 Više o kompaniji Pazari
-              </span>
-              <span className="cursor-pointer hover:text-[#e10000]">
-                Join Life
-              </span>
-              <span className="cursor-pointer hover:text-[#e10000]">
+              </Link>
+
+              <Link
+                href={`/stranica-u-izradi`}
+                className="cursor-pointer hover:text-[#e10000]"
+              >
                 Ponude za posao
-              </span>
-              <span className="cursor-pointer hover:text-[#e10000]">
-                Štampa
-              </span>
-              <span className="cursor-pointer hover:text-[#e10000]">
+              </Link>
+
+              <Link
+                href={`/stranica-u-izradi`}
+                className="cursor-pointer hover:text-[#e10000]"
+              >
                 Naše prodavnice
-              </span>
+              </Link>
             </div>
           </div>
           <div className="flex max-[493px]:mt-10 flex-col self-start gap-[40px]">
             <h1 className="text-[1.063rem] font-bold">Možda te interesuje</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
-              <span className="cursor-pointer hover:text-[#e10000]">
-                StreetStyle
-              </span>
-              <Link href={`/kategorije/muska-odeca/farmerice`} className="cursor-pointer hover:text-[#e10000]">
+              <Link
+                href={`/kategorije/muska-odeca/farmerice`}
+                className="cursor-pointer hover:text-[#e10000]"
+              >
                 Farmerice
               </Link>
-              <Link href={`/kategorije/muska-odeca/komplet-trenerke`} className="cursor-pointer hover:text-[#e10000]">
+              <Link
+                href={`/kategorije/muska-odeca/komplet-trenerke`}
+                className="cursor-pointer hover:text-[#e10000]"
+              >
                 Trenerke
               </Link>
-              <Link href={`/kategorije/muska-odeca/zimske-jakne`} className="cursor-pointer hover:text-[#e10000]">
+              <Link
+                href={`/kategorije/muska-odeca/zimske-jakne`}
+                className="cursor-pointer hover:text-[#e10000]"
+              >
                 Zimske jakne
               </Link>
-              <Link href={`/kategorije/muska-obuca`} className="cursor-pointer hover:text-[#e10000]">Obuća</Link>
-              <span className="cursor-pointer hover:text-[#e10000]">
-                Outlet
-              </span>
+              <Link
+                href={`/kategorije/muska-obuca`}
+                className="cursor-pointer hover:text-[#e10000]"
+              >
+                Obuća
+              </Link>
+              {/*<span className="cursor-pointer hover:text-[#e10000]">*/}
+              {/*  Outlet*/}
+              {/*</span>*/}
             </div>
           </div>
         </div>
