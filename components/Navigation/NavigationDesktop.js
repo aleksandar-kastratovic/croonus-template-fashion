@@ -400,7 +400,7 @@ const NavigationDesktop = () => {
               </form>
             </div>
             <div className="flex items-center gap-5">
-              <Link href="/stranica-u-izradi">
+              <Link href="/nalog">
                 <Image
                   src={User}
                   width={40}
