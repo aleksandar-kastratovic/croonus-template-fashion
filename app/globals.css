@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Ubuntu:wght@300;400;500;700&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +11,7 @@
   font-family: "Open Sans", sans-serif !important;
 }
 .deffont p {
-    font-family: "Open Sans", sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
 }
 .swiper-slide {
   text-align: center;
@@ -464,22 +462,18 @@
   font-size: 0.8rem;
 }
 
-
 .tooltip2 {
   display: none;
   position: absolute;
   top: -93px;
   left: 0;
-   background-color: #2bc48a;
+  background-color: #2bc48a;
   color: white;
   padding: 8px;
   border-radius: 5px;
   font-size: 0.8rem;
   width: 97%;
 }
-
-
-
 
 .button-with-tooltip:hover .tooltip {
   display: block; /* Display the tooltip when button is hovered */
@@ -568,5 +562,122 @@
   }
   .swiper-nav-button {
     display: none !important;
+  }
+}
+.bgbreadcrumbs {
+  background-color: #191919;
+}
+.profilHolder {
+  margin-top: 3rem;
+  margin-bottom: 10rem;
+}
+.profilNav {
+  min-width: 20rem;
+}
+
+.profilNav button {
+  padding-left: 1.6rem;
+  padding-right: 6rem;
+  margin-bottom: 0.4rem;
+}
+@media (max-width: 760px) {
+  .pageConstructionHolder {
+    min-height: 200px;
+  }
+}
+.error-message {
+  color: red !important;
+  margin-top: 1rem;
+}
+.loadMoreButton {
+  margin: 3rem auto;
+  display: flex;
+  margin-top: 2rem;
+  border: 1px solid white;
+  padding: 0.3rem 1.2rem;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+.messHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.loaderImg {
+  width: 30px;
+}
+.socialNetworkHolder {
+  margin-top: 1.4rem;
+}
+.keenHorizontal {
+  display: flex;
+  flex-direction: column;
+  width: fit-content !important;
+  margin-top: 3rem;
+  min-width: 100px;
+}
+.keenVertical {
+  width: 100% !important;
+  margin: 1rem;
+}
+.productKeen {
+  display: flex;
+  max-height: 34rem;
+}
+.productKeen img {
+  height: 100%;
+}
+.productKeen .keen-slider:not([data-keen-slider-disabled]) .keen-slider__slide {
+  min-height: unset;
+  height: auto;
+  width: 100%;
+  min-width: 100% !important;
+}
+.constructionHolder {
+  min-height: 80vh;
+  justify-content: center;
+}
+.positionImage {
+  position: relative;
+  z-index: 2;
+}
+.constructionText {
+  background-color: #f0f0f0;
+  width: 50vw;
+  padding: 6rem;
+  color: black;
+  position: relative;
+  top: -3rem;
+}
+.circleHolder {
+  background-color: #f15923;
+  padding: 0.7rem;
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.54rem;
+}
+.circleHolder:hover {
+  opacity: 60%;
+  cursor: pointer;
+}
+.contactFormHolder p {
+  color: #a8a8a8;
+}
+@media (max-width: 760px) {
+  .contactFormHolder p {
+    width: 90%;
+  }
+  .titleHolder {
+    margin: 2rem 0rem 0rem 0rem;
+  }
+  .constructionText {
+    width: 90vw;
+    padding: 4rem;
+    top: -1rem;
   }
 }
