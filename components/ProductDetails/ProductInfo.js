@@ -179,10 +179,10 @@ const ProductInfo = ({
                 />
               </div>
             )}
-            <div className="flex items-center gap-2">
-              <Image src={Measure} alt="measure" width={30} height={20} />
-              <span className="text-[13px] font-bold">Pomoć za veličine</span>
-            </div>
+            {/*<div className="flex items-center gap-2">*/}
+            {/*  <Image src={Measure} alt="measure" width={30} height={20} />*/}
+            {/*  <span className="text-[13px] font-bold">Pomoć za veličine</span>*/}
+            {/*</div>*/}
             <div className="mt-[4.188rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
                 className={
@@ -276,18 +276,18 @@ const ProductInfo = ({
                 >
                   Dostava
                 </div>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setInfoModal(true)}
-                >
-                  Informacije
-                </div>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setReturnModal(true)}
-                >
-                  Povraćaj
-                </div>
+                {/*<div*/}
+                {/*  className="relative cursor-pointer"*/}
+                {/*  onClick={() => setInfoModal(true)}*/}
+                {/*>*/}
+                {/*  Informacije*/}
+                {/*</div>*/}
+                {/*<div*/}
+                {/*  className="relative cursor-pointer"*/}
+                {/*  onClick={() => setReturnModal(true)}*/}
+                {/*>*/}
+                {/*  Povraćaj*/}
+                {/*</div>*/}
               </ul>
             </div>
             <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 top-[30%] flex flex-col gap-[30px] px-5 py-[37px] bg-white drop-shadow-2xl rounded-l-lg">

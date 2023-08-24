@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { RangeSlider } from "rsuite";
+import { Slider } from "@mui/material";
+
 import { useRouter } from "next/navigation";
 import classes from "./Filter.module.css";
 import Link from "next/link";
@@ -145,12 +146,12 @@ const FilterRange = ({ filter, onChange, selected }) => {
       ? selected
       : [Number(filter.params.min), Number(filter.params.max)]
   );
-  const onRangeChange = (data) => {
+  const onRangeChange = (data, value) => {
     onChange({
       column: filter?.params?.use_field
         ? filter[filter?.params?.use_field]
         : filter.key,
-      value: { selected: data },
+      value: { selected: value },
     });
   };
 
@@ -161,17 +162,31 @@ const FilterRange = ({ filter, onChange, selected }) => {
 
   return (
     <>
-      <div className={classes.slidecontainer}>
-        <RangeSlider
-          min={Number(filter.params.min)}
-          max={Number(filter.params.max)}
+      <div className={`mt-5 w-[85%] mx-auto`}>
+        <Slider
+          sx={{
+            width: "100%",
+            "& .MuiSlider-thumb": {
+              color: "black",
+            },
+            "& .MuiSlider-track": {
+              color: "black",
+            },
+            "& .MuiSlider-rail": {
+              color: "black",
+            },
+            "& .MuiSlider-active": {
+              color: "black",
+            },
+          }}
           value={selectedValue}
-          className={classes.slider + " slider mt-3"}
-          defaultValue={[Number(filter.params.min), Number(filter.params.max)]}
-          onChange={(value) => {
-            setSelectedValue(value);
+          onChange={(e) => {
+            setSelectedValue(e.target.value);
           }}
           onChangeCommitted={onRangeChange}
+          valueLabelDisplay="auto"
+          min={Number(filter.params.min)}
+          max={Number(filter.params.max)}
         />
       </div>
       <div className={`${classes.valueHolder} max-md:text-center`}>
