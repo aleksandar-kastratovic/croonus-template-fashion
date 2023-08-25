@@ -9,7 +9,7 @@ import hide from "@/assets/Icons/hide-password.png";
 import show from "@/assets/Icons/show-password.png";
 import calendar from "@/assets/Icons/calendar.png";
 
-const Registration = () => {
+const Registration = ({ setIsReg }) => {
   const [secondAddress, setSecondAddress] = useState(false);
   const [reg, setReg] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -18,11 +18,12 @@ const Registration = () => {
   const [showPassword2, setShowPassword2] = useState(false);
   const handleRegOpen = () => {
     setReg(true);
+    setIsReg(true);
   };
   const handleRegClose = () => {
     setReg(false);
+    setIsReg(false);
   };
-
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -37,7 +38,7 @@ const Registration = () => {
     email: "",
     phone: "",
     gender: "",
-    birth_date: "",
+    birth_date: null,
     password: "",
     note: "",
     company_name: "",
@@ -47,7 +48,15 @@ const Registration = () => {
     accept_newsletter: 0,
   });
 
-  const required = ["first_name", "last_name", "email", "phone", "password"];
+  const required = [
+    "first_name",
+    "last_name",
+    "email",
+    "phone",
+    "password",
+    "gender",
+    "birth_date",
+  ];
 
   const companyrequired = [
     "first_name",
@@ -127,7 +136,7 @@ const Registration = () => {
             handleRegClose();
           } else {
             setErrors("Greška pri logovanju.");
-            toast.error("Morate popuniti sva obavezna polja.", {
+            toast.error("Došlo je do nepoznate greške. Pokušajte ponovo.", {
               position: "top-center",
               autoClose: 5000,
               hideProgressBar: false,
@@ -155,28 +164,38 @@ const Registration = () => {
   const errorSelect = "Morate izabrati jednu opciju";
   const errorCheck = "Morate prihvatiti uslove";
   return (
-    <div className="h-[100%] flex flex-col items-center">
-      <ToastContainer className="z-[6000]" />
-      <div className="loginHolder lg:w-[74%] max-lg:w-[90%] max-sm:w-[94%]">
-        <h3 className="font-semibold text-xl underline text-black">
-          REGISTRACIJA NALOGA
-        </h3>
-        <p className="mb-[2rem] mt-[0.4rem] font-light text-[#4b4b4b]">
-          Klikom na dugme "napravi nalog" ulazite u proceduru registracije.
-        </p>
-        <p className="font-light text-[#4b4b4b]">
-          Kreiranje naloga omogućava brže zaključivanje narudžbina, kreiranje
-          više adresa za isporuku kao i mogućnost praćenja narudžbina.
-        </p>
-        <button
-          onClick={handleRegOpen}
-          className="bg-croonus-2 rounded-lg text-white py-[0.7rem] px-[1.3rem] text-sm mt-[2rem] hover:bg-opacity-70"
-        >
-          NAPRAVI NALOG
-        </button>
-        {reg && (
+    <>
+      <div className="h-[100%] flex flex-col items-center">
+        <ToastContainer className="z-[6000]" />
+        <div className="loginHolder lg:w-[74%] max-lg:w-[90%] max-sm:w-[94%]">
+          <h3 className="font-semibold text-xl underline text-black">
+            REGISTRACIJA NALOGA
+          </h3>
+          <p className="mb-[2rem] mt-[0.4rem] font-light text-[#4b4b4b]">
+            Klikom na dugme "napravi nalog" ulazite u proceduru registracije.
+          </p>
+          <p className="font-light text-[#4b4b4b]">
+            Kreiranje naloga omogućava brže zaključivanje narudžbina, kreiranje
+            više adresa za isporuku kao i mogućnost praćenja narudžbina.
+          </p>
+          <button
+            onClick={handleRegOpen}
+            className="bg-croonus-2  text-white py-[0.7rem] px-[1.3rem] text-sm mt-[2rem] hover:bg-opacity-70"
+          >
+            NAPRAVI NALOG
+          </button>
+
           <div
-            className={`z-[20000] fixed max-md:mx-auto max-md:overflow-y-scroll scale-100 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center popup text-black max-sm:pt-[20rem]`}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                handleRegClose();
+              }
+            }}
+            className={
+              reg
+                ? `z-[20000] scale-100 transition-all duration-500 fixed max-md:mx-auto max-md:overflow-y-scroll z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center popup text-black max-sm:pt-[20rem]`
+                : `z-[20000] fixed max-md:mx-auto max-md:overflow-y-scroll scale-0 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center popup text-black max-sm:pt-[20rem]`
+            }
           >
             <div
               className={`
@@ -188,36 +207,7 @@ const Registration = () => {
               <p className="mb-[1.4rem] mt-[0.4rem] font-thin text-[#4b4b4b]">
                 Vaši podaci
               </p>
-              <div className="flex flex-row items-center sm:gap-5">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="customer_type"
-                    value="personal"
-                    id="personal"
-                    onChange={formChangeHandler}
-                    checked={formData.customer_type === "personal"}
-                    className="h-3 w-3 focus:ring-0 text-black"
-                  />
-                  <label htmlFor="personal" className="text-black">
-                    Fizičko lice
-                  </label>
-                </div>
-                <div className="flex items-center gap-2 max-sm:ml-[1.4rem]">
-                  <input
-                    type="radio"
-                    name="customer_type"
-                    id="company"
-                    value="company"
-                    onChange={formChangeHandler}
-                    checked={formData.customer_type === "company"}
-                    className="h-3 w-3 focus:ring-0 text-black"
-                  />
-                  <label htmlFor="company" className="text-black">
-                    Pravno lice
-                  </label>
-                </div>
-              </div>
+
               {formData.customer_type === "personal" && (
                 <form className="mt-4 grid sm:grid-cols-2 gap-x-10 pb-4 max-xl:text-base ">
                   <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-start-1 xl:col-end-2">
@@ -228,10 +218,10 @@ const Registration = () => {
                       </label>
                       <input
                         className={`sm:ml-2 max-sm:text-sm h-[58px]  text-black ${
-                          errors.includes("name")
+                          errors.includes("first_name")
                             ? "border-red-500 focus:border-red-500"
                             : "border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0"
-                        }  focus:ring-0 bg-white sm:mx-3 rounded-lg`}
+                        }  focus:ring-0 bg-white sm:mx-3 `}
                         type="text"
                         id="name"
                         name="first_name"
@@ -256,7 +246,7 @@ const Registration = () => {
                           errors.includes("phone")
                             ? "border-red-500 focus:border-red-500"
                             : "border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0"
-                        }  focus:ring-0 bg-white sm:mx-3 rounded-lg`}
+                        }  focus:ring-0 bg-white sm:mx-3 `}
                         placeholder="Broj telefona*"
                       />
                     </div>
@@ -276,7 +266,7 @@ const Registration = () => {
                           errors.includes("email")
                             ? "border-red-500 focus:border-red-500"
                             : "border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0"
-                        }  focus:ring-0 bg-white sm:mx-3 rounded-lg`}
+                        }  focus:ring-0 bg-white sm:mx-3 `}
                         placeholder="Email*"
                       />
                     </div>
@@ -291,7 +281,7 @@ const Registration = () => {
                         id="note"
                         value={formData.note}
                         onChange={formChangeHandler}
-                        className={`sm:ml-2 max-sm:text-sm h-[58px]  text-black border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0 bg-white sm:mx-3 rounded-lg`}
+                        className={`sm:ml-2 max-sm:text-sm h-[58px]  text-black border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0 bg-white sm:mx-3 `}
                         placeholder="Napomena"
                       />
                     </div>
@@ -307,7 +297,7 @@ const Registration = () => {
                           errors.includes("last_name")
                             ? "border-red-500 focus:border-red-500"
                             : "border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0"
-                        }  focus:ring-0 bg-white sm:mx-3 rounded-lg`}
+                        }  focus:ring-0 bg-white sm:mx-3 `}
                         type="text"
                         id="surname"
                         name="last_name"
@@ -328,7 +318,11 @@ const Registration = () => {
                           form="genderform"
                           value={formData.gender}
                           onChange={formChangeHandler}
-                          className={`sm:ml-2 max-sm:text-sm h-[58px] border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0 rounded-lg`}
+                          className={`sm:ml-2 max-sm:text-sm h-[58px] ${
+                            errors.includes("gender")
+                              ? `border border-red-500 focus:border-red-500 focus:outline-0 focus:ring-0`
+                              : `border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0`
+                          } `}
                         >
                           <option value="">Izaberite pol</option>
                           <option value="male">Muški pol</option>
@@ -344,7 +338,13 @@ const Registration = () => {
                           type="date"
                           name="birth_date"
                           id="birth_date"
-                          className={`sm:ml-2 max-sm:text-sm h-[58px] border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0 rounded-lg`}
+                          value={formData.birth_date}
+                          onChange={formChangeHandler}
+                          className={`sm:ml-2 max-sm:text-sm h-[58px] ${
+                            errors.includes("birth_date")
+                              ? `border border-red-500 focus:border-red-500 focus:outline-0 focus:ring-0`
+                              : `border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0`
+                          }`}
                           placeholder="Datum rodjenja*"
                         />
                         <Image
@@ -367,7 +367,7 @@ const Registration = () => {
                             errors.includes("password")
                               ? "border-red-500 focus:border-red-500"
                               : "border border-[#e0e0e0] focus:border-[#e0e0e0] focus:outline-0 focus:ring-0"
-                          }  focus:ring-0 bg-white rounded-lg sm:mx-3 w-full mr-[0.6rem]`}
+                          }  focus:ring-0 bg-white  sm:mx-3 w-full mr-[0.6rem]`}
                           type={showPassword ? "text" : "password"}
                           id="password"
                           autoComplete="off"
@@ -377,7 +377,10 @@ const Registration = () => {
                           onChange={formChangeHandler}
                         />
 
-                        <button onClick={togglePasswordVisibility}>
+                        <button
+                          type={`button`}
+                          onClick={togglePasswordVisibility}
+                        >
                           {showPassword ? (
                             <Image
                               src={hide}
@@ -473,7 +476,7 @@ const Registration = () => {
                           errors.includes("first_name")
                             ? "border-red-500 focus:border-red-500"
                             : "border-none focus:border-none"
-                        }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3`}
+                        }  focus:ring-0 bg-croonus-gray  max-xl:mx-3`}
                         type="text"
                         id="company_name"
                         name="company_name"
@@ -494,7 +497,7 @@ const Registration = () => {
                             errors.includes("first_name")
                               ? "border-red-500 focus:border-red-500"
                               : "border-none focus:border-none"
-                          }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3`}
+                          }  focus:ring-0 bg-croonus-gray  max-xl:mx-3`}
                           placeholder="PIB*"
                         />
                       </div>
@@ -511,7 +514,7 @@ const Registration = () => {
                             errors.includes("first_name")
                               ? "border-red-500 focus:border-red-500"
                               : "border-none focus:border-none"
-                          }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3`}
+                          }  focus:ring-0 bg-croonus-gray  max-xl:mx-3`}
                           placeholder="Matični broj*"
                         />
                       </div>
@@ -531,7 +534,7 @@ const Registration = () => {
                           errors.includes("first_name")
                             ? "border-red-500 focus:border-red-500"
                             : "border-none focus:border-none"
-                        }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3`}
+                        }  focus:ring-0 bg-croonus-gray  max-xl:mx-3`}
                         placeholder="Broj telefona*"
                       />
                     </div>
@@ -550,7 +553,7 @@ const Registration = () => {
                           errors.includes("first_name")
                             ? "border-red-500 focus:border-red-500"
                             : "border-none focus:border-none"
-                        }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3`}
+                        }  focus:ring-0 bg-croonus-gray  max-xl:mx-3`}
                         placeholder="Email*"
                       />
                     </div>
@@ -565,7 +568,7 @@ const Registration = () => {
                         id="note"
                         value={formData.note}
                         onChange={formChangeHandler}
-                        className="ml-2 max-sm:text-sm border-none focus:border-none focus:ring-0 border-0 bg-croonus-gray rounded-lg max-xl:mx-3"
+                        className="ml-2 max-sm:text-sm border-none focus:border-none focus:ring-0 border-0 bg-croonus-gray  max-xl:mx-3"
                         placeholder="Napomena"
                       />
                     </div>
@@ -581,7 +584,7 @@ const Registration = () => {
                           errors.includes("first_name")
                             ? "border-red-500 focus:border-red-500"
                             : "border-none focus:border-none"
-                        }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3`}
+                        }  focus:ring-0 bg-croonus-gray  max-xl:mx-3`}
                         type="text"
                         id="name"
                         name="first_name"
@@ -598,7 +601,7 @@ const Registration = () => {
                           errors.includes("first_name")
                             ? "border-red-500 focus:border-red-500"
                             : "border-none focus:border-none"
-                        }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3`}
+                        }  focus:ring-0 bg-croonus-gray  max-xl:mx-3`}
                         type="text"
                         id="last_name"
                         name="last_name"
@@ -617,7 +620,7 @@ const Registration = () => {
                           form="genderform"
                           value={formData.gender}
                           onChange={formChangeHandler}
-                          className={`ml-2 max-sm:text-sm h-[58px] border-0 bg-croonus-gray rounded-lg`}
+                          className={`ml-2 max-sm:text-sm h-[58px] border-0 bg-croonus-gray `}
                         >
                           <option value="male">Izaberite pol</option>
                           <option value="male">Muški pol</option>
@@ -633,7 +636,7 @@ const Registration = () => {
                           type="date"
                           name="birth_date"
                           id="birth_date"
-                          className={`ml-2 max-sm:text-sm h-[58px] border-0 bg-croonus-gray rounded-lg`}
+                          className={`ml-2 max-sm:text-sm h-[58px] border-0 bg-croonus-gray `}
                           placeholder="Datum rodjenja*"
                         />
                       </div>
@@ -645,7 +648,7 @@ const Registration = () => {
                             errors.includes("first_name")
                               ? "border-red-500 focus:border-red-500"
                               : "border-none focus:border-none"
-                          }  focus:ring-0 bg-croonus-gray rounded-lg max-xl:mx-3 w-full mr-[0.6rem]`}
+                          }  focus:ring-0 bg-croonus-gray  max-xl:mx-3 w-full mr-[0.6rem]`}
                           type={showPassword2 ? "text" : "password"}
                           id="password"
                           name="password"
@@ -739,7 +742,7 @@ const Registration = () => {
 
               <button
                 onClick={formSubmitHandler}
-                className="bg-croonus-2 rounded-lg text-white py-[0.7rem] px-[1.3rem] text-sm hover:bg-opacity-70 w-fit ml-auto"
+                className="bg-croonus-2  text-white py-[0.7rem] px-[1.3rem] text-sm hover:bg-opacity-70 w-fit ml-auto"
               >
                 {loading ? (
                   <i className={`fa fa-spinner fa-spin`}></i>
@@ -755,9 +758,9 @@ const Registration = () => {
               </button>
             </div>
           </div>
-        )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

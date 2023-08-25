@@ -18,9 +18,10 @@ import { userContext } from "@/context/userContext";
 const UserPage = () => {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useContext(userContext);
-
+  const { isLoggedIn, setLoggedIn } = useContext(userContext);
+  const [isReg, setIsReg] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
   };
@@ -52,6 +53,7 @@ const UserPage = () => {
       setErrors(err);
       console.log(err);
     } else {
+      setLoading(true);
       const ret = {
         email: formData.email,
         password: formData.password,
@@ -59,8 +61,8 @@ const UserPage = () => {
       post("/customers/sign-in/login", ret)
         .then((response) => {
           if (response?.code === 200) {
-            setIsLoggedIn(true);
-            localStorage.setItem("loggedIn", true);
+            setLoggedIn(true);
+            // localStorage.setItem("loggedIn", true);
             Cookies.set("customer_token", response.payload.customer_token, {
               expires: 365,
             });
@@ -93,6 +95,7 @@ const UserPage = () => {
               }
             );
           }
+          setLoading(false);
         })
         .catch((error) => console.warn(error));
     }
@@ -154,13 +157,12 @@ const UserPage = () => {
         .catch((error) => console.warn(error));
     }
   };
-
   return (
     <>
       <ToastContainer />
       <div className="mx-auto mt-[0rem] lg:mt-[9rem]">
         <div className="mx-auto grid grid-cols-6 gap-y-3 gap-x-3 sm:mt-8 ">
-          <div className="col-span-6 p-1 border border-[#e0e0e0] sm:col-span-3 px-8 bg-[#f7f7f7] rounded-lg max-md:py-[2rem] py-[9rem] md:ml-[2rem] max-md:mx-[1rem] max-md:mt-[1rem] mb-[2rem]">
+          <div className="col-span-6 p-1  sm:col-span-3 px-8 bg-[#f7f7f7]  max-md:py-[2rem] py-[9rem] md:ml-[2rem] max-md:mx-[1rem] max-md:mt-[1rem] mb-[2rem]">
             <div className="h-[100%] flex flex-col items-center">
               <div className="loginHolder">
                 <h3 className="font-semibold text-xl underline">
@@ -181,7 +183,7 @@ const UserPage = () => {
                     value={formData.email}
                     onChange={formChangeHandler}
                     placeholder="E-mail:"
-                    className="lg:w-[24rem] bg-white  rounded-lg border border-[#e0e0e0] focus:outline-0 focus:ring-0 focus:border-[#e0e0e0] py-[0.6rem]"
+                    className="lg:w-[24rem] bg-white   border border-[#e0e0e0] focus:outline-0 focus:ring-0 focus:border-[#e0e0e0] py-[0.6rem]"
                   />
 
                   <div className="flex relative">
@@ -192,7 +194,7 @@ const UserPage = () => {
                       onChange={formChangeHandler}
                       id="password"
                       placeholder="Lozinka*"
-                      className="mt-[0.6rem] block lg:w-[24rem] bg-white rounded-lg border border-[#e0e0e0] focus:outline-0 focus:ring-0 focus:border-[#e0e0e0] py-[0.6rem] lg:mr-[0.6em] w-full"
+                      className="mt-[0.6rem] block lg:w-[24rem] bg-white  border border-[#e0e0e0] focus:outline-0 focus:ring-0 focus:border-[#e0e0e0] py-[0.6rem] lg:mr-[0.6em] w-full"
                     />
                     <button
                       type={"button"}
@@ -233,7 +235,7 @@ const UserPage = () => {
                     >
                       <div
                         className={`
-                        bg-white max-md:overflow-y-scroll border shadow rounded-lg p-[40px] flex flex-col relative borderThin`}
+                        bg-white max-md:overflow-y-scroll border shadow  p-[40px] flex flex-col relative borderThin`}
                       >
                         <h3 className="font-semibold text-xl underline">
                           ZABORAVILI STE LOZINKU?
@@ -249,12 +251,12 @@ const UserPage = () => {
                             placeholder="E-mail:"
                             value={formData.email1}
                             onChange={formChangeHandler}
-                            className="lg:w-[24rem] rounded-lg focus:outline-0 focus:ring-0 focus:border-[#e0e0e0] border border-[#e0e0e0] py-[0.6rem] w-full"
+                            className="lg:w-[24rem]  focus:outline-0 focus:ring-0 focus:border-[#e0e0e0] border border-[#e0e0e0] py-[0.6rem] w-full"
                           />
                         </form>
                         <button
                           onClick={changePasswordHandler}
-                          className="bg-croonus-2 rounded-lg text-white py-[0.7rem] px-[1.3rem] text-sm hover:bg-opacity-70 w-fit mt-[0.6rem] ml-auto"
+                          className="bg-croonus-2  text-white py-[0.7rem] px-[1.3rem] text-sm hover:bg-opacity-70 w-fit mt-[0.6rem] ml-auto"
                         >
                           RESETUJ LOZINKU
                         </button>
@@ -270,19 +272,35 @@ const UserPage = () => {
 
                   <button
                     onClick={formSubmitHandler}
-                    className="bg-croonus-2 rounded-lg text-white py-[0.7rem] px-[1.3rem] text-sm hover:bg-opacity-70 lg:mr-[2rem] max-lg:ml-[2rem] max-md:whitespace-nowrap"
+                    className="bg-croonus-2  text-white py-[0.7rem] px-[1.3rem] text-sm hover:bg-opacity-70 lg:mr-[2rem] max-lg:ml-[2rem] max-md:whitespace-nowrap"
                   >
-                    PRIJAVI SE
+                    {loading ? (
+                      <i
+                        className={
+                          "fa fa-spinner fa-spin text-white text-lg text-center"
+                        }
+                      ></i>
+                    ) : (
+                      <>PRIJAVI SE</>
+                    )}
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-span-6 border border-[#e0e0e0] p-1 sm:col-span-3 px-8 bg-[#f7f7f7] rounded-lg max-md:py-[2rem] py-[9rem] md:mr-[2rem] max-md:mx-[1rem] max-md:mt-[0rem] mb-[2rem]">
-            <Registration />
+          <div className="col-span-6  p-1 sm:col-span-3 px-8 bg-[#f7f7f7]  max-md:py-[2rem] py-[9rem] md:mr-[2rem] max-md:mx-[1rem] max-md:mt-[0rem] mb-[2rem]">
+            <Registration setIsReg={setIsReg} />
           </div>
         </div>
       </div>
+      {isReg && (
+        <div
+          onClick={() => {
+            setIsReg(false);
+          }}
+          className={`bg-black/40 fixed top-0 left-0 w-screen h-screen`}
+        />
+      )}
     </>
   );
 };

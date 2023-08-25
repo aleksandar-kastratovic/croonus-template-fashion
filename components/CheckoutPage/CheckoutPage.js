@@ -223,7 +223,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
         country_name_billing: "Srbija",
         note_billing:
           formData.note +
-          `Informacije: Visina: ${formData?.height} ; Težina: ${
+          ` Informacije: Visina: ${formData?.height} ; Težina: ${
             formData?.weight
           } ; Gazište: ${
             formData?.foot_size
@@ -1037,7 +1037,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                 <span className=" text-xl  font-bold ">
                   Vrednost Vaše korpe:
                 </span>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-0">
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1 max-xl:text-base">
                     <span className="text-sm  font-medium max-xl:text-sm">
                       Ukupna vrednost korpe:{" "}
@@ -1078,11 +1078,11 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       )}
                     </span>
                   </div>
-                  <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
+                  <div className="flex mt-5 flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
                     <span className="text-sm font-medium max-xl:text-sm">
                       Ukupno za naplatu:
                     </span>
-                    <span className="mr-3 text-xl font-semibold max-xl:text-sm">
+                    <span className="mr-3 text-[1.5rem] font-bold max-xl:text-sm">
                       {currencyFormat(checkoutSummary?.summary?.totals?.total)}
                     </span>
                   </div>{" "}
