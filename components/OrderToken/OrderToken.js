@@ -173,7 +173,7 @@ const OrderSuccess = ({ order }) => {
                         <p
                           className={`bg-[#f8ce5d] px-2 w-fit text-xs mt-2 font-bold text-center`}
                         >
-                          {currencyFormat(item?.price?.total_with_vat)}
+                          {currencyFormat(item?.price?.total)}
                         </p>
                       </div>
                     </div>
@@ -377,7 +377,7 @@ const OrderSuccess = ({ order }) => {
                       <p
                         className={`bg-[#f8ce5d] px-2 w-fit text-xs mt-2 font-bold text-center`}
                       >
-                        {currencyFormat(item?.price?.total_with_vat)}
+                        {currencyFormat(item?.price?.total)}
                       </p>
                     </div>
                   </div>
