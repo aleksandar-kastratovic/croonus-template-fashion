@@ -13,7 +13,7 @@ const IndexBanner = ({ banner }) => {
       data-aos="fade-up-left"
       className="block max-sm:w-[95%] max-sm:mx-auto mx-[20px] max-sm:mt-[5rem] mt-[7.5rem] transition-all duration-500 "
     >
-      <Link href={`${banner[0]?.url ?? ""}`}>
+      <Link href={`${banner[0]?.url ?? "/stranica-u-izradi"}`}>
         <div className="relative max-sm:h-[400px] md:h-[630px]">
           <Image
             src={banner[0]?.image}

@@ -72,12 +72,27 @@
   animation: progress-bar 5s linear forwards;
 }
 
+.bganimatethumb:hover::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: #2bc48a;
+  animation: progress-bar1 0.5s linear forwards;
+}
+
 @keyframes progress-bar {
   to {
     width: 100%;
   }
 }
-
+@keyframes progress-bar1 {
+  to {
+    width: 100%;
+  }
+}
 .wiggle:hover {
   animation: wiggle 0.5s ease-in-out;
 }
@@ -584,20 +599,23 @@
   .pageConstructionHolder {
     min-height: 200px;
   }
-}.constructionHolder {
-   min-height: 80vh;
-   justify-content: center;
- }.positionImage {
-    position: relative;
-    z-index: 2;
-  }.constructionText {
-     background-color: #f0f0f0;
-     width: 50vw;
-     padding: 6rem;
-     color: black;
-     position: relative;
-     top: -3rem;
-   }
+}
+.constructionHolder {
+  min-height: 80vh;
+  justify-content: center;
+}
+.positionImage {
+  position: relative;
+  z-index: 2;
+}
+.constructionText {
+  background-color: #f0f0f0;
+  width: 50vw;
+  padding: 6rem;
+  color: black;
+  position: relative;
+  top: -3rem;
+}
 .error-message {
   color: red !important;
   margin-top: 1rem;

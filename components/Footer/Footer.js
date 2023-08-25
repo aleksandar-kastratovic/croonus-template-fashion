@@ -18,7 +18,9 @@ const Footer = () => {
     <div className="max-md:mt-[3rem] mt-[7.75rem] bg-[#f7f7f7]">
       <div className="mx-[5rem] max-xl:flex-col py-[2.625rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white">
         <div>
-          <Image src={Logo} width={214} height={45} alt="Pazari Logo" />
+          <Link href={`/`}>
+            <Image src={Logo} width={214} height={45} alt="Pazari Logo" />
+          </Link>
         </div>
         <div className="flex max-xl:flex-col max-xl:gap-[2rem] max-xl:mt-10 items-center gap-[5.625rem]">
           <div className="flex flex-col font-bold items-center text-center justify-center gap-1">

@@ -73,8 +73,14 @@ const OrderSuccess = ({ order }) => {
                 </span>
                 <p className="mt-3 text-base">
                   Za sve dodatne informacije možete nas kontaktirati putem call
-                  centra {process.env.TELEPHONE} ili putem emaila{" "}
-                  {process.env.EMAIL}
+                  centra{" "}
+                  <a href={`tel:${process.env.TELEPHONE}`}>
+                    ${process.env.TELEPHONE}
+                  </a>{" "}
+                  ili putem emaila{" "}
+                  <a href={`mailto:${process.env.EMAIL}`}>
+                    ${process.env.EMAIL}
+                  </a>
                 </p>
                 <div>
                   <a href="/">
@@ -255,8 +261,12 @@ const OrderSuccess = ({ order }) => {
             </span>
             <p className="mt-2 text-base">
               Za sve dodatne informacije možete nas kontaktirati putem call
-              centra {process.env.TELEPHONE} ili putem emaila{" "}
-              {process.env.EMAIL}
+              centra{" "}
+              <a href={`tel:${process.env.TELEPHONE}`}>
+                ${process.env.TELEPHONE}
+              </a>{" "}
+              ili putem emaila{" "}
+              <a href={`mailto:${process.env.EMAIL}`}>${process.env.EMAIL}</a>
             </p>
           </div>
         </div>
@@ -283,8 +293,14 @@ const OrderSuccess = ({ order }) => {
               </p>
               <p className="mt-2 text-sm">
                 Za sve dodatne informacije možete nas kontaktirati putem call
-                centra {process.env.TELEPHONE} ili putem emaila{" "}
-                {process.env.EMAIL}
+                centra{" "}
+                <a href={`tel:${process.env.TELEPHONE}`}>
+                  ${process.env.TELEPHONE}
+                </a>{" "}
+                ili putem emaila{" "}
+                <a href={`mailto:${process.env.EMAIL}`}>
+                  ${process.env.EMAIL}
+                </a>
               </p>
             </div>
             <div>
