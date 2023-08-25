@@ -57,3 +57,18 @@ export const generateMetadata = async ({ params: { path } }) => {
     ],
   };
 };
+
+export async function generateStaticParams() {
+  const categories = await get("/categories/product/tree").then(
+    (res) => res?.payload
+  );
+  const products = await list(
+    `/products/category/list/${categories[0]?.slug}`
+  ).then((res) => res?.payload?.items);
+  const trimmedProducts = products?.slice(0, 10);
+  return trimmedProducts?.map((product) => ({
+    path: product?.slug?.split("/"),
+  }));
+}
+
+export const revalidate = 30;
