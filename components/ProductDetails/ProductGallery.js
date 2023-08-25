@@ -216,16 +216,18 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
               : `hidden`
           } bottom-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
           onClick={() => {
-            swiper?.slideTo(swiper?.params?.slidesPerView - 1);
+            swiper?.slideNext();
           }}
         >
           <i
             className={`fas fa-chevron-down`}
             onClick={() => {
-              swiper?.slideTo(swiper?.params?.slidesPerView - 1);
+              swiper?.slideNext();
             }}
           ></i>
         </div>
+
+
         <div
           className={`absolute ${
             productGallery?.length > swiper?.params?.slidesPerView

@@ -4,6 +4,7 @@ import RecommendedProducts from "@/components/RecommendedProducts/RecommendedPro
 import { Suspense } from "react";
 import ProductPage from "@/components/ProductDetails/ProductPage";
 import Loader from "@/components/Loader";
+import { isBlockedPage } from "next/dist/server/utils";
 
 const ProductDetailPage = async ({ params: { path } }) => {
   return (
@@ -62,6 +63,7 @@ export async function generateStaticParams() {
   const categories = await get("/categories/product/tree").then(
     (res) => res?.payload
   );
+
   const products = await list(
     `/products/category/list/${categories[0]?.slug}`
   ).then((res) => res?.payload?.items);
