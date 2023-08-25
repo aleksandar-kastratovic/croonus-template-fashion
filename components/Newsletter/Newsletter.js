@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { post as POST } from "@/app/api/api";
-import { toast } from "react-toastify";
-
+import { toast, ToastContainer } from "react-toastify";
+import Link from "next/link";
+import "react-toastify/dist/ReactToastify.css";
 const Newsletter = () => {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState("subscribe");
@@ -15,50 +16,88 @@ const Newsletter = () => {
     day: "",
   });
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState();
+  const required = ["email", "type", "terms"];
+
+  const changeHandler = (e) => {
+    let err = [];
+    setSelected({ ...selected, [e.target.name]: e.target.value });
+    err = error?.filter((item) => item !== e.target.name);
+    setError(err);
+  };
+
   const handleSubmit = async () => {
+    let err = [];
     const terms = document.getElementById("terms");
-    if (!terms.checked) {
-      toast.warn("Morate prihvatiti Politiku privatnosti", {
-        position: "top-center",
-        autoClose: 2000,
-        progress: undefined,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-      if (selected?.email === "") {
-        setError(true);
+    required?.forEach((item) => {
+      if (selected[item] === "") {
+        err?.push(item);
       }
+
+      if (selected?.terms === false) {
+        setError([...err, "terms"]);
+      } else {
+        setError(err);
+      }
+    });
+    if (error?.length > 0) {
       return;
     } else {
-      const res = await POST("/newsletter", selected).then(
-        (response) => response?.payload
-      );
-      toast.success(res?.message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      await POST("/newsletter/long", {
+        id: 1,
+        slug: "null",
+        name: "null",
+        email: selected?.email,
+        campaign_code: "null",
+        phone: "null",
+        gender: selected?.type,
+        birth_date: `${selected?.month}/${selected?.day}`,
+        id_country: 193,
+        country_name: "Serbia",
+        id_town: 1,
+        town_name: "Beograd",
+        ip_address: "null",
+      }).then((response) => {
+        switch (response?.code) {
+          case 200:
+            return toast.success(response?.payload?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            break;
+          default:
+            return toast.error(response?.payload?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            break;
+        }
       });
+
       setSelected({ email: "", day: "", month: "", type: "", terms: false });
     }
   };
-
   return (
     <>
+      <ToastContainer />
       {view === "subscribe" && (
         <div className="w-full max-md:w-[95%] max-md:mx-auto flex flex-col items-center justify-center max-md:mt-[3rem] max-md:text-center md:mt-[6.25rem]">
           <h1 className="max-md:text-[1.5rem] text-[2.5rem] font-bold">
-            Ostvari 10% popusta
+            Newsletter
           </h1>
           <p className="text-[1rem] max-md:text-[0.85rem] font-normal mt-[1.15rem]">
-            Prijavi se na naš bilten i dobićeš 10% popusta na sledeću kupovinu,
-            pristup ekskluzivnim promocijama i još mnogo toga!
+            Prijavi se na naš bilten i dobićeš ekskluzivni pristup promocijama i
+            još mnogo toga!
           </p>
           <form className="mt-[3.125rem] max-md:mt-[2rem] relative">
             <input
@@ -69,11 +108,9 @@ const Newsletter = () => {
               pattern={/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
               placeholder="Unesi svoj email"
               className={`${
-                error ? `border-red-500` : `border-[#e0e0e0]`
+                error?.includes("email") ? `border-red-500` : `border-[#e0e0e0]`
               } peer border placeholder-transparent w-full 2xl:w-[40.25rem] focus:border-[#e0e0e0] max-md:w-full focus:outline-none focus:ring-0 h-[3.625rem]  rounded-lg  text-[#d1d1d1]`}
-              onChange={(e) => {
-                setSelected({ ...selected, email: e.target.value });
-              }}
+              onChange={changeHandler}
               onClick={() => setOpen(!open)}
               value={selected?.email}
             ></input>
@@ -101,9 +138,7 @@ const Newsletter = () => {
                       name="day"
                       placeholder="Dan"
                       className="peer border placeholder:text-base w-full placeholder-transparent  focus:border-[#e0e0e0] focus:outline-none focus:ring-0 h-[3.625rem] border-[#e0e0e0] rounded-lg  text-black"
-                      onChange={(e) => {
-                        setSelected({ ...selected, day: e.target.value });
-                      }}
+                      onChange={changeHandler}
                       value={selected?.day}
                     >
                       <option value="" disabled selected hidden></option>
@@ -156,9 +191,7 @@ const Newsletter = () => {
                       name="month"
                       placeholder="Mesec"
                       className={`peer border w-full placeholder-transparent focus:border-[#e0e0e0] focus:outline-none focus:ring-0 h-[3.625rem] border-[#e0e0e0] rounded-lg  text-black`}
-                      onChange={(e) => {
-                        setSelected({ ...selected, month: e.target.value });
-                      }}
+                      onChange={changeHandler}
                       value={selected?.month}
                     >
                       {" "}
@@ -194,30 +227,36 @@ const Newsletter = () => {
                   </h1>
                   <div className="flex flex-row max-md:self-center self-end md:ml-auto max-md:mt-4 items-center gap-6">
                     <button
+                      name={`type`}
+                      type={`button`}
                       className={`${
                         selected.type === "zene"
                           ? `border-black  border font-medium text-black`
                           : `text-[#d1d1d1]`
-                      } rounded-3xl px-10 py-2 w-[150px] border-[#e0e0e0] border  flex items-center justify-center`}
-                      value={selected.type}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelected({ ...selected, type: "zene" });
-                      }}
+                      } rounded-3xl px-10 py-2 w-[150px] ${
+                        error?.includes("type")
+                          ? `border-red-500`
+                          : `border-[#e0e0e0]`
+                      } border  flex items-center justify-center`}
+                      value={"zene"}
+                      onClick={changeHandler}
                     >
                       Žene
                     </button>
                     <button
+                      name={`type`}
+                      type={`button`}
                       className={`${
                         selected.type === "muskarci"
                           ? `border-black border font-medium text-black`
                           : `text-[#d1d1d1]`
-                      } rounded-3xl px-10 py-2 border-[#e0e0e0] border flex items-center justify-center `}
-                      value={selected.type}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelected({ ...selected, type: "muskarci" });
-                      }}
+                      } rounded-3xl px-10 py-2 ${
+                        error?.includes("type")
+                          ? `border-red-500`
+                          : `border-[#e0e0e0]`
+                      } border flex items-center justify-center `}
+                      value={"muskarci"}
+                      onClick={changeHandler}
                     >
                       Muškarci
                     </button>
@@ -227,17 +266,27 @@ const Newsletter = () => {
                   <input
                     type="checkbox"
                     id="terms"
-                    className="h-4 w-4 rounded text-green-500 focus:outline-none focus:ring-0"
+                    name={`terms`}
+                    className={`h-4 w-4 rounded text-green-500 focus:outline-none focus:ring-0 ${
+                      error?.includes("terms") ? `border-red-500` : ``
+                    }`}
                     required
-                    value={selected.terms}
-                    onChange={(e) => {
-                      setSelected({ ...selected, terms: true });
+                    value={selected?.terms}
+                    checked={selected?.terms}
+                    onChange={() => {
+                      setSelected({ ...selected, terms: !selected.terms });
                     }}
-                    checked={selected.terms}
                   />
                   <label htmlFor="terms" className="text-black text-xs">
-                    Pročitana je i prihvaćena Politika privatnosti i želim da
-                    primam vesti, obaveštenja i promocije od Pazari Shop.
+                    Pročitana je i prihvaćena{" "}
+                    <Link
+                      className={`hover:underline hover:text-[#e10000]`}
+                      href={`/zastita-privatnosti`}
+                    >
+                      Politika privatnosti
+                    </Link>{" "}
+                    i želim da primam vesti, obaveštenja i promocije od Pazari
+                    Shop.
                   </label>
                 </div>
                 <div className="self-center flex flex-col justify-self-center mx-auto mt-7">
@@ -249,15 +298,6 @@ const Newsletter = () => {
                     }}
                   >
                     Pretplati me
-                  </button>
-                  <button
-                    className="mt-10 text-sm font-semibold"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setView("unsubscribe");
-                    }}
-                  >
-                    Želim da otkažem pretplatu na bilten
                   </button>
                 </div>
               </div>

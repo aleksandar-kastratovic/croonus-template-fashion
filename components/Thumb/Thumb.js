@@ -736,7 +736,7 @@ const Thumb = ({ data, slider }) => {
           <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
             <Link
               href={`/proizvod/${product?.slug}`}
-              className="text-[0.813rem] max-md:leading-4 clamp"
+              className="text-[0.813rem] relative max-md:leading-4 clamp"
             >
               {product?.basic_data?.name}
             </Link>

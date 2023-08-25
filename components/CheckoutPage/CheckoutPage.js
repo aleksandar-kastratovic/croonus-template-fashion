@@ -1156,7 +1156,10 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     <li>
                       - Ukoliko Vam je potrebna pomoć u svakom trenutku nas
                       možete kontaktirati pozivom na broj call centra{" "}
-                      {process.env.TELEPHONE}.
+                      <a href={`tel:${process.env.TELEPHONE}`}>
+                        ${process.env.TELEPHONE}
+                      </a>
+                      .
                     </li>
                     <li>- Pogledajte uputstvo za pomoć pri kupovini.</li>
                   </ul>
