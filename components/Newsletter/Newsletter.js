@@ -51,12 +51,12 @@ const Newsletter = () => {
         campaign_code: "null",
         phone: "null",
         gender: selected?.type,
-        birth_date: `${selected?.month}/${selected?.day}`,
+        birth_date: `0000-${selected?.day}-${selected?.month} 00:00:00`,
         id_country: 193,
         country_name: "Serbia",
         id_town: 1,
         town_name: "Beograd",
-        ip_address: "null",
+        ip_address: null,
       }).then((response) => {
         switch (response?.code) {
           case 200:
