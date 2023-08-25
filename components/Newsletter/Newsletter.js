@@ -25,24 +25,17 @@ const Newsletter = () => {
     err = error?.filter((item) => item !== e.target.name);
     setError(err);
   };
-
+  console.log(error, selected.terms);
   const handleSubmit = async () => {
     let err = [];
     const terms = document.getElementById("terms");
     required?.forEach((item) => {
-      if (selected[item] === "") {
+      if (selected[item] === "" || selected[item] === false) {
         err?.push(item);
       }
-
-      if (selected?.terms === false) {
-        setError([...err, "terms"]);
-      } else {
-        setError(err);
-      }
+      setError(err);
     });
-    if (error?.length > 0) {
-      return;
-    } else {
+    if (error?.length === 0) {
       await POST("/newsletter/long", {
         id: 1,
         slug: "null",
@@ -267,9 +260,7 @@ const Newsletter = () => {
                     type="checkbox"
                     id="terms"
                     name={`terms`}
-                    className={`h-4 w-4 rounded text-green-500 focus:outline-none focus:ring-0 ${
-                      error?.includes("terms") ? `border-red-500` : ``
-                    }`}
+                    className={`h-4 w-4 rounded text-green-500 focus:outline-none focus:ring-0 `}
                     required
                     value={selected?.terms}
                     checked={selected?.terms}
@@ -277,7 +268,12 @@ const Newsletter = () => {
                       setSelected({ ...selected, terms: !selected.terms });
                     }}
                   />
-                  <label htmlFor="terms" className="text-black text-xs">
+                  <label
+                    htmlFor="terms"
+                    className={` ${
+                      error?.includes("terms") ? `text-[#e10000]` : `text-black`
+                    } text-xs`}
+                  >
                     Pročitana je i prihvaćena{" "}
                     <Link
                       className={`hover:underline hover:text-[#e10000]`}
