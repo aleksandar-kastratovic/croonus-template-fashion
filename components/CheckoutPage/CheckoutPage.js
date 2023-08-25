@@ -1032,7 +1032,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                 <span className="font-bold   text-xl">Proizvodi u korpi</span>
                 <CartProductBox cartItems={cartItems} />
               </div>{" "}
-              <div className="flex flex-col max-md:mt-5 col-span-2 max-xl:row-start-4 max-xl:row-end-5 row-start-2 max-xl:col-span-5 row-end-3 col-start-4 gap-4 bg-[#f5f5f7] px-3 mt-0 pt-7 pb-5">
+              <div className="flex flex-col max-md:mt-5 col-span-2 max-xl:row-start-4 max-xl:row-end-5 row-start-2 max-xl:col-span-5 row-end-3 col-start-4 gap-4 bg-[#f5f5f7] max-sm:px-[0.45rem] sm:px-3 mt-0 pt-7 pb-5">
                 {" "}
                 <span className=" text-xl  font-bold ">
                   Vrednost Vaše korpe:
@@ -1042,7 +1042,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     <span className="text-sm  font-medium max-xl:text-sm">
                       Ukupna vrednost korpe:{" "}
                     </span>
-                    <span className="mr-3 text-sm font-medium max-xl:text-sm">
+                    <span className="sm:mr-3 text-sm max-sm:ml-auto font-medium max-xl:text-sm">
                       {currencyFormat(
                         checkoutSummary?.summary?.totals?.with_vat
                       )}
@@ -1052,7 +1052,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     <span className="text-sm font-medium max-xl:text-sm">
                       Ukupna vrednost korpe sa popustom:
                     </span>
-                    <span className="mr-3 text-sm font-medium max-xl:text-sm">
+                    <span className="sm:mr-3 text-sm max-sm:ml-auto font-medium max-xl:text-sm">
                       {currencyFormat(
                         checkoutSummary?.summary?.totals?.items_discount
                       )}
@@ -1062,7 +1062,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     <span className="text-sm font-medium max-xl:text-sm">
                       Iznos popusta u korpi:{" "}
                     </span>
-                    <span className="mr-3 text-sm font-medium max-xl:text-sm">
+                    <span className="sm:mr-3 text-sm font-medium max-xl:text-sm">
                       {currencyFormat(
                         checkoutSummary?.summary?.totals?.items_discount_amount
                       )}
@@ -1072,7 +1072,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     <span className="text-sm font-medium max-xl:text-sm">
                       Iznos koštanja transporta:{" "}
                     </span>
-                    <span className="mr-3 text-sm font-medium max-xl:text-sm">
+                    <span className="sm:mr-3 text-sm font-medium max-xl:text-sm">
                       {currencyFormat(
                         checkoutSummary?.summary?.totals?.delivery_amount
                       )}
@@ -1082,7 +1082,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     <span className="text-sm font-medium max-xl:text-sm">
                       Ukupno za naplatu:
                     </span>
-                    <span className="mr-3 text-[1.5rem] font-bold max-xl:text-sm">
+                    <span className="sm:mr-3 text-[1.5rem] font-bold max-xl:text-sm">
                       {currencyFormat(checkoutSummary?.summary?.totals?.total)}
                     </span>
                   </div>{" "}

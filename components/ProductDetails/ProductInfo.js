@@ -107,16 +107,22 @@ const ProductInfo = ({
   }, [deliveryModal, infoModal, returnModal]);
 
   const [text, setText] = useState("Dodaj u korpu");
+  const [text2, setText2] = useState("Kupi odmah");
 
-  const handleTextChange = () => {
+  const handleTextChangeAddToCart = () => {
     if (product?.product_type === "variant" && !productVariant?.id) {
       setText("Izaberite veličinu");
     }
   };
-
+  const handleTextChangeBuyNow = () => {
+    if (product?.product_type === "variant" && !productVariant?.id) {
+      setText2("Izaberite veličinu");
+    }
+  };
   useEffect(() => {
     if (product?.product_type === "variant" && productVariant?.id) {
       setText("Dodaj u korpu");
+      setText2("Kupi odmah");
     }
   }, [productVariant]);
 
@@ -205,26 +211,37 @@ const ProductInfo = ({
                   ) {
                     addToCart();
                   }
-                  handleTextChange();
+                  handleTextChangeAddToCart();
                 }}
               >
                 {text}
               </button>
               <button
-                disabled={
-                  productVariant === null || productVariant.length === 0
-                }
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold cursor-not-allowed relative`
-                    : `max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] bg-[#191919] flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] ${
+                        text2 === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#191919]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
+                    : `max-sm:w-[8.5rem] ${
+                        text2 === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#191919]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
-                  addToCart();
-                  router.push("/korpa");
+                  if (
+                    product?.product_type === "variant" &&
+                    productVariant?.id
+                  ) {
+                    addToCart();
+                    router.push("/korpa");
+                  }
+                  handleTextChangeBuyNow();
                 }}
               >
-                Kupi odmah
+                {text2}
               </button>
               <div
                 className="w-[39px] h-[35px] cursor-pointer"

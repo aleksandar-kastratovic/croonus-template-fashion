@@ -584,7 +584,20 @@
   .pageConstructionHolder {
     min-height: 200px;
   }
-}
+}.constructionHolder {
+   min-height: 80vh;
+   justify-content: center;
+ }.positionImage {
+    position: relative;
+    z-index: 2;
+  }.constructionText {
+     background-color: #f0f0f0;
+     width: 50vw;
+     padding: 6rem;
+     color: black;
+     position: relative;
+     top: -3rem;
+   }
 .error-message {
   color: red !important;
   margin-top: 1rem;

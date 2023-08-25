@@ -114,7 +114,7 @@ const OrderSuccess = ({ order }) => {
               <h1
                 className={`font-semibold text- border-b-2 border-b-gray-300`}
               >
-                Podaci o korisniku
+                Podaci o kupcu
               </h1>
               <p className={`mt-2 text-sm`}>
                 Ime i prezime: &nbsp;
@@ -124,24 +124,21 @@ const OrderSuccess = ({ order }) => {
                 </span>
               </p>
               <p className={`mt-2 text-sm`}>
-                E-mail adresa:
+                E-mail:
                 <span className={`font-semibold`}>
                   {" "}
                   {order?.billing_address?.email}
                 </span>
               </p>
-              <p className={`mt-2 text-sm`}>
-                Adresa korisnika:
-                <span className={`font-semibold`}>
-                  {" "}
-                  {order?.billing_address?.address}
-                </span>
-              </p>
+
               <p className={`mt-2 text-sm`}>
                 Adresa dostave:
-                <span className={`font-semibold`}>
+                <span>
                   {" "}
-                  {order?.shipping_address?.address}
+                  {order?.shipping_address?.address}{" "}
+                  {order?.shipping_address?.object_number} ,{" "}
+                  {order?.shipping_address?.zip_code}
+                  &nbsp;{order?.shipping_address?.town_name}
                 </span>
               </p>
             </div>
@@ -190,7 +187,7 @@ const OrderSuccess = ({ order }) => {
               <h1
                 className={`font-semibold text- border-b-2 border-b-gray-300`}
               >
-                Podaci o trgovcu
+                Podaci o prodavcu
               </h1>
               <p className={`mt-2 text-sm`}>
                 Naziv:
@@ -323,7 +320,7 @@ const OrderSuccess = ({ order }) => {
             className={`col-span-2 xl:col-span-1 relative flex flex-col bg-[#f0f0f080] rounded-lg p-[2rem] h-[245px]`}
           >
             <h1 className={`font-semibold text- border-b-2 border-b-gray-300`}>
-              Podaci o korisniku
+              Podaci o kupcu
             </h1>
             <p className={`mt-2 text-sm`}>
               Ime i prezime: &nbsp;
@@ -333,24 +330,21 @@ const OrderSuccess = ({ order }) => {
               </span>
             </p>
             <p className={`mt-2 text-sm`}>
-              E-mail adresa:
+              E-mail:
               <span className={`font-semibold`}>
                 {" "}
                 {order?.billing_address?.email}
               </span>
             </p>
-            <p className={`mt-2 text-sm`}>
-              Adresa korisnika:
-              <span className={`font-semibold`}>
-                {" "}
-                {order?.billing_address?.address}
-              </span>
-            </p>
+
             <p className={`mt-2 text-sm`}>
               Adresa dostave:
               <span className={`font-semibold`}>
                 {" "}
-                {order?.shipping_address?.address}
+                {order?.shipping_address?.address}{" "}
+                {order?.shipping_address?.object_number} ,{" "}
+                {order?.shipping_address?.zip_code}
+                &nbsp;{order?.shipping_address?.town_name}
               </span>
             </p>
           </div>
@@ -395,7 +389,7 @@ const OrderSuccess = ({ order }) => {
             className={`col-span-2 xl:col-span-1 relative flex flex-col pb-7 bg-[#f0f0f080] rounded-lg p-[2rem] h-[245px] max-md:mb-5`}
           >
             <h1 className={`font-semibold text- border-b-2 border-b-gray-300`}>
-              Podaci o trgovcu
+              Podaci o prodavcu
             </h1>
             <p className={`mt-2 text-sm`}>
               Naziv:

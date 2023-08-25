@@ -166,10 +166,10 @@ const UserPage = () => {
             <div className="h-[100%] flex flex-col items-center">
               <div className="loginHolder">
                 <h3 className="font-semibold text-xl underline">
-                  POSEDUJETE PROFIL?
+                  IMATE NALOG?
                 </h3>
                 <p className="mb-[2rem] mt-[0.4rem] font-thin text-[#4b4b4b]">
-                  Ulogujte se.
+                  Molimo Vas unesite Vaše podatke.
                 </p>
                 <form
                   className="flex flex-col"
