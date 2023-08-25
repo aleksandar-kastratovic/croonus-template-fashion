@@ -7,6 +7,7 @@ import Footer from "@/components/Footer/Footer";
 import NavigationMobile from "@/components/Navigation/NavigationMobile";
 import TrackingScripts from "@/components/GTAG/GTAG";
 import { UserProvider } from "@/context/userContext";
+import CookieAlert from "@/components/CookieAlert/CookieAlert";
 
 export default function RootLayout({ children }) {
   return (
@@ -32,7 +33,7 @@ export default function RootLayout({ children }) {
             <NavigationDesktop />
             <NavigationMobile />
             {children}
-            <Footer />
+            <Footer /> <CookieAlert />
           </body>
         </html>
       </CartContextProvider>

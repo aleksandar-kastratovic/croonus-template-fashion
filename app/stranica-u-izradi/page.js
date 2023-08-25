@@ -1,20 +1,35 @@
 "use client";
-
 import Link from "next/link";
+import Image from "next/image";
 
-const underConstruction = () => {
+const PageInConstruction = () => {
   return (
-    <div
-      className={`w-full flex flex-col items-center justify-center mt-[2rem] md:mt-[9rem]`}
-    >
-      <h1 className={`text-2xl font-bold`}>Stranica u izradi.</h1>
-      <Link href="/">
-        <button className="bg-[#2bc48a] mt-5 px-10 font-medium text-white hover:bg-opacity-80 py-4">
-          Vrati se na početnu stranu
-        </button>
-      </Link>
-    </div>
+    <>
+      <div className="flex flex-col mt-[0rem] lg:mt-[9rem] items-center constructionHolder">
+        <div className="relative z-[49] col-span-1 rounded-lg w-[300px] h-[300px] positionImage">
+          <Image
+            src={`/icons/under-construction.png`}
+            alt="Pazari Shop"
+            height={150}
+            width={150}
+            style={{ objectFit: "contain" }}
+            className="object-scale-down max-sm:w-[100%]"
+          />
+        </div>
+        <div className="flex h-full w-full flex-col items-center justify-center rounded-lg bg-opacity-50 constructionText text-center">
+          <p className="font-medium">
+            Izvinite, stranica je trenutno u izradi.
+          </p>
+          <Link
+            href="/"
+            className="bg-[#2bc48a] mt-10 px-10 font-medium text-white hover:bg-opacity-80 py-4"
+          >
+            Idite na početnu
+          </Link>
+        </div>
+      </div>
+    </>
   );
 };
 
-export default underConstruction;
+export default PageInConstruction;

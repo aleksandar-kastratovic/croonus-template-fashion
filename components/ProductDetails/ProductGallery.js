@@ -226,8 +226,6 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
             }}
           ></i>
         </div>
-
-
         <div
           className={`absolute ${
             productGallery?.length > swiper?.params?.slidesPerView
