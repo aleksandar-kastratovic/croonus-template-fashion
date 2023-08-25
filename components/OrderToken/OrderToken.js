@@ -12,7 +12,7 @@ import { currencyFormat } from "@/helpers/functions";
 const OrderSuccess = ({ order }) => {
   const router = useRouter();
   const [cart, , ,] = useCartContext();
-
+  console.log("order", order);
   let conditions;
   if (order?.credit_card !== null && order) {
     if (order?.credit_card?.payment_status?.toLowerCase() === "approved") {
@@ -75,7 +75,7 @@ const OrderSuccess = ({ order }) => {
                   Za sve dodatne informacije možete nas kontaktirati putem call
                   centra{" "}
                   <a href={`tel:${process.env.TELEPHONE}`}>
-                    ${process.env.TELEPHONE}
+                    {process.env.TELEPHONE}
                   </a>{" "}
                   ili putem emaila{" "}
                   <a href={`mailto:${process.env.EMAIL}`}>
@@ -146,6 +146,10 @@ const OrderSuccess = ({ order }) => {
                   {order?.shipping_address?.zip_code}
                   &nbsp;{order?.shipping_address?.town_name}
                 </span>
+              </p>
+              <p className={`mt-2 text-sm`}>
+                Telefon:
+                <span>{order?.shipping_address?.phone}</span>
               </p>
             </div>
             <div
@@ -263,10 +267,10 @@ const OrderSuccess = ({ order }) => {
               Za sve dodatne informacije možete nas kontaktirati putem call
               centra{" "}
               <a href={`tel:${process.env.TELEPHONE}`}>
-                ${process.env.TELEPHONE}
+                {process.env.TELEPHONE}
               </a>{" "}
               ili putem emaila{" "}
-              <a href={`mailto:${process.env.EMAIL}`}>${process.env.EMAIL}</a>
+              <a href={`mailto:${process.env.EMAIL}`}>{process.env.EMAIL}</a>
             </p>
           </div>
         </div>
@@ -295,12 +299,10 @@ const OrderSuccess = ({ order }) => {
                 Za sve dodatne informacije možete nas kontaktirati putem call
                 centra{" "}
                 <a href={`tel:${process.env.TELEPHONE}`}>
-                  ${process.env.TELEPHONE}
+                  {process.env.TELEPHONE}
                 </a>{" "}
                 ili putem emaila{" "}
-                <a href={`mailto:${process.env.EMAIL}`}>
-                  ${process.env.EMAIL}
-                </a>
+                <a href={`mailto:${process.env.EMAIL}`}>{process.env.EMAIL}</a>
               </p>
             </div>
             <div>
@@ -361,6 +363,12 @@ const OrderSuccess = ({ order }) => {
                 {order?.shipping_address?.object_number} ,{" "}
                 {order?.shipping_address?.zip_code}
                 &nbsp;{order?.shipping_address?.town_name}
+              </span>
+            </p>
+            <p className={`mt-2 text-sm`}>
+              Telefon:
+              <span className={`font-semibold`}>
+                &nbsp;{order?.shipping_address?.phone}
               </span>
             </p>
           </div>

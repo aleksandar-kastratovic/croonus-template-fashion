@@ -260,20 +260,21 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
       post("/checkout/one-page", ret)
         .then((response) => {
           const creditCardForm = response?.payload?.payment_provider_data?.form;
+          const orderToken = response?.payload?.order?.order_token;
+          if (response?.code === 200) {
+            if (creditCardForm) {
+              const dom = document.createElement("div");
+              dom.innerHTML = creditCardForm;
+              document.body.appendChild(dom);
 
-          if (response?.code === 200 && creditCardForm) {
-            const dom = document.createElement("div");
-            dom.innerHTML = creditCardForm;
-            document.body.appendChild(dom);
-
-            const formData = document.getElementById("bank_send_form");
-            formData.submit();
-            mutateCart();
+              const formData = document.getElementById("bank_send_form");
+              formData.submit();
+              mutateCart();
+            } else {
+              router.push(`/korpa/${orderToken}`);
+              mutateCart();
+            }
           } else {
-            router.push(`/korpa/${response?.payload?.order?.order_token}`);
-          }
-
-          if (response?.code === 500 || response?.code === 400) {
             return (
               <div className="flex flex-row items-center justify-center rounded-2xl border border-croonus-1">
                 <div className="flex flex-col items-center justify-center">
@@ -291,6 +292,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
     }
   };
   const [checkoutSummary, setCheckoutSummary] = useState([]);
+
   useEffect(() => {
     const getSummary = async () => {
       return await get(`/checkout/summary`).then((response) => {
