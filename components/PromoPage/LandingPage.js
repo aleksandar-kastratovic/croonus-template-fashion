@@ -47,7 +47,7 @@ const LandingPage = ({ slug }) => {
       ).then((res) => {
         setData((prevData) => ({
           ...prevData,
-          conditions: res?.payload,
+          conditions: res?.payload?.items,
         }));
         setLoadingConditions(false);
       });
