@@ -119,7 +119,10 @@ const IndexSlider = ({ banners }) => {
                     height={1080}
                     className="bg-fixed w-full max-sm:h-full object-cover"
                   />
-                  <div className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40">
+                  <Link
+                    href={`${banner?.url ?? `/stranica-u-izradi`}`}
+                    className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40"
+                  >
                     <div className="absolute flex flex-col items-center justify-center max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                       {banner?.title && (
                         <h1 className="text-white max-sm:text-base text-xl font-bold ">
@@ -140,7 +143,7 @@ const IndexSlider = ({ banners }) => {
                         </Link>
                       )}
                     </div>
-                  </div>
+                  </Link>
                 </div>
               </div>
             );

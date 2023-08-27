@@ -1042,21 +1042,11 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                 <div className="flex flex-col gap-0">
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1 max-xl:text-base">
                     <span className="text-sm  font-medium max-xl:text-sm">
-                      Ukupna vrednost korpe:{" "}
+                      Ukupna vrednost korpe bez popusta:{" "}
                     </span>
                     <span className="sm:mr-3 text-sm max-sm:ml-auto font-medium max-xl:text-sm">
                       {currencyFormat(
                         checkoutSummary?.summary?.totals?.with_vat
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
-                    <span className="text-sm font-medium max-xl:text-sm">
-                      Ukupna vrednost korpe sa popustom:
-                    </span>
-                    <span className="sm:mr-3 text-sm max-sm:ml-auto font-medium max-xl:text-sm">
-                      {currencyFormat(
-                        checkoutSummary?.summary?.totals?.items_discount
                       )}
                     </span>
                   </div>
@@ -1066,10 +1056,21 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     </span>
                     <span className="sm:mr-3 text-sm font-medium max-xl:text-sm">
                       {currencyFormat(
-                        checkoutSummary?.summary?.totals?.items_discount_amount
+                          checkoutSummary?.summary?.totals?.items_discount_amount + checkoutSummary?.summary?.totals?.cart_discount_amount
                       )}
                     </span>
                   </div>
+                  <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
+                    <span className="text-sm font-medium max-xl:text-sm">
+                      Ukupna vrednost korpe sa popustom:
+                    </span>
+                    <span className="sm:mr-3 text-sm max-sm:ml-auto font-medium max-xl:text-sm">
+                      {currencyFormat(
+                        checkoutSummary?.summary?.totals?.cart_discount
+                      )}
+                    </span>
+                  </div>
+
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
                     <span className="text-sm font-medium max-xl:text-sm">
                       Iznos koštanja transporta:{" "}

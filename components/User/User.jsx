@@ -48,26 +48,28 @@ const UserPage = () => {
   };
 
   const formSubmitHandler = () => {
+    setLoading(true);
     const err = [];
     if (err.length > 0) {
       setErrors(err);
-      console.log(err);
+      setLoading(false);
     } else {
-      setLoading(true);
       const ret = {
         email: formData.email,
         password: formData.password,
       };
       post("/customers/sign-in/login", ret)
         .then((response) => {
-          if (response?.code === 200) {
-            setLoggedIn(true);
-            // localStorage.setItem("loggedIn", true);
+          if (response?.payload?.customer_token !== "") {
+            setLoading(false);
+            router.push("/customer-profil");
             Cookies.set("customer_token", response.payload.customer_token, {
               expires: 365,
             });
-            router.push("/customer-profil");
+            setLoggedIn(true);
+            // localStorage.setItem("loggedIn", true);
           } else {
+            setLoading(false);
             setErrors("Greška pri logovanju.");
             toast.error(
               "Greška pri logovanju. Proverite da li ste uneli ispravne podatke.",
@@ -81,6 +83,7 @@ const UserPage = () => {
             );
           }
           if (response?.code === 500 || response?.code === 400) {
+            setLoading(false);
             setErrors(
               "Došlo je do nepoznate greške pri obrađivanju Vašeg zahteva."
             );
@@ -171,12 +174,7 @@ const UserPage = () => {
                 <p className="mb-[2rem] mt-[0.4rem] font-thin text-[#4b4b4b]">
                   Molimo Vas unesite Vaše podatke.
                 </p>
-                <form
-                  className="flex flex-col"
-                  onSubmit={() => {
-                    formSubmitHandler();
-                  }}
-                >
+                <form className="flex flex-col" onSubmit={formSubmitHandler}>
                   <input
                     type="email"
                     name="email"
