@@ -1,7 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-
 const generateCustomerToken = () => {
   return "device_" + Math.random().toString(12) + Date.now();
 };
