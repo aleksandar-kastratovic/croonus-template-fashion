@@ -313,7 +313,7 @@ const Footer = () => {
           <a
             href="https://www.croonus.com"
             target={"_blank"}
-            className="hover:text-[#e10000] cursor-pointer"
+            className="hover:text-[#e10000] cursor-pointer bganimatethumb relative"
           >
             Croonus Technologies
           </a>
