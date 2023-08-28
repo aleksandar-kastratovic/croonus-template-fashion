@@ -10,17 +10,20 @@ const getCustomerToken = () => {
   if (!token) {
     token = generateCustomerToken();
     Cookies.set("customer_token", token, { expires: 365 });
+    Cookies.set("device_token", token, { expires: 365 });
   }
   return token;
 };
-
 const makeRequest = async (method, path, payload) => {
   const customer_token = getCustomerToken();
   try {
     const response = await axios({
       method: method,
       url: process.env.API_URL + path.replace(/^\//, ""),
-      headers: { "customer-token": customer_token },
+      headers: {
+        "customer-token": customer_token,
+        "device_token": customer_token,
+      },
       data: payload,
     });
 

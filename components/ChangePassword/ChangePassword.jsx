@@ -83,7 +83,7 @@ const ChangePassword = () => {
           onChange={formChangeHandler}
           type={showChangedPassword ? "text" : "password"}
           placeholder="Nova lozinka:"
-          className="block lg:w-full max-sm:flex-1 border border-[#e0e0e0] focus:border-[#e0e0e0] focus:ring-0 focus:outline-0 py-[0.6rem] rounded-lg"
+          className="block lg:w-full max-sm:flex-1 border border-[#e0e0e0] focus:border-[#e0e0e0] focus:ring-0 focus:outline-0 py-[0.6rem] "
         />
         <button onClick={togglePasswordVisibility} className="ml-3">
           {showChangedPassword ? (
@@ -109,7 +109,7 @@ const ChangePassword = () => {
 
       <button
         onClick={submitHandler}
-        className="bg-croonus-2 rounded-lg text-white py-[0.8rem] px-[4rem] max-sm:px-[1rem] hover:bg-opacity-80 mt-[3rem]"
+        className="bg-croonus-2  text-white py-[0.8rem] px-[4rem] max-sm:px-[1rem] hover:bg-opacity-80 mt-[3rem]"
       >
         Potvrdite
       </button>

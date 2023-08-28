@@ -25,7 +25,7 @@ const Newsletter = () => {
     err = error?.filter((item) => item !== e.target.name);
     setError(err);
   };
-  console.log(error, selected.terms);
+
   const handleSubmit = async () => {
     let err = [];
     const terms = document.getElementById("terms");
@@ -37,18 +37,20 @@ const Newsletter = () => {
     });
     if (error?.length === 0) {
       await POST("/newsletter/long", {
-        id: 1,
-        slug: "null",
-        name: "null",
+        slug: null,
+        name: null,
         email: selected?.email,
-        campaign_code: "null",
-        phone: "null",
+        campaign_code: null,
+        phone: null,
         gender: selected?.type,
-        birth_date: `0000-${selected?.day}-${selected?.month} 00:00:00`,
-        id_country: 193,
-        country_name: "Serbia",
-        id_town: 1,
-        town_name: "Beograd",
+        birth_day: selected?.day,
+        birth_month: selected?.month,
+        birth_year: null,
+        birth_date: null,
+        id_country: null,
+        country_name: null,
+        id_town: null,
+        town_name: null,
         ip_address: null,
       }).then((response) => {
         switch (response?.code) {
@@ -64,15 +66,18 @@ const Newsletter = () => {
             });
             break;
           default:
-            return toast.error(response?.payload?.message, {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            return toast.error(
+              `Došlo je do nepoznate greške! Molimo pokušajte ponovo.`,
+              {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
             break;
         }
       });
@@ -224,13 +229,13 @@ const Newsletter = () => {
                       type={`button`}
                       className={`${
                         selected.type === "zene"
-                          ? `border-black  border font-medium text-black`
+                          ? `border-black border font-medium text-black`
                           : `text-[#d1d1d1]`
                       } rounded-3xl px-10 py-2 w-[150px] ${
                         error?.includes("type")
                           ? `border-red-500`
                           : `border-[#e0e0e0]`
-                      } border  flex items-center justify-center`}
+                      } border  flex items-center hover:border-black hover:text-black justify-center`}
                       value={"zene"}
                       onClick={changeHandler}
                     >
@@ -247,7 +252,7 @@ const Newsletter = () => {
                         error?.includes("type")
                           ? `border-red-500`
                           : `border-[#e0e0e0]`
-                      } border flex items-center justify-center `}
+                      } border flex items-center justify-center hover:border-black hover:text-black `}
                       value={"muskarci"}
                       onClick={changeHandler}
                     >
