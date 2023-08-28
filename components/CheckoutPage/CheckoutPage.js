@@ -304,10 +304,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
 
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
-      <GoogleReCaptcha
-        onVerify={verifyCaptcha}
-        refreshReCaptcha={refreshReCaptcha}
-      />
+      <GoogleReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={true} />
       <ToastContainer />
       <div className="mx-auto text-sm 4xl:container mt-[1rem] lg:mt-[9rem] placeholder">
         <div className="md:hidden bg-[#f5f5f6]">
@@ -1056,7 +1053,9 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                     </span>
                     <span className="sm:mr-3 text-sm font-medium max-xl:text-sm">
                       {currencyFormat(
-                          checkoutSummary?.summary?.totals?.items_discount_amount + checkoutSummary?.summary?.totals?.cart_discount_amount
+                        checkoutSummary?.summary?.totals
+                          ?.items_discount_amount +
+                          checkoutSummary?.summary?.totals?.cart_discount_amount
                       )}
                     </span>
                   </div>
@@ -1070,7 +1069,6 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                       )}
                     </span>
                   </div>
-
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1">
                     <span className="text-sm font-medium max-xl:text-sm">
                       Iznos koštanja transporta:{" "}

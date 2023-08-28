@@ -8,6 +8,8 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Povracaj = () => {
+  const [token, setToken] = useState(null);
+
   const [formData, setFormData] = useState({
     message: "",
     date_of_contract: null,
@@ -19,9 +21,9 @@ const Povracaj = () => {
     bank_account: "",
     email: "",
     today_date: null,
+    gcaptcha: token,
   });
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState(null);
   const [errors, setErrors] = useState([]);
   const required = [
     "message",
@@ -78,19 +80,19 @@ const Povracaj = () => {
         company_sector: "",
         message: `Odustajanje od robe: ${
           formData?.message
-        } ; Datum zaključenja ugovora: ${convertDate(
+        } \n Datum zaključenja ugovora: ${convertDate(
           formData?.date_of_contract
-        )} ; Datum prijema robe: ${convertDate(
+        )} \n Datum prijema robe: ${convertDate(
           formData?.date_of_arrival
-        )} ; Razlozi za odustanak: ${
+        )} \n Razlozi za odustanak: ${
           formData?.reasons_of_return
-        } ; Ime i prezime potrošača: ${
+        } \n Ime i prezime potrošača: ${
           formData?.full_name
-        } ; Broj lične karte: ${formData?.id_number} ; Adresa potrošača: ${
+        } \n Broj lične karte: ${formData?.id_number} \n Adresa potrošača: ${
           formData?.address
-        } ; Broj tekućeg računa potrošača: ${
+        } \n Broj tekućeg računa potrošača: ${
           formData?.bank_account
-        } ; Email potrošača: ${formData?.email} ; Datum: ${convertDate(
+        } \n Email potrošača: ${formData?.email} \n Datum: ${convertDate(
           formData?.today_date
         )}`,
         accept_rules: true,
