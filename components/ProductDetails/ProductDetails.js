@@ -1,10 +1,9 @@
 "use client";
 import ProductGallery from "./ProductGallery";
 import ProductInfo from "./ProductInfo";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { get } from "@/app/api/api";
 import { useParams, usePathname } from "next/navigation";
-
 const ProductDetails = ({ product, productGallery, desc, path }) => {
   const [rawGallery, setRawGallery] = useState(productGallery);
   const [loading, setLoading] = useState(false);
@@ -39,6 +38,7 @@ const ProductDetails = ({ product, productGallery, desc, path }) => {
         path={path}
         setColor={setColor}
       />
+
     </div>
   );
 };

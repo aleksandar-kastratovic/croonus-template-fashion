@@ -1101,7 +1101,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                   className="focus:ring-0 focus:border-none focus:outline-none text-[#191919] bg-[#191919]"
                 />
                 <label htmlFor="agreed" className="max-md:text-xs">
-                  Saglasan sam sa opštim uslovima korišćenja PAZARI ONLINE
+                  Saglasan sam sa <Link className={`text-[#e10000] underline`} href={`/uslovi-koriscenja`}>opštim uslovima korišćenja</Link> PAZARI ONLINE
                   SHOP-a.
                 </label>
                 {errors.includes("agreed") && (
