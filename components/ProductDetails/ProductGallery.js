@@ -244,6 +244,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
           ></i>
         </div>
       </Swiper>
+
     </div>
   );
 };

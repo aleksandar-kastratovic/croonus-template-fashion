@@ -27,13 +27,20 @@ export default function RootLayout({ children }) {
               href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
               rel="stylesheet"
             ></link>
+            {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>*/}
+            {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/FBXLoader.js"></script>*/}
+            {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/MTLLoader.js"></script>*/}
+            {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/OBJLoader.js"></script>*/}
+            {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>*/}
+            {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/fflate.min.js"></script>*/}
           </head>
           <body className="">
             <TrackingScripts />
             <NavigationDesktop />
             <NavigationMobile />
             {children}
-            <Footer /> <CookieAlert />
+            <Footer />
+            <CookieAlert />
           </body>
         </html>
       </CartContextProvider>
