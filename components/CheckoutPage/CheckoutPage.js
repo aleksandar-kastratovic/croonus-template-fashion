@@ -32,6 +32,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
   const [token, setToken] = useState();
   const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [cartLoading, setCartLoading] = useState(true);
   const verifyCaptcha = useCallback((token) => {
     setToken(token);
   }, []);
@@ -111,6 +112,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
     list("/cart")
       .then((response) => {
         setCartData(response?.payload);
+        setCartLoading(false);
       })
       .catch((error) => console.warn(error));
   }, []);
@@ -266,13 +268,16 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
               const dom = document.createElement("div");
               dom.innerHTML = creditCardForm;
               document.body.appendChild(dom);
+              setLoading(false);
 
               const formData = document.getElementById("bank_send_form");
               formData.submit();
               mutateCart();
             } else {
               router.push(`/korpa/${orderToken}`);
+
               mutateCart();
+              setLoading(false);
             }
           } else {
             return (
@@ -286,7 +291,6 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
               </div>
             );
           }
-          setLoading(false);
         })
         .catch((error) => console.warn(error));
     }
@@ -312,7 +316,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
             Korpa
           </div>
         </div>
-        {cartItems.length > 0 ? (
+        {cartItems.length > 0 && !cartLoading ? (
           <>
             <div className="grid grid-cols-5 gap-y-3 gap-x-3 max-xl:mx-auto max-xl:w-[95%] xl:mx-[5rem] ">
               <div className="col-span-5 bg-white p-1 xl:col-span-3 max-xl:row-start-1">
@@ -1101,8 +1105,14 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                   className="focus:ring-0 focus:border-none focus:outline-none text-[#191919] bg-[#191919]"
                 />
                 <label htmlFor="agreed" className="max-md:text-xs">
-                  Saglasan sam sa <Link className={`text-[#e10000] underline`} href={`/uslovi-koriscenja`}>opštim uslovima korišćenja</Link> PAZARI ONLINE
-                  SHOP-a.
+                  Saglasan sam sa{" "}
+                  <Link
+                    className={`text-[#e10000] underline`}
+                    href={`/uslovi-koriscenja`}
+                  >
+                    opštim uslovima korišćenja
+                  </Link>{" "}
+                  PAZARI ONLINE SHOP-a.
                 </label>
                 {errors.includes("agreed") && (
                   <span
@@ -1135,39 +1145,41 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
             </div>
           </>
         ) : (
-          <>
-            <div className="nocontent-holder mt-[1.2rem] lg:mt-[13rem] flex items-center justify-center max-md:w-[95%] mx-auto">
-              <div className="text-center justify-center items-center flex flex-col border border-[#f8f8f8] rounded-3xl p-10">
-                <div className="text-center">
-                  <span className="text-2xl font-medium">Vaša korpa</span>
-                </div>
-                <div className="mt-6 text-center text-lg font-medium">
-                  Trenutno ne postoji sadržaj u Vašoj korpi.
-                </div>
-                <div className="mt-5 text-center">
-                  <Link href="/">
-                    <button className="bg-[#2bc48a] mt-10 px-10 font-medium text-white hover:bg-opacity-80 py-4">
-                      Vrati se na početnu stranu
-                    </button>
-                  </Link>
-                </div>
-                <div className="help-container mt-10 text-center">
-                  <p className="font-medium">Pomoć pri kupovini:</p>
-                  <ul className="mt-2">
-                    <li>
-                      - Ukoliko Vam je potrebna pomoć u svakom trenutku nas
-                      možete kontaktirati pozivom na broj call centra{" "}
-                      <a href={`tel:${process.env.TELEPHONE}`}>
-                        ${process.env.TELEPHONE}
-                      </a>
-                      .
-                    </li>
-                    <li>- Pogledajte uputstvo za pomoć pri kupovini.</li>
-                  </ul>
+          !cartLoading && (
+            <>
+              <div className="nocontent-holder mt-[1.2rem] lg:mt-[13rem] flex items-center justify-center max-md:w-[95%] mx-auto">
+                <div className="text-center justify-center items-center flex flex-col border border-[#f8f8f8] rounded-3xl p-10">
+                  <div className="text-center">
+                    <span className="text-2xl font-medium">Vaša korpa</span>
+                  </div>
+                  <div className="mt-6 text-center text-lg font-medium">
+                    Trenutno ne postoji sadržaj u Vašoj korpi.
+                  </div>
+                  <div className="mt-5 text-center">
+                    <Link href="/">
+                      <button className="bg-[#2bc48a] mt-10 px-10 font-medium text-white hover:bg-opacity-80 py-4">
+                        Vrati se na početnu stranu
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="help-container mt-10 text-center">
+                    <p className="font-medium">Pomoć pri kupovini:</p>
+                    <ul className="mt-2">
+                      <li>
+                        - Ukoliko Vam je potrebna pomoć u svakom trenutku nas
+                        možete kontaktirati pozivom na broj call centra{" "}
+                        <a href={`tel:${process.env.TELEPHONE}`}>
+                          ${process.env.TELEPHONE}
+                        </a>
+                        .
+                      </li>
+                      <li>- Pogledajte uputstvo za pomoć pri kupovini.</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
+            </>
+          )
         )}
         {loading && (
           <div className="fixed top-0 left-0 bg-black bg-opacity-40 h-screen w-screen flex items-center justify-center">
