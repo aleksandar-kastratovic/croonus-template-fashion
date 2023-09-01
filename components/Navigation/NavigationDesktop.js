@@ -12,6 +12,7 @@ import User from "../../assets/Icons/user.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import Search from "../../assets/Icons/search.png";
+import { currencyFormat } from "@/helpers/functions";
 
 const NavigationDesktop = () => {
   const pathname = usePathname();
@@ -351,30 +352,54 @@ const NavigationDesktop = () => {
                       : `hidden`
                   } `}
                 >
-                  {!loading &&
-                    searchData?.items?.slice(0, 10)?.map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className={`py-2 hover:bg-croonus-2 hover:text-white transition-all duration-500`}
-                        >
-                          <Link
-                            onClick={() => {
-                              setSearchTerm("");
-                              setSearchData([]);
-                            }}
-                            className={`text-[0.9rem] block px-2 h-full w-full`}
-                            href={`/proizvod/${item?.slug_path}`}
-                          >
-                            {item?.basic_data?.name}
-                          </Link>
-                        </div>
-                      );
-                    })}
+                  {searchData?.items?.length > 0 && searchTerm?.length > 0 && (
+                    <div className="w-[95%] mx-auto mt-5">
+                      <h1 className="text-[1rem] font-normal">
+                        Rezultati pretrage
+                      </h1>
+                      <div className="flex flex-col gap-5 mt-3 pb-5">
+                        {searchData?.items?.slice(0, 6)?.map((item) => {
+                          return (
+                            <Link
+                              href={`/proizvod/${item?.slug_path}`}
+                              onClick={(e) => {
+                                setSearchData([]);
+                                setSearchOpen(false);
+                                handleSearch(e);
+                                setSearchTerm("");
+                              }}
+                            >
+                              <div className="flex flex-row items-center gap-5">
+                                <div className="w-[60px] h-[60px] relative">
+                                  <Image
+                                    src={item.image[0]}
+                                    alt={``}
+                                    fill
+                                    className={`object-cover rounded-full`}
+                                  />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <h1 className="text-[0.9rem] font-normal">
+                                    {item?.basic_data?.name}
+                                  </h1>
+                                  <h1 className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
+                                    {currencyFormat(
+                                      item?.price?.price?.discount ??
+                                        item?.price?.price?.original
+                                    )}
+                                  </h1>
+                                </div>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                   {loading && (
-                    <div className="flex h-full flex-1 items-center justify-center">
+                    <div className={`w-[95%] mx-auto text-center mt-5`}>
                       <i
-                        className={`text-4xl fa fa-solid fa-spinner fa-spin`}
+                        className={`fas fa-spinner fa-spin text-xl text-black`}
                       ></i>
                     </div>
                   )}
@@ -390,8 +415,9 @@ const NavigationDesktop = () => {
                         className={`text-white w-full h-full font-light text-center`}
                       >
                         Prikaži sve rezultate (
-                        {searchData?.pagination?.total_items > 10 &&
-                          `još ${searchData?.pagination?.total_items - 10}`}
+                        {searchData?.pagination?.total_items > 10
+                          ? `još ${searchData?.pagination?.total_items - 10}`
+                          : `Pretraži`}
                         )
                       </button>
                     </div>
