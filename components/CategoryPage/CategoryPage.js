@@ -25,9 +25,9 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [isBeingFiltered, setIsBeingFiltered] = useState(false);
   useEffect(() => {
     const fetchData = async (limit, sort, page, filters) => {
-      if (page < 2) {
-        setLoading(true);
-      }
+      // if (page < 2) {
+      //   setLoading(true);
+      // }
       const res = await list(`/products/category/list/${singleCategory?.id}`, {
         limit: limit,
         sort: sort,
@@ -53,7 +53,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
             (product) => !uniqueProductIds?.has(product?.basic_data?.id_product)
           );
           return {
-            products: [...prevData?.products, ...filteredNewProducts],
+            products: [...prevData?.products, ...(filteredNewProducts ?? [])],
             pagination: newPagination,
           };
         });

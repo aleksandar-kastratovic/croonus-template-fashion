@@ -102,7 +102,7 @@ const NavigationMobile = () => {
     setActiveImage(categories[0]?.image);
   }, [categories]);
 
-  const [generateBreadcrumbs, setGenerateBreadcrumbs] = useState();
+  const [generateBreadcrumbs, setGenerateBreadcrumbs] = useState([]);
   const [searchVisible, setSearchVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
@@ -180,7 +180,9 @@ const NavigationMobile = () => {
                 />
               </div>
             )}
-            <Image src={User} width={33} height={33} />
+            <Link href={`/nalog`}>
+              <Image src={User} width={33} height={33} />
+            </Link>
             <Link href="/korpa">
               <div className="relative">
                 <Image src={Cart} width={33} height={33} />
@@ -256,7 +258,7 @@ const NavigationMobile = () => {
                       firstCategory: true,
                     });
                     setActiveImage(category?.image);
-                    setGenerateBreadcrumbs(category?.slug_path);
+                    setGenerateBreadcrumbs(category?.name);
                   }}
                 >
                   {category?.name}
@@ -277,7 +279,7 @@ const NavigationMobile = () => {
           </div>
         </div>
 
-        {generateBreadcrumbs && generateBreadcrumbs.split("/").length > 1 && (
+        {generateBreadcrumbs && (
           <div className="w-[95%] mx-auto mt-5">
             <button
               className="flex items-center justify-between w-full gap-5"
@@ -308,26 +310,11 @@ const NavigationMobile = () => {
                 <i className="fa-solid fa-chevron-left text-base"></i>
                 <h1 className="text-[0.9rem] font-normal">Nazad</h1>
               </div>
-              {generateBreadcrumbs &&
-              generateBreadcrumbs.split("/").length > 1 ? (
-                <h1 className="text-[0.9rem] font-normal">
-                  {generateBreadcrumbs
-                    .split("/")
-                    .map((breadcrumb, index, array) => {
-                      let spacedBreadcrumb =
-                        breadcrumb.charAt(0).toUpperCase() +
-                        breadcrumb.slice(1);
-                      if (index < array.length - 1) {
-                        spacedBreadcrumb += " / ";
-                      }
-                      return spacedBreadcrumb;
-                    })}
-                </h1>
-              ) : null}
+              {generateBreadcrumbs && <>{generateBreadcrumbs}</>}
             </button>
           </div>
         )}
-
+        {console.log(generateBreadcrumbs)}
         <div className="mt-5 w-[95%] overflow-y-auto mx-auto flex flex-col gap-5">
           {activeCategory?.data?.length > 0 &&
             activeCategory?.data?.map((category) => {
@@ -354,7 +341,13 @@ const NavigationMobile = () => {
                           parentCategory: activeCategory?.parentCategory,
                         });
                         setActiveImage(category?.image);
-                        setGenerateBreadcrumbs(category?.slug_path);
+                        setGenerateBreadcrumbs((prev) => {
+                          if (prev) {
+                            return `${prev} / ${category?.name}`;
+                          } else {
+                            return `${category?.name}`;
+                          }
+                        });
                         exActiveIds.push(category?.id);
                       }}
                     >
