@@ -12,6 +12,7 @@ import User from "../../assets/Icons/user.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import Thumb from "../Thumb/Thumb";
+import { currencyFormat } from "@/helpers/functions";
 
 const NavigationMobile = () => {
   const router = useRouter();
@@ -139,6 +140,23 @@ const NavigationMobile = () => {
     };
     getLandingPages();
   }, []);
+
+  const [searchData, setSearchData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (searchTerm?.length > 0) {
+      const getData = async (search) => {
+        await list(`/products/search/list`, {
+          search: search,
+        }).then((response) => {
+          setSearchData(response?.payload);
+          setLoading(false);
+        });
+      };
+      getData(searchTerm);
+    }
+  }, [searchTerm]);
+
   return (
     <>
       <div className="md:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
@@ -439,14 +457,89 @@ const NavigationMobile = () => {
                 className="w-full border  border-[#191919] focus:border-[#191919] focus:outline-none focus:ring-0 placeholder:text-xs text-xs rounded-lg pl-10"
                 placeholder="Unesite pojam za pretragu "
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setLoading(true);
+                }}
               />
               <i className="fas fa-search absolute top-1/2 transform -translate-y-1/2 text-sm left-3 text-[#191919]"></i>
             </form>
-            <p className="text-xs" onClick={() => setSearchOpen(false)}>
+            <p
+              className="text-xs"
+              onClick={() => {
+                setSearchOpen(false);
+                setLoading(false);
+                setSearchTerm("");
+                setSearchData([]);
+              }}
+            >
               Otkaži
             </p>
           </div>
+          {searchData?.items?.length > 0 && searchTerm?.length > 0 && (
+            <div className="w-[95%] mx-auto mt-5">
+              <h1 className="text-[1rem] font-normal">Rezultati pretrage</h1>
+              <div className="flex flex-col gap-5 mt-3">
+                {searchData?.items?.slice(0, 6)?.map((item) => {
+                  return (
+                    <Link
+                      href={`/proizvod/${item?.slug_path}`}
+                      onClick={(e) => {
+                        setSearchData([]);
+                        setSearchOpen(false);
+                        handleSearch(e);
+                        setSearchTerm("");
+                      }}
+                    >
+                      <div className="flex flex-row items-center gap-5">
+                        <div className="w-[60px] h-[60px] relative">
+                          <Image
+                            src={item.image[0]}
+                            alt={``}
+                            fill
+                            className={`object-cover rounded-full`}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <h1 className="text-[0.9rem] font-normal">
+                            {item?.basic_data?.name}
+                          </h1>
+                          <h1 className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
+                            {currencyFormat(
+                              item?.price?.price?.discount ??
+                                item?.price?.price?.original
+                            )}
+                          </h1>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+                <Link
+                  href={`/search?search=${searchTerm}`}
+                  className={`text-[0.9rem] text-center text-white bg-[#191919] mt-4 py-3 w-[80%] mx-auto font-normal`}
+                  onClick={(e) => {
+                    setSearchData([]);
+                    setSearchOpen(false);
+                    handleSearch(e);
+                    setSearchTerm("");
+                  }}
+                >
+                  {`Pogledaj sve rezultate ( još ${
+                    searchData?.pagination?.total_items -
+                    (searchData?.items?.length > 6
+                      ? 6
+                      : searchData?.items?.length)
+                  } )`}
+                </Link>
+              </div>
+            </div>
+          )}
+          {loading && (
+            <div className={`w-[95%] mx-auto text-center mt-5`}>
+              <i className={`fas fa-spinner fa-spin text-xl text-black`}></i>
+            </div>
+          )}
         </div>
       )}
     </>
