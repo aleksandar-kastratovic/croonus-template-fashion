@@ -1106,12 +1106,13 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                 />
                 <label htmlFor="agreed" className="max-md:text-xs">
                   Saglasan sam sa{" "}
-                  <Link
+                  <a
                     className={`text-[#e10000] underline`}
                     href={`/uslovi-koriscenja`}
+                    target={`_blank`}
                   >
                     opštim uslovima korišćenja
-                  </Link>{" "}
+                  </a>{" "}
                   PAZARI ONLINE SHOP-a.
                 </label>
                 {errors.includes("agreed") && (

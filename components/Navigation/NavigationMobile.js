@@ -157,6 +157,7 @@ const NavigationMobile = () => {
     }
   }, [searchTerm]);
 
+
   return (
     <>
       <div className="md:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
@@ -332,7 +333,6 @@ const NavigationMobile = () => {
             </button>
           </div>
         )}
-        {console.log(generateBreadcrumbs)}
         <div className="mt-5 w-[95%] overflow-y-auto mx-auto flex flex-col gap-5">
           {activeCategory?.data?.length > 0 &&
             activeCategory?.data?.map((category) => {
