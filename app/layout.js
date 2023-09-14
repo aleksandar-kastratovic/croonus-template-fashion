@@ -3,6 +3,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import { Open_Sans } from 'next/font/google'
 import { CartContextProvider } from './api/cartContext'
+import HeaderModal from '@/components/HeaderModal'
 
 //👇 Configure our font object
 const openSans = Open_Sans({
@@ -19,9 +20,13 @@ export default function RootLayout({ children }) {
   return (
     <CartContextProvider>
       <html lang="en" className={openSans.className}>
+
         <body className='min-h-screen'>
           <Header />
-          {children}
+          <div className='relative'>
+            <HeaderModal />
+            {children}
+          </div>
           <Footer />
         </body>
       </html>

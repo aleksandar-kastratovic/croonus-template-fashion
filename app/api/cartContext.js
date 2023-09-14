@@ -29,6 +29,19 @@ export function CartContextProvider({ children }) {
     setHeaderTotal(total);
   };
 
+  const [openHeader, setOpenHeader] = useState(false);
+
+  const mutateOpenHeader = (open) => {
+    setOpenHeader(open);
+  };
+
+  const [chooseCategory, setChooseCategory] = useState(null);
+
+
+  const mutateChooseCategory = (category) => {
+    setChooseCategory(category);
+  };
+
   return (
     <CartContext.Provider
       value={[
@@ -38,6 +51,10 @@ export function CartContextProvider({ children }) {
         mutateWishList,
         headerTotal,
         mutateHeaderTotal,
+        openHeader,
+        mutateOpenHeader,
+        chooseCategory,
+        mutateChooseCategory
       ]}
     >
       {children}
