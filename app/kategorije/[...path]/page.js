@@ -17,6 +17,8 @@ const getCategories = async () => {
   return await get("/categories/product/tree").then((res) => res?.payload);
 };
 
+const getBreadcrumbs = async (slug) => {}
+
 export async function generateMetadata({ params: { path } }, { searchParams }) {
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
   return {
