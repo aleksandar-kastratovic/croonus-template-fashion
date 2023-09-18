@@ -60,7 +60,7 @@ const UserPage = () => {
       };
       post("/customers/sign-in/login", ret)
         .then((response) => {
-          if (response?.payload?.customer_token !== "") {
+          if (response?.code === 200) {
             setLoading(false);
             router.push("/customer-profil");
             Cookies.set("customer_token", response.payload.customer_token, {
