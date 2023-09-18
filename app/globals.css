@@ -420,7 +420,7 @@
   align-items: center;
 
   top: 50% !important;
-  right: -30px !important;
+  right: 0px !important;
   justify-content: center;
   transform: scale(0.6) !important;
   background-color: transparent !important;
@@ -551,7 +551,7 @@
   width: 56px !important;
   transform: scale(0.3) !important;
   box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
-  left: -6px !important;
+  left: 0px !important;
   z-index: 500 !important;
   fill: black !important;
   position: absolute !important;

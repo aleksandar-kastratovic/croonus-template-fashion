@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,7 +8,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
-import Chevron from "../../assets/Icons/right-chevron.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
@@ -81,24 +80,24 @@ const Thumb = ({ data, slider }) => {
           );
           !variant?.basic_data?.name
             ? toast.error(`Došlo je do greške, molimo Vas pokušajte ponovo.`, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            })
+            : toast.success(
+              `Proizvod ${variant?.basic_data?.name} je dodat u korpu`,
+              {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-              })
-            : toast.success(
-                `Proizvod ${variant?.basic_data?.name} je dodat u korpu`,
-                {
-                  position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                }
-              );
+              }
+            );
           addToCart(variant?.basic_data?.id_product, 1);
           setSelected([]);
           setIdProduct(null);
@@ -238,12 +237,11 @@ const Thumb = ({ data, slider }) => {
                         return (
                           <SwiperSlide key={Math.random()}>
                             <div
-                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${
-                                isSelected &&
-                                variantAttributeKey === variantAttributeKey
+                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${isSelected &&
+                                  variantAttributeKey === variantAttributeKey
                                   ? `border-[#242424] bg-[#242424] text-white`
                                   : ``
-                              }`}
+                                }`}
                               onClick={() => {
                                 if (product?.variant_options?.length > 1) {
                                   setSelected((prevSelected) => {
@@ -374,7 +372,7 @@ const Thumb = ({ data, slider }) => {
           </div>
           <div className={`flex flex-row items-start gap-3 mt-2 max-lg:hidden`}>
             {loading?.status &&
-            loading?.id === product?.basic_data?.id_product ? (
+              loading?.id === product?.basic_data?.id_product ? (
               <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
             ) : (
               <>
@@ -390,9 +388,8 @@ const Thumb = ({ data, slider }) => {
                   return (
                     <div
                       key={item3?.key}
-                      className={`max-sm:scale-[0.8] ${
-                        isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                      } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                      className={`max-sm:scale-[0.8] ${isSelected ? `border border-[#242424] p-[0.5px]` : ``
+                        } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
                       onClick={() => {
                         setSelected((prevSelected) => {
                           // Remove previous selections with the same variantAttributeKey
@@ -610,12 +607,11 @@ const Thumb = ({ data, slider }) => {
                         return (
                           <SwiperSlide key={Math.random()}>
                             <div
-                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${
-                                isSelected &&
-                                variantAttributeKey === variantAttributeKey
+                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${isSelected &&
+                                  variantAttributeKey === variantAttributeKey
                                   ? `border-[#242424] bg-[#242424] text-white`
                                   : ``
-                              }`}
+                                }`}
                               onClick={() => {
                                 if (product?.variant_options?.length > 1) {
                                   setSelected((prevSelected) => {
@@ -782,7 +778,7 @@ const Thumb = ({ data, slider }) => {
           </div>{" "}
           <div className={`flex flex-row items-start gap-3 max-sm:gap-0 mt-2`}>
             {loading?.status &&
-            loading?.id === product?.basic_data?.id_product ? (
+              loading?.id === product?.basic_data?.id_product ? (
               <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
             ) : (
               <>
@@ -798,9 +794,8 @@ const Thumb = ({ data, slider }) => {
                   return (
                     <div
                       key={item3?.key}
-                      className={`max-sm:scale-[0.8] ${
-                        isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                      } rounded-full  cursor-pointer flex flex-wrap items-center justify-center max-md:hidden text-center text-xs w-[10px] h-[10px] md:w-[15px] md:h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                      className={`max-sm:scale-[0.8] ${isSelected ? `border border-[#242424] p-[0.5px]` : ``
+                        } rounded-full  cursor-pointer flex flex-wrap items-center justify-center max-md:hidden text-center text-xs w-[10px] h-[10px] md:w-[15px] md:h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
                       onClick={() => {
                         setSelected((prevSelected) => {
                           // Remove previous selections with the same variantAttributeKey

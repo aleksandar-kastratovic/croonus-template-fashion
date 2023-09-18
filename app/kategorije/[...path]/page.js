@@ -1,20 +1,15 @@
-import { get, post } from "@/app/api/api";
-import CategoryPage from "@/components/CategoryPage/CategoryPage";
+
 import { Suspense } from "react";
 
-const fetchFilters = async (slug) => {
-  return await post(`/products/category/filters/${slug}`).then(
-    (res) => res?.payload
-  );
-};
+import { get } from "@/app/api/api";
+import Category from "@/components/sections/categories/Category";
+import Loading from "@/components/sections/categories/Loader";
+
 
 const fetchSingleCategory = async (slug) => {
   return await get(`/categories/product/single/${slug}`).then(
     (res) => res?.payload
   );
-};
-const getCategories = async () => {
-  return await get("/categories/product/tree").then((res) => res?.payload);
 };
 
 export async function generateMetadata({ params: { path } }, { searchParams }) {
@@ -37,14 +32,19 @@ export async function generateMetadata({ params: { path } }, { searchParams }) {
   };
 }
 
-const Category = async ({ params: { path } }) => {
-  const filters = await fetchFilters(path[path?.length - 1]);
-  const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
-
-  return <CategoryPage filter={filters} singleCategory={singleCategory} />;
+const CategoryPage = ({ params: { path } }) => {
+  return (
+    <>
+      <Suspense fallback={<Loading />}>
+        <Category path={path[path?.length - 1]} />
+      </Suspense>
+    </>
+  );
 };
 
-export default Category;
+
+export default CategoryPage;
+
 
 export async function generateStaticParams() {
   const categories = await get("/categories/product/tree").then(

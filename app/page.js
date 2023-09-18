@@ -2,8 +2,9 @@ import IndexSlider from "@/components/IndexSlider/IndexSlider";
 import { get, list } from "./api/api";
 import RecommendedCategories from "@/components/RecommendedCategories/RecommendedCategories";
 import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
-import IndexBanner from "@/components/IndexBanner/IndexBanner";
-import Newsletter from "@/components/Newsletter/Newsletter";
+import { Suspense } from "react";
+import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
+import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";
 
 const getBanners = async () => {
   return await get("/banners/index_slider").then((res) => res?.payload);
@@ -61,12 +62,18 @@ const Home = async () => {
         >
           <IndexSlider banners={banners} />
         </div>
-        <RecommendedCategories categories={categories} />
         <div className="overflow-hidden">
           <RecommendedProducts products={newProducts} />
         </div>
-        <IndexBanner banner={indexBanner} />
-        <Newsletter />
+        <RecommendedCategories categories={categories} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <NewCategoriesSections />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <NewsLetterInstagramSection />
+        </Suspense>
+        {/* <IndexBanner banner={indexBanner} />
+          <Newsletter /> */}
       </div>
     </>
   );

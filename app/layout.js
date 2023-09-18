@@ -1,4 +1,3 @@
-import NavigationDesktop from "@/components/Navigation/NavigationDesktop";
 import { CartContextProvider } from "./api/cartContext";
 import "./globals.css";
 import Script from "next/script";
@@ -8,6 +7,8 @@ import NavigationMobile from "@/components/Navigation/NavigationMobile";
 import TrackingScripts from "@/components/GTAG/GTAG";
 import { UserProvider } from "@/context/userContext";
 import CookieAlert from "@/components/CookieAlert/CookieAlert";
+import Header from "@/components/Header/Header";
+import HeaderModal from "@/components/Header/HeaderModal";
 
 export default function RootLayout({ children }) {
   return (
@@ -34,11 +35,14 @@ export default function RootLayout({ children }) {
             {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>*/}
             {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/fflate.min.js"></script>*/}
           </head>
-          <body className="">
+          <body className="relative">
             <TrackingScripts />
-            <NavigationDesktop />
+            <Header />
             <NavigationMobile />
-            {children}
+            <div className="relative">
+              <HeaderModal />
+              {children}
+            </div>
             <Footer />
             <CookieAlert />
           </body>

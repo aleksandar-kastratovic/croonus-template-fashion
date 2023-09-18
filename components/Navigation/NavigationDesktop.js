@@ -219,25 +219,22 @@ const NavigationDesktop = () => {
   return (
     <>
       <div
-        className={`max-md:hidden sticky top-0 z-[54] flex items-center justify-between w-full bg-${
-          category ? `white` : `${background}`
-        } ${background === "white" ? `bg-opacity-70 backdrop-blur` : ``}`}
+        className={`max-lg:hidden sticky top-0 z-[54] flex items-center justify-between w-full bg-${category ? `white` : `${background}`
+          } ${background === "white" ? `bg-opacity-70 backdrop-blur` : ``}`}
         id="navigation"
       >
         <div
-          className={`absolute top-0 h-[4.719rem] ${
-            background === "white" ? `bg-opacity-90 backdrop-blur` : `pt-8`
-          } px-[3%] z-[54] flex items-center justify-between w-full bg-${
-            category ? `white` : `${background}`
-          }  transition-all duration-500`}
+          className={`absolute top-0 h-[4.719rem] ${background === "white" ? `bg-opacity-90 backdrop-blur` : `pt-8`
+            } px-[3%] z-[54] flex items-center justify-between w-full bg-${category ? `white` : `${background}`
+            }  transition-all duration-500`}
         >
           <div
             className="flex items-center gap-20 "
-            // onMouseEnter={() => {
-            //   if (background === "white") {
-            //     setOpen(true);
-            //   }
-            // }}
+          // onMouseEnter={() => {
+          //   if (background === "white") {
+          //     setOpen(true);
+          //   }
+          // }}
           >
             <Link href="/">
               {open || background === "white" ? (
@@ -278,25 +275,24 @@ const NavigationDesktop = () => {
                       setOpen(true);
                     }}
                     key={category?.id}
-                    className={`uppercase ${
-                      (isActiveCategory && !open && background === "transparent"
-                        ? `text-white`
-                        : isActiveCategory && !open && background === "white"
+                    className={`uppercase ${(isActiveCategory && !open && background === "transparent"
+                      ? `text-white`
+                      : isActiveCategory && !open && background === "white"
                         ? `text-black`
                         : !isActiveCategory &&
-                          !open &&
-                          background === "transparent" &&
-                          `text-white`) ||
+                        !open &&
+                        background === "transparent" &&
+                        `text-white`) ||
                       ((open &&
                         isActiveCategory &&
                         background === "transparent") ||
-                      (open && isActiveCategory && background === "white")
+                        (open && isActiveCategory && background === "white")
                         ? `bg-black text-white`
                         : `text-black`) ||
                       (open && isActiveCategory && background === "white"
                         ? `bg-red-500 text-white`
                         : `bg-red-500 text-white`)
-                    } px-5 py-1 text-[0.8rem] rounded cursor-pointer`}
+                      } px-5 py-1 text-[0.8rem] rounded cursor-pointer`}
                     onMouseEnter={() => {
                       setIsActive(category?.id);
                       setActiveCategory(category);
@@ -326,18 +322,16 @@ const NavigationDesktop = () => {
               />
               <form
                 onSubmit={handleSearch}
-                className={`${
-                  searchTerm?.length > 0 ? `w-[25rem]` : `w-60`
-                } transition-all duration-500 relative`}
+                className={`${searchTerm?.length > 0 ? `w-[25rem]` : `w-60`
+                  } transition-all duration-500 relative`}
               >
                 <input
                   type="text"
                   placeholder="PRETRAGA"
-                  className={`bg-transparent border-l-0 w-full border-t-0 border-r-0 border-b ${
-                    background === "white"
-                      ? "border-b-black text-black"
-                      : "border-b-white focus:border-b-white placeholder:text-white text-white"
-                  }  focus:ring-0 placeholder:text-sm text-sm p-0 focus:border-b-black  focus:outline-none`}
+                  className={`bg-transparent border-l-0 w-full border-t-0 border-r-0 border-b ${background === "white"
+                    ? "border-b-black text-black"
+                    : "border-b-white focus:border-b-white placeholder:text-white text-white"
+                    }  focus:ring-0 placeholder:text-sm text-sm p-0 focus:border-b-black  focus:outline-none`}
                   onChange={(event) => {
                     setSearchTerm(event.target.value);
                     setLoading(true);
@@ -346,11 +340,10 @@ const NavigationDesktop = () => {
                 />
                 <div
                   ref={searchRef}
-                  className={`${
-                    searchTerm?.length > 0
-                      ? `absolute flex flex-col h-[420px] hidescrollbar overflow-y-auto bg-white top-[30px] right-0 w-full border rounded-b-lg`
-                      : `hidden`
-                  } `}
+                  className={`${searchTerm?.length > 0
+                    ? `absolute flex flex-col h-[420px] hidescrollbar overflow-y-auto bg-white top-[30px] right-0 w-full border rounded-b-lg`
+                    : `hidden`
+                    } `}
                 >
                   {searchData?.items?.length > 0 && searchTerm?.length > 0 && (
                     <div className="w-[95%] mx-auto mt-5">
@@ -385,7 +378,7 @@ const NavigationDesktop = () => {
                                   <h1 className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
                                     {currencyFormat(
                                       item?.price?.price?.discount ??
-                                        item?.price?.price?.original
+                                      item?.price?.price?.original
                                     )}
                                   </h1>
                                 </div>
@@ -470,27 +463,24 @@ const NavigationDesktop = () => {
                   </span>
                 </div>
               </Link>
-            </div>
+            </div>!
           </div>
         </div>
       </div>
       <div
         className={
           open
-            ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px] transition-all duration-500 4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${
-                background === "white"
-                  ? `py-4  transition-all duration-500`
-                  : `pt-8 transition-all duration-500`
-              } gap-[162px] bg-white transition-all duration-500`
-            : `max-md:hidden -translate-x-[150%] transition-all duration-500 fixed ${
-                background === "white"
-                  ? `invisible transition-all duration-500`
-                  : `transition-all duration-500`
-              } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${
-                background === "white"
-                  ? `py-4 transition-all duration-500`
-                  : `pt-8 transition-all duration-500`
-              } gap-[162px] bg-transparent transition-all duration-500`
+            ? `max-md:hidden fixed  left-0 top-0  lg:min-w-[480px] transition-all duration-500 4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${background === "white"
+              ? `py-4  transition-all duration-500`
+              : `pt-8 transition-all duration-500`
+            } gap-[162px] bg-white transition-all duration-500`
+            : `max-md:hidden -translate-x-[150%] transition-all duration-500 fixed ${background === "white"
+              ? `invisible transition-all duration-500`
+              : `transition-all duration-500`
+            } duration-500 transition-all left-0 top-0  lg:min-w-[480px]  4xl:min-w-[500px] h-full z-[54]  flex flex-col px-[3%] ${background === "white"
+              ? `py-4 transition-all duration-500`
+              : `pt-8 transition-all duration-500`
+            } gap-[162px] bg-transparent transition-all duration-500`
         }
         onMouseEnter={() => {
           if (background === "white" && category) {
@@ -650,11 +640,10 @@ const NavigationDesktop = () => {
               {activeSubSubCategory?.map((category) => {
                 return (
                   <div
-                    className={`${
-                      pathname?.includes(category?.slug)
-                        ? `text-[#e10000]`
-                        : `text-black`
-                    } text-xs hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium`}
+                    className={`${pathname?.includes(category?.slug)
+                      ? `text-[#e10000]`
+                      : `text-black`
+                      } text-xs hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium`}
                   >
                     <Link
                       href={`/kategorije/${category?.slug_path}`}

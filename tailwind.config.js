@@ -29,6 +29,7 @@ module.exports = {
         "croonus-2": "#030303",
         "croonus-3": "#eec0ad",
         "croonus-4": "#faf9f8",
+        "topHeader": '#f7f7f7',
       },
     },
   },

@@ -5,13 +5,10 @@ import Image from "next/image";
 import { useCartContext } from "@/app/api/cartContext";
 import Link from "next/link";
 import Burger from "../../assets/Icons/hamburger.png";
-import Logo from "../../assets/Logo/pazari-logo-dark.png";
 import Search from "../../assets/Icons/search.png";
 import { useRouter, usePathname } from "next/navigation";
 import User from "../../assets/Icons/user.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
-import Wishlist from "../../assets/Icons/heart.png";
-import Thumb from "../Thumb/Thumb";
 import { currencyFormat } from "@/helpers/functions";
 
 const NavigationMobile = () => {
@@ -157,17 +154,18 @@ const NavigationMobile = () => {
     }
   }, [searchTerm]);
 
+  const categoriesMain = [{ name: 'Početna', slug: '/' }, { name: 'Brendovi', slug: '/brendovi' }, { name: 'Blog', slug: '/blogs' }, { name: 'Maloprodaje', slug: '/maloprodaje' }, { name: 'Kontakt', slug: '/kontakt' }]
 
   return (
     <>
-      <div className="md:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
+      <div className="xl:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
         <div className="w-[95%] py-3 mx-auto flex justify-between items-center">
           <div onClick={() => setMenuOpen(true)}>
             <Image alt={``} src={Burger} width={30} height={30} />
           </div>
           <Link href="/">
-            <div className="pr-20">
-              <Image alt={``} src={Logo} width={100} height={50} />
+            <div className="pr-20 aspect-video w-1/3 relative">
+              <Image alt={`logo`} src={'/logo.png'} fill />
             </div>
           </Link>
           <div className="relative flex items-center gap-4">
@@ -181,7 +179,7 @@ const NavigationMobile = () => {
                 }
               >
                 <Image
-                  src={Search}
+                  src='/search.png'
                   id="search"
                   width={22}
                   height={22}
@@ -218,12 +216,10 @@ const NavigationMobile = () => {
       <div
         className={
           searchVisible
-            ? `text-white ${
-                pathname === "/" ? `flex items-center justify-center` : `hidden`
-              } md:hidden bg-transparent  invisible sticky top-[60px] transition-all duration-500 opacity-0 z-[4000] `
-            : `text-white ${
-                pathname === "/" ? `flex items-center justify-center` : `hidden`
-              } md:hidden bg-transparent visible sticky top-[60px] z-[4000] transition-all duration-500 opacity-100 `
+            ? `text-white ${pathname === "/" ? `flex items-center justify-center` : `hidden`
+            } md:hidden bg-transparent  invisible sticky top-[60px] transition-all duration-500 opacity-0 z-[4000] `
+            : `text-white ${pathname === "/" ? `flex items-center justify-center` : `hidden`
+            } md:hidden bg-transparent visible sticky top-[60px] z-[4000] transition-all duration-500 opacity-100 `
         }
       >
         <form
@@ -249,7 +245,7 @@ const NavigationMobile = () => {
         }
       >
         <div className="w-[95%]  mx-auto flex items-center justify-between py-3.5">
-          <Image src={Logo} width={150} height={150} />
+          <Image src='/logo.png' width={150} height={150} alt='logo' />
           <i
             className="fas fa-times text-2xl"
             onClick={() => setMenuOpen(false)}
@@ -343,11 +339,10 @@ const NavigationMobile = () => {
                 >
                   {category?.children?.length > 0 ? (
                     <div
-                      className={`${
-                        activeCategory.firstCategory
-                          ? `uppercase flex flex-row w-full items-center justify-between`
-                          : `uppercase flex flex-row w-full items-center justify-between`
-                      } text-[0.9rem]`}
+                      className={`${activeCategory.firstCategory
+                        ? `uppercase flex flex-row w-full items-center justify-between`
+                        : `uppercase flex flex-row w-full items-center justify-between`
+                        } text-[0.9rem]`}
                       onClick={() => {
                         setLastActiveCategory({
                           id: category?.id,
@@ -377,15 +372,13 @@ const NavigationMobile = () => {
                   ) : (
                     <Link
                       href={`/kategorije/${category?.slug_path}`}
-                      className={`${
-                        activeCategory.firstCategory
-                          ? `uppercase w-full`
-                          : `w-full`
-                      } ${
-                        pathname?.includes(category?.slug)
+                      className={`${activeCategory.firstCategory
+                        ? `uppercase w-full`
+                        : `w-full`
+                        } ${pathname?.includes(category?.slug)
                           ? `text-[#e10000]`
                           : `text-black`
-                      } text-[0.9rem]`}
+                        } text-[0.9rem]`}
                       onClick={() => {
                         setMenuOpen(false);
                         setActiveCategory({
@@ -422,24 +415,18 @@ const NavigationMobile = () => {
               </Link>
             );
           })}
-          <Link
-            onClick={() => {
-              setMenuOpen(false);
-            }}
-            href={`/novo`}
-            className={`text-[1.2rem] uppercase`}
-          >
-            Novo
-          </Link>
-          <Link
-            onClick={() => {
-              setMenuOpen(false);
-            }}
-            href="/"
-            className="text-[1.2rem] uppercase"
-          >
-            Outlet{" "}
-          </Link>
+          {categoriesMain?.map(category =>
+            <Link
+              onClick={() => {
+                setMenuOpen(false);
+              }}
+              href={`/${category?.slug}`}
+              className={`text-[1.2rem] uppercase`}
+            >
+              {category?.name}
+            </Link>
+
+          )}
         </div>
       </div>
       {menuOpen && (
@@ -507,7 +494,7 @@ const NavigationMobile = () => {
                           <h1 className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
                             {currencyFormat(
                               item?.price?.price?.discount ??
-                                item?.price?.price?.original
+                              item?.price?.price?.original
                             )}
                           </h1>
                         </div>
@@ -525,12 +512,11 @@ const NavigationMobile = () => {
                     setSearchTerm("");
                   }}
                 >
-                  {`Pogledaj sve rezultate ( još ${
-                    searchData?.pagination?.total_items -
+                  {`Pogledaj sve rezultate ( još ${searchData?.pagination?.total_items -
                     (searchData?.items?.length > 6
                       ? 6
                       : searchData?.items?.length)
-                  } )`}
+                    } )`}
                 </Link>
               </div>
             </div>

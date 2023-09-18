@@ -12,19 +12,18 @@ const RecommendedCategories = ({ categories }) => {
   return (
     <div
       data-aos="fade-left"
-      className="grid grid-cols-1 lg:grid-cols-2 gap-[1.25rem] mt-[1.25rem] mx-[1.25rem] max-sm:w-[95%] max-sm:mx-auto"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-[1.25rem] max-sm:w-[95%] max-sm:mx-auto md:mx-[5rem] max-sm:mt-[3rem] md:mt-[5.625rem]"
     >
       {categories?.map((category, index) => {
         return (
           <div className="col-span-1" key={index}>
-            <div className="relative lg:h-[630px]">
+            <div className="relative lg:h-[450px]">
               <Image
                 src={category?.images?.image}
                 alt={category.slug}
-                width={2400}
-                height={2400}
+                fill
                 priority={true}
-                className="object-cover h-full bg-fixed"
+                className=" h-full bg-fixed"
               />
               <Link href={`/kategorije/${category?.slug_path}`}>
                 <div className="absolute h-full  top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center">
