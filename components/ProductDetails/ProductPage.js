@@ -24,12 +24,18 @@ const getNewProducts = async () => {
   return await list("/products/new-in/list").then((res) => res?.payload?.items);
 };
 
+const getBreadcrumbs = async (slug) => {
+  return await get(`/product-details/breadcrumbs/${slug}`).then(
+    (res) => res?.payload
+  );
+};
+
 const ProductPage = async ({ path }) => {
   const product = await getProduct(path);
   const productGallery = await getProductGallery(path);
   const desc = await getProductLongDescription(path);
   const newProducts = await getNewProducts();
-
+  const breadcrumbs = await getBreadcrumbs(path);
   return (
     <div className="">
       <ProductDetails
@@ -37,6 +43,7 @@ const ProductPage = async ({ path }) => {
         productGallery={productGallery}
         desc={desc}
         path={path}
+        breadcrumbs={breadcrumbs}
       />
       <RecommendedProducts products={newProducts} />
     </div>

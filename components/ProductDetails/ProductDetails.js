@@ -4,7 +4,13 @@ import ProductInfo from "./ProductInfo";
 import React, { useEffect, useState } from "react";
 import { get } from "@/app/api/api";
 import { useParams, usePathname } from "next/navigation";
-const ProductDetails = ({ product, productGallery, desc, path }) => {
+const ProductDetails = ({
+  product,
+  productGallery,
+  desc,
+  path,
+  breadcrumbs,
+}) => {
   const [rawGallery, setRawGallery] = useState(productGallery);
   const [loading, setLoading] = useState(false);
   const filteredImages = productGallery?.filter((image) => {
@@ -37,8 +43,8 @@ const ProductDetails = ({ product, productGallery, desc, path }) => {
         desc={desc}
         path={path}
         setColor={setColor}
+        breadcrumbs={breadcrumbs}
       />
-
     </div>
   );
 };

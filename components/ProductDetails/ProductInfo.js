@@ -15,6 +15,7 @@ import FreeDelivery from "../../assets/Icons/package.png";
 import Cancel from "../../assets/Icons/cancel.png";
 import { notFound } from "next/navigation";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
+import Link from "next/link";
 
 const ProductInfo = ({
   product,
@@ -25,6 +26,7 @@ const ProductInfo = ({
   setVariantKey,
   variantKey,
   setColor,
+  breadcrumbs,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
 
@@ -131,6 +133,35 @@ const ProductInfo = ({
       {product ? (
         <>
           <div className="max-md:col-span-4 mt-[2rem] md:col-span-2 ">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Link href={`/`} className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]">
+                Početna
+              </Link>{" "}
+              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              {breadcrumbs?.steps?.map((breadcrumb, index, arr) => {
+                return (
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={
+                        index === arr.length - 1
+                          ? `/kategorije/${breadcrumb?.slug}`
+                          : `/kategorije/${breadcrumb?.slug}`
+                      }
+                      className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+                    >
+                      {breadcrumb?.name}
+                    </Link>
+                    {index !== arr.length - 1 && (
+                      <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+                    )}
+                  </div>
+                );
+              })}
+              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              <h1 className="text-[#191919] text-[0.75rem] font-normal text-[#e10000]">
+                {breadcrumbs?.end?.name}
+              </h1>
+            </div>
             <div className="flex flex-col ">
               <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold">
                 {product?.data?.item?.basic_data?.name}
