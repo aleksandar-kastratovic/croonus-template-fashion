@@ -92,12 +92,14 @@ const NavigationMobile = () => {
     handleBodyOverflow();
   }, [menuOpen]);
   useEffect(() => {
-    setActiveCategory({
-      id: categories[0]?.id ?? 0,
-      data: categories[0]?.children ?? [],
-      parentCategory: categories[0]?.id ?? 0,
-    });
-    setActiveImage(categories[0]?.image);
+    if (!pathname?.includes("/kategorije/")) {
+      setActiveCategory({
+        id: categories[0]?.id ?? 0,
+        data: categories[0]?.children ?? [],
+        parentCategory: categories[0]?.id ?? 0,
+        firstCategory: true,
+      });
+    }
   }, [categories]);
 
   const [generateBreadcrumbs, setGenerateBreadcrumbs] = useState([]);
@@ -154,12 +156,57 @@ const NavigationMobile = () => {
     }
   }, [searchTerm]);
 
+<<<<<<< HEAD
   const categoriesMain = [{ name: 'Početna', slug: '/' }, { name: 'Brendovi', slug: '/brendovi' }, { name: 'Blog', slug: '/blogs' }, { name: 'Maloprodaje', slug: '/maloprodaje' }, { name: 'Kontakt', slug: '/kontakt' }]
 
   return (
     <>
       <div className="xl:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
         <div className="w-[95%] py-3 mx-auto flex justify-between items-center">
+=======
+  useEffect(() => {
+    if (pathname?.includes("/kategorije/")) {
+      const findSelectedCategoryRecursive = (categories, slug_path) => {
+        let result = null;
+        categories?.forEach((category) => {
+          if (slug_path.includes(category?.slug)) {
+            result = category;
+          } else if (category?.children?.length > 0) {
+            const tmp = findSelectedCategoryRecursive(
+              category?.children,
+              slug_path
+            );
+            if (tmp) {
+              result = tmp;
+            }
+          }
+        });
+        return result;
+      };
+      const selectedCategory = findSelectedCategoryRecursive(
+        categories,
+        pathname?.slice(12, pathname?.length)
+      );
+      const slugPathArr = pathname?.slice(12, pathname?.length).split("/");
+
+      console.log(selectedCategory);
+      if (selectedCategory && slugPathArr) {
+        setActiveCategory({
+          id: selectedCategory?.id,
+          data: selectedCategory?.children,
+          parentCategory: selectedCategory?.id,
+          firstCategory: true,
+        });
+        setGenerateBreadcrumbs(selectedCategory?.name);
+      }
+    }
+  }, [categories, pathname]);
+
+  return (
+    <>
+      <div className="md:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
+        <div className="w-[95%] py-2.5 mx-auto flex justify-between items-center">
+>>>>>>> 366d62e05de823dd37b4bcebda1175ab2cf7d213
           <div onClick={() => setMenuOpen(true)}>
             <Image alt={``} src={Burger} width={30} height={30} />
           </div>
@@ -321,11 +368,17 @@ const NavigationMobile = () => {
                 setGenerateBreadcrumbs();
               }}
             >
-              <div className="flex items-center gap-2">
-                <i className="fa-solid fa-chevron-left text-base"></i>
-                <h1 className="text-[0.9rem] font-normal">Nazad</h1>
-              </div>
-              {generateBreadcrumbs && <>{generateBreadcrumbs}</>}
+              {!activeCategory?.firstCategory && (
+                <div className="flex items-center gap-2">
+                  <i className="fa-solid fa-chevron-left text-base"></i>
+                  <h1 className="text-[0.9rem] font-normal">Nazad</h1>
+                </div>
+              )}
+              {generateBreadcrumbs && (
+                <h1 className={activeCategory?.firstCategory && `ml-auto`}>
+                  {generateBreadcrumbs}
+                </h1>
+              )}
             </button>
           </div>
         )}

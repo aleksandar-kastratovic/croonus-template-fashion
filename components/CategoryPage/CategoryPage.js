@@ -5,6 +5,7 @@ import FilterIcon from "../../assets/Icons/filter.png";
 import Thumb from "../Thumb/Thumb";
 import { list, post } from "@/app/api/api";
 import Filters from "../Filters/Filters";
+import Link from "next/link";
 
 const CategoryPage = ({ filter, singleCategory, products }) => {
   const [productData, setProductData] = useState({
@@ -134,9 +135,35 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
     };
   }, [loading, productData, page]);
 
+  const breadCrumbsText = singleCategory?.breadcrumb_text;
+  const breadCrumbs = breadCrumbsText?.split(">");
+
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+  useEffect(() => {
+    const generateBreadcrumbs = (category) => {
+      category?.parents?.forEach((parent) => {
+        if (
+          !breadcrumbs.some((breadcrumb) => breadcrumb.name === parent?.name)
+        ) {
+          setBreadcrumbs((prevBreadcrumbs) => [
+            ...prevBreadcrumbs,
+            {
+              name: parent?.name,
+              slug: parent?.slug,
+            },
+          ]);
+        }
+      });
+    };
+
+    if (singleCategory) {
+      generateBreadcrumbs(singleCategory);
+    }
+  }, [singleCategory, breadcrumbs]);
   return (
     <>
       <div className="">
+        {" "}
         <div className="px-[3%] max-md:z-[51] bg-white max-md:mt-[2rem] mt-[9rem] flex items-center justify-between max-md:sticky max-md:top-[56px] max-md:py-2">
           <h1 className="font-bold text-[1.313rem] max-md:text-[1rem] text-[#191919]">
             {singleCategory?.basic_data?.name}
@@ -156,7 +183,41 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
               Filteri
             </h1>
           </div>
-        </div>
+        </div>{" "}
+        {breadcrumbs?.length > 0 && (
+          <div className="flex items-center gap-2 px-[3%] flex-wrap">
+            <Link
+              href={`/`}
+              className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+            >
+              Početna
+            </Link>{" "}
+            <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+            {breadcrumbs?.map((breadcrumb, index, arr) => {
+              return (
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={
+                      index === arr.length - 1
+                        ? `/kategorije/${breadcrumb?.slug}`
+                        : `/kategorije/${breadcrumb?.slug}`
+                    }
+                    className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+                  >
+                    {breadcrumb?.name}
+                  </Link>
+                  {index !== arr.length - 1 && (
+                    <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+                  )}
+                </div>
+              );
+            })}
+            <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+            <h1 className="text-[#191919] text-[0.75rem] font-normal text-[#e10000]">
+              {singleCategory?.basic_data?.name}
+            </h1>
+          </div>
+        )}
         <div
           className={`${
             tempSelectedFilters?.length > 0
