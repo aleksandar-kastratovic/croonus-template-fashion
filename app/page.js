@@ -2,7 +2,6 @@ import IndexSlider from "@/components/IndexSlider/IndexSlider";
 import { get, list } from "./api/api";
 import RecommendedCategories from "@/components/RecommendedCategories/RecommendedCategories";
 import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
-import { Suspense } from "react";
 import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
 import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";
 
@@ -19,6 +18,23 @@ const getNew = async () => {
 };
 const getIndexBanner = async () => {
   return await get("/banners/index_banner").then((res) => res?.payload);
+};
+
+const fetchAction4 = async () => {
+  const fetchAction4 = await get("/banners/akcija4").then(
+    (response) => response?.payload
+  );
+  return fetchAction4;
+};
+
+const getInstagramPost = async () => {
+  const resData = await fetch(
+      `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=${process.env.NEXT_PUBLIC_INSTAGRAM_KEY}`
+  );
+
+ const data = await resData.json();
+ 
+ return data;
 };
 
 export const metadata = {
@@ -52,7 +68,9 @@ const Home = async () => {
   const banners = await getBanners();
   const categories = await getRecommendedCategories();
   const newProducts = await getNew();
-  const indexBanner = await getIndexBanner();
+  const instagramImages = await getInstagramPost();
+  const action4 = await fetchAction4();
+  
   return (
     <>
       <div className="block relative overflow-hidden">
@@ -63,15 +81,11 @@ const Home = async () => {
           <IndexSlider banners={banners} />
         </div>
         <div className="overflow-hidden">
-          <RecommendedProducts products={newProducts} />
+          <RecommendedProducts recommendedProducts={newProducts}  action4={action4} />
         </div>
         <RecommendedCategories categories={categories} />
-        <Suspense fallback={<div>Loading...</div>}>
           <NewCategoriesSections />
-        </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <NewsLetterInstagramSection />
-        </Suspense>
+          <NewsLetterInstagramSection instagramImages={instagramImages}/>
         {/* <IndexBanner banner={indexBanner} />
           <Newsletter /> */}
       </div>
