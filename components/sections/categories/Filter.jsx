@@ -5,59 +5,7 @@ import classes from "./Filter.module.css";
 import Link from "next/link";
 import Slider from "@mui/material/Slider";
 
-const Filter = ({
-    filter,
-    selectedFilters,
-    setSelectedFilters,
-    setTempSelectedFilters,
-}) => {
-    const changeHandler = (data) => {
-        let tmp = [...selectedFilters];
-        const filtered = tmp.filter((item) => item.column === data.column);
-        if (data.value.selected.length === 0) {
-            if (filtered.length > 0) {
-                const index = tmp.indexOf(filtered[0]);
-                tmp.splice(index, 1);
-            }
-        } else {
-            if (filtered.length > 0) {
-                tmp = tmp.map((item) => (item.column === data.column ? data : item));
-            } else {
-                tmp.push(data);
-            }
-        }
-        setSelectedFilters([...tmp]);
-        setTempSelectedFilters([...tmp]);
-    };
 
-    let selected = selectedFilters.filter(
-        (item) => item.column === filter.key
-    )[0];
-    selected = selected ? selected.value.selected : [];
-
-    switch (filter.type) {
-        case "range":
-            return (
-                <FilterRange
-                    filter={filter}
-                    onChange={changeHandler}
-                    selected={selected}
-                />
-            );
-        case "in":
-            return (
-                <FilterIn
-                    filter={filter}
-                    onChange={changeHandler}
-                    selected={selected}
-                />
-            );
-        case "within_tree":
-            return <FilterWithinTree filter={filter} />;
-    }
-};
-
-export default Filter;
 
 const FilterIn = ({
     filter,
@@ -242,3 +190,57 @@ const FilterWithinTree = ({ filter }) => {
         </>
     );
 };
+
+const Filter = ({
+    filter,
+    selectedFilters,
+    setSelectedFilters,
+    setTempSelectedFilters,
+}) => {
+    const changeHandler = (data) => {
+        let tmp = [...selectedFilters];
+        const filtered = tmp.filter((item) => item.column === data.column);
+        if (data.value.selected.length === 0) {
+            if (filtered.length > 0) {
+                const index = tmp.indexOf(filtered[0]);
+                tmp.splice(index, 1);
+            }
+        } else {
+            if (filtered.length > 0) {
+                tmp = tmp.map((item) => (item.column === data.column ? data : item));
+            } else {
+                tmp.push(data);
+            }
+        }
+        setSelectedFilters([...tmp]);
+        setTempSelectedFilters([...tmp]);
+    };
+
+    let selected = selectedFilters.filter(
+        (item) => item.column === filter.key
+    )[0];
+    selected = selected ? selected.value.selected : [];
+
+    switch (filter.type) {
+        case "range":
+            return (
+                <FilterRange
+                    filter={filter}
+                    onChange={changeHandler}
+                    selected={selected}
+                />
+            );
+        case "in":
+            return (
+                <FilterIn
+                    filter={filter}
+                    onChange={changeHandler}
+                    selected={selected}
+                />
+            );
+        case "within_tree":
+            return <FilterWithinTree filter={filter} />;
+    }
+};
+
+export default Filter;

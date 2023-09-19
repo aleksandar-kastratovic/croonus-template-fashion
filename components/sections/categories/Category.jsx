@@ -21,7 +21,7 @@ const getSingleCategory = async (path) => {
     );
 };
 
-const Categories = async ({ path }) => {
+const Category = async ({ path }) => {
     const products = await getProductsFromCategory(path);
     const filters = await getCategoryFilters(path);
     const category = await getSingleCategory(path);
@@ -35,9 +35,10 @@ const Categories = async ({ path }) => {
                 />
             ) : (
                 notFound()
-            )}
+            )
+            }
         </>
     );
 };
 
-export default Categories;
+export default Category;

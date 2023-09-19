@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { list, post } from "@/app/api/api";
-import Filters from "./Filters";
-import FiltersMobile from "./FilterMobile";
+// import Filters from "./Filters";
+// import FiltersMobile from "./FilterMobile";
 import Image from "next/image";
 import GenerateBreadCrumbsServer from "@/helpers/generateBreadCrumbsServer";
 import Thumb from "@/components/Thumb/Thumb";
+import Filters from "./Filters";
+import FiltersMobile from "./FilterMobile";
 
 
 const CategoryPage = ({ filter, singleCategory, products }) => {
