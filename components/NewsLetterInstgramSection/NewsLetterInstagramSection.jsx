@@ -18,10 +18,9 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
     const onSubmit = async(e) => {
         e.preventDefault();
         console.log("data")
-		await post('/newslette',{ email: email })
+		await post('/newsletter',{ email: email })
 			.then((response) => {
 				if (!response?.code) {
-                   
                     setEmail('');
 					toast.error(
                         response?.payload?.message || 'Error 404',
@@ -38,6 +37,7 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
                       setError(true)
 				} else {
                 setEmail('');
+                setError(false)
                 toast.success(response?.payload?.message, {
                     position: "top-center",
                     autoClose: 2000,
