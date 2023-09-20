@@ -308,7 +308,7 @@ export default function Variants({
   };
   console.log(selected);
   return (
-    <div className="flex flex-col-reverse max-md:gap-7 gap-[60px] max-lg:w-full  ">
+    <div className="flex flex-col-reverse max-md:gap-7 gap-[38px] max-lg:w-full  ">
       {variantOptions?.map((item) => {
         return (
           <div className="flex flex-col items-start gap-[1.5rem]">
@@ -407,11 +407,18 @@ export default function Variants({
                                   x.attribute_key == item.attribute.key &&
                                   x.value_key == value.key
                               )
-                                ? `bg-[#2bc48a] flex items-center gap-2 text-left text-white`
+                                ? `bg-green-500 flex items-center gap-2 text-left text-white`
                                 : `bg-[#191919]`
                             } transition-all duration-500 !text-xs`}
                           >
                             {value.name}
+                            <svg className={`${  selected.find(
+                                (x) =>
+                                  x.attribute_key == item.attribute.key &&
+                                  x.value_key == value.key
+                              ) ? 'text-green-500' : 'text-[#191919]'} absolute z-50 w-6 h-6 transform left-[45%] -translate-x-1/2 -translate-y-[0px] fill-current stroke-current`} width="8" height="8">
+                              <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
+                          </svg>
                           </div>
                         </button>
                       </div>

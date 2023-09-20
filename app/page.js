@@ -1,9 +1,9 @@
 import IndexSlider from "@/components/IndexSlider/IndexSlider";
 import { get, list } from "./api/api";
 import RecommendedCategories from "@/components/RecommendedCategories/RecommendedCategories";
-import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
 import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
 import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";
+import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
 
 const getBanners = async () => {
   return await get("/banners/index_slider").then((res) => res?.payload);
@@ -13,8 +13,8 @@ const getRecommendedCategories = async () => {
     (res) => res?.payload
   );
 };
-const getNew = async () => {
-  return await list("/products/new-in/list").then((res) => res?.payload?.items);
+const getRecommendedProducts = async () => {
+  return await list("/products/section/list/recommendation").then((res) => res?.payload?.items);
 };
 const getIndexBanner = async () => {
   return await get("/banners/index_banner").then((res) => res?.payload);
@@ -67,7 +67,7 @@ export const metadata = {
 const Home = async () => {
   const banners = await getBanners();
   const categories = await getRecommendedCategories();
-  const newProducts = await getNew();
+  const recommendedProducts = await getRecommendedProducts();
   const instagramImages = await getInstagramPost();
   const action4 = await fetchAction4();
   
@@ -81,13 +81,11 @@ const Home = async () => {
           <IndexSlider banners={banners} />
         </div>
         <div className="overflow-hidden">
-          <RecommendedProducts recommendedProducts={newProducts}  action4={action4} />
+            <RecommendedProducts recommendedProducts={recommendedProducts}  action4={action4} />
         </div>
         <RecommendedCategories categories={categories} />
           <NewCategoriesSections />
           <NewsLetterInstagramSection instagramImages={instagramImages}/>
-        {/* <IndexBanner banner={indexBanner} />
-          <Newsletter /> */}
       </div>
     </>
   );

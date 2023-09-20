@@ -17,7 +17,6 @@ const HeaderModal = () => {
 
     return (
         <Dialog open={openHeader} onClose={() => mutateOpenHeader(false)} className='absolute top-[110px] right-0 w-full bg-white z-50 h-[257px] max-lg:hidden' as="div">
-            <div className='w-full h-1 bg-topHeader' />
             <Dialog.Panel className='px-20 py-6 relative h-full'>
                 <div className='flex justify-between h-full'>
                     <div className='flex gap-x-[10rem]'>

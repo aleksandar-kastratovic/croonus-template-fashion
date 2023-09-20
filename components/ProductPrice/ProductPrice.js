@@ -1,6 +1,7 @@
 "use client";
-import { usePathname } from "next/navigation";
 import { currencyFormat } from "@/helpers/functions";
+import { usePathname } from "next/navigation";
+
 
 const ProductPrice = ({ price, inventory, className, handlePrice }) => {
   const pathname = usePathname();
@@ -8,17 +9,26 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
     case price?.price_defined && inventory?.amount !== null:
       handlePrice ? handlePrice(price?.price?.original) : null;
       return (
-        <>
+        <div className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}>
           {price?.price?.discount !== null ? (
-            <>
-              <h1 className={className}>
-                {currencyFormat(price?.price?.discount)}
-              </h1>
-            </>
+
+            <div className="group relative inline-block">
+              <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
+                Cena sa popustom
+                <svg class="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
+                  <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
+                </svg>
+              </span>
+              <div className={`${className}`}>
+               {currencyFormat(price?.price?.discount)}
+              </div>
+            </div>
+
           ) : (
-            <>{currencyFormat(price?.price?.original)}</>
+            <h1 className={className}>{currencyFormat(price?.price?.original)}</h1>
           )}
-        </>
+        </div>
+
       );
 
     case price?.price_defined && inventory?.amount === null:
@@ -26,15 +36,23 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
       return (
         <>
           {price?.price?.discount !== null ? (
-            <>
-              <h1 className={className}>
+
+            <div className="group relative inline-block">
+              <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-[15%] text-[10px] font-normal">
+                Cena sa popustom
+                <svg class="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
+                  <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
+                </svg>
+              </span>
+              <h1 className={`${className}`}>
+
                 {currencyFormat(price?.price?.discount)}
               </h1>
-            </>
+            </div>
           ) : (
             <>
               {" "}
-              <>{currencyFormat(price?.price?.original)}</>
+              <h1 className={className}>{currencyFormat(price?.price?.original)}</h1>
             </>
           )}
         </>

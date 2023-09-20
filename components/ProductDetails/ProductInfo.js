@@ -7,15 +7,17 @@ import { currencyFormat } from "@/helpers/functions";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Measure from "../../assets/Icons/measure.png";
 import Wishlist from "../../assets/Icons/heart.png";
 import DeliveryStatus from "../../assets/Icons/delivery-status.png";
 import Calendar from "../../assets/Icons/calendar.png";
 import FreeDelivery from "../../assets/Icons/package.png";
-import Cancel from "../../assets/Icons/cancel.png";
 import { notFound } from "next/navigation";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
-import Link from "next/link";
+import CampaignsDetails from "./CampaignsDetails";
+import DeliveryModal from "./DeliveryModal";
+import InfoModal from "./InfoModal";
+import ReturnModal from "./ReturnModal";
+
 
 const ProductInfo = ({
   product,
@@ -29,7 +31,8 @@ const ProductInfo = ({
   breadcrumbs,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
-
+  const campaignsDate = product?.data?.item?.price?.discount?.campaigns[0]?.duration
+  
   const router = useRouter();
   useEffect(() => {
     if (window.scrollY > 0) {
@@ -127,46 +130,21 @@ const ProductInfo = ({
       setText2("Kupi odmah");
     }
   }, [productVariant]);
-
+  
   return (
     <>
       {product ? (
         <>
           <div className="max-md:col-span-4 mt-[2rem] md:col-span-2 ">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Link href={`/`} className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]">
-                Početna
-              </Link>{" "}
-              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-              {breadcrumbs?.steps?.map((breadcrumb, index, arr) => {
-                return (
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={
-                        index === arr.length - 1
-                          ? `/kategorije/${breadcrumb?.slug}`
-                          : `/kategorije/${breadcrumb?.slug}`
-                      }
-                      className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
-                    >
-                      {breadcrumb?.name}
-                    </Link>
-                    {index !== arr.length - 1 && (
-                      <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-                    )}
-                  </div>
-                );
-              })}
-              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-              <h1 className="text-[#191919] text-[0.75rem] font-normal text-[#e10000]">
-                {breadcrumbs?.end?.name}
-              </h1>
-            </div>
             <div className="flex flex-col ">
-              <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold">
+    
+              <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold group">
                 {product?.data?.item?.basic_data?.name}
               </h1>
-              <h2 className="mt-[1.063rem] text-[#636363] text-[0.688rem]">
+              
+              
+             
+              <h2 className="mt-[6px] text-[#636363] text-[0.688rem]">
                 Šifra:&nbsp;
                 {productVariant?.id
                   ? productVariant?.basic_data?.sku
@@ -175,6 +153,7 @@ const ProductInfo = ({
               <div
                 className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
               >
+                
                 <ProductPrice
                   price={
                     productVariant?.id
@@ -186,22 +165,44 @@ const ProductInfo = ({
                       ? productVariant?.inventory
                       : product?.data?.item?.inventory
                   }
+                  className={
+                    product?.data?.item?.price?.discount?.active
+                      ? `font-bold text-[21px] px-3 py-0.5 bg-[#f8ce5d]`
+                      : `font-normal text-[1.172rem]  py-0.5`
+                  }
                 />
                 {product?.data?.item?.price?.discount?.active && (
-                  <span className="text-[#636363] text-[1rem] line-through">
+                            <div className="group relative inline-block">
+                            <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
+                            Važeća MP cena
+                                <svg class="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
+                      <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
+                    </svg>
+                              </span>
+                  <span className="text-[#171717] text-[19px] line-through font-normal">
                     {currencyFormat(
                       product?.data?.item?.price?.price?.original
                     )}
                   </span>
+                  </div>
                 )}
               </div>
+              {product?.data?.item?.price?.discount?.active && (
+                  <div className='mt-3'>
+                     <h2 className='text-[17px] text-[#2bc48a] font-semibold'>Ušteda: {currencyFormat(Number(product?.data?.item?.price?.discount?.amount))}</h2>
+                  </div>
+                  )}
+              {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
+                <CampaignsDetails campaignsDate={campaignsDate} />
+              )}
+                
               <p
-                className="mt-[2.438rem] max-md:mt-[1.5rem] max-w-[90%] text-sm font-regular"
+                className="mt-7 max-md:mt-[1.5rem] max-w-[90%] text-sm font-regular"
                 dangerouslySetInnerHTML={{ __html: desc?.description }}
               ></p>
             </div>
             {product?.product_type === "variant" && (
-              <div className="py-[2.75rem] max-md:py-[1.5rem]">
+              <div className="pt-12 pb-7 max-md:py-[1.5rem]">
                 <Variants
                   firstVariantOption={productVariant ? false : true}
                   product={product}
@@ -216,11 +217,11 @@ const ProductInfo = ({
                 />
               </div>
             )}
-            {/*<div className="flex items-center gap-2">*/}
-            {/*  <Image src={Measure} alt="measure" width={30} height={20} />*/}
-            {/*  <span className="text-[13px] font-bold">Pomoć za veličine</span>*/}
-            {/*</div>*/}
-            <div className="mt-[4.188rem] max-md:mt-[2rem] flex items-center gap-3">
+            <button className="flex items-center gap-2">
+             <Image src={'/icons/measure.png'} alt="measure" width={30} height={20} />
+             <span className="text-[13px] font-bold">Pomoć za veličine</span>
+            </button>
+            <div className="mt-[3rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
                 className={
                   productVariant === null || productVariant.length === 0
@@ -316,7 +317,7 @@ const ProductInfo = ({
                 <p className="text-sm regular">Povrat do 14 dana</p>
               </div>
             </div>
-            <div className="mt-[5.125rem] max-md:mt-[2rem] max-md:flex max-md:items-center max-md:justify-center max-md:w-full">
+            <div className="mt-[3.2rem] max-md:mt-[2rem] max-md:flex max-md:items-center max-md:justify-center max-md:w-full">
               <ul className="flex flex-row gap-[47px] text-[13px] relative separate">
                 <div
                   className="relative cursor-pointer"
@@ -324,21 +325,21 @@ const ProductInfo = ({
                 >
                   Dostava
                 </div>
-                {/*<div*/}
-                {/*  className="relative cursor-pointer"*/}
-                {/*  onClick={() => setInfoModal(true)}*/}
-                {/*>*/}
-                {/*  Informacije*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*  className="relative cursor-pointer"*/}
-                {/*  onClick={() => setReturnModal(true)}*/}
-                {/*>*/}
-                {/*  Povraćaj*/}
-                {/*</div>*/}
+                <div
+                 className="relative cursor-pointer"
+                 onClick={() => setInfoModal(true)}
+                >
+                 Informacije
+                </div>
+                <div
+                 className="relative cursor-pointer"
+                 onClick={() => setReturnModal(true)}
+                >
+                 Povraćaj
+                </div>
               </ul>
             </div>
-            <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 top-[30%] flex flex-col gap-[30px] px-5 py-[37px] bg-white drop-shadow-2xl rounded-l-lg">
+            <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 2xl:top-[48%] top-[55%] flex flex-col gap-[30px] px-5 2xl:py-[37px] py-5 bg-white drop-shadow-2xl rounded-l-lg">
               <div className="flex flex-col items-center text-center justify-center">
                 <Image
                   src={FreeDelivery}
@@ -368,58 +369,9 @@ const ProductInfo = ({
               </div>
             </div>
           </div>
-          <div
-            className={
-              deliveryModal
-                ? `max-md:z-[20000] fixed max-md:mx-auto max-md:overflow-y-scroll scale-100 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center`
-                : `max-md:z-[20000] fixed max-md:mx-auto max-md:overflow-y-scroll scale-0 transition-all duration-500 z-[101] top-0 left-0 w-screen h-screen flex items-center justify-center`
-            }
-          >
-            <div
-              className={`
-          
-              bg-white rounded-lg max-md:overflow-y-scroll  p-[40px] flex flex-col md:w-[890px] md:h-[490px]`}
-            >
-              <div className="flex items-center justify-between">
-                <h1 className="text-[20px] font-bold">Dostava</h1>
-                <Image
-                  src={Cancel}
-                  alt="cancel"
-                  width={20}
-                  height={20}
-                  onClick={() => setDeliveryModal(false)}
-                  className="cursor-pointer"
-                />
-              </div>
-              <div className="mt-[4.375rem]">
-                <p className="font-light text-[15px]">
-                  Mesto isporuke poruče ne robe mora se nalaziti na teritoriji
-                  Republike Srbije. Isporuku proizvoda poručenih na sajtu
-                  pazari.rs vrši kurirska služba „YU – PD Express“ d.o.o .
-                  Beograd – D Express, na teritoriji Republike Srbije, radnim
-                  danima u periodu od 8 do 16h, na adresu primaoca pošiljke.
-                </p>
-                <p className="font-light mt-[30px] text-[15px]">
-                  U slučaju da je na porudžbenici više artikala, velika je
-                  verovatnoće da nemamo sve artikle na jednom mestu, zbog čega
-                  ćete porudžbinu dobiti u više pošiljki. Nakon obrade
-                  porudžbine, na vašu e-mail adresu stići će obaveštenje o
-                  statusu porudžbine.
-                </p>
-                <p className="font-light mt-[30px] text-[15px]">
-                  Po Zakonu o zaštiti potrošača, član 32 – Trgovac je dužan da u
-                  roku od 30 dana od dana zaključenja ugovora na daljinu i
-                  ugovora koji se zaključuje izvan poslovnih prostorija izvrši
-                  isporuku robe. Okvirni rok isporuke je do 3 radna dana. Rok
-                  isporuke može biti i duži od navedenog (3 radna dana), u
-                  vanrednim slučajevima poput velikih gužvi, pandemija,
-                  neprohodnosti puteva u slučaju vremenskih nepogoda i sl.
-                  Kurirska služba je u obavezi da isporuku vrši što efikasnije u
-                  skladu sa svojim mogućnostima i poslovnim kapacitetima.
-                </p>
-              </div>
-            </div>
-          </div>
+            <DeliveryModal deliveryModal={deliveryModal} setDeliveryModal={setDeliveryModal} />
+            <InfoModal infoModal={infoModal} setInfoModal={setInfoModal} />
+            <ReturnModal  returnModal={returnModal} setReturnModal={setReturnModal} />
           {(deliveryModal || infoModal || returnModal) && (
             <div
               className="fixed z-[100] bg-black bg-opacity-40 top-0 left-0 w-screen h-screen transition-all duration-500"
