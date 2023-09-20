@@ -5,7 +5,9 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import "swiper/css/pagination";
-import { FreeMode, Navigation, Pagination, Thumbs } from "swiper";
+import "swiper/css/zoom";
+
+import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
@@ -17,6 +19,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
     magnifierHeight = 300,
     magnifierWidth = 300,
     zoomLevel = 2.5,
+    onClick = () => {},
   }) {
     const [[x, y], setXY] = useState([0, 0]);
 
@@ -31,6 +34,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
           zIndex: 100,
         }}
         className="h-full w-full object-cover"
+        onClick={onClick}
       >
         <Image
           src={src}
@@ -85,10 +89,18 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
     );
   }
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [modalImage, setModalImage] = useState(null);
   const productImage = productGallery?.map((image, index) => {
     return (
       <SwiperSlide key={index} className="w-full">
-        <ImageMagnifier src={image?.image} width={2000} height={2000} />
+        <ImageMagnifier
+          src={image?.image}
+          width={2000}
+          height={2000}
+          onClick={() => {
+            setModalImage(image?.image);
+          }}
+        />
       </SwiperSlide>
     );
   });
@@ -131,7 +143,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
     <div className="col-span-2 max-md:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:h-[650px] lg:h-[700px] xl:h-[780px] 2xl:h-[790px] 3xl:h-[878px]">
       <Swiper
         spaceBetween={10}
-        thumbs={{ swiper: thumbsSwiper }}
+        thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         pagination={true}
         modules={[FreeMode, Thumbs, Pagination, Navigation]}
         initialSlide={color ? newImage : 0}
@@ -244,7 +256,64 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
           ></i>
         </div>
       </Swiper>
-
+      {modalImage && (
+        <div
+          className={`fixed md:hidden top-0 left-0 w-full h-full bg-black/80 z-[999999] flex items-center justify-center`}
+        >
+          <div className="relative w-full h-full">
+            <Swiper
+              modules={[Pagination, Zoom]}
+              pagination={true}
+              direction={"vertical"}
+              zoom={{
+                maxRatio: 2.5,
+                toggle: true,
+                minRatio: 1,
+              }}
+              initialSlide={productGallery?.findIndex(
+                (item) => item?.image === modalImage
+              )}
+              className={`${classes.mySwiper2} modalSwiper swiper-zoom-container`}
+              breakpoints={{
+                0: {
+                  direction: "vertical",
+                  slidesPerView: 1,
+                  pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                    enabled: true,
+                    bulletClass: "swiper-pagination-bullet",
+                    bulletActiveClass: "swiper-pagination-bullet-active",
+                  },
+                },
+              }}
+            >
+              {productGallery?.map((image, index) => {
+                return (
+                  <SwiperSlide key={index} className="w-full">
+                    <div className="swiper-zoom-container">
+                      <Image
+                        src={image?.image}
+                        alt={`Pazari Shop`}
+                        layout="fill"
+                        objectFit="cover"
+                        priority={true}
+                        className="cursor-pointer w-full h-auto"
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+          <i
+            className={`fas fa-times absolute top-2 left-2 z-50 text-[#e10000] bg-white rounded-xl px-2 py-1 text-xl cursor-pointer`}
+            onClick={() => {
+              setModalImage(null);
+            }}
+          ></i>
+        </div>
+      )}
     </div>
   );
 };

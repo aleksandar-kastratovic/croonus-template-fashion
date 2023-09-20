@@ -18,7 +18,6 @@ import DeliveryModal from "./DeliveryModal";
 import InfoModal from "./InfoModal";
 import ReturnModal from "./ReturnModal";
 
-
 const ProductInfo = ({
   product,
   desc,
@@ -137,13 +136,9 @@ const ProductInfo = ({
         <>
           <div className="max-md:col-span-4 mt-[2rem] md:col-span-2 ">
             <div className="flex flex-col ">
-    
               <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold group">
                 {product?.data?.item?.basic_data?.name}
               </h1>
-              
-              
-             
               <h2 className="mt-[6px] text-[#636363] text-[0.688rem]">
                 Šifra:&nbsp;
                 {productVariant?.id
@@ -189,7 +184,7 @@ const ProductInfo = ({
               </div>
               {product?.data?.item?.price?.discount?.active && (
                   <div className='mt-3'>
-                     <h2 className='text-[17px] text-[#2bc48a] font-semibold'>Ušteda: {currencyFormat(Number(product?.data?.item?.price?.discount?.amount))}</h2>
+                     <h2 className='text-[17px] text-[#2bc48a] font-semibold'>Ušteda: {currencyFormat(product?.data?.item?.price?.discount?.amount)}</h2>
                   </div>
                   )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (

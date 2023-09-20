@@ -9,7 +9,7 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
     case price?.price_defined && inventory?.amount !== null:
       handlePrice ? handlePrice(price?.price?.original) : null;
       return (
-        <div className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}>
+        <div className={`text-[1.313rem] flex items-center gap-3 font-bold`}>
           {price?.price?.discount !== null ? (
 
             <div className="group relative inline-block">

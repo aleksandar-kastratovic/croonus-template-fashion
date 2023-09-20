@@ -145,7 +145,7 @@ const Filters = ({
               </div>
             )}
           </div>
-          <div className="col-span-1 col-start-9 flex items-center gap-3 justify-end relative">
+          <div className="col-span-1 col-start-9 flex items-center gap-3 justify-end relative md:hidden lg:flex">
             <h1 className=" font-light text-base text-center">Prikaz:</h1>
             <div className="flex items-center justify-center gap-2">
               <button

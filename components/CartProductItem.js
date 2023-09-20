@@ -3,8 +3,6 @@ import Image from "next/image";
 import { useGlobalAddToCart } from "@/app/api/globals";
 import { useGlobalRemoveFromCart } from "@/app/api/globals";
 import { currencyFormat } from "../helpers/functions";
-import PlusMinusInputTwo from "./PlusMinusInputTwo";
-import classes from "./CartProductItem.module.css";
 import PlusMinusInputOne from "./PlusMinusInputOne";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import Link from "next/link";
@@ -31,7 +29,7 @@ const CartProductItem = ({ item }) => {
   return (
     <>
       <div className="col-span-2 grid grid-cols-3 gap-x-10 mt-1 relative">
-        <div className="relative col-span-1 w-full flex items-center justify-center">
+        <div className="relative col-span-1 w-full flex items-center">
           <div className="xl:h-[186px] xl:w-[139px]  ">
             <Link href={`/proizvod/${item?.product?.slug}`}>
               <Image

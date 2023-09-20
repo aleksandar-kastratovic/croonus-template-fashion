@@ -4,7 +4,7 @@ import { list, post } from "@/app/api/api";
 // import Filters from "./Filters";
 // import FiltersMobile from "./FilterMobile";
 import Image from "next/image";
-import GenerateBreadCrumbsServer from "@/helpers/generateBreadCrumbsServer";
+import Link from "next/link";
 import Thumb from "@/components/Thumb/Thumb";
 import Filters from "./Filters";
 import FiltersMobile from "./FilterMobile";
@@ -66,10 +66,66 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [productsPerView, setProductsPerView] = useState(4);
   const [productsPerViewMobile, setProductsPerViewMobile] = useState(2);
   const [filterOpen, setFilterOpen] = useState(false);
+
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+  
+  useEffect(() => {
+    const generateBreadcrumbs = (category) => {
+      category?.parents?.forEach((parent) => {
+        if (
+          !breadcrumbs.some((breadcrumb) => breadcrumb?.name === parent?.name)
+        ) {
+          setBreadcrumbs((prevBreadcrumbs) => [
+            ...prevBreadcrumbs,
+            {
+              name: parent?.name,
+              slug: parent?.slug,
+            },
+          ]);
+        }
+      });
+    };
+
+    if (singleCategory) {
+      generateBreadcrumbs(singleCategory);
+    }
+  }, [singleCategory, breadcrumbs]);
+  
+  console.log(breadcrumbs)
+  
   return (
     <div>
-      <div className="px-20">
-        {GenerateBreadCrumbsServer()}
+      <div className="px-5 lg:px-20">
+      {breadcrumbs?.length > 0 && (
+          <div className="flex items-center gap-2 flex-wrap mt-5">
+            <Link
+              href={`/`}
+              className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+            >
+              Početna
+            </Link>{" "}
+            <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+            {breadcrumbs?.map((breadcrumb, index, arr) => {
+              return (
+                <div className="flex items-center gap-2">
+                  <Link
+                    href= {`/kategorije/${breadcrumb?.slug}`}
+                    className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+                  >
+                    {breadcrumb?.name}
+                  </Link>
+                  {index !== arr.length - 1 && (
+                    <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+                  )}
+                </div>
+              );
+            })}
+            <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+            <h1 className="text-[#191919] text-[0.75rem] font-normal">
+              {singleCategory?.basic_data?.name}
+            </h1>
+          </div>
+        )}
       </div>
       <div className="mt-[80px] flex flex-col items-center justify-center">
         <div className="flex flex-row max-sm:flex-col items-center justify-center">
@@ -128,7 +184,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           />
         </div>
       </div>
-      <div className={`max-md:hidden px-20`}>
+      <div className={`max-lg:hidden px-20`}>
         <div
           className={`mt-[1.875rem] ${productsPerView === 2 && "w-[50%] mx-auto"
             } grid grid-cols-${productsPerView} gap-x-[40px] gap-y-[66px]`}
@@ -142,7 +198,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           />
         </div>
       </div>
-      <div className={`md:hidden px-20`}>
+      <div className={`lg:hidden px-5 lg:px-20`}>
         <div
           className={`mt-[50px] grid grid-cols-${productsPerViewMobile} md:grid-cols-3 gap-x-[20px] gap-y-[36px]`}
         >
