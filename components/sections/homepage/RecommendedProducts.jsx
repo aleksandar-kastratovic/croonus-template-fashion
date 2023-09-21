@@ -17,7 +17,7 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
   return (
     <div
       data-aos="fade-right"
-      className="max-sm:w-[95%] max-sm:mx-auto md:mx-[5rem] max-sm:mt-[3rem] md:mt-[5.625rem] overflow-visible"
+      className="max-sm:w-[95%] max-sm:mx-auto md:mx-5 lg:mx-[5rem] max-sm:mt-[3rem] md:mt-[5.625rem] overflow-visible"
     >
         <div className="max-lg:col-span-1 lg:col-span-4 2xl:col-span-4 4xl:col-span-5">
           <div className="relative flex flex-col justify-between max-lg:gap-3 lg:flex-row lg:items-center">

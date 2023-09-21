@@ -167,7 +167,7 @@ const NavigationMobile = () => {
           </div>
           <Link href="/">
             <div className="relative">
-              <Image alt={`logo`} src={'/logo.png'} width={150} height={33} />
+            <Image alt={`logo`} src={'/logo.png'} width={150} height={33} />
             </div>
           </Link>
           <div className="relative flex items-center gap-4">

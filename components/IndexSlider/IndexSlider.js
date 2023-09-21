@@ -117,7 +117,7 @@ const IndexSlider = ({ banners }) => {
                     alt={banner?.title}
                     width={1920}
                     height={1080}
-                    className="bg-fixed w-full max-sm:h-full object-cover"
+                    className="bg-fixed w-full max-sm:h-full object-cover max-lg:aspect-square"
                   />
                   <Link
                     href={`${banner?.url ?? `/stranica-u-izradi`}`}

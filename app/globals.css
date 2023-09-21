@@ -3,17 +3,35 @@
 @tailwind utilities;
 
 @layer base {
+
   html,
   body {
     font-family: "Open Sans", sans-serif;
+    color: black;
+    top: 0 !important;
   }
 }
+
+.notranslate .rs-picker-default .rs-btn,
+.rs-picker-default .rs-picker-toggle,
+.rs-picker-input .rs-btn,
+.rs-picker-input .rs-picker-toggle {
+  background-color: black !important;
+}
+
+.skiptranslate {
+  display: none;
+}
+
+
 .deffont {
   font-family: "Open Sans", sans-serif !important;
 }
+
 .deffont p {
   font-family: "Open Sans", sans-serif !important;
 }
+
 .swiper-slide {
   text-align: center;
   font-size: 18px;
@@ -89,11 +107,13 @@
     width: 100%;
   }
 }
+
 @keyframes progress-bar1 {
   to {
     width: 100%;
   }
 }
+
 .wiggle:hover {
   animation: wiggle 0.5s ease-in-out;
 }
@@ -102,15 +122,19 @@
   0% {
     transform: rotate(0);
   }
+
   25% {
     transform: rotate(-20deg);
   }
+
   50% {
     transform: rotate(0);
   }
+
   75% {
     transform: rotate(20deg);
   }
+
   100% {
     transform: rotate(0);
   }
@@ -203,9 +227,8 @@
   }
 }
 
-.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
-.swiper-pagination-horizontal.swiper-pagination-bullets
-  .swiper-pagination-bullet {
+.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
   margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 4px);
   background: #171717 !important;
 }
@@ -220,7 +243,7 @@
 }
 
 .swiper-pagination-vertical.swiper-pagination-bullets,
-.swiper-vertical > .swiper-pagination-bullets {
+.swiper-vertical>.swiper-pagination-bullets {
   right: var(--swiper-pagination-right, 8px);
   left: var(--swiper-pagination-left, auto);
   top: 59% !important;
@@ -244,7 +267,7 @@
     display: none;
   }
 
-  .item:hover > .chevrons {
+  .item:hover>.chevrons {
     display: flex;
   }
 
@@ -259,7 +282,7 @@
     display: none;
   }
 
-  .item:hover > .chevrons {
+  .item:hover>.chevrons {
     display: none;
   }
 }
@@ -272,7 +295,7 @@
   opacity: 1;
 }
 
-.favorites:hover > .favorite {
+.favorites:hover>.favorite {
   filter: invert(1);
 }
 
@@ -325,7 +348,7 @@
   display: none;
 }
 
-.separate > div:not(:last-child)::after {
+.separate>div:not(:last-child)::after {
   content: "";
   position: absolute;
   width: 2px;
@@ -434,10 +457,8 @@
   z-index: 1;
   display: flex;
   transition-property: transform;
-  transition-timing-function: var(
-    --swiper-wrapper-transition-timing-function,
-    initial
-  );
+  transition-timing-function: var(--swiper-wrapper-transition-timing-function,
+      initial);
   box-sizing: content-box;
   align-items: center !important;
   justify-content: center !important;
@@ -457,13 +478,18 @@
   opacity: var(--swiper-pagination-bullet-opacity, 1);
   background: black !important;
 }
+
 /* Add this to your CSS stylesheet */
 .button-with-tooltip {
-  position: relative; /* Set the button to be a positioned container */
+  position: relative;
+  /* Set the button to be a positioned container */
 }
+
 .buttontooltip {
-  position: relative; /* Set the button to be a positioned container */
+  position: relative;
+  /* Set the button to be a positioned container */
 }
+
 .tooltip {
   display: none;
   position: absolute;
@@ -492,16 +518,17 @@
 }
 
 .button-with-tooltip:hover .tooltip {
-  display: block; /* Display the tooltip when button is hovered */
+  display: block;
+  /* Display the tooltip when button is hovered */
 }
+
 .buttontooltip:hover .tooltip2 {
-  display: block; /* Display the tooltip when button is hovered */
+  display: block;
+  /* Display the tooltip when button is hovered */
 }
+
 .categoryImageSwiper .swiper-pagination-vertical.swiper-pagination-bullets,
-.categoryImageSwiper
-  .swiper-vertical
-  > .categoryImageSwiper
-  .swiper-pagination-bullets {
+.categoryImageSwiper .swiper-vertical>.categoryImageSwiper .swiper-pagination-bullets {
   right: 2px;
   left: auto !important;
   bottom: auto !important;
@@ -558,35 +585,44 @@
   position: absolute !important;
   opacity: 0.8;
 }
+
 .no-spinners::-webkit-inner-spin-button,
 .no-spinners::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 .no-spinners {
   appearance: none;
-  -moz-appearance: textfield; /* Firefox */
+  -moz-appearance: textfield;
+  /* Firefox */
 }
+
 .productdetailsnav {
   display: none !important;
 }
 
 @media (max-width: 768px) {
+
   .mySwiper2 .swiper-button-next,
   .mySwiper2 .swiper-button-prev {
     display: none !important;
   }
+
   .swiper-nav-button {
     display: none !important;
   }
 }
+
 .bgbreadcrumbs {
   background-color: #191919;
 }
+
 .profilHolder {
   margin-top: 3rem;
   margin-bottom: 10rem;
 }
+
 .profilNav {
   min-width: 20rem;
 }
@@ -596,19 +632,23 @@
   padding-right: 6rem;
   margin-bottom: 0.4rem;
 }
+
 @media (max-width: 760px) {
   .pageConstructionHolder {
     min-height: 200px;
   }
 }
+
 .constructionHolder {
   min-height: 80vh;
   justify-content: center;
 }
+
 .positionImage {
   position: relative;
   z-index: 2;
 }
+
 .constructionText {
   background-color: #f0f0f0;
   width: 50vw;
@@ -617,10 +657,12 @@
   position: relative;
   top: -3rem;
 }
+
 .error-message {
   color: red !important;
   margin-top: 1rem;
 }
+
 .loadMoreButton {
   margin: 3rem auto;
   display: flex;
@@ -631,17 +673,21 @@
   font-size: 0.9rem;
   letter-spacing: 1px;
 }
+
 .messHolder {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .loaderImg {
   width: 30px;
 }
+
 .socialNetworkHolder {
   margin-top: 1.4rem;
 }
+
 .keenHorizontal {
   display: flex;
   flex-direction: column;
@@ -649,31 +695,38 @@
   margin-top: 3rem;
   min-width: 100px;
 }
+
 .keenVertical {
   width: 100% !important;
   margin: 1rem;
 }
+
 .productKeen {
   display: flex;
   max-height: 34rem;
 }
+
 .productKeen img {
   height: 100%;
 }
+
 .productKeen .keen-slider:not([data-keen-slider-disabled]) .keen-slider__slide {
   min-height: unset;
   height: auto;
   width: 100%;
   min-width: 100% !important;
 }
+
 .constructionHolder {
   min-height: 80vh;
   justify-content: center;
 }
+
 .positionImage {
   position: relative;
   z-index: 2;
 }
+
 .constructionText {
   background-color: #f0f0f0;
   width: 50vw;
@@ -682,6 +735,7 @@
   position: relative;
   top: -3rem;
 }
+
 .circleHolder {
   background-color: #f15923;
   padding: 0.7rem;
@@ -693,20 +747,25 @@
   align-items: center;
   margin-right: 0.54rem;
 }
+
 .circleHolder:hover {
   opacity: 60%;
   cursor: pointer;
 }
+
 .contactFormHolder p {
   color: #a8a8a8;
 }
+
 @media (max-width: 760px) {
   .contactFormHolder p {
     width: 90%;
   }
+
   .titleHolder {
     margin: 2rem 0rem 0rem 0rem;
   }
+
   .constructionText {
     width: 90vw;
     padding: 4rem;

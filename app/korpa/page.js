@@ -1,5 +1,5 @@
 import CheckoutPage from "@/components/CheckoutPage/CheckoutPage";
-import { get } from "../api/api";
+import { get, list } from "../api/api";
 const paymentOptions = async () => {
   const paymentOptions = await get("/checkout/payment-options").then(
     (response) => response?.payload
@@ -12,6 +12,11 @@ const deliveryOptions = async () => {
   );
   return deliveryOptions;
 };
+
+const getRecommendedProducts = async () => {
+  return await list("/products/section/list/recommendation").then((res) => res?.payload?.items);
+};
+
 export const metadata = () => {
   return {
     title: "Korpa - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
@@ -33,11 +38,14 @@ export const metadata = () => {
 const Cart = async () => {
   const paymentoptions = await paymentOptions();
   const deliveryoptions = await deliveryOptions();
+  const recommendedProducts = await getRecommendedProducts();
+  
   return (
     <div className="">
       <CheckoutPage
         paymentoptions={paymentoptions}
         deliveryoptions={deliveryoptions}
+        recommendedProducts={recommendedProducts}
       />
     </div>
   );

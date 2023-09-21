@@ -16,8 +16,9 @@ import {
 } from "react-google-recaptcha-v3";
 import { currencyFormat } from "../../helpers/functions";
 import { ToastContainer } from "react-toastify";
+import RecommendedProducts from "../sections/homepage/RecommendedProducts";
 
-const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
+const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) => {
   const router = useRouter();
   const { asPath } = router;
   function handleClick() {
@@ -121,8 +122,8 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
     getCart();
   }, [getCart, cart]);
 
-  const cartItems = cartData.items ?? [];
-  const cartCost = cartData.summary?.total ?? 0;
+  const cartItems = cartData?.items ?? [];
+  const cartCost = cartData?.summary?.total ?? 0;
 
   const formChangeHandler = ({ target }) => {
     setErrors(errors.filter((item) => item != target.name));
@@ -1062,6 +1063,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions }) => {
                 </h1>
               )}
             </div>
+            <RecommendedProducts recommendedProducts={recommendedProducts} />
           </>
         ) : (
           !cartLoading && (

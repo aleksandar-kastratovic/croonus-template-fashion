@@ -54,7 +54,7 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
     return (
         <div>
               <ToastContainer />
-        <div className='grid grid-cols-[1fr,2fr] mt-32 gap-14 2xl:gap-28 px-20'>
+        <div className='grid lg:grid-cols-[1fr,2fr] mt-10 lg:mt-32 gap-14 2xl:gap-28 px-5 lg:px-20'>
             <div className='self-center'>
                 <h2 className='font-bold text-[40px] text-black'>Ostvari 10% popusta</h2>
                 <p className='text-base font-normal text-black my-8'>Prijavi se na naš bilten i dobićeš 10% popusta na sledeću kupovinu, pristup
@@ -74,12 +74,12 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
                         <Image src={'/send.png'} width={28} height={34} />
                     </button>
                 </form>
-                <p className='text-[17px] text-black font-normal mb-3 mt-20'>Brza i laka kupovina Vaših omiljenih artikala <br /> putem mobilne aplikacije.</p>
+                <p className='text-[17px] text-black font-normal mb-3 mt-5 lg:mt-20'>Brza i laka kupovina Vaših omiljenih artikala <br /> putem mobilne aplikacije.</p>
                 <div className='flex items-center gap-7'>
                     <Image src={'/app-store.png'} width={120} height={40} />
                     <Image src={'/google-play.png'} width={120} height={40} />
                 </div>
-                <p className='text-base text-black mt-14 font-normal'>Podelite svoje jedinstveno onlajn iskustvo sa našim <br /> timom i pomozite nam da ostanemo bolji.</p>
+                <p className='text-base text-black mt-5 lg:mt-14 font-normal'>Podelite svoje jedinstveno onlajn iskustvo sa našim <br /> timom i pomozite nam da ostanemo bolji.</p>
                 <Link href='/' className='text-base text-black mt-5 font-bold underline block'>Ostavite vaše mišljenje</Link>
             </div>
             <div>
