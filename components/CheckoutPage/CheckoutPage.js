@@ -851,7 +851,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
                 <>
                   <div className="flex flex-col max-md:mt-0 col-span-3 row-start-2 max-xl:col-span-5 gap-y-8 mt-7">
                     <span className="text-[18px] font-bold ">Način dostave </span>
-                    <div className="bg-[#f5f5f7] lg:pl-9 pb-14 pt-12 lg:pr-32 pl-5 pr-5">
+                    <div className="bg-[#f5f5f7] lg:pl-9 pb-12 pt-10 lg:pr-32 pl-5 pr-5">
                       <div className="flex flex-col gap-2 relative">
                         {errors.includes("delivery") && (
                           <span
@@ -886,21 +886,6 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
                         </p>
                       </div>
                     </div>
-                 
-                    {/* <div className="bg-white pt-7 pl-5 pb-5 pr-5">
-                <div className="flex flex-col gap-2">
-                  <h1 className="text-lg font-medium">Kupon:</h1>
-                  <input
-                    id="coupon"
-                    type="text"
-                    placeholder="-- Ovde unesite kupon"
-                    className="h-[58px] placeholder:text-black  w-full placeholder:text-black border border-slate-300 bg-[#f7f8fa] px-2"
-                  />
-                  <button className="h-[58px] placeholder:text-black  w-full placeholder:text-black bg-[#333e48] font-medium text-white">
-                    Aktiviraj kupon
-                  </button>
-                </div>
-              </div> */}
                   </div>
                   <div className="flex flex-col col-span-3  max-xl:col-span-5 gap-y-4 mt-7 row-start-3">
                   <span className="text-[18px] font-bold ">
@@ -940,11 +925,31 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
                   </div>
                 </>
               )}
-              <div className="overflow-y-auto max-h-[411px] col-span-5 bg-white xl:col-start-4 xl:col-end-6 xl:row-start-1 row-start-4 mt-7 lg:mt-0">
+              <div className="overflow-y-auto max-h-[411px] col-span-5 bg-white xl:col-start-4 xl:col-end-6 xl:row-start-1 lg:row-start-4 mt-7 lg:mt-0">
                 <span className="font-bold text-[18px]">Proizvodi u korpi</span>
                 <CartProductBox cartItems={cartItems} />
-              </div>{" "}
-            
+              </div>
+              
+              <div className="flex flex-col max-md:mt-5  xl:row-start-2  max-xl:col-span-5 col-start-4 col-end-6 gap-8 mt-7 row-start-4">
+                    <span className="text-[18px] font-bold ">
+                      Kupon:
+                    </span>
+                <div className="bg-[#f5f5f7] py-5 px-5 lg:px-7 flex flex-col gap-y-6">
+                  <input
+                    id="coupon"
+                    type="text"
+                    placeholder="Ovde unesite kupon"
+                    className="h-[62px] border-none  w-full placeholder:text-[#171717] placeholder:text-base bg-white px-2"
+                  />
+                <button className='self-start text-[#171717] pl-5'>
+                *Uputstvo za upotrebu kupona.
+                  </button>
+                    <button className="h-[47px] max-xl:w-full w-1/2 placeholder:text-black bg-[#2bc48a] font-medium text-white self-end uppercase">
+                      Aktiviraj kupon
+                    </button>
+              
+                  </div>
+              </div>
             
               <div className="flex flex-col max-md:mt-5  xl:row-start-3  max-xl:col-span-5 col-start-4 col-end-6 gap-4 mt-7 row-start-5">
               <span className="text-[18px] font-bold">
