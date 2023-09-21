@@ -53,7 +53,6 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
     
     return (
         <div>
-              <ToastContainer />
         <div className='grid lg:grid-cols-[1fr,2fr] mt-10 lg:mt-32 gap-14 2xl:gap-28 px-5 lg:px-20'>
             <div className='self-center'>
                 <h2 className='font-bold text-[40px] text-black'>Ostvari 10% popusta</h2>

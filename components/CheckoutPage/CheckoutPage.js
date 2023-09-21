@@ -939,7 +939,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
                     id="coupon"
                     type="text"
                     placeholder="Ovde unesite kupon"
-                    className="h-[62px] border-none  w-full placeholder:text-[#171717] placeholder:text-base bg-white px-2"
+                    className="h-[62px] border-none  w-full placeholder:text-[#171717] placeholder:text-base bg-white px-6"
                   />
                 <button className='self-start text-[#171717] pl-5'>
                 *Uputstvo za upotrebu kupona.

@@ -18,7 +18,7 @@ const Header = async () => {
 	const categoriesMain = [{ name: 'Početna', slug: '/' }, ...categories, { name: 'Brendovi', slug: '/brendovi' }, { name: 'Blog', slug: '/blogs' }, { name: 'Maloprodaje', slug: '/maloprodaje' }, { name: 'Kontakt', slug: '/kontakt' }]
 
 	return (
-		<header className='max-xl:hidden top-0 sticky w-full z-[1000000] bg-white border-b-4 border-topHeader'>
+		<header className='max-xl:hidden top-0 sticky w-full z-[101] bg-white border-b-4 border-topHeader'>
 			<HeaderTop />
 			<div className='py-5 px-20 flex items-center justify-between'>
 				<Link href='/'>
