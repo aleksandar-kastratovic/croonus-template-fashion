@@ -1031,7 +1031,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
                     target={`_blank`}
                   >
                     opštim uslovima korišćenja
-                  </a>{" "}
+                  </a>{"  "}
                  {process.env.NEXT_PUBLIC_COMPANY_NAME}
                 </label>
                 {errors.includes("agreed") && (
