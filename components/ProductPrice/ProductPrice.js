@@ -9,7 +9,7 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
     case price?.price_defined && inventory?.amount !== null:
       handlePrice ? handlePrice(price?.price?.original) : null;
       return (
-        <div className={`text-[1.313rem] flex items-center gap-3 font-bold`}>
+        <div className={`flex items-center gap-3 font-bold`}>
           {price?.price?.discount !== null ? (
 
             <div className="group relative inline-block">
@@ -25,7 +25,7 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
             </div>
 
           ) : (
-            <h1 className={className}>{currencyFormat(price?.price?.original)}</h1>
+            <div className={className}>{currencyFormat(price?.price?.original)}</div>
           )}
         </div>
 
@@ -44,15 +44,15 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
                   <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
                 </svg>
               </span>
-              <h1 className={`${className}`}>
+              <div className={`${className}`}>
 
                 {currencyFormat(price?.price?.discount)}
-              </h1>
+              </div>
             </div>
           ) : (
             <>
               {" "}
-              <h1 className={className}>{currencyFormat(price?.price?.original)}</h1>
+              <div className={className}>{currencyFormat(price?.price?.original)}</div>
             </>
           )}
         </>

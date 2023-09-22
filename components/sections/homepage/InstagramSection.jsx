@@ -9,7 +9,7 @@ const InstagramSection = ({instagramImages}) => {
             <div className='grid grid-cols-2 sm:grid-cols-3 gap-3'>
                 {instagramImages?.data?.slice(0, 6)?.map((image, index) => (
                     <div className='w-full aspect-square relative' key={index}>
-                        <Image src={image?.media_url} fill alt={image?.caption} />
+                        <Image src={image?.media_url} fill alt={image?.caption} className='object-cover'/>
                     </div>))}
             </div>
 

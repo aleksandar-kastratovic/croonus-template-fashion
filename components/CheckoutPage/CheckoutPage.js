@@ -16,7 +16,8 @@ import {
 } from "react-google-recaptcha-v3";
 import { currencyFormat } from "../../helpers/functions";
 import { ToastContainer } from "react-toastify";
-import RecommendedProducts from "../sections/homepage/RecommendedProducts";
+import RecommendedCategories from "../RecommendedCategories/RecommendedCategories";
+
 
 const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) => {
   const router = useRouter();
@@ -79,11 +80,11 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
     "address",
     "state",
     "zip_code",
-    "object_number",
+    // "object_number",
     "town",
-    "height",
-    "weight",
-    "product_size_agreement",
+    // "height",
+    // "weight",
+    // "product_size_agreement",
     "agreed",
     "shipping_first_name",
     "shipping_last_name",
@@ -136,6 +137,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
   };
 
   const formSubmitHandler = () => {
+    console.log('test')
     setRefreshReCaptcha((r) => !r);
     const err = [];
     for (const key in formData) {
@@ -156,6 +158,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
       }
     }
     if (err.length > 0) {
+      console.log(err)
       setErrors(err);
     } else {
       const ret = {
@@ -925,7 +928,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
                   </div>
                 </>
               )}
-              <div className="overflow-y-auto max-h-[411px] col-span-5 bg-white xl:col-start-4 xl:col-end-6 xl:row-start-1 lg:row-start-4 mt-7 lg:mt-0">
+              <div className="overflow-y-auto max-xl:max-h-[411px] max-h-[570px] col-span-5 row-span-3  bg-white xl:col-start-4 xl:col-end-6 xl:row-start-1 lg:row-start-4 mt-7 lg:mt-0">
                 <span className="font-bold text-[18px]">Proizvodi u korpi</span>
                 <CartProductBox cartItems={cartItems} />
               </div>
@@ -952,18 +955,10 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
               </div>
             
               <div className="flex flex-col max-md:mt-5  xl:row-start-3  max-xl:col-span-5 col-start-4 col-end-6 gap-4 mt-7 row-start-5">
-              <span className="text-[18px] font-bold">
+                <span className=" text-[18px]  font-bold ">
                   Vrednost Vaše korpe:
                 </span>
-                <div className="flex flex-col gap-4 bg-[#f5f5f7] max-sm:px-[0.45rem] sm:px-3 mt-0 pt-7 pb-5">
-                <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1 max-xl:text-base">
-                    <span className="text-sm  font-medium max-xl:text-sm">
-                      Ukupan broj artikala u korpi:{" "}
-                    </span>
-                    <span className="sm:mr-3 text-sm max-sm:ml-auto font-medium max-xl:text-sm">
-                        {checkoutSummary?.summary?.items_count}
-                    </span>
-                  </div>
+                <div className="flex flex-col gap-2 bg-[#f5f5f7] max-sm:px-[0.45rem] sm:px-3 mt-0 pt-7 pb-5">
                   <div className="flex flex-row items-center justify-between border-b-[1px] border-b-slate-100 py-1 max-xl:text-base">
                     <span className="text-sm  font-medium max-xl:text-sm">
                       Ukupna vrednost korpe bez popusta:{" "}
@@ -1018,15 +1013,15 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
               </div>
               </div>
                
-            <div className="flex flex-col max-md:items-center max-md:justify-center items-end justify-end max-md:w-[95%] max-md:mx-auto md:mx-[5rem]">
-              <div className="mt-2 flex gap-3 py-3 relative items-center">
+              <div className="flex flex-col max-md:items-center max-md:justify-center items-end justify-end max-md:w-[95%] max-md:mx-auto md:mx-[5rem]">
+              <div className="mt-2 flex gap-3 py-3 relative">
                 <input
-                  type="radio"
+                  type="checkbox"
                   id="agreed"
                   name="agreed"
                   onChange={formChangeHandler}
                   value={formData.agreed === "1" ? "" : "1"}
-                  className="h-3 w-3 focus:ring-0 focus:outline-none focus:border-none text-[#171717]"
+                  className="focus:ring-0 focus:border-none focus:outline-none text-[#191919] bg-[#191919]"
                 />
                 <label htmlFor="agreed" className="max-md:text-xs">
                   Saglasan sam sa{" "}
@@ -1037,7 +1032,7 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
                   >
                     opštim uslovima korišćenja
                   </a>{" "}
-                  {process.env.NEXT_PUBLIC_COMPANY_NAME}
+                 {process.env.NEXT_PUBLIC_COMPANY_NAME}
                 </label>
                 {errors.includes("agreed") && (
                   <span
@@ -1054,21 +1049,62 @@ const CheckoutPage = ({ paymentoptions, deliveryoptions, recommendedProducts }) 
               >
                 Potvrdi porudžbenicu{" "}
               </button>
-              {cartCost < 6000 && (
-                <h1 className="text-base text-[#e10000] mt-3 font-bold">
+
+              <div className={`max-xl:w-full xl:w-[400px] ml-auto mt-2`}>
+                {/*bar for measuring*/}
+                <div className="w-full h-1 bg-[#f5f5f7] mt-3">
+                  <div
+                    className="h-full relative transition-all duration-500 bg-[#2bc48a]"
+                    style={{
+                      width: `${
+                        (checkoutSummary?.summary?.totals?.items_discount /
+                          6000) *
+                          100 >
+                        100
+                          ? 100
+                          : (checkoutSummary?.summary?.totals?.items_discount /
+                              6000) *
+                            100
+                      }%`,
+                    }}
+                  >
+                    <div className="absolute top-0 right-0 h-full w-full flex items-center justify-end">
+                      <span className="text-black font-bold text-[0.5rem] px-[0.275rem] py-1 bg-white rounded-full border-2 border-[#2bc48a] ">
+                        {checkoutSummary?.summary?.totals?.items_discount > 6000
+                          ? 100
+                          : Math.round(
+                              (checkoutSummary?.summary?.totals
+                                ?.items_discount /
+                                6000) *
+                                100
+                            )}
+                        %
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <h1
+                  className={`text-base text-[#e10000] mt-3 font-bold ${
+                    checkoutSummary?.summary?.totals?.items_discount > 6000
+                      ? "hidden"
+                      : ""
+                  }`}
+                >
                   Do besplatne dostave nedostaje ti još{" "}
                   {currencyFormat(
                     6000 - checkoutSummary?.summary?.totals?.items_discount
                   )}
                 </h1>
-              )}
+              </div>
+
               {cartCost > 6000 && (
                 <h1 className="text-base text-[#2bc48a] mt-3 font-bold">
                   Besplatna dostava
                 </h1>
               )}
             </div>
-            <RecommendedProducts recommendedProducts={recommendedProducts} />
+            <RecommendedCategories products={recommendedProducts} />
           </>
         ) : (
           !cartLoading && (

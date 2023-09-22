@@ -72,7 +72,7 @@ const Translate = () => {
       ></div>{" "}
       <div className="notranslate flex items-center gap-5">
         <select
-          className=" h-8 rounded-lg border-none text-sm font-bold uppercase text-black focus:ring-0 cursor-pointer"
+          className=" h-8 rounded-lg border-none text-sm font-bold uppercase text-black focus:ring-0 cursor-pointer p-0"
           onChange={(e) => langChange(e.target.value)}
         >
           <option className=''>{selected?.split('/')[selected?.split('/').length - 1] || 'SRB'}</option>
