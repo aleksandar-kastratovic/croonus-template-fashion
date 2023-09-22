@@ -13,7 +13,7 @@ const nextConfig = {
     CAPTCHAKEY: process.env.CAPTCHAKEY,
   },
   images: {
-    domains: ["api.pazarishop.croonus.com", "192.168.1.174", "scontent.cdninstagram.com", "api.tiffany.croonus.com"],
+    domains: ["api.pazarishop.croonus.com", "192.168.1.174", "scontent.cdninstagram.com", "api.fashiondemo.croonus.com"],
   },
 };
 
