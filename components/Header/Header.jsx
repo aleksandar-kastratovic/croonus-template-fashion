@@ -13,10 +13,12 @@ const getCategories = async () => {
 	return await get("/categories/product/tree").then((response) => response?.payload);
 };
 
+export const revalidate = 30;
+
 const Header = async () => {
 	const categories = await getCategories();
 	const categoriesMain = [{ name: 'Početna', slug: '/' }, ...categories, { name: 'Brendovi', slug: '/brendovi' }, { name: 'Blog', slug: '/blogs' }, { name: 'Maloprodaje', slug: '/maloprodaje' }, { name: 'Kontakt', slug: '/kontakt' }]
-
+	
 	return (
 		<header className='max-xl:hidden top-0 sticky w-full z-[101] bg-white border-b-4 border-topHeader'>
 			<HeaderTop />

@@ -2,6 +2,7 @@
 import Variants from "../Variants/Variants";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Link from 'next/link';
 import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { currencyFormat } from "@/helpers/functions";
 import Image from "next/image";
@@ -31,7 +32,7 @@ const ProductInfo = ({
 }) => {
   const [productVariant, setProductVariant] = useState(null);
   const campaignsDate = product?.data?.item?.price?.discount?.campaigns[0]?.duration
-  
+
   const router = useRouter();
   useEffect(() => {
     if (window.scrollY > 0) {
@@ -129,12 +130,44 @@ const ProductInfo = ({
       setText2("Kupi odmah");
     }
   }, [productVariant]);
-  
+
   return (
     <>
       {product ? (
         <>
-          <div className="max-md:col-span-4 mt-[2rem] md:col-span-2 ">
+          <div className="max-lg:col-span-4 mt-[2rem] lg:col-span-2 ">
+            <div className="max-lg:flex hidden items-center gap-2 flex-wrap">
+              <Link
+                href={`/`}
+                className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+              >
+                Početna
+              </Link>{" "}
+              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              {breadcrumbs?.steps?.map((breadcrumb, index, arr) => {
+                return (
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={
+                        index === arr.length - 1
+                          ? `/kategorije/${breadcrumb?.slug}`
+                          : `/kategorije/${breadcrumb?.slug}`
+                      }
+                      className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+                    >
+                      {breadcrumb?.name}
+                    </Link>
+                    {index !== arr.length - 1 && (
+                      <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+                    )}
+                  </div>
+                );
+              })}
+              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              <h1 className="text-[#191919] text-[0.75rem] font-normal">
+                {breadcrumbs?.end?.name}
+              </h1>
+            </div>
             <div className="flex flex-col ">
               <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold group">
                 {product?.data?.item?.basic_data?.name}
@@ -148,7 +181,6 @@ const ProductInfo = ({
               <div
                 className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
               >
-                
                 <ProductPrice
                   price={
                     productVariant?.id
@@ -167,30 +199,30 @@ const ProductInfo = ({
                   }
                 />
                 {product?.data?.item?.price?.discount?.active && (
-                            <div className="group relative inline-block">
-                            <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
-                            Važeća MP cena
-                                <svg class="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
-                      <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
-                    </svg>
-                              </span>
-                  <span className="text-[#171717] text-[19px] line-through font-normal">
-                    {currencyFormat(
-                      product?.data?.item?.price?.price?.original
-                    )}
-                  </span>
+                  <div className="group relative inline-block">
+                    <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
+                      Važeća MP cena
+                      <svg class="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
+                        <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
+                      </svg>
+                    </span>
+                    <span className="text-[#171717] text-[19px] line-through font-normal">
+                      {currencyFormat(
+                        product?.data?.item?.price?.price?.original
+                      )}
+                    </span>
                   </div>
                 )}
               </div>
               {product?.data?.item?.price?.discount?.active && (
-                  <div className='mt-3'>
-                     <h2 className='text-[17px] text-[#2bc48a] font-semibold'>Ušteda: {currencyFormat(product?.data?.item?.price?.discount?.amount)}</h2>
-                  </div>
-                  )}
+                <div className='mt-3'>
+                  <h2 className='text-[17px] text-[#2bc48a] font-semibold'>Ušteda: {currencyFormat(product?.data?.item?.price?.discount?.amount)}</h2>
+                </div>
+              )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
                 <CampaignsDetails campaignsDate={campaignsDate} />
               )}
-                
+
               <p
                 className="mt-7 max-md:mt-[1.5rem] max-w-[90%] text-sm font-regular"
                 dangerouslySetInnerHTML={{ __html: desc?.description }}
@@ -213,23 +245,21 @@ const ProductInfo = ({
               </div>
             )}
             <button className="flex items-center gap-2">
-             <Image src={'/icons/measure.png'} alt="measure" width={30} height={20} />
-             <span className="text-[13px] font-bold">Pomoć za veličine</span>
+              <Image src={'/icons/measure.png'} alt="measure" width={30} height={20} />
+              <span className="text-[13px] font-bold">Pomoć za veličine</span>
             </button>
             <div className="mt-[3rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `max-sm:w-[8.5rem] ${
-                        text === "Izaberite veličinu"
-                          ? `bg-red-500`
-                          : `bg-[#2bc48a]`
-                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
-                    : `max-sm:w-[8.5rem] ${
-                        text === "Izaberite veličinu"
-                          ? `bg-red-500`
-                          : `bg-[#2bc48a]`
-                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] ${text === "Izaberite veličinu"
+                      ? `bg-red-500`
+                      : `bg-[#2bc48a]`
+                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
+                    : `max-sm:w-[8.5rem] ${text === "Izaberite veličinu"
+                      ? `bg-red-500`
+                      : `bg-[#2bc48a]`
+                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
                   if (
@@ -246,16 +276,14 @@ const ProductInfo = ({
               <button
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `max-sm:w-[8.5rem] ${
-                        text2 === "Izaberite veličinu"
-                          ? `bg-red-500`
-                          : `bg-[#191919]`
-                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
-                    : `max-sm:w-[8.5rem] ${
-                        text2 === "Izaberite veličinu"
-                          ? `bg-red-500`
-                          : `bg-[#191919]`
-                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] ${text2 === "Izaberite veličinu"
+                      ? `bg-red-500`
+                      : `bg-[#191919]`
+                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
+                    : `max-sm:w-[8.5rem] ${text2 === "Izaberite veličinu"
+                      ? `bg-red-500`
+                      : `bg-[#191919]`
+                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
                   if (
@@ -321,16 +349,16 @@ const ProductInfo = ({
                   Dostava
                 </div>
                 <div
-                 className="relative cursor-pointer"
-                 onClick={() => setInfoModal(true)}
+                  className="relative cursor-pointer"
+                  onClick={() => setInfoModal(true)}
                 >
-                 Informacije
+                  Informacije
                 </div>
                 <div
-                 className="relative cursor-pointer"
-                 onClick={() => setReturnModal(true)}
+                  className="relative cursor-pointer"
+                  onClick={() => setReturnModal(true)}
                 >
-                 Povraćaj
+                  Povraćaj
                 </div>
               </ul>
             </div>
@@ -364,9 +392,9 @@ const ProductInfo = ({
               </div>
             </div>
           </div>
-            <DeliveryModal deliveryModal={deliveryModal} setDeliveryModal={setDeliveryModal} />
-            <InfoModal infoModal={infoModal} setInfoModal={setInfoModal} />
-            <ReturnModal  returnModal={returnModal} setReturnModal={setReturnModal} />
+          <DeliveryModal deliveryModal={deliveryModal} setDeliveryModal={setDeliveryModal} />
+          <InfoModal infoModal={infoModal} setInfoModal={setInfoModal} />
+          <ReturnModal returnModal={returnModal} setReturnModal={setReturnModal} />
           {(deliveryModal || infoModal || returnModal) && (
             <div
               className="fixed z-[100] bg-black bg-opacity-40 top-0 left-0 w-screen h-screen transition-all duration-500"

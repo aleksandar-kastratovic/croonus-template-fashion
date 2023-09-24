@@ -18,13 +18,13 @@ const RecommendedCategories = ({ categories }) => {
         return (
           <div className="col-span-1" key={index}>
             <div className="relative lg:h-[450px] 2xl:h-[500px] h-[350px]">
-              <Image
+             {category?.images?.image && <Image
                 src={category?.images?.image}
                 alt={category.slug}
                 fill
                 priority={true}
                 className="h-full bg-fixed max-xl:object-cover"
-              />
+              />}
               <Link href={`/kategorije/${category?.slug_path}`}>
                 <div className="absolute h-full  top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center">
                   <div className="relative z-[53] ">

@@ -6,11 +6,11 @@ function HeaderTop() {
 	return (
 		<div className='bg-topHeader h-8 w-full flex items-center justify-between px-20'>
 			<div>
-				<Link href='/' className='text-sm font-normal text-black'>Facebook</Link>
+				<Link href='https://www.facebook.com/Croonus/' className='text-sm font-normal text-black' target='_blank'>Facebook</Link>
 				<span className='mx-2'>-</span>
-				<Link href='/' className='text-sm font-normal text-black'>Instagram</Link>
+				<Link href='https://www.instagram.com/lifeatcroonus/' className='text-sm font-normal text-black' target='_blank'>Instagram</Link>
 				<span className='mx-2'>-</span>
-				<Link href='/' className='text-sm font-normal text-black'>Youtube</Link>
+				<Link href='https://www.youtube.com/channel/UCTCxl3sqxPqafMhOsKVVEMQ/videos?view_as=subscriber' className='text-sm font-normal text-black' target='_blank'>Youtube</Link>
 			</div>
 			<SliderHeader />
 			<div>

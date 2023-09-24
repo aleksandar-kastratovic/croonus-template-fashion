@@ -15,7 +15,7 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
             <div className="group relative inline-block">
               <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
                 Cena sa popustom
-                <svg class="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
+                <svg className="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
                   <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
                 </svg>
               </span>
@@ -40,7 +40,7 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
             <div className="group relative inline-block">
               <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-[15%] text-[10px] font-normal">
                 Cena sa popustom
-                <svg class="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
+                <svg className="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
                   <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
                 </svg>
               </span>

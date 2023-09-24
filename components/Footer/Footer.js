@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "../../assets/Logo/pazari-logo-dark.png";
 import Image1 from "../../assets/Icons/master.png";
 import Image2 from "../../assets/Icons/visa.png";
 import Image3 from "../../assets/Icons/bancaIntesa.png";
@@ -19,7 +18,7 @@ const Footer = () => {
       <div className="mx-[5rem] max-xl:flex-col py-[2.625rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white">
         <div>
           <Link href={`/`}>
-            <Image src={Logo} width={214} height={45} alt="Pazari Logo" />
+            <Image src={'/logo.png'} width={214} height={45} alt="Croonus Logo" />
           </Link>
         </div>
         <div className="flex max-xl:flex-col max-xl:gap-[2rem] max-xl:mt-10 items-center gap-[5.625rem]">
@@ -28,7 +27,7 @@ const Footer = () => {
               Besplatna dostava za
             </h1>
             <h1 className="text-[#171717] uppercase text-[0.813rem]">
-              Iznos preko <span className="text-[#e10000]">6.000 RSD</span>
+              Iznos preko <span className="text-[#04b400]">6.000 RSD</span>
             </h1>
           </div>{" "}
           <div className="flex flex-col font-bold items-center text-center justify-center gap-1">
@@ -36,7 +35,7 @@ const Footer = () => {
               Rok isporuke do
             </h1>
             <h1 className="text-[#171717] uppercase text-[0.813rem]">
-              <span className="text-[#e10000]">2</span> radna dana
+              <span className="text-[#04b400]">2</span> radna dana
             </h1>
           </div>{" "}
           <div className="flex flex-col font-bold items-center text-center justify-center gap-1">
@@ -44,13 +43,13 @@ const Footer = () => {
               Povrat robe
             </h1>
             <h1 className="text-[#171717] uppercase text-[0.813rem]">
-              U roku od <span className="text-[#e10000]">14</span> dana
+              U roku od <span className="text-[#04b400]">14</span> dana
             </h1>
           </div>
         </div>
         <div className="flex max-xl:mt-10 items-center gap-[1.938rem]">
           <a
-            href="https://www.instagram.com/pazarishop/?hl=en"
+            href="https://www.instagram.com/Croonusshop/?hl=en"
             target={"_blank"}
           >
             <Image
@@ -74,7 +73,7 @@ const Footer = () => {
               className="hover:scale-110 transition-all duration-300"
             />
           </a>
-          <a href="https://www.facebook.com/pazarishop/" target={"_blank"}>
+          <a href="https://www.facebook.com/Croonusshop/" target={"_blank"}>
             <Image
               src={Facebook}
               width={30}
@@ -135,7 +134,7 @@ const Footer = () => {
                 href={`/stranica-u-izradi`}
                 className="cursor-pointer hover:text-[#e10000]"
               >
-                Više o kompaniji Pazari
+                Više o kompaniji Croonus
               </Link>
 
               <Link
@@ -308,7 +307,7 @@ const Footer = () => {
           </Link>
         </div>
         <p className="text-[0.813rem] font-normal text-[#191919] ">
-          &copy; {new Date().getFullYear()} Pazari.rs | Sva prava zadržana.
+          &copy; {new Date().getFullYear()} Croonus.rs | Sva prava zadržana.
           Powered by{" "}
           <a
             href="https://www.croonus.com"
