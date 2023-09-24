@@ -1,17 +1,8 @@
 /** @type {import('next').NextConfig} */
-const repo = "boilerplate-nextjs";
-const assetPrefix = `/${repo}/`;
-const basePath = `/${repo}`;
-
 const nextConfig = {
   experimental: {
     appDir: true,
   },
-  trailingSlash: true,
-
-  basePath: basePath,
-  assetPrefix: assetPrefix,
-
   env: {
     API_URL: process.env.API_URL,
     NAME: process.env.NAME,
