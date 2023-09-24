@@ -13,7 +13,14 @@ const nextConfig = {
     CAPTCHAKEY: process.env.CAPTCHAKEY,
   },
   images: {
-    domains: ["api.pazarishop.croonus.com", "192.168.1.174", "scontent.cdninstagram.com", "api.fashiondemo.croonus.com"],
+    domains: ["api.pazarishop.croonus.com", "192.168.1.174", "scontent.cdninstagram.com", "api.fashiondemo.croonus.com", 'video.cdninstagram.com',
+      'scontent-frx5-1.cdninstagram.com',
+      'scontent-frt3-2.cdninstagram.com',
+      'scontent-frt3-1.cdninstagram.com',
+      'scontent-vie1-1.cdninstagram.com',
+      'scontent-atl3-1.cdninstagram.com',
+      'scontent-cgk1-1.cdninstagram.com',
+      'scontent-fco2-1.cdninstagram.com',],
   },
 };
 
