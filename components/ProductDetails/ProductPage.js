@@ -1,6 +1,8 @@
 import { get, list } from "@/app/api/api";
 import ProductDetails from "@/components/ProductDetails/ProductDetails";
 import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
+import ProductGallery from "../ProductMobileDetails/ProductMobileGallery";
+import ProductMobileDetails from "../ProductMobileDetails/ProductMobileDetails";
 
 const getProduct = async (slug) => {
   return await get(`/product-details/basic-data/${slug}`).then(
@@ -38,6 +40,7 @@ const ProductPage = async ({ path }) => {
   const breadcrumbs = await getBreadcrumbs(path);
   return (
     <div className="">
+      <div className="hidden lg:block">
       <ProductDetails
         product={product}
         productGallery={productGallery}
@@ -45,6 +48,17 @@ const ProductPage = async ({ path }) => {
         path={path}
         breadcrumbs={breadcrumbs}
       />
+      </div>
+      <div className='max-lg:block hidden'>
+        <ProductMobileDetails
+             product={product}
+             productGallery={productGallery}
+             desc={desc}
+             path={path}
+             breadcrumbs={breadcrumbs}
+        />
+      </div>
+  
       <RecommendedProducts products={newProducts} />
     </div>
   );
