@@ -13,8 +13,6 @@ const fetchSingleCategory = async (slug) => {
   );
 };
 
-const getBreadcrumbs = async (slug) => {}
-
 export async function generateMetadata({ params: { path } }, { searchParams }) {
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
   return {

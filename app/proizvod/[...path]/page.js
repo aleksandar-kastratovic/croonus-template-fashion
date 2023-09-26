@@ -1,10 +1,7 @@
-import { get, list } from "@/app/api/api";
-import ProductDetails from "@/components/ProductDetails/ProductDetails";
-import RecommendedProducts from "@/components/RecommendedProducts/RecommendedProducts";
+import { get } from "@/app/api/api";
 import { Suspense } from "react";
 import ProductPage from "@/components/ProductDetails/ProductPage";
 import Loader from "@/components/Loader";
-import { isBlockedPage } from "next/dist/server/utils";
 
 const ProductDetailPage = async ({ params: { path } }) => {
   return (
@@ -73,4 +70,4 @@ export const generateMetadata = async ({ params: { path } }) => {
 //   }));
 // }
 
-// export const revalidate = 30;
+export const revalidate = 30;

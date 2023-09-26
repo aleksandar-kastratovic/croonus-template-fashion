@@ -52,7 +52,7 @@ const Filters = ({
                           ? `rotate-180 transition-all duration-500`
                           : `rotate-0 transition-all duration-500`
                       }
-                      src={`/Icons/chevron.png`}
+                      src={`/icons/chevron.png`}
                       alt={`TFY Production`}
                       width={15}
                       height={15}
@@ -115,7 +115,7 @@ const Filters = ({
                     ? `rotate-180 transition-all duration-500`
                     : `rotate-0 transition-all duration-500`
                 }
-                src={`/Icons/chevron.png`}
+                src={`/icons/chevron.png`}
                 alt={`TFY Production`}
                 width={15}
                 height={15}

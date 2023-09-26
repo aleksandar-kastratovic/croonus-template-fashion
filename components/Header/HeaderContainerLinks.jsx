@@ -22,7 +22,7 @@ const HeaderContainerLinks = ({ categoriesMain }) => {
                     }}
                         key={index} className={`${(isActive || pathname) === category?.slug ? 'border-b-2 border-black' : ''} mx-2 text-sm font-normal text-black uppercase 2xl:mr-8`}>
                         {category?.name}
-                    </button> : <Link href={`/${category?.slug}`} key={index} className={`${(isActive || pathname) === category?.slug ? 'border-b-2 border-black' : ''} mx-2 text-sm font-normal text-black uppercase 2xl:mr-8`} onClick={() => {
+                    </button> : <Link href={`${category?.slug}`} key={index} className={`${(isActive || pathname) === category?.slug ? 'border-b-2 border-black' : ''} mx-2 text-sm font-normal text-black uppercase 2xl:mr-8`} onClick={() => {
                         setIsActive(category?.slug);
                         mutateOpenHeader(false)
                     }}  >

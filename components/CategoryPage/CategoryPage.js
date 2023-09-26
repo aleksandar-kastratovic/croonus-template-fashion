@@ -188,7 +188,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           <div className="flex items-center gap-2 px-[3%] flex-wrap">
             <Link
               href={`/`}
-              className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+              className="text-[#191919] text-[0.95rem] font-normal hover:text-[#e10000]"
             >
               Početna
             </Link>{" "}
@@ -202,7 +202,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                         ? `/kategorije/${breadcrumb?.slug}`
                         : `/kategorije/${breadcrumb?.slug}`
                     }
-                    className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+                    className="text-[#191919] text-[0.95rem] font-normal hover:text-[#e10000]"
                   >
                     {breadcrumb?.name}
                   </Link>
@@ -213,7 +213,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
               );
             })}
             <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-            <h1 className="text-[#191919] text-[0.75rem] font-normal text-[#e10000]">
+            <h1 className="text-[#191919] text-[0.95rem] font-normal ">
               {singleCategory?.basic_data?.name}
             </h1>
           </div>

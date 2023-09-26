@@ -27,7 +27,7 @@ const SliderHeader = () => {
         }}
         loop={true}
         modules={[Autoplay]}
-        getSwiper={setSwiper}
+        getswiper={setSwiper}
         centeredSlides={true} e
       >
         {

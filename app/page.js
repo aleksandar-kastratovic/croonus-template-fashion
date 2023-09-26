@@ -37,6 +37,8 @@ const getInstagramPost = async () => {
  return data;
 };
 
+export const revalidate = 30;
+
 export const metadata = {
   title: "Početna - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
   description: "Dobrodošli na Pazari.rs Online Shop",
@@ -93,4 +95,4 @@ const Home = async () => {
 
 export default Home;
 
-export const revalidate = 30;
+

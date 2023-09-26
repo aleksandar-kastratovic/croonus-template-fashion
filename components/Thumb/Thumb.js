@@ -175,7 +175,7 @@ const Thumb = ({ data, slider }) => {
                     scroll={true}
                     className="z-[100]"
                   >
-                    <Image
+                    {image && <Image
                       src={convertHttpToHttps(image)}
                       alt={product?.basic_data?.name}
                       fill
@@ -184,7 +184,7 @@ const Thumb = ({ data, slider }) => {
                       }
                       priority
                       className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                    />
+                    />}
                   </Link>
                 </SwiperSlide>
               ))}
@@ -238,9 +238,9 @@ const Thumb = ({ data, slider }) => {
                           <SwiperSlide key={Math.random()}>
                             <div
                               className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${isSelected &&
-                                  variantAttributeKey === variantAttributeKey
-                                  ? `border-[#242424] bg-[#242424] text-white`
-                                  : ``
+                                variantAttributeKey === variantAttributeKey
+                                ? `border-[#242424] bg-[#242424] text-white`
+                                : ``
                                 }`}
                               onClick={() => {
                                 if (product?.variant_options?.length > 1) {
@@ -608,9 +608,9 @@ const Thumb = ({ data, slider }) => {
                           <SwiperSlide key={Math.random()}>
                             <div
                               className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${isSelected &&
-                                  variantAttributeKey === variantAttributeKey
-                                  ? `border-[#242424] bg-[#242424] text-white`
-                                  : ``
+                                variantAttributeKey === variantAttributeKey
+                                ? `border-[#242424] bg-[#242424] text-white`
+                                : ``
                                 }`}
                               onClick={() => {
                                 if (product?.variant_options?.length > 1) {

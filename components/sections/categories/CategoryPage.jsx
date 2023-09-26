@@ -100,28 +100,28 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           <div className="flex items-center gap-2 flex-wrap mt-5">
             <Link
               href={`/`}
-              className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+              className="text-[#191919] text-[0.95rem] font-normal hover:text-[#e10000]"
             >
               Početna
             </Link>{" "}
-            <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+            <i className="fas fa-chevron-right text-[#191919] text-[0.6rem]"></i>
             {breadcrumbs?.map((breadcrumb, index, arr) => {
               return (
                 <div className="flex items-center gap-2">
                   <Link
                     href= {`/kategorije/${breadcrumb?.slug}`}
-                    className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
+                    className="text-[#191919] text-[0.95rem] font-normal hover:text-[#e10000]"
                   >
                     {breadcrumb?.name}
                   </Link>
                   {index !== arr.length - 1 && (
-                    <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+                    <i className="fas fa-chevron-right text-[#191919] text-[0.6rem]"></i>
                   )}
                 </div>
               );
             })}
-            <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-            <h1 className="text-[#191919] text-[0.75rem] font-normal">
+            <i className="fas fa-chevron-right text-[#191919] text-[0.6rem]"></i>
+            <h1 className="text-[#191919] text-[0.95rem] font-normal">
               {singleCategory?.basic_data?.name}
             </h1>
           </div>

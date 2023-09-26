@@ -11,7 +11,7 @@ import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
-const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
+const ProductMobileGallery = ({ productGallery, color, loading, setLoading }) => {
   function ImageMagnifier({
     src,
     width,
@@ -140,10 +140,12 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
     }
   }, [productGallery]);
   return (
-    <div className="col-span-2 max-lg:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:h-[650px] lg:h-[700px] xl:h-[780px] 2xl:h-[790px] 3xl:h-[878px]">
+    <div className="col-span-2 max-md:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:h-[650px] lg:h-[700px] xl:h-[780px] 2xl:h-[790px] 3xl:h-[878px]">
       <Swiper
         spaceBetween={10}
-        thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
         pagination={true}
         modules={[FreeMode, Thumbs, Pagination, Navigation]}
         initialSlide={color ? newImage : 0}
@@ -318,4 +320,4 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
   );
 };
 
-export default ProductGallery;
+export default ProductMobileGallery;
