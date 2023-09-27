@@ -231,7 +231,7 @@ const ProductInfo = ({
             {product?.product_type === "variant" && (
               <div className="pt-12 pb-7 max-md:py-[1.5rem]">
                 <Variants
-                  firstVariantOption={productVariant ? false : true}
+                  firstVariantOption={true}
                   product={product}
                   productSlug={path}
                   handleURLChange={handleURLChange}

@@ -1,6 +1,6 @@
 import IndexSlider from "@/components/IndexSlider/IndexSlider";
 import { get, list } from "./api/api";
-import RecommendedCategories from "@/components/RecommendedCategories/RecommendedCategories";
+import RecommendedCategories from "@/components/sections/homepage/RecommendedCategories";
 import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
 import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";
 import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
@@ -8,6 +8,11 @@ import RecommendedProducts from "@/components/sections/homepage/RecommendedProdu
 const getBanners = async () => {
   return await get("/banners/index_slider").then((res) => res?.payload);
 };
+
+const getBannersCategories = async () => {
+  return await get("/banners/index-first-banner").then((res) => res?.payload);
+}
+
 const getRecommendedCategories = async () => {
   return await list("/categories/section/recommended").then(
     (res) => res?.payload
@@ -68,10 +73,10 @@ export const metadata = {
 
 const Home = async () => {
   const banners = await getBanners();
-  const categories = await getRecommendedCategories();
   const recommendedProducts = await getRecommendedProducts();
   const instagramImages = await getInstagramPost();
   const action4 = await fetchAction4();
+  const categories = await getBannersCategories();  
   
   return (
     <>

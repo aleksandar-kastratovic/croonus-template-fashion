@@ -114,11 +114,13 @@ const Thumb = ({ data, slider }) => {
 
   const products = (data ?? []).map((product, index) => {
     const variantOptionSize = product?.variant_options?.find((variant) => {
-      return variant?.attribute?.slug === "size";
+      return variant?.attribute?.slug === "velicina";
     });
     const variantOptionColor = product?.variant_options?.find((variant) => {
-      return variant?.attribute?.slug === "color";
+      return variant?.attribute?.slug === "boja";
     });
+    
+    console.log('product', product)
 
     return (
       <SwiperSlide key={product?.basic_data?.id} className="">
