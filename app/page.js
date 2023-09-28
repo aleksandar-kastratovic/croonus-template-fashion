@@ -13,11 +13,6 @@ const getBannersCategories = async () => {
   return await get("/banners/index-first-banner").then((res) => res?.payload);
 }
 
-const getRecommendedCategories = async () => {
-  return await list("/categories/section/recommended").then(
-    (res) => res?.payload
-  );
-};
 const getRecommendedProducts = async () => {
   return await list("/products/section/list/recommendation").then((res) => res?.payload?.items);
 };

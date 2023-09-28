@@ -96,7 +96,7 @@ const IndexSlider = ({ banners }) => {
       ref={sliderRef}
     >
       <div className="relative h-full overflow-hidden">
-        <div className=" items-center max-sm:h-[400px] justify-between w-full max-h-[1057px]">
+        <div className=" items-center max-sm:h-[400px] justify-between h-full w-full">
           {banners.map((banner, index) => {
             const isActive = currentSlide?.index === index;
 
@@ -105,19 +105,19 @@ const IndexSlider = ({ banners }) => {
                 key={index}
                 className={
                   isActive
-                    ? "relative overflow-hidden max-h-[1057px] opacity-100 duration-[400ms] transition-all ease-in"
+                    ? "relative overflow-hidden h-full opacity-100 duration-[400ms] transition-all ease-in"
                     : index < currentSlide?.index
-                    ? "absolute max-h-[1057px] overflow-hidden opacity-0 duration-[400ms] transition-all ease-in"
-                    : "absolute overflow-hidden max-h-[1057px] opacity-0 duration-[400ms] transition-all ease-in"
+                    ? "absolute h-full overflow-hidden opacity-0 duration-[400ms] transition-all ease-in"
+                    : "absolute overflow-hidden h-full opacity-0 duration-[400ms] transition-all ease-in"
                 }
               >
-                <div className="relative max-sm:h-[400px]">
+                <div className="relative max-sm:h-[400px] sm:h-full">
                   <Image
                     src={banner?.image}
                     alt={banner?.title}
                     width={1920}
                     height={1080}
-                    className="bg-fixed w-full max-sm:h-full object-cover max-lg:aspect-square"
+                    className="bg-fixed w-full h-full object-cover"
                   />
                   <Link
                     href={`${banner?.url ?? `/stranica-u-izradi`}`}

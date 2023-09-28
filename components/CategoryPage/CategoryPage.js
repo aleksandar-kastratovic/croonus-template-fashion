@@ -310,6 +310,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
                 data={productData?.products ?? productsFromSection}
                 slider={false}
                 loading={loading}
+                category={true}
               />
             ) : (
               <div
