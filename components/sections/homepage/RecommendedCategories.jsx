@@ -5,9 +5,6 @@ import React from 'react'
 
 
 const RecommendedCategories = async ({ categories }) => {
-
-    console.log('categories12', categories);
-
     return (
         <div className='grid grid-cols-2 px-20 mt-28 gap-5'>
             {
