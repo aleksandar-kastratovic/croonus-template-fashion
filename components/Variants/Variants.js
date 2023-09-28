@@ -308,17 +308,16 @@ export default function Variants({
 
     setSelected(temp_selected);
   };
-  console.log(selected);
+
   return (
     <div className="flex flex-col-reverse max-md:gap-7 gap-[38px] max-lg:w-full  ">
       {variantOptions?.map((item) => {
-        console.log('item', item)
         return (
           <div className="flex flex-col items-start gap-[1.5rem]">
             <label
               htmlFor={item.id}
               className={
-                item.attribute.name === "Boje"
+                item.attribute.name === "boja"
                   ? `hidden`
                   : `max-lg:text-left text-[0.938rem] font-bold max-md:font-normal min-w-[5.619rem]`
               }
@@ -345,9 +344,8 @@ export default function Variants({
               //   }
               // }}
             >
-              {item?.attribute?.name === "Boje"
+              {item?.attribute?.name === "boja"
                 ? item.values.map((value) => {
-                  console.log('display', value)
                     let display = value.display;
                     return (
                       <div>
@@ -429,7 +427,6 @@ export default function Variants({
                     );
                   })
                 : item.values.map((value) => {
-                  console.log('display', value)
                     let display = value.display;
                     return (
                       <button
