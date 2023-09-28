@@ -164,7 +164,7 @@ const ProductInfo = ({
                 );
               })}
               <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-              <h1 className="text-[#191919] text-[0.75rem] font-normal text-[#e10000]">
+              <h1 className="text-[0.75rem] font-normal text-[#e10000]">
                 {breadcrumbs?.end?.name}
               </h1>
             </div>
@@ -250,6 +250,7 @@ const ProductInfo = ({
                       } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
+                  console.log(productVariant);
                   if (
                     product?.product_type === "variant" &&
                     productVariant?.id
