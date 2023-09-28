@@ -2,8 +2,6 @@ import { list } from '@/app/api/api';
 import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link'
-import { revalidate } from '@/app/page';
-import { revalidate } from '../../app/strana/[slug]/page';
 
 const getNew = async () => {
     return await list("/categories/section/recommended").then((res) => res?.payload);
