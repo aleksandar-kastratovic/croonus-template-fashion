@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Image1 from "../../assets/uspesno.png";
-import Image2 from "../../assets/uspesno.png";
 import { useRouter } from "next/navigation";
 import { useCartContext } from "@/app/api/cartContext";
 import { get } from "@/app/api/api";
@@ -12,7 +11,6 @@ import { currencyFormat } from "@/helpers/functions";
 const OrderSuccess = ({ order }) => {
   const router = useRouter();
   const [cart, , ,] = useCartContext();
-  console.log("order", order);
   let conditions;
   if (order?.credit_card !== null && order) {
     if (order?.credit_card?.payment_status?.toLowerCase() === "approved") {

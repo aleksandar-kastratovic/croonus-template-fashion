@@ -114,12 +114,12 @@ const Thumb = ({ data, slider }) => {
 
   const products = (data ?? []).map((product, index) => {
     const variantOptionSize = product?.variant_options?.find((variant) => {
-      return variant?.attribute?.slug === "size";
+      return variant?.attribute?.slug === "velicina";
     });
     const variantOptionColor = product?.variant_options?.find((variant) => {
-      return variant?.attribute?.slug === "color";
+      return variant?.attribute?.slug === "boja";
     });
-
+    
     return (
       <SwiperSlide key={product?.basic_data?.id} className="">
         <div
@@ -190,11 +190,11 @@ const Thumb = ({ data, slider }) => {
               ))}
             </Swiper>
             {product?.variant_options?.length > 0 ? (
-              <div className="absolute z-[100] rounded-lg py-5 left-3 bottom-[10px] w-[95%] mx-auto bg-white chevrons">
+              <div className="absolute z-[100] py-2 left-0 bottom-0 w-full mx-auto bg-white chevrons opacity-90">
                 <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
-                  <h1 className="text-[0.938rem] font-semibold text-center">
+                  {/* <h1 className="text-[0.938rem] font-semibold text-center">
                     Izaberi veličinu
-                  </h1>
+                  </h1> */}
                   <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
                     <Swiper
                       slidesPerView={3}
@@ -487,10 +487,10 @@ const Thumb = ({ data, slider }) => {
 
     const products = data?.map((product, index) => {
       const variantOptionSize = product?.variant_options?.find((variant) => {
-        return variant?.attribute?.slug === "size";
+        return variant?.attribute?.slug === "velicina";
       });
       const variantOptionColor = product?.variant_options?.find((variant) => {
-        return variant?.attribute?.slug === "color";
+        return variant?.attribute?.slug === "boja";
       });
       return (
         <div

@@ -20,6 +20,8 @@ export default function Variants({
   let variant_items = product?.data?.variant_items; // niz svih varijanti proizvoda
   let product_slug = productSlug; // slug proizvoda koji se prikazuje
   let variant_product = null; // krajnji proizvod koji se prikazuje
+  
+  console.log('product', variant_items)
 
   const [selected, setSelected] = useState([]); // niz selektovanih variant_options
   useEffect(() => {
@@ -310,6 +312,7 @@ export default function Variants({
   return (
     <div className="flex flex-col-reverse max-md:gap-7 gap-[38px] max-lg:w-full  ">
       {variantOptions?.map((item) => {
+        console.log('item', item)
         return (
           <div className="flex flex-col items-start gap-[1.5rem]">
             <label
@@ -344,6 +347,7 @@ export default function Variants({
             >
               {item?.attribute?.name === "Boje"
                 ? item.values.map((value) => {
+                  console.log('display', value)
                     let display = value.display;
                     return (
                       <div>
@@ -425,6 +429,7 @@ export default function Variants({
                     );
                   })
                 : item.values.map((value) => {
+                  console.log('display', value)
                     let display = value.display;
                     return (
                       <button
@@ -432,9 +437,7 @@ export default function Variants({
                         value={value.key}
                         selected={value.selected}
                         style={{ display: value.display }}
-                        className={
-                          display === "show"
-                            ? `block text-[0.834rem] ${
+                        className={ `block text-[0.834rem] ${
                                 selected.find(
                                   (x) =>
                                     x.attribute_key == item.attribute.key &&
@@ -443,7 +446,6 @@ export default function Variants({
                                   ? `bg-[#191919] hover:border-[#191919] text-white`
                                   : `border hover:border-[#191919] border-[#838482] `
                               } w-[2.5rem] h-[2.5rem] rounded-full`
-                            : `hidden`
                         }
                         onClick={(e) => {
                           e.preventDefault();

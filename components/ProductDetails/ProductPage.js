@@ -38,6 +38,9 @@ const ProductPage = async ({ path }) => {
   const desc = await getProductLongDescription(path);
   const newProducts = await getNewProducts();
   const breadcrumbs = await getBreadcrumbs(path);
+  
+  console.log('product', product)
+  
   return (
     <div className="">
       <div className="hidden lg:block">
