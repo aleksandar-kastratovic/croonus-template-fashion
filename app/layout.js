@@ -9,8 +9,14 @@ import { UserProvider } from "@/context/userContext";
 import CookieAlert from "@/components/CookieAlert/CookieAlert";
 import Header from "@/components/Header/Header";
 import HeaderModal from "@/components/Header/HeaderModal";
-
-export default function RootLayout({ children }) {
+import { get } from "@/app/api/api";
+const getCategories = async () => {
+  return await get("/categories/product/tree").then(
+    (response) => response?.payload
+  );
+};
+export default async function RootLayout({ children }) {
+  const categories = await getCategories();
   return (
     <UserProvider>
       <CartContextProvider>
@@ -37,12 +43,10 @@ export default function RootLayout({ children }) {
           </head>
           <body className="relative">
             <TrackingScripts />
-            <Header />
-            <NavigationMobile />
-            <div className="relative">
-              <HeaderModal />
-              {children}
-            </div>
+            <Header categories={categories}/>
+            <NavigationMobile categories={categories}/>
+
+            {children}
             <Footer />
             <CookieAlert />
           </body>
@@ -51,3 +55,19 @@ export default function RootLayout({ children }) {
     </UserProvider>
   );
 }
+
+export const metadata = {
+  title: "Početna - Fashion Template",
+  description: "Dobrodošli na Fashion Template Online Shop",
+
+  robots: "index, follow",
+  og: {
+    title: "Fashion Template - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na Fashion Template Online Shop",
+    type: "website",
+    url: "https://croonus.com",
+    image: "https://croonus.com/images/logo.png",
+    site_name: "croonus.com",
+    locale: "sr_RS",
+  },
+};

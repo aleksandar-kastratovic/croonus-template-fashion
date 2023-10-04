@@ -16,7 +16,7 @@ const HowToBuy = () => {
         Poručivanje putem telefona nije moguće.
       </p>
       <p>
-        Na vrhu stranice&nbsp;<strong>pazari.rs</strong>, nalazi se glavni meni
+        Na vrhu stranice&nbsp;<strong>croonus.com</strong>, nalazi se glavni meni
         sa kategorijama proizvoda.
         <br />
         Kada izaberete željenu kategoriju izlistaće vam se proizvodi koje ona
@@ -135,13 +135,13 @@ const HowToBuy = () => {
         <br />
         Za sva dodatna pitanja vezano za va&scaron;u porudžbinu možete nam se
         obratiti putem{" "}
-        <a href="https://pazari.rs/kontakt/">
+        <a href="https://croonus.com/kontakt/">
           <strong>kontakt forme</strong>
         </a>
         , preko email-a{" "}
-        <a href="mailto:info@pazari.rs">
+        <a href="mailto:info@croonus.com">
           <strong>info@</strong>
-          <strong>pazari.rs</strong>
+          <strong>croonus.com</strong>
         </a>{" "}
         ili pozivom na telefon <strong>060/588</strong> <strong>8564</strong>.
       </p>

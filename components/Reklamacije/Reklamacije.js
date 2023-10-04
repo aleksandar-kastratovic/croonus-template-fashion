@@ -49,7 +49,7 @@ const Reklamacije = () => {
         Ovim pravilnikom trgovac uređuje način, uslove i postupak
         re&scaron;avanja reklamacije ili prigovora potro&scaron;ača zbog
         nesaobraznosti ugovoru, robe kupljene putem sajta&nbsp;
-        <strong>pazari.rs</strong>, kao i ovla&scaron;ćenja, obaveze i
+        <strong>croonus.com</strong>, kao i ovla&scaron;ćenja, obaveze i
         odgovornosti trgovca u pogledu ostvarivanja prava potro&scaron;ača na
         reklamaciju.
       </p>
@@ -107,7 +107,7 @@ const Reklamacije = () => {
         <br />
         b. Dostavi popunjen reklamacioni list, koji je moguće preuzeti na
         sledećem linku &ndash;{" "}
-        <a href="https://pazari.rs/wp-content/uploads/2022/08/PAZARI_REKLAMACIONI_LIST.pdf">
+        <a href="https://croonus.com/wp-content/uploads/2022/08/PAZARI_REKLAMACIONI_LIST.pdf">
           REKLAMACIONI LIST
         </a>
         <br />

@@ -1,13 +1,13 @@
 export const metadata = () => {
   return {
     title:
-      "Zaštita privatnosti - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na Pazari.rs Online Shop",
+      "Zaštita privatnosti - croonus.com - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
@@ -46,7 +46,7 @@ const ZastitaPrivatnosti = () => {
       <p>
         U slučaju bilo kakvih pitanja ili zahteva u vezi postupanja ili
         za&scaron;tite Va&scaron;ih ličnih podataka, možete nam se obratiti na
-        e-mail adresu:&nbsp;zastitapodataka@pazari.rs
+        e-mail adresu:&nbsp;zastitapodataka@croonus.com
       </p>
       <p>
         U ime PAZARI Internet prodaje &ndash; obavezujemo se da ćemo čuvati
@@ -56,7 +56,7 @@ const ZastitaPrivatnosti = () => {
       </p>
       <p>
         Podaci koje korisnik ostavlja prilikom kupovine na&nbsp;
-        <strong>pazari.rs</strong> su sledeći:
+        <strong>croonus.com</strong> su sledeći:
       </p>
       <ol className="list-decimal ml-10 py-2">
         <li>Ime i prezime</li>
@@ -143,7 +143,7 @@ const ZastitaPrivatnosti = () => {
       <p>
         Ukoliko želite da povučete saglasnost za obradu podataka, molimo da nam
         uputite zahtev na sledeću email adresu:{" "}
-        <a href="mailto:zastitapodataka@pazari.rs">zastitapodataka@pazari.rs</a>
+        <a href="mailto:zastitapodataka@croonus.com">zastitapodataka@croonus.com</a>
         . Mi ćemo na osnovu Va&scaron;eg zahteva dalje postupiti u skladu sa
         zakonom.
       </p>

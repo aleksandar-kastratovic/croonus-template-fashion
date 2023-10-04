@@ -11,21 +11,29 @@ const fetchFilters = async (slug) => {
 const fetchProductsFromSection = async (slug) => {
   const fetchProductsFromSection = await list(
     `/products/section/list/${slug}`
-  ).then((res) => res?.payload?.items);
+  ).then((res) => res?.payload);
   return fetchProductsFromSection;
 };
 
 const Section = async ({ params: { path } }) => {
-  const filters = await fetchFilters(path[path?.length - 1]);
-  const productsFromSection = await fetchProductsFromSection(
-    path[path?.length - 1]
-  );
+  let slug;
+  switch (true) {
+    case path[path?.length - 1] === "preporuceno":
+      slug = "recommendation";
+      break;
+    default:
+      break;
+  }
+
+  const filters = await fetchFilters(slug);
+  const productsFromSection = await fetchProductsFromSection(slug);
+
   return (
     <>
       <CategoryPage
         filter={filters}
         productsFromSection={productsFromSection}
-        slug={path[path?.length - 1]}
+        slug={slug}
       />
     </>
   );

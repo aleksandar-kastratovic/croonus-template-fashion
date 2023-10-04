@@ -327,7 +327,7 @@ const Povracaj = () => {
               <input
                 type={`text`}
                 disabled
-                value={`info@pazari.rs`}
+                value={`info@croonus.com`}
                 className={`mt-1 w-full border border-[#e0e0e0]`}
               />
             </div>

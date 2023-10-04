@@ -12,10 +12,36 @@ import Wishlist from "../../assets/Icons/heart.png";
 import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
-import { get } from "@/app/api/api";
+import { get, post } from "@/app/api/api";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
+import { useCartContext } from "@/app/api/cartContext";
 
-const Thumb = ({ data, slider }) => {
+const Thumb = ({ data, slider, productsPerViewMobile }) => {
+  const [, , , mutateWishList] = useCartContext();
+
+  const addToWishlist = async (id) => {
+    await post("/wishlist", {
+      id: null,
+      id_product: id,
+      quantity: 1,
+      id_product_parent: null,
+      description: null,
+      status: null,
+    }).then((response) => {
+      mutateWishList();
+      if (response?.code === 200) {
+        toast.success("Uspešno dodato u listu želja", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      } else {
+        toast.error("Došlo je do nepoznate greške.", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+    });
+  };
   const [swiper, setSwiper] = useState(null);
   const [loading, setLoading] = useState({
     id: null,
@@ -80,24 +106,24 @@ const Thumb = ({ data, slider }) => {
           );
           !variant?.basic_data?.name
             ? toast.error(`Došlo je do greške, molimo Vas pokušajte ponovo.`, {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            })
-            : toast.success(
-              `Proizvod ${variant?.basic_data?.name} je dodat u korpu`,
-              {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-              }
-            );
+              })
+            : toast.success(
+                `Proizvod ${variant?.basic_data?.name} je dodat u korpu`,
+                {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                }
+              );
           addToCart(variant?.basic_data?.id_product, 1);
           setSelected([]);
           setIdProduct(null);
@@ -119,9 +145,9 @@ const Thumb = ({ data, slider }) => {
     const variantOptionColor = product?.variant_options?.find((variant) => {
       return variant?.attribute?.slug === "boja";
     });
-    
+
     return (
-      <SwiperSlide key={product?.basic_data?.id} className="">
+      <SwiperSlide key={product?.basic_data?.id} className="hoveredColor">
         <div
           className="w-full item"
           onMouseEnter={() =>
@@ -138,7 +164,7 @@ const Thumb = ({ data, slider }) => {
           }
         >
           {" "}
-          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
+          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative hoveredColor">
             <Swiper
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
@@ -175,20 +201,55 @@ const Thumb = ({ data, slider }) => {
                     scroll={true}
                     className="z-[100]"
                   >
-                    {image && <Image
-                      src={convertHttpToHttps(image)}
-                      alt={product?.basic_data?.name}
-                      fill
-                      sizes={
-                        "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
-                      }
-                      priority
-                      className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                    />}
+                    {image && (
+                      <Image
+                        src={convertHttpToHttps(image)}
+                        alt={product?.basic_data?.name}
+                        fill
+                        sizes={
+                          "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                        }
+                        priority
+                        className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                      />
+                    )}
                   </Link>
                 </SwiperSlide>
               ))}
             </Swiper>
+            {product?.price?.discount?.active && (
+              <div
+                className={`absolute left-2 top-2 z-[1] text-white text-[13px]`}
+              >
+                <div
+                  className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
+                >
+                  -
+                  {(
+                    ((product?.price?.price?.original -
+                      product?.price?.price?.discount) /
+                      product?.price?.price?.original) *
+                    100
+                  ).toFixed(0)}
+                  %
+                </div>
+              </div>
+            )}
+            {product?.stickers?.length > 0 && (
+              <div
+                className={`absolute right-2 top-2 z-[1] text-center text-white text-[13px] flex flex-col gap-2`}
+              >
+                {product?.stickers?.map((sticker) => {
+                  return (
+                    <div
+                      className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
+                    >
+                      {sticker?.name}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {product?.variant_options?.length > 0 ? (
               <div className="absolute z-[100] py-2 left-0 bottom-0 w-full mx-auto bg-white chevrons opacity-90">
                 <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
@@ -237,11 +298,12 @@ const Thumb = ({ data, slider }) => {
                         return (
                           <SwiperSlide key={Math.random()}>
                             <div
-                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${isSelected &&
+                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${
+                                isSelected &&
                                 variantAttributeKey === variantAttributeKey
-                                ? `border-[#242424] bg-[#242424] text-white`
-                                : ``
-                                }`}
+                                  ? `border-[#242424] bg-[#242424] text-white`
+                                  : ``
+                              }`}
                               onClick={() => {
                                 if (product?.variant_options?.length > 1) {
                                   setSelected((prevSelected) => {
@@ -326,25 +388,13 @@ const Thumb = ({ data, slider }) => {
               scroll={true}
               className="relative z-[5]"
             >
-              <h1 className="text-[0.813rem] max-md:text-[0.75rem] clamp max-md:leading-4">
+              <h1 className="max-md:text-[0.85] text-[0.813rem]  max-md:leading-4">
                 {product?.basic_data?.name}
               </h1>
             </Link>
             <div
               onClick={() => {
                 addToWishlist(product?.basic_data?.id_product);
-                toast.success(
-                  `Proizvod ${product?.basic_data?.name} je dodat u listu želja!`,
-                  {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                  }
-                );
               }}
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >
@@ -358,79 +408,97 @@ const Thumb = ({ data, slider }) => {
             </div>
           </div>
           <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
-            <div className={`bg-[#f8ce5d] px-2 font-bold text-center`}>
+            <div className={`bg-[#f8ce5d] mt-3 px-2 font-bold text-center`}>
               <ProductPrice
                 price={product?.price}
                 inventory={product?.inventory}
               />
             </div>
             {product?.price?.discount?.active && (
-              <span className={`line-through`}>
+              <span className={`line-through mt-3`}>
                 {currencyFormat(product?.price?.price?.original)}
               </span>
             )}
           </div>
-          <div className={`flex flex-row items-start gap-3 mt-2 max-lg:hidden`}>
-            {loading?.status &&
+          <div className={` w-full`}>
+            <div
+              className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
+            >
+              {loading?.status &&
               loading?.id === product?.basic_data?.id_product ? (
-              <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
-            ) : (
-              <>
-                {variantOptionColor?.values?.map((item3) => {
-                  const variantAttributeKey =
-                    variantOptionColor?.attribute?.key;
-                  const isSelected = selected.find(
-                    (item) =>
-                      item?.attribute_key === variantAttributeKey &&
-                      item?.value_key === item3?.key
-                  );
+                <i
+                  className={`fa fa-solid fa-spinner animate-spin text-xl`}
+                ></i>
+              ) : (
+                <>
+                  {variantOptionColor?.values?.map((item3) => {
+                    const variantAttributeKey =
+                      variantOptionColor?.attribute?.key;
+                    const isSelected = selected.find(
+                      (item) =>
+                        item?.attribute_key === variantAttributeKey &&
+                        item?.value_key === item3?.key
+                    );
 
-                  return (
-                    <div
-                      key={item3?.key}
-                      className={`max-sm:scale-[0.8] ${isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                        } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[15px] h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
-                      onClick={() => {
-                        setSelected((prevSelected) => {
-                          // Remove previous selections with the same variantAttributeKey
-                          const filteredSelections = prevSelected.filter(
-                            (selection) =>
-                              selection.attribute_key !== variantAttributeKey
-                          );
-                          return [
-                            ...filteredSelections,
-                            {
-                              attribute_key: variantAttributeKey,
-                              value_key: item3?.key,
-                            },
-                          ];
-                        });
-                        setIdProduct(product?.basic_data?.id_product);
-                      }}
-                    >
-                      {item3?.image && (
-                        <Image
-                          src={item3?.image}
-                          alt=""
-                          className="rounded-full"
-                          fill
-                          sizes={
-                            "(max-width: 639px) 15px, (max-width: 767px) 15px, (max-width: 1023px) 15px, (max-width: 1279px) 15px, 15px"
-                          }
-                          style={{ objectFit: "cover" }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </>
+                    return (
+                      <div
+                        key={item3?.key}
+                        className={`max-sm:scale-[0.8] ${
+                          isSelected ? `border border-[#242424] p-[0.5px]` : ``
+                        } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[9px] md:w-[15px] h-[9px] md:h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                        onClick={() => {
+                          setSelected((prevSelected) => {
+                            // Remove previous selections with the same variantAttributeKey
+                            const filteredSelections = prevSelected.filter(
+                              (selection) =>
+                                selection.attribute_key !== variantAttributeKey
+                            );
+                            return [
+                              ...filteredSelections,
+                              {
+                                attribute_key: variantAttributeKey,
+                                value_key: item3?.key,
+                              },
+                            ];
+                          });
+                          setIdProduct(product?.basic_data?.id_product);
+                        }}
+                      >
+                        {item3?.image && (
+                          <Image
+                            src={item3?.image}
+                            alt=""
+                            className="rounded-full"
+                            fill
+                            sizes={
+                              "(max-width: 639px) 15px, (max-width: 767px) 15px, (max-width: 1023px) 15px, (max-width: 1279px) 15px, 15px"
+                            }
+                            style={{ objectFit: "cover" }}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+            {variantOptionColor?.values?.length > 1 && (
+              <div className={`text-[0.75rem] text-left mt-1 hoveredColor1`}>
+                + {variantOptionColor?.values?.length - 1}{" "}
+                {variantOptionColor?.values?.length - 1 === 1
+                  ? "boja"
+                  : variantOptionColor?.values?.length - 1 >= 2 &&
+                    variantOptionColor?.values?.length - 1 <= 4
+                  ? "boje"
+                  : "boja"}
+              </div>
             )}
           </div>
         </div>
       </SwiperSlide>
     );
   });
-  const addToWishlist = useGlobalAddToWishList();
+
   const addToCart = useGlobalAddToCart();
   if (slider) {
     return (
@@ -469,7 +537,6 @@ const Thumb = ({ data, slider }) => {
     );
   } else {
     const [productVariant, setProductVariant] = useState(null);
-    const addToWishlist = useGlobalAddToWishList();
     const addToCart = useGlobalAddToCart();
     const [initialSlide, setInitialSlide] = useState(0);
     const [image, setImage] = useState({
@@ -494,7 +561,7 @@ const Thumb = ({ data, slider }) => {
       });
       return (
         <div
-          className="col-span-1 relative item"
+          className="col-span-1 relative item hoveredColor"
           onMouseEnter={() => {
             setNavigationEnabled({
               enabled: true,
@@ -502,7 +569,11 @@ const Thumb = ({ data, slider }) => {
             });
           }}
         >
-          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
+          <div
+            className={`max-md:h-[250px] ${
+              productsPerViewMobile === 1 && "!h-[500px]"
+            } md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative`}
+          >
             <Swiper
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
@@ -559,12 +630,45 @@ const Thumb = ({ data, slider }) => {
                 );
               })}
             </Swiper>
+            {product?.price?.discount?.active && (
+              <div
+                className={`absolute left-2 top-2 z-[1] text-white text-[13px]`}
+              >
+                <div
+                  className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
+                >
+                  -
+                  {(
+                    ((product?.price?.price?.original -
+                      product?.price?.price?.discount) /
+                      product?.price?.price?.original) *
+                    100
+                  ).toFixed(0)}
+                  %
+                </div>
+              </div>
+            )}
+            {product?.stickers?.length > 0 && (
+              <div
+                className={`absolute right-2 top-2 z-[1] text-center text-white text-[13px] flex flex-col gap-2`}
+              >
+                {product?.stickers?.map((sticker) => {
+                  return (
+                    <div
+                      className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
+                    >
+                      {sticker?.name}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {product?.variant_options?.length > 0 ? (
-              <div className="absolute z-50 rounded-lg py-5 left-3 bottom-[10px] w-[95%] mx-auto bg-white chevrons">
+              <div className="absolute z-[100] py-2 left-0 bottom-0 w-full mx-auto bg-white chevrons opacity-90">
                 <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
-                  <h1 className="text-[0.938rem] font-semibold text-center">
+                  {/* <h1 className="text-[0.938rem] font-semibold text-center">
                     Izaberi veličinu
-                  </h1>
+                  </h1> */}
                   <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
                     <Swiper
                       slidesPerView={3}
@@ -607,11 +711,12 @@ const Thumb = ({ data, slider }) => {
                         return (
                           <SwiperSlide key={Math.random()}>
                             <div
-                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${isSelected &&
+                              className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${
+                                isSelected &&
                                 variantAttributeKey === variantAttributeKey
-                                ? `border-[#242424] bg-[#242424] text-white`
-                                : ``
-                                }`}
+                                  ? `border-[#242424] bg-[#242424] text-white`
+                                  : ``
+                              }`}
                               onClick={() => {
                                 if (product?.variant_options?.length > 1) {
                                   setSelected((prevSelected) => {
@@ -732,25 +837,13 @@ const Thumb = ({ data, slider }) => {
           <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
             <Link
               href={`/proizvod/${product?.slug}`}
-              className="text-[0.813rem] relative max-md:leading-4 clamp"
+              className="max-md:text-[0.85] text-[0.813rem] relative max-md:leading-4 max-sm:line-clamp-1"
             >
               {product?.basic_data?.name}
             </Link>
             <div
               onClick={() => {
                 addToWishlist(product?.basic_data?.id_product);
-                toast.success(
-                  `Proizvod ${product?.basic_data?.name} je dodat u listu želja!`,
-                  {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                  }
-                );
               }}
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >
@@ -764,103 +857,90 @@ const Thumb = ({ data, slider }) => {
             </div>
           </div>
           <div className=" flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
-            <div className={`bg-[#f8ce5d] px-2  font-bold text-center`}>
+            <div className={`bg-[#f8ce5d] px-2 md:mt-3 font-bold text-center`}>
               <ProductPrice
                 price={product?.price}
                 inventory={product?.inventory}
               />
             </div>
             {product?.price?.discount?.active && (
-              <span className={`line-through `}>
+              <span className={`line-through md:mt-3`}>
                 {currencyFormat(product?.price?.price?.original)}
               </span>
             )}
           </div>{" "}
-          <div className={`flex flex-row items-start gap-3 max-sm:gap-0 mt-2`}>
-            {loading?.status &&
+          <div className={` w-full`}>
+            <div
+              className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
+            >
+              {loading?.status &&
               loading?.id === product?.basic_data?.id_product ? (
-              <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
-            ) : (
-              <>
-                {variantOptionColor?.values?.map((item3) => {
-                  const variantAttributeKey =
-                    variantOptionColor?.attribute?.key;
-                  const isSelected = selected.find(
-                    (item) =>
-                      item?.attribute_key === variantAttributeKey &&
-                      item?.value_key === item3?.key
-                  );
+                <i
+                  className={`fa fa-solid fa-spinner animate-spin text-xl`}
+                ></i>
+              ) : (
+                <>
+                  {variantOptionColor?.values?.map((item3) => {
+                    const variantAttributeKey =
+                      variantOptionColor?.attribute?.key;
+                    const isSelected = selected.find(
+                      (item) =>
+                        item?.attribute_key === variantAttributeKey &&
+                        item?.value_key === item3?.key
+                    );
 
-                  return (
-                    <div
-                      key={item3?.key}
-                      className={`max-sm:scale-[0.8] ${isSelected ? `border border-[#242424] p-[0.5px]` : ``
-                        } rounded-full  cursor-pointer flex flex-wrap items-center justify-center max-md:hidden text-center text-xs w-[10px] h-[10px] md:w-[15px] md:h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
-                      onClick={() => {
-                        setSelected((prevSelected) => {
-                          // Remove previous selections with the same variantAttributeKey
-                          const filteredSelections = prevSelected.filter(
-                            (selection) =>
-                              selection.attribute_key !== variantAttributeKey
-                          );
-                          return [
-                            ...filteredSelections,
-                            {
-                              attribute_key: variantAttributeKey,
-                              value_key: item3?.key,
-                            },
-                          ];
-                        });
-                        setIdProduct(product?.basic_data?.id_product);
-                        setImage({
-                          id: product?.basic_data?.id_product,
-                          image: item3?.product_image,
-                        });
-                      }}
-                    >
-                      {item3?.image && (
-                        <Image
-                          src={item3?.image}
-                          alt=""
-                          priority={true}
-                          className="rounded-full"
-                          fill
-                          sizes={"15px"}
-                          style={{ objectFit: "cover" }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-
-                {variantOptionColor?.values?.map((item3) => {
-                  const variantAttributeKey =
-                    variantOptionColor?.attribute?.key;
-                  const isSelected = selected.find(
-                    (item) =>
-                      item?.attribute_key === variantAttributeKey &&
-                      item?.value_key === item3?.key
-                  );
-
-                  return (
-                    <div
-                      key={item3?.key}
-                      className={`max-sm:scale-[0.8] border rounded-full md:hidden cursor-pointer flex items-center justify-center text-center text-xs w-[10px] h-[10px] md:w-[15px] md:h-[15px] transition-all relative duration-500`}
-                    >
-                      {item3?.image && (
-                        <Image
-                          src={item3?.image}
-                          alt=""
-                          className="rounded-full"
-                          fill
-                          sizes={"15px"}
-                          style={{ objectFit: "cover" }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </>
+                    return (
+                      <div
+                        key={item3?.key}
+                        className={`max-sm:scale-[0.8] ${
+                          isSelected ? `border border-[#242424] p-[0.5px]` : ``
+                        } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[9px] md:w-[15px] h-[9px] md:h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                        onClick={() => {
+                          setSelected((prevSelected) => {
+                            // Remove previous selections with the same variantAttributeKey
+                            const filteredSelections = prevSelected.filter(
+                              (selection) =>
+                                selection.attribute_key !== variantAttributeKey
+                            );
+                            return [
+                              ...filteredSelections,
+                              {
+                                attribute_key: variantAttributeKey,
+                                value_key: item3?.key,
+                              },
+                            ];
+                          });
+                          setIdProduct(product?.basic_data?.id_product);
+                        }}
+                      >
+                        {item3?.image && (
+                          <Image
+                            src={item3?.image}
+                            alt=""
+                            className="rounded-full"
+                            fill
+                            sizes={
+                              "(max-width: 639px) 15px, (max-width: 767px) 15px, (max-width: 1023px) 15px, (max-width: 1279px) 15px, 15px"
+                            }
+                            style={{ objectFit: "cover" }}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+            {variantOptionColor?.values?.length > 1 && (
+              <div className={`text-[0.75rem] text-left mt-1 hoveredColor1`}>
+                + {variantOptionColor?.values?.length - 1}{" "}
+                {variantOptionColor?.values?.length - 1 === 1
+                  ? "boja"
+                  : variantOptionColor?.values?.length - 1 >= 2 &&
+                    variantOptionColor?.values?.length - 1 <= 4
+                  ? "boje"
+                  : "boja"}
+              </div>
             )}
           </div>
         </div>

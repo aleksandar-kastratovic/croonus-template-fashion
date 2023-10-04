@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   html,
   body {
     font-family: "Open Sans", sans-serif;
@@ -22,7 +21,6 @@
 .skiptranslate {
   display: none;
 }
-
 
 .deffont {
   font-family: "Open Sans", sans-serif !important;
@@ -227,8 +225,9 @@
   }
 }
 
-.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
-.swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets
+  .swiper-pagination-bullet {
   margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 4px);
   background: #171717 !important;
 }
@@ -243,7 +242,7 @@
 }
 
 .swiper-pagination-vertical.swiper-pagination-bullets,
-.swiper-vertical>.swiper-pagination-bullets {
+.swiper-vertical > .swiper-pagination-bullets {
   right: var(--swiper-pagination-right, 8px);
   left: var(--swiper-pagination-left, auto);
   top: 59% !important;
@@ -267,7 +266,7 @@
     display: none;
   }
 
-  .item:hover>.chevrons {
+  .item:hover > .chevrons {
     display: flex;
   }
 
@@ -282,7 +281,7 @@
     display: none;
   }
 
-  .item:hover>.chevrons {
+  .item:hover > .chevrons {
     display: none;
   }
 }
@@ -295,7 +294,7 @@
   opacity: 1;
 }
 
-.favorites:hover>.favorite {
+.favorites:hover > .favorite {
   filter: invert(1);
 }
 
@@ -348,7 +347,7 @@
   display: none;
 }
 
-.separate>div:not(:last-child)::after {
+.separate > div:not(:last-child)::after {
   content: "";
   position: absolute;
   width: 2px;
@@ -457,8 +456,10 @@
   z-index: 1;
   display: flex;
   transition-property: transform;
-  transition-timing-function: var(--swiper-wrapper-transition-timing-function,
-      initial);
+  transition-timing-function: var(
+    --swiper-wrapper-transition-timing-function,
+    initial
+  );
   box-sizing: content-box;
   align-items: center !important;
   justify-content: center !important;
@@ -528,7 +529,10 @@
 }
 
 .categoryImageSwiper .swiper-pagination-vertical.swiper-pagination-bullets,
-.categoryImageSwiper .swiper-vertical>.categoryImageSwiper .swiper-pagination-bullets {
+.categoryImageSwiper
+  .swiper-vertical
+  > .categoryImageSwiper
+  .swiper-pagination-bullets {
   right: 2px;
   left: auto !important;
   bottom: auto !important;
@@ -603,7 +607,6 @@
 }
 
 @media (max-width: 768px) {
-
   .mySwiper2 .swiper-button-next,
   .mySwiper2 .swiper-button-prev {
     display: none !important;
@@ -770,5 +773,37 @@
     width: 90vw;
     padding: 4rem;
     top: -1rem;
+  }
+}
+
+.activeCategory::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: -2px;
+  margin: auto;
+  width: 110%;
+  height: 2px;
+  background-color: #000;
+}
+
+.color {
+  display: none;
+}
+
+.hoveredColor:hover .color {
+  display: flex;
+}
+
+.hoveredColor:hover .hoveredColor1 {
+  display: none;
+}
+
+@media (0px <= width <= 650px) {
+  .color {
+    display: flex;
+  }
+  .hoveredColor1 {
+    display: none;
   }
 }

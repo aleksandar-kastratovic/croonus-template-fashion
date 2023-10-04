@@ -14,6 +14,9 @@ const Filters = ({
   setProductsPerView,
   productsPerView,
   setTempSelectedFilters,
+  setLastSelectedFilterKey,
+  setChangeFilters,
+  filter,
 }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -27,6 +30,47 @@ const Filters = ({
     setActiveFilters(selectedFilters);
   }, [selectedFilters]);
 
+  const filterRef = useRef(null);
+  console.log(openIndex);
+
+  const handleClickInsideAndOutside = (e) => {
+    // Close the filter if the click occurred outside of it or if the user clicked on the filter
+
+    if (
+      (!filterRef?.current?.contains(e.target) ||
+        e.target?.classList?.contains("filter")) &&
+      openIndex !== null
+    ) {
+      setOpenIndex(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickInsideAndOutside);
+    return () => {
+      document.removeEventListener("click", handleClickInsideAndOutside);
+    };
+  }, [openIndex]);
+
+  const sortRef = useRef(null);
+
+  const handleClickInsideAndOutsideSort = (e) => {
+    if (
+      (!sortRef?.current?.contains(e.target) ||
+        e.target?.classList?.contains("sortref")) &&
+      openSort !== false
+    ) {
+      setOpenSort(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickInsideAndOutsideSort);
+    return () => {
+      document.removeEventListener("click", handleClickInsideAndOutsideSort);
+    };
+  }, [openSort]);
+
   return (
     <>
       <div className=" px-[50px] flex items-center justify-between bg-[#f2f2f2]">
@@ -34,23 +78,25 @@ const Filters = ({
           {(availableFilters ?? []).map((filter, index) => {
             const isOpen = openIndex === index;
             return (
-              <div className="relative max-lg:hidden ">
+              <div className="relative max-lg:hidden filter">
                 <div
-                  className="relative select-none cursor-pointer"
+                  className="relative select-none cursor-pointer filter"
                   key={filter?.id}
                   onClick={() => {
-                    setOpenIndex(isOpen ? null : index);
+                    setOpenIndex(openIndex === index ? null : index);
                   }}
                 >
-                  <div className={`relative py-4 flex items-center  gap-2`}>
-                    <h1 className="text-base text-center font-light">
+                  <div
+                    className={`relative py-[0.65rem] flex items-center filter gap-2`}
+                  >
+                    <h1 className="text-base text-center filter font-light">
                       {filter?.name}
                     </h1>
                     <Image
                       className={
                         isOpen
-                          ? `rotate-180 transition-all duration-500`
-                          : `rotate-0 transition-all duration-500`
+                          ? `rotate-180 filter transition-all duration-500`
+                          : `rotate-0 filter transition-all duration-500`
                       }
                       src={`/icons/chevron.png`}
                       alt={`TFY Production`}
@@ -62,17 +108,20 @@ const Filters = ({
 
                 {isOpen && (
                   <div
+                    ref={filterRef}
                     className={` z-[20] ${
                       filter?.name === "Cena" && "w-[230px]"
-                    } w-[150px] top-[60px] bg-white/80 border-l border-r border-b border-[#f2f2f2] border-t left-0 absolute`}
+                    } w-[150px] top-[43px] bg-white/80 border-l border-r border-b border-[#f2f2f2] border-t left-0 absolute`}
                   >
-                    <div className="uppercase pb-3.5">
+                    <div className="pb-3.5 filter">
                       <Filter
                         filter={filter}
                         availableFilters={availableFilters}
                         selectedFilters={selectedFilters}
                         setSelectedFilters={setSelectedFilters}
                         setTempSelectedFilters={setTempSelectedFilters}
+                        setLastSelectedFilterKey={setLastSelectedFilterKey}
+                        setChangeFilters={setChangeFilters}
                       />
                     </div>
                   </div>
@@ -86,10 +135,11 @@ const Filters = ({
             className="mr-auto ml-[6rem] relative select-none cursor-pointer"
             onClick={() => {
               setSelectedFilters([]);
+              setChangeFilters(true);
               setOpenIndex(null);
             }}
           >
-            <div className={`relative py-4 flex items-center gap-2`}>
+            <div className={`relative flex items-center gap-2`}>
               <h1 className="font-medium text-base text-center">
                 Izbrišite sve
               </h1>
@@ -122,10 +172,13 @@ const Filters = ({
               />
             </div>
             {openSort && (
-              <div className="absolute z-[2] border border-[#f2f2f2] right-[-100px] top-[50px] flex flex-col items-center justify-end w-[200px]">
+              <div
+                ref={sortRef}
+                className="absolute sortref z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]"
+              >
                 {sortKeys.map((key) => (
                   <div
-                    className={`flex items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
+                    className={`flex sortref items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
                       sort === key?.key
                         ? "bg-[#f2f2f2] text-black"
                         : "bg-white "
@@ -135,7 +188,7 @@ const Filters = ({
                     }
                   >
                     <h1
-                      className="uppercase font-light text-[0.775rem] text-center"
+                      className="uppercase sortref font-light text-[0.775rem] text-center"
                       onClick={() => setOpenSort(false)}
                     >
                       {key?.label}

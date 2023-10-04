@@ -1,11 +1,9 @@
-
 import { Suspense } from "react";
 
 import { get } from "@/app/api/api";
 
 import Loading from "@/components/sections/categories/Loader";
 import Category from "@/components/sections/categories/Category";
-
 
 const fetchSingleCategory = async (slug) => {
   return await get(`/categories/product/single/${slug}`).then(
@@ -16,13 +14,13 @@ const fetchSingleCategory = async (slug) => {
 export async function generateMetadata({ params: { path } }, { searchParams }) {
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
   return {
-    title: `${singleCategory?.basic_data?.name} - Pazari.rs - Farmerke, Muške farmerke, Muška odeća`,
-    description: "Dobrodošli na Pazari.rs Online Shop",
+    title: `${singleCategory?.basic_data?.name} - croonus.com - Farmerke, Muške farmerke, Muška odeća`,
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
@@ -43,9 +41,6 @@ const CategoryPage = ({ params: { path } }) => {
   );
 };
 
-
-
-
 export async function generateStaticParams() {
   const categories = await get("/categories/product/tree").then(
     (res) => res?.payload
@@ -64,6 +59,5 @@ export async function generateStaticParams() {
 }
 
 export const revalidate = 30;
-
 
 export default CategoryPage;

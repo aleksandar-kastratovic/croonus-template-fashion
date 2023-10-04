@@ -4,7 +4,7 @@ import SliderHeader from './SliderHeader'
 
 function HeaderTop() {
 	return (
-		<div className='bg-topHeader h-8 w-full flex items-center justify-between px-20'>
+		<div className='bg-topHeader h-8 w-full flex items-center justify-between px-[3rem]'>
 			<div>
 				<Link href='https://www.facebook.com/Croonus/' className='text-sm font-normal text-black' target='_blank'>Facebook</Link>
 				<span className='mx-2'>-</span>

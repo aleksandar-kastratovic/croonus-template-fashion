@@ -9,7 +9,7 @@ const PageInConstruction = () => {
         <div className="relative z-[49] col-span-1 rounded-lg w-[300px] h-[300px] positionImage">
           <Image
             src={`/icons/under-construction.png`}
-            alt="Pazari Shop"
+            alt="Croonus"
             height={150}
             width={150}
             style={{ objectFit: "contain" }}

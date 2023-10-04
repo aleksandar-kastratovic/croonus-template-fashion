@@ -2,13 +2,13 @@ import PravoNaOdustajanje from "@/components/PravoNaOdustajanje/PravoNaOdustajan
 export const metadata = () => {
   return {
     title:
-      "Pravo na odustajanje - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na Pazari.rs Online Shop",
+      "Pravo na odustajanje - croonus.com - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",

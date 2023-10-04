@@ -2,7 +2,7 @@
 import Variants from "../Variants/Variants";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { currencyFormat } from "@/helpers/functions";
 import Image from "next/image";
@@ -18,6 +18,8 @@ import CampaignsDetails from "./CampaignsDetails";
 import DeliveryModal from "./DeliveryModal";
 import InfoModal from "./InfoModal";
 import ReturnModal from "./ReturnModal";
+import { post } from "@/app/api/api";
+import { useCartContext } from "@/app/api/cartContext";
 
 const ProductInfo = ({
   product,
@@ -31,7 +33,8 @@ const ProductInfo = ({
   breadcrumbs,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
-  const campaignsDate = product?.data?.item?.price?.discount?.campaigns[0]?.duration
+  const campaignsDate =
+    product?.data?.item?.price?.discount?.campaigns[0]?.duration;
 
   const router = useRouter();
   useEffect(() => {
@@ -60,20 +63,34 @@ const ProductInfo = ({
       setColor(selectedColor);
     }
   }, [selectedColor]);
+  const [, , , mutateWishList] = useCartContext();
 
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();
   const [setVariant, setVariantOnOff] = useState(true);
-  const addToWishlist = (e) => {
-    globalAddToWishList(product.data.item.basic_data?.id_product);
-    toast.success(
-      `Proizvod ${product.data.item.basic_data?.name} dodat u listu želja!`,
-      {
-        position: toast.POSITION.TOP_CENTER,
+  const addToWishlist = async () => {
+    await post(`/wishlist`, {
+      id: null,
+      id_product: product?.data?.item?.basic_data?.id_product,
+      quantity: 1,
+      id_product_parent: null,
+      description: null,
+      status: null,
+    }).then((res) => {
+      mutateWishList();
+      if (res?.code === 200) {
+        toast.success("Proizvod dodat u listu želja!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else {
+        toast.error("Došlo je do nepoznate greške!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
-    );
+    });
   };
+
   const addToCart = (e) => {
     if (product.product_type === "single") {
       globalAddToCart(product.data.item.basic_data.id_product, 1);
@@ -143,7 +160,7 @@ const ProductInfo = ({
               >
                 Početna
               </Link>{" "}
-              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              <>/</>{" "}
               {breadcrumbs?.steps?.map((breadcrumb, index, arr) => {
                 return (
                   <div className="flex items-center gap-2">
@@ -157,13 +174,11 @@ const ProductInfo = ({
                     >
                       {breadcrumb?.name}
                     </Link>
-                    {index !== arr.length - 1 && (
-                      <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-                    )}
+                    {index !== arr.length - 1 && <>/</>}
                   </div>
                 );
               })}
-              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              <>/</>
               <h1 className="text-[#191919] text-[0.75rem] font-normal">
                 {breadcrumbs?.end?.name}
               </h1>
@@ -202,8 +217,18 @@ const ProductInfo = ({
                   <div className="group relative inline-block">
                     <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
                       Važeća MP cena
-                      <svg className="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
-                        <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
+                      <svg
+                        className="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current"
+                        width="8"
+                        height="8"
+                      >
+                        <rect
+                          x="12"
+                          y="-10"
+                          width="8"
+                          height="8"
+                          transform="rotate(45)"
+                        />
                       </svg>
                     </span>
                     <span className="text-[#171717] text-[19px] line-through font-normal">
@@ -215,8 +240,13 @@ const ProductInfo = ({
                 )}
               </div>
               {product?.data?.item?.price?.discount?.active && (
-                <div className='mt-3'>
-                  <h2 className='text-[17px] text-[#2bc48a] font-semibold'>Ušteda: {currencyFormat(product?.data?.item?.price?.discount?.amount)}</h2>
+                <div className="mt-3">
+                  <h2 className="text-[17px] text-[#2bc48a] font-semibold">
+                    Ušteda:{" "}
+                    {currencyFormat(
+                      product?.data?.item?.price?.discount?.amount
+                    )}
+                  </h2>
                 </div>
               )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
@@ -245,21 +275,28 @@ const ProductInfo = ({
               </div>
             )}
             <button className="flex items-center gap-2">
-              <Image src={'/icons/measure.png'} alt="measure" width={30} height={20} />
+              <Image
+                src={"/icons/measure.png"}
+                alt="measure"
+                width={30}
+                height={20}
+              />
               <span className="text-[13px] font-bold">Pomoć za veličine</span>
             </button>
             <div className="mt-[3rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `max-sm:w-[8.5rem] ${text === "Izaberite veličinu"
-                      ? `bg-red-500`
-                      : `bg-[#2bc48a]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
-                    : `max-sm:w-[8.5rem] ${text === "Izaberite veličinu"
-                      ? `bg-red-500`
-                      : `bg-[#2bc48a]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] ${
+                        text === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#2bc48a]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
+                    : `max-sm:w-[8.5rem] ${
+                        text === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#2bc48a]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
                   if (
@@ -276,14 +313,16 @@ const ProductInfo = ({
               <button
                 className={
                   productVariant === null || productVariant.length === 0
-                    ? `max-sm:w-[8.5rem] ${text2 === "Izaberite veličinu"
-                      ? `bg-red-500`
-                      : `bg-[#191919]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
-                    : `max-sm:w-[8.5rem] ${text2 === "Izaberite veličinu"
-                      ? `bg-red-500`
-                      : `bg-[#191919]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
+                    ? `max-sm:w-[8.5rem] ${
+                        text2 === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#191919]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
+                    : `max-sm:w-[8.5rem] ${
+                        text2 === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#191919]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
                   if (
@@ -362,7 +401,7 @@ const ProductInfo = ({
                 </div>
               </ul>
             </div>
-            <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 2xl:top-[48%] top-[55%] flex flex-col gap-[30px] px-5 2xl:py-[37px] py-5 bg-white drop-shadow-2xl rounded-l-lg">
+            <div className="max-md:hidden fixed z-[99] max-w-[114px] right-0 2xl:top-[28%] top-[20%] flex flex-col gap-[30px] px-5 2xl:py-[37px] py-5 bg-white drop-shadow-2xl rounded-l-lg">
               <div className="flex flex-col items-center text-center justify-center">
                 <Image
                   src={FreeDelivery}
@@ -392,9 +431,15 @@ const ProductInfo = ({
               </div>
             </div>
           </div>
-          <DeliveryModal deliveryModal={deliveryModal} setDeliveryModal={setDeliveryModal} />
+          <DeliveryModal
+            deliveryModal={deliveryModal}
+            setDeliveryModal={setDeliveryModal}
+          />
           <InfoModal infoModal={infoModal} setInfoModal={setInfoModal} />
-          <ReturnModal returnModal={returnModal} setReturnModal={setReturnModal} />
+          <ReturnModal
+            returnModal={returnModal}
+            setReturnModal={setReturnModal}
+          />
           {(deliveryModal || infoModal || returnModal) && (
             <div
               className="fixed z-[100] bg-black bg-opacity-40 top-0 left-0 w-screen h-screen transition-all duration-500"

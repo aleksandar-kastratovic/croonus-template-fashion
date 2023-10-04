@@ -28,7 +28,7 @@ export const generateMetadata = async ({ params: { path } }) => {
     openGraph: {
       title: product?.name,
       description: product?.short_description ?? "Pazari online Shop",
-      site_name: "Pazari.rs",
+      site_name: "croonus.com",
     },
 
     twitter: {
@@ -43,7 +43,7 @@ export const generateMetadata = async ({ params: { path } }) => {
           "pazari",
           "online",
           "shop",
-          "pazari.rs",
+          "croonus.com",
           "farmerke",
           "trenerke",
           "dukserice",
