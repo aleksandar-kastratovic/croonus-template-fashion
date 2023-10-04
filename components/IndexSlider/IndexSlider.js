@@ -105,10 +105,8 @@ const IndexSlider = ({ banners, mobileBanners }) => {
                 key={index}
                 className={
                   isActive
-                    ? "relative overflow-hidden h-full opacity-100 duration-[400ms] transition-all ease-in"
-                    : index < currentSlide?.index
-                    ? "absolute h-full overflow-hidden opacity-0 duration-[400ms] transition-all ease-in"
-                    : "absolute overflow-hidden h-full opacity-0 duration-[400ms] transition-all ease-in"
+                    ? "relative w-full overflow-hidden h-full opacity-100 duration-[1000ms] transition-all ease-linear"
+                    : "absolute w-full h-full overflow-hidden opacity-0 duration-[1000ms] transition-all ease-linear"
                 }
               >
                 <div className="relative max-sm:h-[400px] sm:h-full">
