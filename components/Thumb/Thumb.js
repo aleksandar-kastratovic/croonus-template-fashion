@@ -147,7 +147,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
     });
 
     return (
-      <SwiperSlide key={product?.basic_data?.id} className="">
+      <SwiperSlide key={product?.basic_data?.id} className="hoveredColor">
         <div
           className="w-full item"
           onMouseEnter={() =>
@@ -164,7 +164,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
           }
         >
           {" "}
-          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
+          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative hoveredColor">
             <Swiper
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
@@ -420,7 +420,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
               </span>
             )}
           </div>
-          <div className={`hoveredColor w-full`}>
+          <div className={` w-full`}>
             <div
               className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
             >
@@ -561,7 +561,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
       });
       return (
         <div
-          className="col-span-1 relative item"
+          className="col-span-1 relative item hoveredColor"
           onMouseEnter={() => {
             setNavigationEnabled({
               enabled: true,
@@ -836,7 +836,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
               </span>
             )}
           </div>{" "}
-          <div className={`hoveredColor w-full`}>
+          <div className={` w-full`}>
             <div
               className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
             >

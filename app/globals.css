@@ -791,11 +791,11 @@
   display: none;
 }
 
-.hoveredColor:hover > .color {
+.hoveredColor:hover .color {
   display: flex;
 }
 
-.hoveredColor:hover > .hoveredColor1 {
+.hoveredColor:hover .hoveredColor1 {
   display: none;
 }
 
