@@ -64,7 +64,7 @@ const Home = async () => {
         <div className="overflow-hidden">
           <RecommendedProducts
             recommendedProducts={recommendedProducts}
-            action4={action4}
+            action4={`Izdvajamo za Vas`}
           />
         </div>
         <RecommendedCategories categories={categories} />

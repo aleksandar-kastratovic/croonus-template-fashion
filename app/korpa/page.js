@@ -52,3 +52,5 @@ const Cart = async () => {
 };
 
 export default Cart;
+
+export const revalidate = 30;
