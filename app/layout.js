@@ -65,9 +65,9 @@ export const metadata = {
     title: "Fashion Template - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na Fashion Template Online Shop",
     type: "website",
-    url: "https://pazari.rs",
-    image: "https://pazari.rs/images/logo.png",
-    site_name: "Pazari.rs",
+    url: "https://croonus.com",
+    image: "https://croonus.com/images/logo.png",
+    site_name: "croonus.com",
     locale: "sr_RS",
   },
 };

@@ -422,7 +422,7 @@ const Registration = ({ setIsReg }) => {
                         htmlFor="accept_terms"
                         className="max-md:text-xs text-[#4b4b4b] w-full "
                       >
-                        Slažem se sa Pazari Shop politikom privatnosti i
+                        Slažem se sa Croonus politikom privatnosti i
                         čuvanjem podataka.
                       </label>
                     </div>

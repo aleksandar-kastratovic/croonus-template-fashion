@@ -1,13 +1,13 @@
 import HowToBuy from "@/components/HowToBuy/HowToBuy";
 export const metadata = () => {
   return {
-    title: "Kako kupiti - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na Pazari.rs Online Shop",
+    title: "Kako kupiti - croonus.com - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",

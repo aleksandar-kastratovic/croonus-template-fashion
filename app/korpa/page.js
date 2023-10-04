@@ -19,13 +19,13 @@ const getRecommendedProducts = async () => {
 
 export const metadata = () => {
   return {
-    title: "Korpa - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na Pazari.rs Online Shop",
+    title: "Korpa - croonus.com - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",

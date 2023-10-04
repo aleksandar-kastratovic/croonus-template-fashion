@@ -410,7 +410,7 @@ const ProductInfo = ({
                 <p className="font-light text-[15px]">
                   Mesto isporuke poruče ne robe mora se nalaziti na teritoriji
                   Republike Srbije. Isporuku proizvoda poručenih na sajtu
-                  pazari.rs vrši kurirska služba „YU – PD Express“ d.o.o .
+                  croonus.com vrši kurirska služba „YU – PD Express“ d.o.o .
                   Beograd – D Express, na teritoriji Republike Srbije, radnim
                   danima u periodu od 8 do 16h, na adresu primaoca pošiljke.
                 </p>

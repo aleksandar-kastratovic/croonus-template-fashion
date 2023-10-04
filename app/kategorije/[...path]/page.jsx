@@ -14,13 +14,13 @@ const fetchSingleCategory = async (slug) => {
 export async function generateMetadata({ params: { path } }, { searchParams }) {
   const singleCategory = await fetchSingleCategory(path[path?.length - 1]);
   return {
-    title: `${singleCategory?.basic_data?.name} - Pazari.rs - Farmerke, Muške farmerke, Muška odeća`,
-    description: "Dobrodošli na Pazari.rs Online Shop",
+    title: `${singleCategory?.basic_data?.name} - croonus.com - Farmerke, Muške farmerke, Muška odeća`,
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",

@@ -25,8 +25,8 @@ export default function Variants({
     if (setVariant) {
       setSelected([
         {
-          attribute_key: variant_options[0]?.attribute?.key,
-          value_key: variant_options[0]?.values[0]?.key,
+          attribute_key: variant_options[1]?.attribute?.key,
+          value_key: variant_options[1]?.values[0]?.key,
         },
       ]);
       setVariantOnOff(false);

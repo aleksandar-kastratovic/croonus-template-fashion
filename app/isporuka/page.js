@@ -1,12 +1,12 @@
 export const metadata = () => {
   return {
-    title: "Isporuka - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na Pazari.rs Online Shop",
+    title: "Isporuka - croonus.com - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
@@ -27,7 +27,7 @@ const Isporuka = () => {
         Srbije.
         <br />
         Isporuku proizvoda poručenih na sajtu{" "}
-        <a href="https://www.pazari.rs/">pazari.rs</a> vr&scaron;i kurirska
+        <a href="https://www.croonus.com/">croonus.com</a> vr&scaron;i kurirska
         služba &bdquo;YU &ndash; PD Express&ldquo; d.o.o . Beograd &ndash; D
         Express, na teritoriji Republike Srbije, radnim danima u periodu od 8 do
         16h, na adresu primaoca po&scaron;iljke.
@@ -79,7 +79,7 @@ const Isporuka = () => {
         pregledate paket. Ukoliko primetite da je paket značajno o&scaron;tećen
         i posumnjate da je i proizvod o&scaron;tećen, odbijte prijem
         po&scaron;iljke i odmah nas obavestite putem e-maila na
-        adresu&nbsp;info@pazari.rs&nbsp;ili pozivom na broj 060-588 8564.
+        adresu&nbsp;info@croonus.com&nbsp;ili pozivom na broj 060-588 8564.
       </p>
       <p>
         <strong>&nbsp;</strong>

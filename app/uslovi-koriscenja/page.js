@@ -1,13 +1,13 @@
 export const metadata = () => {
   return {
     title:
-      "Uslovi korišćenja - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na Pazari.rs Online Shop",
+      "Uslovi korišćenja - croonus.com - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
@@ -28,7 +28,7 @@ const UsloviKoriscenja = () => {
       </h5>
       <p>
         Ovaj dokument (zajedno sa ovde spomenutim drugim dokumentima) utvrđuje
-        op&scaron;te uslove za kori&scaron;ćenje veb-sajta: pazari.rs (u daljem
+        op&scaron;te uslove za kori&scaron;ćenje veb-sajta: croonus.com (u daljem
         tekstu: Veb-sajt) i kupovine proizvoda preko Veb-sajta.
       </p>
       <p>Postavljanjem, upravljanjem i prodajom preko Veb-sajta rukovodi:</p>
@@ -39,7 +39,7 @@ const UsloviKoriscenja = () => {
       <p>Paralovo bb, 36300 Novi Pazar</p>
       <p>MB: 65242605</p>
       <p>PIB: 111178213</p>
-      <p>Email:&nbsp;info@pazari.rs&nbsp;(u daljem tekstu: PAZARI ili mi).</p>
+      <p>Email:&nbsp;info@croonus.com&nbsp;(u daljem tekstu: PAZARI ili mi).</p>
       <p>
         <br />
       </p>
@@ -62,7 +62,7 @@ const UsloviKoriscenja = () => {
         kori&scaron;ćenja i svrhom i načinom obrade Va&scaron;ih ličnih podataka
         molimo Vas da ne koristite Veb-sajt. Ako imate pitanja u vezi sa
         Uslovima kori&scaron;ćenja možete da nas kontaktirati na email
-        adresu:&nbsp;info@pazari.rs&nbsp;ili adresu sedi&scaron;ta PAZARI Novi
+        adresu:&nbsp;info@croonus.com&nbsp;ili adresu sedi&scaron;ta PAZARI Novi
         Pazar: Paralovo bb, 36300 Novi Pazar odnosno putem broja telefona:
         060/588-8564.
       </p>
@@ -482,7 +482,7 @@ const UsloviKoriscenja = () => {
       <p>
         Obave&scaron;tavamo Vas da reklamacije na robu kupljenu preko Veb-sajta
         možete da izjavite elektronskim putem na email
-        adresu:&nbsp;reklamacije@pazari.rs, ili po&scaron;tom na napred navedenu
+        adresu:&nbsp;reklamacije@croonus.com, ili po&scaron;tom na napred navedenu
         adresu PAZARI-ja. Prilikom izjavljivanja reklamacije dužni ste da
         dostavite robu na koju se reklamacija odnosi, kao i račun na uvid ili
         drugi dokaz o kupovini robe &nbsp;(kopija računa, slip i sl.).

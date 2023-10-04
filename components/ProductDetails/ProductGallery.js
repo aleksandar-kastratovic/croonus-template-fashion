@@ -60,7 +60,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
           onMouseLeave={() => {
             setShowMagnifier(false);
           }}
-          alt={`Pazari Shop`}
+          alt={`Croonus Template`}
         />
 
         <div
@@ -109,7 +109,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
       <SwiperSlide key={index}>
         <Image
           src={image?.image}
-          alt={`Pazari Shop`}
+          alt={`Croonus`}
           width={2000}
           height={2000}
           priority={true}
@@ -294,7 +294,7 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
                     <div className="swiper-zoom-container">
                       <Image
                         src={image?.image}
-                        alt={`Pazari Shop`}
+                        alt={`Croonus`}
                         layout="fill"
                         objectFit="cover"
                         priority={true}

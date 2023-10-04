@@ -4,13 +4,13 @@ import Link from "next/link";
 import Image1 from "../assets/Icons/404.png";
 export const metadata = () => {
   return {
-    title: "404 - Pazari.rs - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na Pazari.rs Online Shop",
+    title: "404 - croonus.com - Farmerke, Muške farmerke, Muška odeća",
+    description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
       "pazari",
       "online",
       "shop",
-      "pazari.rs",
+      "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",

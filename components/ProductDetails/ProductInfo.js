@@ -144,7 +144,7 @@ const ProductInfo = ({
               >
                 Početna
               </Link>{" "}
-              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              <>/</>{" "}
               {breadcrumbs?.steps?.map((breadcrumb, index, arr) => {
                 return (
                   <div className="flex items-center gap-2">
@@ -158,13 +158,11 @@ const ProductInfo = ({
                     >
                       {breadcrumb?.name}
                     </Link>
-                    {index !== arr.length - 1 && (
-                      <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
-                    )}
+                    {index !== arr.length - 1 && <>/</>}
                   </div>
                 );
               })}
-              <i className="fas fa-chevron-right text-[#191919] text-[0.65rem]"></i>
+              <>/</>
               <h1 className="text-[#191919] text-[0.75rem] font-normal">
                 {breadcrumbs?.end?.name}
               </h1>
