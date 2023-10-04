@@ -12,10 +12,36 @@ import Wishlist from "../../assets/Icons/heart.png";
 import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
-import { get } from "@/app/api/api";
+import { get, post } from "@/app/api/api";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
+import { useCartContext } from "@/app/api/cartContext";
 
 const Thumb = ({ data, slider, productsPerViewMobile }) => {
+  const [, , , mutateWishList] = useCartContext();
+
+  const addToWishlist = async (id) => {
+    await post("/wishlist", {
+      id: null,
+      id_product: id,
+      quantity: 1,
+      id_product_parent: null,
+      description: null,
+      status: null,
+    }).then((response) => {
+      mutateWishList();
+      if (response?.code === 200) {
+        toast.success("Uspešno dodato u listu želja", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      } else {
+        toast.error("Došlo je do nepoznate greške.", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+    });
+  };
   const [swiper, setSwiper] = useState(null);
   const [loading, setLoading] = useState({
     id: null,
@@ -369,18 +395,6 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
             <div
               onClick={() => {
                 addToWishlist(product?.basic_data?.id_product);
-                toast.success(
-                  `Proizvod ${product?.basic_data?.name} je dodat u listu želja!`,
-                  {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                  }
-                );
               }}
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >
@@ -484,7 +498,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
       </SwiperSlide>
     );
   });
-  const addToWishlist = useGlobalAddToWishList();
+
   const addToCart = useGlobalAddToCart();
   if (slider) {
     return (
@@ -523,7 +537,6 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
     );
   } else {
     const [productVariant, setProductVariant] = useState(null);
-    const addToWishlist = useGlobalAddToWishList();
     const addToCart = useGlobalAddToCart();
     const [initialSlide, setInitialSlide] = useState(0);
     const [image, setImage] = useState({
@@ -798,18 +811,6 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
             <div
               onClick={() => {
                 addToWishlist(product?.basic_data?.id_product);
-                toast.success(
-                  `Proizvod ${product?.basic_data?.name} je dodat u listu želja!`,
-                  {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                  }
-                );
               }}
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >
