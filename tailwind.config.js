@@ -13,6 +13,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        "2xl": "1440px",
         "3xl": "1680px",
         "4xl": "1920px",
       },
@@ -29,7 +30,7 @@ module.exports = {
         "croonus-2": "#030303",
         "croonus-3": "#eec0ad",
         "croonus-4": "#faf9f8",
-        "topHeader": '#f7f7f7',
+        topHeader: "#f7f7f7",
       },
     },
   },

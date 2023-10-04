@@ -37,7 +37,6 @@ export function CartContextProvider({ children }) {
 
   const [chooseCategory, setChooseCategory] = useState(null);
 
-
   const mutateChooseCategory = (category) => {
     setChooseCategory(category);
   };
@@ -54,7 +53,7 @@ export function CartContextProvider({ children }) {
         openHeader,
         mutateOpenHeader,
         chooseCategory,
-        mutateChooseCategory
+        mutateChooseCategory,
       ]}
     >
       {children}

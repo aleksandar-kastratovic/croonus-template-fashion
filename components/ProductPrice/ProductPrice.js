@@ -13,7 +13,7 @@ const ProductPrice = ({ price, inventory, className, handlePrice }) => {
           {price?.price?.discount !== null ? (
 
             <div className="group relative inline-block">
-              <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
+              <span className="z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
                 Cena sa popustom
                 <svg className="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
                   <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />

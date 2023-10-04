@@ -13,7 +13,7 @@ const Filters = ({
   products,
   setProductsPerView,
   productsPerView,
-  setTempSelectedFilters,
+  setTempSelectedFilters,setLastSelectedFilterKey
 }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -42,7 +42,9 @@ const Filters = ({
                     setOpenIndex(isOpen ? null : index);
                   }}
                 >
-                  <div className={`relative py-4 flex items-center  gap-2`}>
+                  <div
+                    className={`relative py-[0.65rem] flex items-center  gap-2`}
+                  >
                     <h1 className="text-base text-center font-light">
                       {filter?.name}
                     </h1>
@@ -64,15 +66,16 @@ const Filters = ({
                   <div
                     className={` z-[20] ${
                       filter?.name === "Cena" && "w-[230px]"
-                    } w-[150px] top-[60px] bg-white/80 border-l border-r border-b border-[#f2f2f2] border-t left-0 absolute`}
+                    } w-[150px] top-[43px] bg-white/80 border-l border-r border-b border-[#f2f2f2] border-t left-0 absolute`}
                   >
-                    <div className="uppercase pb-3.5">
+                    <div className="pb-3.5">
                       <Filter
                         filter={filter}
                         availableFilters={availableFilters}
                         selectedFilters={selectedFilters}
                         setSelectedFilters={setSelectedFilters}
                         setTempSelectedFilters={setTempSelectedFilters}
+                        setLastSelectedFilterKey={setLastSelectedFilterKey}
                       />
                     </div>
                   </div>

@@ -10,9 +10,9 @@ const RecommendedProducts = ({ products }) => {
   return (
     <div
       data-aos="fade-right"
-      className="max-sm:w-[95%] max-sm:mx-auto md:mx-5 max-sm:mt-[3rem] md:mt-[5.625rem] overflow-visible"
+      className="max-sm:w-[95%] max-sm:mx-auto md:mx-[3rem] max-sm:mt-[3rem] md:mt-[5.625rem] overflow-visible"
     >
-      <div className='flex justify-between w-full items-center'>
+      <div className="flex justify-between w-full items-center">
         <h1 className="text-[1.5rem] font-bold max-md:text-[1.1rem] ">
           Izdvajamo za vas
         </h1>

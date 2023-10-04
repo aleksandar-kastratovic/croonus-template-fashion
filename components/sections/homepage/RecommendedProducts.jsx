@@ -17,12 +17,12 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
   return (
     <div
       data-aos="fade-right"
-      className="max-sm:w-[90%] max-sm:mx-auto md:mx-5 lg:mx-[5rem] max-sm:mt-[3rem] md:mt-[5.625rem] overflow-visible"
+      className="max-sm:w-[95%] max-sm:mx-auto md:mx-5 lg:mx-[3rem] max-sm:mt-[3rem] md:mt-[5.625rem] overflow-visible"
     >
         <div className="max-lg:col-span-1 lg:col-span-4 2xl:col-span-4 4xl:col-span-5">
           <div className="relative flex flex-col justify-between max-lg:gap-3 lg:flex-row lg:items-center">
             <h1
-              className={`text-[1.5rem] font-bold max-md:text-[1.1rem]`}
+              className={`text-[25px] font-bold`}
             >
               Izdvajamo za vas
             </h1>
@@ -42,8 +42,8 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
                       <button
                         className={
                           selectedCategory === uniqueCategories[0]?.id
-                            ? `font-bold active-button uppercase text-xl underline text-black`
-                            : `font-normal uppercase text-lg text-black`
+                            ? `font-normal w-fit relative active-button  text-lg activeCategory text-black`
+                            : `font-normal w-fit relative  text-lg text-black`
                         }
                         onClick={(e) => {
                           e.preventDefault();
@@ -73,9 +73,8 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
                     return item?.categories[0]?.id === Number(e.target.value);
                   });
                   setProducts(newProducts);
-                  console.log(newProducts);
                 }}
-                className="rounded-md bg-[#b0976d] border-none bg-opacity-50 text-white w-full"
+                className="rounded-md border-2 border-[#f7f7f7] focus:border-[#f7f7f7] focus:outline-0 focus:ring-0 text-black w-full max-md:text-[0.9rem]"
               >
                 {recommendedProducts?.map((category) => {
                   const uniqueCategories = category?.categories?.filter(
@@ -92,6 +91,7 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
                       <option
                         key={uniqueCategories[0]?.id}
                         value={Number(uniqueCategories[0]?.id)}
+                        className={`max-md:text-[0.9rem]`}
                       >
                         {uniqueCategories[0]?.name}
                       </option>
@@ -102,8 +102,8 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
             </div>
             <div className="flex items-center gap-3">
               <Link
-               className='text-base underline text-[#171717] block'
-                href={`/sekcija/recommendation`}
+               className='max-md:text-[0.9rem] text-lg underline text-[#171717] block'
+                href={`/sekcija/preporuceno`}
               >
                 Pogledajte sve proizvode
               </Link>

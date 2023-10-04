@@ -20,16 +20,13 @@ export default function Variants({
   let variant_items = product?.data?.variant_items; // niz svih varijanti proizvoda
   let product_slug = productSlug; // slug proizvoda koji se prikazuje
   let variant_product = null; // krajnji proizvod koji se prikazuje
-  
-  console.log('product', variant_items)
-
   const [selected, setSelected] = useState([]); // niz selektovanih variant_options
   useEffect(() => {
     if (setVariant) {
       setSelected([
         {
-          attribute_key: variant_options[1]?.attribute?.key,
-          value_key: variant_options[1]?.values[0]?.key,
+          attribute_key: variant_options[0]?.attribute?.key,
+          value_key: variant_options[0]?.values[0]?.key,
         },
       ]);
       setVariantOnOff(false);
@@ -308,16 +305,15 @@ export default function Variants({
 
     setSelected(temp_selected);
   };
-
   return (
-    <div className="flex flex-col-reverse max-md:gap-7 gap-[38px] max-lg:w-full  ">
+    <div className="flex flex-col-reverse max-md:gap-7 gap-[25px] max-lg:w-full  ">
       {variantOptions?.map((item) => {
         return (
           <div className="flex flex-col items-start gap-[1.5rem]">
             <label
               htmlFor={item.id}
               className={
-                item.attribute.name === "boja"
+                item.attribute.name === "Boja"
                   ? `hidden`
                   : `max-lg:text-left text-[0.938rem] font-bold max-md:font-normal min-w-[5.619rem]`
               }
@@ -344,11 +340,11 @@ export default function Variants({
               //   }
               // }}
             >
-              {item?.attribute?.name === "boja"
+              {item?.attribute?.name === "Boja"
                 ? item.values.map((value) => {
                     let display = value.display;
                     return (
-                      <div>
+                      <div className={display === "show" ? `block` : `hidden`}>
                         <button
                           onClick={(e) => {
                             e.preventDefault();
@@ -374,7 +370,7 @@ export default function Variants({
                           }
                           aria-label={value.name}
                         >
-                          {value?.product_image && (
+                          {(value?.product_image || value?.image) && (
                             <div
                               className={`${
                                 selected.find(
@@ -383,10 +379,10 @@ export default function Variants({
                                     x.value_key == value.key
                                 )
                                   ? `border-2 border-[#2bc48a] `
-                                  : ``
+                                  : `border border-[#838482]`
                               } h-[85px] w-[65px]`}
                             >
-                              {value?.product_image && (
+                              {(value?.product_image || value?.image) && (
                                 <Suspense fallback={<div>Loading...</div>}>
                                   <Image
                                     src={convertHttpToHttps(
@@ -394,7 +390,7 @@ export default function Variants({
                                     )}
                                     width={65}
                                     height={85}
-                                    alt={`Pazari Shop`}
+                                    alt={``}
                                     priority={true}
                                     className="h-full object-cover"
                                   />
@@ -409,18 +405,11 @@ export default function Variants({
                                   x.attribute_key == item.attribute.key &&
                                   x.value_key == value.key
                               )
-                                ? `bg-green-500 flex items-center gap-2 text-left text-white`
+                                ? `bg-[#2bc48a] flex items-center gap-2 text-left text-white`
                                 : `bg-[#191919]`
                             } transition-all duration-500 !text-xs`}
                           >
                             {value.name}
-                            <svg className={`${  selected.find(
-                                (x) =>
-                                  x.attribute_key == item.attribute.key &&
-                                  x.value_key == value.key
-                              ) ? 'text-green-500' : 'text-[#191919]'} absolute z-50 w-6 h-6 transform left-[45%] -translate-x-1/2 -translate-y-[0px] fill-current stroke-current`} width="8" height="8">
-                              <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
-                          </svg>
                           </div>
                         </button>
                       </div>
@@ -434,15 +423,19 @@ export default function Variants({
                         value={value.key}
                         selected={value.selected}
                         style={{ display: value.display }}
-                        className={ `block text-[0.834rem] ${
+                        className={
+                          display === "show"
+                            ? `block text-[0.834rem] ${
                                 selected.find(
                                   (x) =>
-                                    x.attribute_key == item.attribute.key &&
-                                    x.value_key == value.key
+                                    x.attribute_key === item.attribute.key &&
+                                    x.value_key === value.key
                                 )
-                                  ? `bg-[#191919] hover:border-[#191919] text-white`
-                                  : `border hover:border-[#191919] border-[#838482] `
+                                  ? `bg-white border border-[#2bc48a] hover:border-[#2bc48a] text-[#2bc48a]
+                           `
+                                  : `border hover:border-[#2bc48a] border-black hover:text-[#2bc48a]`
                               } w-[2.5rem] h-[2.5rem] rounded-full`
+                            : `hidden`
                         }
                         onClick={(e) => {
                           e.preventDefault();

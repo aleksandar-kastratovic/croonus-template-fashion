@@ -7,10 +7,16 @@ import { list, post } from "@/app/api/api";
 import Filters from "../Filters/Filters";
 import Link from "next/link";
 
-const CategoryPage = ({ filter, singleCategory, products }) => {
+const CategoryPage = ({
+  filter,
+  singleCategory,
+  products,
+  productsFromSection,
+  slug = "",
+}) => {
   const [productData, setProductData] = useState({
-    products: [],
-    pagination: {},
+    products: productsFromSection?.items ?? [],
+    pagination: productsFromSection?.pagination ?? {},
   });
   const [openFilter, setOpenFilter] = useState(false);
   const [sort, setSort] = useState({ field: "", direction: "" });
@@ -24,17 +30,28 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   const [tempSelectedFilters, setTempSelectedFilters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isBeingFiltered, setIsBeingFiltered] = useState(false);
+
   useEffect(() => {
     const fetchData = async (limit, sort, page, filters) => {
       // if (page < 2) {
       //   setLoading(true);
       // }
-      const res = await list(`/products/category/list/${singleCategory?.id}`, {
-        limit: limit,
-        sort: sort,
-        page: page,
-        filters: selectedFilters,
-      });
+      let res;
+      if (slug) {
+        res = await list(`/products/section/list/${slug}`, {
+          limit: limit,
+          sort: sort,
+          page: page,
+          filters: selectedFilters,
+        });
+      } else {
+        res = await list(`/products/category/list/${singleCategory?.id}`, {
+          limit: limit,
+          sort: sort,
+          page: page,
+          filters: selectedFilters,
+        });
+      }
       const newProducts = res?.payload?.items;
       const newPagination = res?.payload?.pagination;
       if (isBeingFiltered) {
@@ -80,11 +97,19 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
 
   useEffect(() => {
     if (changeFilters) {
-      post(`/products/category/filters/${singleCategory?.id}`, {
-        filters: tempSelectedFilters,
-      }).then((response) => {
-        setAvailableFilters(response?.payload);
-      });
+      if (slug) {
+        post(`/products/section/filters/${slug}`, {
+          filters: tempSelectedFilters,
+        }).then((response) => {
+          setAvailableFilters(response?.payload);
+        });
+      } else {
+        post(`/products/category/filters/${singleCategory?.id}`, {
+          filters: tempSelectedFilters,
+        }).then((response) => {
+          setAvailableFilters(response?.payload);
+        });
+      }
     }
     setChangeFilters(false);
   }, [changeFilters]);
@@ -123,8 +148,8 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       if (
         window.innerHeight + window.scrollY >=
           document.body.offsetHeight - buffer &&
-        productData.pagination.total_pages >
-          productData.pagination?.selected_page
+        productData?.pagination?.total_pages >
+          productData?.pagination?.selected_page
       ) {
         setPage(page + 1);
       }

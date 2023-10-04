@@ -38,30 +38,28 @@ const ProductPage = async ({ path }) => {
   const desc = await getProductLongDescription(path);
   const newProducts = await getNewProducts();
   const breadcrumbs = await getBreadcrumbs(path);
-  
-  console.log('product', product)
-  
+
   return (
     <div className="">
       <div className="hidden lg:block">
-      <ProductDetails
-        product={product}
-        productGallery={productGallery}
-        desc={desc}
-        path={path}
-        breadcrumbs={breadcrumbs}
-      />
-      </div>
-      <div className='max-lg:block hidden'>
-        <ProductMobileDetails
-             product={product}
-             productGallery={productGallery}
-             desc={desc}
-             path={path}
-             breadcrumbs={breadcrumbs}
+        <ProductDetails
+          product={product}
+          productGallery={productGallery}
+          desc={desc}
+          path={path}
+          breadcrumbs={breadcrumbs}
         />
       </div>
-  
+      <div className="max-lg:block hidden">
+        <ProductMobileDetails
+          product={product}
+          productGallery={productGallery}
+          desc={desc}
+          path={path}
+          breadcrumbs={breadcrumbs}
+        />
+      </div>
+
       <RecommendedProducts products={newProducts} />
     </div>
   );

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Aos from "aos";
 
-const IndexSlider = ({ banners }) => {
+const IndexSlider = ({ banners, mobileBanners }) => {
   const [currentSlide, setCurrentSlide] = useState({
     index: 0,
     banner: banners[0]?.image,
@@ -92,7 +92,7 @@ const IndexSlider = ({ banners }) => {
   return (
     <div
       data-aos="zoom-out"
-      className="absolute w-screen block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[860px] 2xl:h-[1000px] 3xl:h-[1057px]"
+      className="absolute w-screen block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[700px] 2xl:h-[750px] 3xl:h-[800px]"
       ref={sliderRef}
     >
       <div className="relative h-full overflow-hidden">
@@ -123,7 +123,7 @@ const IndexSlider = ({ banners }) => {
                     href={`${banner?.url ?? `/stranica-u-izradi`}`}
                     className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40"
                   >
-                    <div className="absolute flex flex-col items-center justify-center max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute flex flex-col items-center md:items-start justify-center md:justify-start max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-[4%] transform -translate-y-1/2">
                       {banner?.title && (
                         <h1 className="text-white max-sm:text-base text-xl font-bold ">
                           {banner?.title}

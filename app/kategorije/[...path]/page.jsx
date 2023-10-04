@@ -1,11 +1,9 @@
-
 import { Suspense } from "react";
 
 import { get } from "@/app/api/api";
 
 import Loading from "@/components/sections/categories/Loader";
 import Category from "@/components/sections/categories/Category";
-
 
 const fetchSingleCategory = async (slug) => {
   return await get(`/categories/product/single/${slug}`).then(
@@ -43,9 +41,6 @@ const CategoryPage = ({ params: { path } }) => {
   );
 };
 
-
-
-
 export async function generateStaticParams() {
   const categories = await get("/categories/product/tree").then(
     (res) => res?.payload
@@ -64,6 +59,5 @@ export async function generateStaticParams() {
 }
 
 export const revalidate = 30;
-
 
 export default CategoryPage;
