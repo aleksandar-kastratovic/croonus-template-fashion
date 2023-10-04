@@ -18,6 +18,8 @@ import CampaignsDetails from "./CampaignsDetails";
 import DeliveryModal from "./DeliveryModal";
 import InfoModal from "./InfoModal";
 import ReturnModal from "./ReturnModal";
+import { post } from "@/app/api/api";
+import { useCartContext } from "@/app/api/cartContext";
 
 const ProductInfo = ({
   product,
@@ -61,20 +63,34 @@ const ProductInfo = ({
       setColor(selectedColor);
     }
   }, [selectedColor]);
+  const [, , , mutateWishList] = useCartContext();
 
   const [productAmount, setProductAmount] = useState(1);
   const globalAddToCart = useGlobalAddToCart();
   const globalAddToWishList = useGlobalAddToWishList();
   const [setVariant, setVariantOnOff] = useState(true);
-  const addToWishlist = (e) => {
-    globalAddToWishList(product.data.item.basic_data?.id_product);
-    toast.success(
-      `Proizvod ${product.data.item.basic_data?.name} dodat u listu želja!`,
-      {
-        position: toast.POSITION.TOP_CENTER,
+  const addToWishlist = async () => {
+    await post(`/wishlist`, {
+      id: null,
+      id_product: product?.data?.item?.basic_data?.id_product,
+      quantity: 1,
+      id_product_parent: null,
+      description: null,
+      status: null,
+    }).then((res) => {
+      mutateWishList();
+      if (res?.code === 200) {
+        toast.success("Proizvod dodat u listu želja!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else {
+        toast.error("Došlo je do nepoznate greške!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
-    );
+    });
   };
+
   const addToCart = (e) => {
     if (product.product_type === "single") {
       globalAddToCart(product.data.item.basic_data.id_product, 1);
