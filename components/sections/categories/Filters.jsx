@@ -125,7 +125,7 @@ const Filters = ({
               />
             </div>
             {openSort && (
-              <div className="absolute z-[2] border border-[#f2f2f2] right-[-100px] top-[50px] flex flex-col items-center justify-end w-[200px]">
+              <div className="absolute z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]">
                 {sortKeys.map((key) => (
                   <div
                     className={`flex items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
