@@ -29,47 +29,45 @@ const Filters = ({
   }, [selectedFilters]);
 
   const filterRef = useRef(null);
+  console.log(openIndex);
 
   const handleClickInsideAndOutside = (e) => {
-    //setOpenIndex should be null when user clicks outside the filter and also if user clicks on the filter
+    // Close the filter if the click occurred outside of it or if the user clicked on the filter
+
     if (
-      filterRef?.current?.contains(e.target) ||
-      e.target?.classList?.contains("filter")
+      (!filterRef?.current?.contains(e.target) ||
+        e.target?.classList?.contains("filter")) &&
+      openIndex !== null
     ) {
-      return;
+      setOpenIndex(null);
     }
-    setOpenIndex(null);
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickInsideAndOutside);
+    document.addEventListener("click", handleClickInsideAndOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickInsideAndOutside);
+      document.removeEventListener("click", handleClickInsideAndOutside);
     };
-  }, []);
+  }, [openIndex]);
 
   const sortRef = useRef(null);
 
   const handleClickInsideAndOutsideSort = (e) => {
-    //setOpenIndex should be null when user clicks outside the filter and also if user clicks on the filter
     if (
-      sortRef?.current?.contains(e.target) ||
-      e.target?.classList?.contains("filter")
+      (!sortRef?.current?.contains(e.target) ||
+        e.target?.classList?.contains("sortref")) &&
+      openSort !== false
     ) {
-      return;
+      setOpenSort(false);
     }
-    setOpenSort(false);
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickInsideAndOutsideSort);
+    document.addEventListener("click", handleClickInsideAndOutsideSort);
     return () => {
-      document.removeEventListener(
-        "mousedown",
-        handleClickInsideAndOutsideSort
-      );
+      document.removeEventListener("click", handleClickInsideAndOutsideSort);
     };
-  }, []);
+  }, [openSort]);
 
   return (
     <>
@@ -78,25 +76,25 @@ const Filters = ({
           {(availableFilters ?? []).map((filter, index) => {
             const isOpen = openIndex === index;
             return (
-              <div className="relative max-lg:hidden ">
+              <div className="relative max-lg:hidden filter">
                 <div
-                  className="relative select-none cursor-pointer"
+                  className="relative select-none cursor-pointer filter"
                   key={filter?.id}
                   onClick={() => {
-                    setOpenIndex(isOpen ? null : index);
+                    setOpenIndex(openIndex === index ? null : index);
                   }}
                 >
                   <div
-                    className={`relative py-[0.65rem] flex items-center  gap-2`}
+                    className={`relative py-[0.65rem] flex items-center filter gap-2`}
                   >
-                    <h1 className="text-base text-center font-light">
+                    <h1 className="text-base text-center filter font-light">
                       {filter?.name}
                     </h1>
                     <Image
                       className={
                         isOpen
-                          ? `rotate-180 transition-all duration-500`
-                          : `rotate-0 transition-all duration-500`
+                          ? `rotate-180 filter transition-all duration-500`
+                          : `rotate-0 filter transition-all duration-500`
                       }
                       src={`/icons/chevron.png`}
                       alt={`TFY Production`}
@@ -172,11 +170,11 @@ const Filters = ({
             {openSort && (
               <div
                 ref={sortRef}
-                className="absolute z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]"
+                className="absolute sortref z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]"
               >
                 {sortKeys.map((key) => (
                   <div
-                    className={`flex items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
+                    className={`flex sortref items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
                       sort === key?.key
                         ? "bg-[#f2f2f2] text-black"
                         : "bg-white "
@@ -186,7 +184,7 @@ const Filters = ({
                     }
                   >
                     <h1
-                      className="uppercase font-light text-[0.775rem] text-center"
+                      className="uppercase sortref font-light text-[0.775rem] text-center"
                       onClick={() => setOpenSort(false)}
                     >
                       {key?.label}
