@@ -1,39 +1,33 @@
+"use client";
 import { list } from "@/app/api/api";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
-const getNew = async () => {
-  return await list("/categories/section/recommended").then(
-    (res) => res?.payload
-  );
-};
-
-export const revalidate = 30;
-
-const NewCategoriesSections = async () => {
-  const newCategories = await getNew();
-
+const NewCategoriesSections = ({ categories }) => {
   return (
     <div className="mt-16 lg:mt-28 max-md:w-[95%] mx-auto md:w-full md:px-[3rem]">
       <h2 className="font-bold text-[25px] mb-7 text-[#171717]">
         Izdvojeno iz nove kolekcije
       </h2>
       <div className="grid grid-cols-2 lg:grid-cols-[1fr,2fr,1fr] gap-3">
-        {newCategories?.slice(0, 5)?.map((category, index) => (
+        {categories?.slice(0, 5)?.map((category, index) => (
           <Link
             key={category.id}
             className={`${
               index === 1 ? "row-span-2 h-full" : ""
-            } aspect-square relative w-full`}
+            } aspect-square relative w-full overflow-hidden`}
             href={`/kategorije/${category?.slug_path}`}
+            onMouseEnter={() => setHoveredId(index)}
+            onMouseLeave={() => setHoveredId(null)}
           >
             {category?.images?.image && (
               <Image
                 src={category?.images?.image}
                 alt="category"
                 fill
-                className="object-cover"
+                className="object-cover hover:scale-110 transition-all duration-700 ease-in-out"
               />
             )}
             <div className="absolute bottom-0 left-0 w-full h-14 bg-black/40 z-10 flex items-center justify-center">

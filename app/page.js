@@ -42,7 +42,11 @@ const getInstagramPost = async () => {
 
   return data;
 };
-
+const getNew = async () => {
+  return await list("/categories/section/recommended").then(
+    (res) => res?.payload
+  );
+};
 export const revalidate = 30;
 
 const Home = async () => {
@@ -52,6 +56,7 @@ const Home = async () => {
   const action4 = await fetchAction4();
   const categories = await getBannersCategories();
   const mobileBanners = await getMobileBanners();
+  const recommendedCategories = await getNew();
   return (
     <>
       <div className="block relative overflow-hidden">
@@ -68,7 +73,7 @@ const Home = async () => {
           />
         </div>
         <RecommendedCategories categories={categories} />
-        <NewCategoriesSections />
+        <NewCategoriesSections categories={recommendedCategories} />
         <NewsLetterInstagramSection instagramImages={instagramImages} />
       </div>
     </>
