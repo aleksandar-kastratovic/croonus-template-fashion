@@ -13,7 +13,8 @@ const Filters = ({
   products,
   setProductsPerView,
   productsPerView,
-  setTempSelectedFilters,setLastSelectedFilterKey
+  setTempSelectedFilters,
+  setLastSelectedFilterKey,
 }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -26,6 +27,49 @@ const Filters = ({
   useEffect(() => {
     setActiveFilters(selectedFilters);
   }, [selectedFilters]);
+
+  const filterRef = useRef(null);
+
+  const handleClickInsideAndOutside = (e) => {
+    //setOpenIndex should be null when user clicks outside the filter and also if user clicks on the filter
+    if (
+      filterRef?.current?.contains(e.target) ||
+      e.target?.classList?.contains("filter")
+    ) {
+      return;
+    }
+    setOpenIndex(null);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickInsideAndOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickInsideAndOutside);
+    };
+  }, []);
+
+  const sortRef = useRef(null);
+
+  const handleClickInsideAndOutsideSort = (e) => {
+    //setOpenIndex should be null when user clicks outside the filter and also if user clicks on the filter
+    if (
+      sortRef?.current?.contains(e.target) ||
+      e.target?.classList?.contains("filter")
+    ) {
+      return;
+    }
+    setOpenSort(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickInsideAndOutsideSort);
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickInsideAndOutsideSort
+      );
+    };
+  }, []);
 
   return (
     <>
@@ -64,11 +108,12 @@ const Filters = ({
 
                 {isOpen && (
                   <div
+                    ref={filterRef}
                     className={` z-[20] ${
                       filter?.name === "Cena" && "w-[230px]"
                     } w-[150px] top-[43px] bg-white/80 border-l border-r border-b border-[#f2f2f2] border-t left-0 absolute`}
                   >
-                    <div className="pb-3.5">
+                    <div className="pb-3.5 filter">
                       <Filter
                         filter={filter}
                         availableFilters={availableFilters}
@@ -125,7 +170,10 @@ const Filters = ({
               />
             </div>
             {openSort && (
-              <div className="absolute z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]">
+              <div
+                ref={sortRef}
+                className="absolute z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]"
+              >
                 {sortKeys.map((key) => (
                   <div
                     className={`flex items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
