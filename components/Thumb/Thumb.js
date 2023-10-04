@@ -219,7 +219,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
             </Swiper>
             {product?.price?.discount?.active && (
               <div
-                className={`absolute left-2 bottom-2 z-[1] text-white text-[13px]`}
+                className={`absolute left-2 top-2 z-[1] text-white text-[13px]`}
               >
                 <div
                   className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
@@ -237,12 +237,12 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
             )}
             {product?.stickers?.length > 0 && (
               <div
-                className={`absolute left-2 top-2 z-[1] text-white text-[13px] flex flex-col gap-2`}
+                className={`absolute right-2 top-2 z-[1] text-center text-white text-[13px] flex flex-col gap-2`}
               >
                 {product?.stickers?.map((sticker) => {
                   return (
                     <div
-                      className={`text-xs md:text-sm bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
+                      className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
                     >
                       {sticker?.name}
                     </div>
@@ -630,6 +630,39 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                 );
               })}
             </Swiper>
+            {product?.price?.discount?.active && (
+              <div
+                className={`absolute left-2 top-2 z-[1] text-white text-[13px]`}
+              >
+                <div
+                  className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
+                >
+                  -
+                  {(
+                    ((product?.price?.price?.original -
+                      product?.price?.price?.discount) /
+                      product?.price?.price?.original) *
+                    100
+                  ).toFixed(0)}
+                  %
+                </div>
+              </div>
+            )}
+            {product?.stickers?.length > 0 && (
+              <div
+                className={`absolute right-2 top-2 z-[1] text-center text-white text-[13px] flex flex-col gap-2`}
+              >
+                {product?.stickers?.map((sticker) => {
+                  return (
+                    <div
+                      className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
+                    >
+                      {sticker?.name}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {product?.variant_options?.length > 0 ? (
               <div className="absolute z-[100] py-2 left-0 bottom-0 w-full mx-auto bg-white chevrons opacity-90">
                 <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
