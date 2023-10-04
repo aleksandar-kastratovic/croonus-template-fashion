@@ -15,6 +15,8 @@ const Filters = ({
   productsPerView,
   setTempSelectedFilters,
   setLastSelectedFilterKey,
+  setChangeFilters,
+  filter,
 }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -119,6 +121,7 @@ const Filters = ({
                         setSelectedFilters={setSelectedFilters}
                         setTempSelectedFilters={setTempSelectedFilters}
                         setLastSelectedFilterKey={setLastSelectedFilterKey}
+                        setChangeFilters={setChangeFilters}
                       />
                     </div>
                   </div>
@@ -132,10 +135,11 @@ const Filters = ({
             className="mr-auto ml-[6rem] relative select-none cursor-pointer"
             onClick={() => {
               setSelectedFilters([]);
+              setChangeFilters(true);
               setOpenIndex(null);
             }}
           >
-            <div className={`relative py-4 flex items-center gap-2`}>
+            <div className={`relative flex items-center gap-2`}>
               <h1 className="font-medium text-base text-center">
                 Izbrišite sve
               </h1>

@@ -15,6 +15,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       window.scrollTo(0, 0);
     }
   }, []);
+  console.log(filter)
   const [productData, setProductData] = useState({
     products: products?.items,
     pagination: products?.pagination,
@@ -53,6 +54,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   }, [limit, sort, page, selectedFilters]);
 
   useEffect(() => {
+    console.log("TU SAM");
     if (changeFilters) {
       post(`/products/category/filters/${singleCategory?.id}`, {
         filters: tempSelectedFilters,
@@ -93,8 +95,8 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           setAvailableFilters(response?.payload);
         }
       });
+      setChangeFilters(false);
     }
-    setChangeFilters(false);
   }, [changeFilters]);
 
   const [productsPerView, setProductsPerView] = useState(4);
@@ -162,6 +164,9 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           productsPerView={productsPerView}
           setTempSelectedFilters={setTempSelectedFilters}
           setLastSelectedFilterKey={setLastSelectedFilterKey}
+          setChangeFilters={setChangeFilters}
+          filter={filter}
+
         />
       </div>
       <div

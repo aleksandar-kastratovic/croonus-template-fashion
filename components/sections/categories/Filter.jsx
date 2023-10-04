@@ -175,6 +175,7 @@ const Filter = ({
   setSelectedFilters,
   setTempSelectedFilters,
   setLastSelectedFilterKey,
+  setChangeFilters,
 }) => {
   const changeHandler = (data) => {
     let tmp = [...selectedFilters];
@@ -194,6 +195,7 @@ const Filter = ({
     setSelectedFilters([...tmp]);
     setTempSelectedFilters([...tmp]);
     setLastSelectedFilterKey(data.column);
+    setChangeFilters(true);
   };
 
   let selected = selectedFilters.filter(
