@@ -807,3 +807,41 @@
     display: none;
   }
 }
+
+.blogSlider .swiper-button-next {
+  background-color: white !important;
+  opacity: 0.8;
+  border-radius: 50% !important;
+  padding: 2.2rem !important;
+  color: rgba(0, 0, 0, 0.716) !important;
+  transform: scale(0.5) !important;
+  right: -6px !important;
+  top: 45% !important;
+
+  box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+  fill: black !important;
+  z-index: 500 !important;
+}
+
+.blogSlider .swiper-button-prev {
+  background-color: white !important;
+  opacity: 0.8;
+  border-radius: 50% !important;
+  padding: 2.2rem !important;
+  color: rgba(0, 0, 0, 0.716) !important;
+  transform: scale(0.5) !important;
+  left: -6px !important;
+  top: 45% !important;
+
+  box-shadow: 0px 4px 10px 0.5px rgba(0, 0, 0, 0.1) !important;
+  fill: black !important;
+  z-index: 500 !important;
+}
+
+.font p,
+.font span,
+.font tspan,
+.font > * {
+  font-family: "Open Sans", sans-serif !important;
+  color: black !important;
+}

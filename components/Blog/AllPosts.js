@@ -10,6 +10,7 @@ const AllPosts = ({ posts }) => {
         className={`grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-x-3.5 gap-y-10`}
       >
         {posts?.map((post, index) => {
+          const wordCount = post?.basic_data?.description?.split(" ").length;
           return (
             <div className={`col-span-1 bg-white rounded-md drop-shadow-md`}>
               <div className={`flex flex-col gap-3`}>
@@ -34,7 +35,16 @@ const AllPosts = ({ posts }) => {
                       </div>
                     </div>
                   )}
-
+                  <div className={`absolute top-2 left-2 rounded-lg`}>
+                    <div
+                      className={`bg-black px-2.5 py-1 rounded-lg bg-opacity-[0.55]`}
+                    >
+                      <p className={`text-white text-sm font-medium`}>
+                        {/*calculate read time*/}
+                        {Math.ceil(wordCount / 238)} min čitanja
+                      </p>
+                    </div>
+                  </div>
                   <div
                     className={`absolute py-2 text-center bottom-0 left-0 right-0 bg-black bg-opacity-[0.55]`}
                   >
