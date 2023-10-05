@@ -7,12 +7,16 @@ const AllPosts = ({ posts }) => {
   return (
     <div className={`w-[95%] mt-[3rem] mx-auto lg:w-full lg:px-[3rem]`}>
       <div
-        className={`grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-x-3.5 gap-y-10`}
+        className={`grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-x-5 gap-y-5`}
       >
         {posts?.map((post, index) => {
           const wordCount = post?.basic_data?.description?.split(" ").length;
           return (
-            <div className={`col-span-1 bg-white rounded-md drop-shadow-md`}>
+            <div
+              key={post?.id}
+              className={`col-span-1
+               bg-white rounded-md drop-shadow-md`}
+            >
               <div className={`flex flex-col gap-3`}>
                 <div
                   className={`relative h-[250px] md:h-[350px] w-full overflow-hidden rounded-t-md`}
@@ -29,7 +33,9 @@ const AllPosts = ({ posts }) => {
                     />
                   </Link>
                   {index === 0 && (
-                    <div className={`absolute top-2 right-2 rounded-lg`}>
+                    <div
+                      className={`absolute top-2 right-2 rounded-lg shadow-md`}
+                    >
                       <div className={`bg-[#04b400] px-2.5 py-1 rounded-lg`}>
                         <p className={`text-white text-sm font-medium`}>Novo</p>
                       </div>
@@ -50,7 +56,7 @@ const AllPosts = ({ posts }) => {
                   >
                     <Link
                       href={`/blog/${post?.slug}`}
-                      className={`text-[1.35rem] md:text-[1.7rem] font-medium uppercase text-white`}
+                      className={`text-[1.35rem] md:text-[1.5rem] font-medium uppercase text-white line-clamp-1 max-w-[95%] mx-auto`}
                     >
                       {post?.basic_data?.title}
                     </Link>
@@ -70,8 +76,6 @@ const AllPosts = ({ posts }) => {
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
                         })
                         .replace(/јануар/g, "januar")
                         .replace(/фебруар/g, "februar")
