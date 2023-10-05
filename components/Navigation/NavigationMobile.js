@@ -158,7 +158,7 @@ const NavigationMobile = () => {
 
   const categoriesMain = [
     { name: "Brendovi", slug: "/brendovi" },
-    { name: "Blog", slug: "/blogs" },
+    { name: "Blog", slug: "/blog" },
     { name: "Maloprodaje", slug: "/maloprodaje" },
     { name: "Kontakt", slug: "/kontakt" },
   ];
@@ -432,7 +432,7 @@ const NavigationMobile = () => {
               onClick={() => {
                 setMenuOpen(false);
               }}
-              href={`/${category?.slug}`}
+              href={`${category?.slug}`}
               className={`text-[1.2rem] uppercase`}
             >
               {category?.name}
