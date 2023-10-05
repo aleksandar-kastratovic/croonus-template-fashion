@@ -34,7 +34,7 @@ const SinglePost = ({ post }) => {
                   height={0}
                   sizes={`100vw`}
                   priority
-                  className={`object-cover rounded-md w-full h-full`}
+                  className={`object-cover rounded-md w-full h-full bg-fixed`}
                 />
               </div>
             </Slide>
@@ -48,7 +48,7 @@ const SinglePost = ({ post }) => {
           </p>
         </div>
         <div
-          className={`text-base font-normal mt-5 prose !max-w-full prose-a:text-red-500 font`}
+          className={`text-base font-normal mt-5 prose !max-w-full prose-a:text-[#04b400] font`}
           dangerouslySetInnerHTML={{ __html: post?.basic_data?.description }}
         />
       </section>
