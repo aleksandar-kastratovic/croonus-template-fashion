@@ -19,8 +19,6 @@ const NewCategoriesSections = ({ categories }) => {
               index === 1 ? "row-span-2 h-full" : ""
             } aspect-square relative w-full overflow-hidden`}
             href={`/kategorije/${category?.slug_path}`}
-            onMouseEnter={() => setHoveredId(index)}
-            onMouseLeave={() => setHoveredId(null)}
           >
             {category?.images?.image && (
               <Image
