@@ -851,3 +851,14 @@
   font-family: "Open Sans", sans-serif !important;
   color: black !important;
 }
+
+.activeCategoryHover:hover::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: -2px;
+    margin: auto;
+    width: 110%;
+    height: 2px;
+    background-color: #000;
+}

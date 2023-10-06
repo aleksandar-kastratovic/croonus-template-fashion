@@ -15,7 +15,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       window.scrollTo(0, 0);
     }
   }, []);
-  console.log(filter)
+  console.log(filter);
   const [productData, setProductData] = useState({
     products: products?.items,
     pagination: products?.pagination,
@@ -110,17 +110,17 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           <div className="flex items-center gap-2 flex-wrap mt-5">
             <Link
               href={`/`}
-              className="text-[#191919] text-[0.95rem] font-normal hover:text-[#e10000]"
+              className="text-[#191919] text-[0.95rem] font-normal"
             >
               Početna
-            </Link>{" "}
-            <>/</>{" "}
+            </Link>
+            <>/</>
             {singleCategory?.parents?.map((breadcrumb, index, arr) => {
               return (
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/kategorije/${breadcrumb?.slug}`}
-                    className="text-[#191919] text-[0.95rem] font-normal hover:text-[#e10000]"
+                    className="text-[#191919] text-[0.95rem] font-normal"
                   >
                     {breadcrumb?.name}
                   </Link>
@@ -166,7 +166,6 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           setLastSelectedFilterKey={setLastSelectedFilterKey}
           setChangeFilters={setChangeFilters}
           filter={filter}
-
         />
       </div>
       <div

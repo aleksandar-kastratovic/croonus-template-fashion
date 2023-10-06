@@ -43,8 +43,8 @@ export default async function RootLayout({ children }) {
           </head>
           <body className="relative">
             <TrackingScripts />
-            <Header categories={categories}/>
-            <NavigationMobile categories={categories}/>
+            <Header categories={categories} />
+            <NavigationMobile categories={categories} />
 
             {children}
             <Footer />

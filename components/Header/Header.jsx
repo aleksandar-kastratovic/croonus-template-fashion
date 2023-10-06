@@ -92,7 +92,7 @@ const Header = ({ categories }) => {
                     category?.id === activeCategory?.id
                       ? "activeCategory "
                       : "font-normal"
-                  } text-[13px] uppercase block relative w-fit text-black`}
+                  } text-[13px] uppercase block relative w-fit text-black activeCategoryHover`}
                   onClick={() => {
                     setActiveCategory({
                       id:
@@ -121,7 +121,9 @@ const Header = ({ categories }) => {
                   key={index}
                   onClick={resetActiveCategory}
                 >
-                  <span className={`text-[13px] uppercase block text-black`}>
+                  <span
+                    className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover`}
+                  >
                     {category?.name}
                   </span>
                 </Link>

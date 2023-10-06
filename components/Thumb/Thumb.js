@@ -19,7 +19,7 @@ import { useCartContext } from "@/app/api/cartContext";
 const Thumb = ({ data, slider, productsPerViewMobile }) => {
   const [, , , mutateWishList] = useCartContext();
 
-  const addToWishlist = async (id) => {
+  const addToWishlist = async (id, name) => {
     await post("/wishlist", {
       id: null,
       id_product: id,
@@ -30,7 +30,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
     }).then((response) => {
       mutateWishList();
       if (response?.code === 200) {
-        toast.success("Uspešno dodato u listu želja", {
+        toast.success(`Proizvod ${name} uspešno dodat u listu želja`, {
           position: "top-center",
           autoClose: 2000,
         });
@@ -394,7 +394,10 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
             </Link>
             <div
               onClick={() => {
-                addToWishlist(product?.basic_data?.id_product);
+                addToWishlist(
+                  product?.basic_data?.id_product,
+                  product?.basic_data?.name
+                );
               }}
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >
@@ -843,7 +846,10 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
             </Link>
             <div
               onClick={() => {
-                addToWishlist(product?.basic_data?.id_product);
+                addToWishlist(
+                  product?.basic_data?.id_product,
+                  product?.basic_data?.name
+                );
               }}
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >

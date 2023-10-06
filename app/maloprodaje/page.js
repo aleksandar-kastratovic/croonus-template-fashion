@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Contact from "@/components/Contact/Contact";
+import MaloprodajePage from "@/components/MaloprodajePage/MaloprodajePage";
 
-const Kontakt = () => {
+const Maloprodaje = () => {
   return (
     <>
       <div className={`text-left w-[95%] mx-auto lg:w-full lg:px-[3rem] mt-5`}>
@@ -10,17 +10,17 @@ const Kontakt = () => {
             Početna
           </Link>
           <span className={`text-[0.95rem]`}>/</span>
-          <span className={`text-[0.95rem]`}>Kontakt</span>
+          <span className={`text-[0.95rem]`}>Maloprodaje</span>
         </div>
         <h1
           className={`text-[23px] md:text-[29px] font-normal mt-5 w-full border-b pb-2`}
         >
-          Kontakt
+          Maloprodaje
         </h1>
       </div>
-      <Contact />
+      <MaloprodajePage />
     </>
   );
 };
 
-export default Kontakt;
+export default Maloprodaje;
