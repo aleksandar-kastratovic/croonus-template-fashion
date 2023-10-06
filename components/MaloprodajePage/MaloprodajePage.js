@@ -56,7 +56,7 @@ const MaloprodajePage = () => {
                   <div
                     key={index}
                     className={` w-full gap-2 rounded-lg col-span-1 lg:col-span-1 p-5 hover:border-[#04b400] cursor-pointer border ${
-                      active?.id === object?.id && `border-[#04b400]`
+                      active?.id === object?.id && `border-[#04b400] border-2`
                     }`}
                     onClick={() => {
                       setActive({
@@ -68,7 +68,7 @@ const MaloprodajePage = () => {
                     }}
                   >
                     <div className={`flex flex-col items-start gap-2 p-2`}>
-                      <Image src={Croonus} alt="" />
+                      <Image src={Croonus} alt="" className={`w-full`}/>
                       <div className={`flex flex-col`}>
                         <h1 className={`text-[1.2rem] font-semibold`}>
                           {object?.name}
