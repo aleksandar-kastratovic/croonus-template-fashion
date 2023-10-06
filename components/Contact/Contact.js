@@ -126,11 +126,6 @@ const Contact = () => {
         className={`w-[95%] mx-auto lg:w-full lg:px-[3rem] mt-5 grid grid-cols-3 gap-x-10 gap-y-10`}
       >
         <div className={`col-span-3 lg:col-span-1`}>
-          <h1
-            className={`text-[23px] md:text-[29px] font-normal mt-5 z-[5] after:bottom-[15px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
-          >
-            Pišite nam.
-          </h1>
           <p className={`text-[0.95rem] mt-5`}>
             Ukoliko imate pitanja, sugestije ili želite da se učlanite u našu
             organizaciju, slobodno nam se obratite. Odgovorićemo Vam u najkraćem
@@ -141,9 +136,7 @@ const Contact = () => {
               <i
                 className={`fa fa-map-marker text-[16px] w-5 text-[#04b400]`}
               ></i>
-              <span
-                className={`text-[0.95rem] z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
-              >
+              <span className={`text-[0.95rem]`}>
                 <span className={`font-bold`}>Adresa 1:</span> Kralja Petra I
                 30, 32000 Čačak
               </span>
@@ -152,9 +145,7 @@ const Contact = () => {
               <i
                 className={`fa fa-map-marker text-[16px] w-5 text-[#04b400]`}
               ></i>
-              <span
-                className={`text-[0.95rem]  z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
-              >
+              <span className={`text-[0.95rem]`}>
                 <span className={`font-bold`}>Adresa 2:</span> Borska 32, 11000
                 Beograd
               </span>
@@ -163,18 +154,14 @@ const Contact = () => {
               <i
                 className={`fa fa-map-marker text-[16px] w-5 text-[#04b400]`}
               ></i>
-              <span
-                className={`text-[0.95rem]  z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
-              >
+              <span className={`text-[0.95rem]`}>
                 <span className={`font-bold`}>Adresa 3:</span> Old Vine Blvd
                 Lewes,United States
               </span>
             </div>
             <div className={`flex items-center gap-2`}>
               <i className={`fa fa-phone text-[16px] w-5 text-[#04b400]`}></i>
-              <span
-                className={`text-[0.95rem]  z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
-              >
+              <span className={`text-[0.95rem]`}>
                 <span className={`font-bold`}>Kontakt telefon:</span> +381 32 51
                 22 052
               </span>
