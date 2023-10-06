@@ -118,13 +118,73 @@ const Contact = () => {
       });
     }
   };
-  console.log(errors);
   return (
     <Provider reCaptchaKey={process.env.CAPTCHAKEY}>
       <ToastContainer />
       <ReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={refreshReCaptcha} />
-      <div className={`w-[95%] mx-auto lg:w-full lg:px-[3rem] mt-5`}>
-        <form onSubmit={handleSubmit} className={`w-full lg:w-[70%] mx-auto`}>
+      <div
+        className={`w-[95%] mx-auto lg:w-full lg:px-[3rem] mt-5 grid grid-cols-3 gap-x-10 gap-y-10`}
+      >
+        <div className={`col-span-3 lg:col-span-1`}>
+          <h1
+            className={`text-[23px] md:text-[29px] font-normal mt-5 z-[5] after:bottom-[15px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
+          >
+            Pišite nam.
+          </h1>
+          <p className={`text-[0.95rem] mt-5`}>
+            Ukoliko imate pitanja, sugestije ili želite da se učlanite u našu
+            organizaciju, slobodno nam se obratite. Odgovorićemo Vam u najkraćem
+            roku.
+          </p>
+          <div className={`flex flex-col gap-2 mt-5`}>
+            <div className={`flex items-center gap-2`}>
+              <i
+                className={`fa fa-map-marker text-[16px] w-5 text-[#04b400]`}
+              ></i>
+              <span
+                className={`text-[0.95rem] z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
+              >
+                <span className={`font-bold`}>Adresa 1:</span> Kralja Petra I
+                30, 32000 Čačak
+              </span>
+            </div>
+            <div className={`flex items-center gap-2`}>
+              <i
+                className={`fa fa-map-marker text-[16px] w-5 text-[#04b400]`}
+              ></i>
+              <span
+                className={`text-[0.95rem]  z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
+              >
+                <span className={`font-bold`}>Adresa 2:</span> Borska 32, 11000
+                Beograd
+              </span>
+            </div>
+            <div className={`flex items-center gap-2`}>
+              <i
+                className={`fa fa-map-marker text-[16px] w-5 text-[#04b400]`}
+              ></i>
+              <span
+                className={`text-[0.95rem]  z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
+              >
+                <span className={`font-bold`}>Adresa 3:</span> Old Vine Blvd
+                Lewes,United States
+              </span>
+            </div>
+            <div className={`flex items-center gap-2`}>
+              <i className={`fa fa-phone text-[16px] w-5 text-[#04b400]`}></i>
+              <span
+                className={`text-[0.95rem]  z-[5] after:bottom-[8px] pb-2 relative after:absolute after:left-0 after:w-full after:h-[5px] after:bg-[#04b400] w-fit after:z-[-1] after:skew-x-[-40deg] after:transform`}
+              >
+                <span className={`font-bold`}>Kontakt telefon:</span> +381 32 51
+                22 052
+              </span>
+            </div>
+          </div>
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          className={`w-full col-span-3 lg:col-span-2 mx-auto`}
+        >
           <div
             className={`rounded-lg border p-2 lg:p-5 grid gap-5 grid-cols-2`}
           >
@@ -141,7 +201,7 @@ const Contact = () => {
                   errors.includes("customer_name")
                     ? "border-red-500"
                     : " border-slate-300"
-                } border rounded-lg focus:border-slate-300 focus:ring-0 focus:outline-0 p-2`}
+                } border rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
             </div>
             <div className={`flex flex-col gap-2 col-span-2 lg:col-span-1`}>
@@ -157,7 +217,7 @@ const Contact = () => {
                   errors.includes("phone")
                     ? "border-red-500"
                     : " border-slate-300"
-                } rounded-lg focus:border-slate-300 focus:ring-0 focus:outline-0 p-2`}
+                } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
             </div>
             <div className={`flex flex-col gap-2 col-span-2 lg:col-span-1`}>
@@ -173,7 +233,7 @@ const Contact = () => {
                   errors.includes("email")
                     ? "border-red-500"
                     : " border-slate-300"
-                } rounded-lg focus:border-slate-300 focus:ring-0 focus:outline-0 p-2`}
+                } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
             </div>
             <div className={`flex flex-col gap-2 col-span-2 lg:col-span-1`}>
@@ -189,7 +249,7 @@ const Contact = () => {
                   errors.includes("subject")
                     ? "border-red-500"
                     : " border-slate-300"
-                } rounded-lg focus:border-slate-300 focus:ring-0 focus:outline-0 p-2`}
+                } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
             </div>
             <div className={`flex flex-col gap-2 col-span-2`}>
@@ -204,7 +264,7 @@ const Contact = () => {
                   errors.includes("message")
                     ? "border-red-500"
                     : " border-slate-300"
-                } rounded-lg focus:border-slate-300 focus:ring-0 focus:outline-0 p-2`}
+                } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
             </div>
             <div
@@ -222,7 +282,7 @@ const Contact = () => {
                     errors.includes("accept_rules")
                       ? "border-red-500"
                       : " border-slate-300"
-                  } rounded-lg focus:border-slate-300 focus:ring-0 focus:outline-0 p-2 text-[#04b400]`}
+                  } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2 text-[#04b400]`}
                 />
                 <label htmlFor={`accept_rules`}>
                   <span className={`text-[0.85rem]`}>
