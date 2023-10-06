@@ -227,15 +227,7 @@ const CheckoutPage = ({
         municipality_name_billing: "",
         id_country_billing: null,
         country_name_billing: "Srbija",
-        note_billing:
-          formData.note +
-          ` Informacije: Visina: ${formData?.height} ; Težina: ${
-            formData?.weight
-          } ; Gazište: ${
-            formData?.foot_size
-          } ; Saglasnost za slanje veličine: ${
-            formData?.product_size_agreement ? "Da" : "Ne"
-          }`,
+        note_billing: formData.note,
 
         delivery_method: formData.delivery,
         delivery_method_options: [],
@@ -246,15 +238,7 @@ const CheckoutPage = ({
         promo_code: null,
         promo_code_options: [],
 
-        note:
-          formData.note +
-          ` Informacije: Visina: ${formData?.height} ; Težina: ${
-            formData?.weight
-          } ; Gazište: ${
-            formData?.foot_size
-          } ; Saglasnost za slanje veličine: ${
-            formData?.product_size_agreement ? "Da" : "Ne"
-          }`,
+        note: formData.note,
         gcaptcha: token,
 
         accept_rules: 1,
@@ -384,7 +368,7 @@ const CheckoutPage = ({
                 <h1 className="text-xl   font-bold ">Informacije</h1>
                 {formData.type === "personal" && (
                   <>
-                    <div className="mt-4 grid grid-cols-2 gap-x-10 pb-4 max-xl:text-base border-b">
+                    <div className="mt-4 grid grid-cols-2 gap-x-10 pb-4 max-xl:text-base">
                       <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-start-1 xl:col-end-2">
                         <div className="flex flex-col gap-2  ">
                           <label htmlFor="name" className="hidden">
@@ -578,86 +562,6 @@ const CheckoutPage = ({
                             placeholder="Napomena"
                           />
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      className={`grid max-xl:grid-cols-1 grid-cols-2 gap-x-10 gap-y-5 pb-4 mt-5 xl:mt-[0.7rem]`}
-                    >
-                      <div className="flex flex-col gap-2 max-xl:mt-2">
-                        <label htmlFor="height" className="text-[14px] ml-2">
-                          Molimo unesite Vašu visinu
-                        </label>
-                        <input
-                          type="text"
-                          name="height"
-                          id="height"
-                          value={formData.height}
-                          onChange={formChangeHandler}
-                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                            errors.includes("height")
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-none focus:border-none"
-                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                          placeholder="Visina*"
-                        />
-                      </div>{" "}
-                      <div className="flex flex-col gap-2 max-xl:mt-2">
-                        <label htmlFor="weight" className="text-[14px] ml-2">
-                          Molimo unesite Vašu težinu
-                        </label>
-                        <input
-                          type="text"
-                          name="weight"
-                          id="weight"
-                          value={formData.weight}
-                          onChange={formChangeHandler}
-                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                            errors.includes("weight")
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-none focus:border-none"
-                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                          placeholder="Težina*"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-2 max-xl:mt-2">
-                        <label htmlFor="foot_size" className="text-[14px] ml-2">
-                          U slučaju da kupujete neki model od naše obuće molimo
-                          unesite Vašu dužinu gazišta u centimetrima (opciono)
-                        </label>
-                        <input
-                          type="text"
-                          name="foot_size"
-                          id="foot_size"
-                          value={formData.foot_size}
-                          onChange={formChangeHandler}
-                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                            errors.includes("foot_size")
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-none focus:border-none"
-                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                          placeholder="Gazište u cm"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-2 max-xl:mt-2">
-                        <label htmlFor="foot_size" className="text-[14px] ml-2">
-                          Da li ste saglasni da pošaljemo veličinu proizvoda
-                          shodno Vašoj visini i težini koju ste naveli?
-                        </label>
-                        <select
-                          name="product_size_agreement"
-                          id="product_size_agreement"
-                          value={formData.product_size_agreement}
-                          onChange={formChangeHandler}
-                          className={`ml-2 max-sm:text-sm h-[58px] rounded-md ${
-                            errors.includes("product_size_agreement")
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-none focus:border-none"
-                          }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
-                        >
-                          <option value="">Izaberite</option>
-                          <option value={true}>Da</option>
-                          <option value={false}>Ne</option>
-                        </select>
                       </div>
                     </div>
                   </>
@@ -1095,62 +999,6 @@ const CheckoutPage = ({
                 className={`col-span-5 bg-white max-xl:row-start-3 xl:col-span-2 xl:col-start-4 xl:col-end-6 xl:row-start-1 flex flex-col`}
               >
                 <p className="font-bold text-xl">Proizvodi u korpi</p>
-                <div className={`max-xl:hidden`}>
-                  <div className={`max-xl:w-full xl:w-[400px] mt-2`}>
-                    {/*bar for measuring*/}
-                    <div className="w-full h-1 bg-[#f5f5f7] mt-3">
-                      <div
-                        className="h-full relative transition-all duration-500 bg-[#2bc48a]"
-                        style={{
-                          width: `${
-                            (checkoutSummary?.summary?.totals?.items_discount /
-                              6000) *
-                              100 >
-                            100
-                              ? 100
-                              : (checkoutSummary?.summary?.totals
-                                  ?.items_discount /
-                                  6000) *
-                                100
-                          }%`,
-                        }}
-                      >
-                        <div className="absolute top-0 right-0 h-full w-full flex items-center justify-end">
-                          <span className="text-black font-bold text-[0.5rem] px-[0.275rem] py-1 bg-white rounded-full border-2 border-[#2bc48a] ">
-                            {checkoutSummary?.summary?.totals?.items_discount >
-                            6000
-                              ? 100
-                              : Math.round(
-                                  (checkoutSummary?.summary?.totals
-                                    ?.items_discount /
-                                    6000) *
-                                    100
-                                )}
-                            %
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <h1
-                      className={`text-base text-[#e10000] mt-3 font-bold ${
-                        checkoutSummary?.summary?.totals?.items_discount > 6000
-                          ? "hidden"
-                          : ""
-                      }`}
-                    >
-                      Do besplatne dostave nedostaje ti još{" "}
-                      {currencyFormat(
-                        6000 - checkoutSummary?.summary?.totals?.items_discount
-                      )}
-                    </h1>
-                  </div>
-                  {cartCost > 6000 && (
-                    <h1 className="text-base text-[#2bc48a] mt-3 font-bold">
-                      Besplatna dostava
-                    </h1>
-                  )}
-                </div>
                 <div className="overflow-y-auto max-h-[411px] ">
                   <CartProductBox cartItems={cartItems} />
                 </div>
@@ -1250,7 +1098,64 @@ const CheckoutPage = ({
               >
                 Potvrdi porudžbenicu{" "}
               </button>
+              <div className={`float-right mt-7 max-xl:hidden`}>
+                <div className={`max-xl:w-full xl:w-[400px] mt-2`}>
+                  {/*bar for measuring*/}
+                  <div className="w-full h-1 bg-[#f5f5f7] mt-3">
+                    <div
+                      className="h-full relative transition-all duration-500 bg-[#2bc48a]"
+                      style={{
+                        width: `${
+                          (checkoutSummary?.summary?.totals?.items_discount /
+                            6000) *
+                            100 >
+                          100
+                            ? 100
+                            : (checkoutSummary?.summary?.totals
+                                ?.items_discount /
+                                6000) *
+                              100
+                        }%`,
+                      }}
+                    >
+                      <div className="absolute top-0 right-0 h-full w-full flex items-center justify-end">
+                        <span className="text-black font-bold text-[0.5rem] px-[0.275rem] py-1 bg-white rounded-full border-2 border-[#2bc48a] ">
+                          {checkoutSummary?.summary?.totals?.items_discount >
+                          6000
+                            ? 100
+                            : Math.round(
+                                (checkoutSummary?.summary?.totals
+                                  ?.items_discount /
+                                  6000) *
+                                  100
+                              )}
+                          %
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h1
+                    className={`text-base text-[#e10000] mt-3 font-bold ${
+                      checkoutSummary?.summary?.totals?.items_discount > 6000
+                        ? "hidden"
+                        : ""
+                    }`}
+                  >
+                    Do besplatne dostave nedostaje ti još{" "}
+                    {currencyFormat(
+                      6000 - checkoutSummary?.summary?.totals?.items_discount
+                    )}
+                  </h1>
+                </div>
+                {cartCost > 6000 && (
+                  <h1 className="text-base text-[#2bc48a] mt-3 font-bold">
+                    Besplatna dostava
+                  </h1>
+                )}
+              </div>
             </div>
+
             <RecommendedProducts
               recommendedProducts={recommendedProducts}
               action4={`Gledali ste i ove modele`}
