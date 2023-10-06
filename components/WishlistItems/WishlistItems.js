@@ -6,10 +6,10 @@ import { currencyFormat } from "@/helpers/functions";
 import { useState, useCallback, useEffect } from "react";
 import Heart from "../../assets/Icons/heart.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useCartContext } from "@/app/api/cartContext";
 import { useGlobalAddToCart } from "@/app/api/globals";
-import { get, list } from "@/app/api/api";
+import { get, list, deleteMethod as DELETE } from "@/app/api/api";
 import CartProductBox from "../CartProductBox";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 
@@ -45,6 +45,25 @@ const WishlistItems = ({ items, product, border }) => {
     getCart();
   }, [cart]);
   const isStickerHovered = stickerHovered === product?.id;
+  const [, , , mutateWishList] = useCartContext();
+
+  const removeFromWishlist = async (id, name) => {
+    return DELETE(`/wishlist/${id}`).then((response) => {
+      if (response?.code === 200) {
+        toast.success(`Proizvod ${name} je uspešno uklonjen iz liste želja!`, {
+          position: "top-center",
+          autoClose: 2000,
+        });
+        mutateWishList();
+      } else {
+        toast.error("Došlo je do greške!", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+    });
+  };
+
   return (
     <>
       <div className="col-span-1 relative item mt-[2rem] lg:mt-[9rem]">
@@ -134,26 +153,11 @@ const WishlistItems = ({ items, product, border }) => {
           <h1 className="text-[0.813rem] clamp">{product?.basic_data?.name}</h1>
           <div
             onClick={() => {
-              removeFromWishList(items);
-              toast.success(
-                `Proizvod ${product?.basic_data?.name} je dodat u listu želja!`,
-                {
-                  position: "top-center",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                }
-              );
+              removeFromWishlist(items, product?.basic_data?.name);
             }}
             className=" p-1 favorites"
           >
-            <i
-              className="fa-solid fa-times text-lg cursor-pointer hover:text-red-500"
-              onClick={() => removeFromWishList(items)}
-            />
+            <i className="fa-solid fa-times text-lg cursor-pointer hover:text-red-500" />
           </div>
         </div>
         <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
@@ -170,6 +174,7 @@ const WishlistItems = ({ items, product, border }) => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
