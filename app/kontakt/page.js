@@ -10,9 +10,7 @@ const Kontakt = () => {
             Početna
           </Link>
           <span className={`text-[0.95rem]`}>/</span>
-          <Link className={`text-[0.95rem]`} href={`/blog`}>
-            Kontakt
-          </Link>
+          <span className={`text-[0.95rem]`}>Kontakt</span>
         </div>
         <h1
           className={`text-[23px] md:text-[29px] font-normal mt-5 w-full border-b pb-2`}
