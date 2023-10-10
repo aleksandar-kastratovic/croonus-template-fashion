@@ -205,35 +205,46 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
           </div>
         </div>
       </div>
-      <div className={`max-lg:hidden px-[3rem]`}>
-        <div
-          className={`mt-[1.875rem] ${
-            productsPerView === 2 && "w-[50%] mx-auto"
-          } grid grid-cols-${productsPerView} gap-x-5 gap-y-10`}
-        >
-          <Thumb
-            data={productData?.products}
-            loading={loading}
-            slider={false}
-            category={true}
-            products={false}
-          />
+      {productData?.products?.length > 0 ? (
+        <>
+          <div className={`max-lg:hidden px-[3rem]`}>
+            <div
+              className={`mt-[1.875rem] ${
+                productsPerView === 2 && "w-[50%] mx-auto"
+              } grid grid-cols-${productsPerView} gap-x-5 gap-y-10`}
+            >
+              <Thumb
+                data={productData?.products}
+                loading={loading}
+                slider={false}
+                category={true}
+                products={false}
+              />
+            </div>
+          </div>
+          <div className={`lg:hidden w-[95%] mx-auto`}>
+            <div
+              className={`mt-[50px] grid grid-cols-${productsPerViewMobile} md:grid-cols-3 gap-x-[20px] gap-y-[36px]`}
+            >
+              <Thumb
+                data={productData?.products}
+                loading={loading}
+                slider={false}
+                category={true}
+                products={false}
+                productsPerViewMobile={productsPerViewMobile}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="flex items-center justify-center w-full py-10 text-center">
+          <h1 className="text-[#191919] text-[1.1rem]">
+            U traženoj kategoriji nema proizvoda, ili izabrani filteri ne daju
+            rezultate.
+          </h1>
         </div>
-      </div>
-      <div className={`lg:hidden w-[95%] mx-auto`}>
-        <div
-          className={`mt-[50px] grid grid-cols-${productsPerViewMobile} md:grid-cols-3 gap-x-[20px] gap-y-[36px]`}
-        >
-          <Thumb
-            data={productData?.products}
-            loading={loading}
-            slider={false}
-            category={true}
-            products={false}
-            productsPerViewMobile={productsPerViewMobile}
-          />
-        </div>
-      </div>
+      )}
       <div
         className={
           filterOpen
