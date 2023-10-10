@@ -65,9 +65,30 @@ const Header = ({ categories }) => {
     });
   };
 
+  let scrollPos = 0;
+  const [visible, setVisible] = useState("");
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      if (scrollPos > currentScrollPos && currentScrollPos > 170) {
+        setVisible("sticky top-0 translate-y-0 transition-all duration-500");
+      } else {
+        setVisible(
+          "sticky top-0 -translate-y-full transition-all duration-500"
+        );
+      }
+      scrollPos = currentScrollPos;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
-      <header className="max-xl:hidden top-0 sticky w-full z-[101] bg-white border-b-4 border-topHeader">
+      <header
+        className={`max-xl:hidden ${visible} w-full z-[101] bg-white border-b-4 border-topHeader `}
+        id="header"
+      >
         <HeaderTop />
         <div className="py-5 px-[3rem] flex items-center justify-between">
           <Link href="/">
