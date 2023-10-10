@@ -68,19 +68,26 @@ const Header = ({ categories }) => {
   let scrollPos = 0;
   const [visible, setVisible] = useState("");
   useEffect(() => {
+    let lastScroll = window.scrollY;
     const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      if (scrollPos > currentScrollPos && currentScrollPos > 170) {
-        setVisible("sticky top-0 translate-y-0 transition-all duration-500");
-      } else {
+      if (window.scrollY < 40)
+        return setVisible(
+          "sticky top-0 translate-y-0 transition-all duration-500"
+        );
+      const currentScroll = window.scrollY;
+      if (currentScroll > lastScroll) {
         setVisible(
           "sticky top-0 -translate-y-full transition-all duration-500"
         );
+      } else {
+        setVisible("sticky top-0 translate-y-0 transition-all duration-500");
       }
-      scrollPos = currentScrollPos;
+      lastScroll = currentScroll;
     };
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
