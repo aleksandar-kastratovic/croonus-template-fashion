@@ -29,7 +29,8 @@ const ProductInfo = ({
   breadcrumbs,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
-  const campaignsDate = product?.data?.item?.price?.discount?.campaigns[0]?.duration
+  const campaignsDate =
+    product?.data?.item?.price?.discount?.campaigns[0]?.duration;
 
   const router = useRouter();
   useEffect(() => {
@@ -135,7 +136,7 @@ const ProductInfo = ({
     <>
       {product ? (
         <>
-          <div className="max-md:col-span-4 mt-[2rem] md:col-span-2 ">
+          <div className="col-span-4 mt-[2rem]">
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href={`/`}
@@ -202,8 +203,13 @@ const ProductInfo = ({
                 )}
               </div>
               {product?.data?.item?.price?.discount?.active && (
-                <div className='mt-3'>
-                  <h2 className='text-[17px] text-[#2bc48a] font-semibold'>Ušteda: {currencyFormat(product?.data?.item?.price?.discount?.amount)}</h2>
+                <div className="mt-3">
+                  <h2 className="text-[17px] text-[#2bc48a] font-semibold">
+                    Ušteda:{" "}
+                    {currencyFormat(
+                      product?.data?.item?.price?.discount?.amount
+                    )}
+                  </h2>
                 </div>
               )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (

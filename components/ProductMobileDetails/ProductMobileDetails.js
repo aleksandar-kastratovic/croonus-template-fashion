@@ -2,6 +2,7 @@
 import ProductMobileGallery from "./ProductMobileGallery";
 import React, { useEffect, useState } from "react";
 import ProductMobileInfo from "./ProductMobileInfo";
+import Tabs from "@/components/ProductDetails/Tabs";
 
 const ProductMobileDetails = ({
   product,
@@ -9,6 +10,7 @@ const ProductMobileDetails = ({
   desc,
   path,
   breadcrumbs,
+  specification,
 }) => {
   const [rawGallery, setRawGallery] = useState(productGallery);
   const [loading, setLoading] = useState(false);
@@ -44,6 +46,9 @@ const ProductMobileDetails = ({
         setColor={setColor}
         breadcrumbs={breadcrumbs}
       />
+      <div className={`col-span-4`}>
+        <Tabs productsDesc={desc} specification={specification} />
+      </div>{" "}
     </div>
   );
 };
