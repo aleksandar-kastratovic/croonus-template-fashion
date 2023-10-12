@@ -3,6 +3,7 @@ import ProductGallery from "./ProductGallery";
 import ProductInfo from "./ProductInfo";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Tabs from "@/components/ProductDetails/Tabs";
 
 const ProductDetails = ({
   product,
@@ -10,6 +11,7 @@ const ProductDetails = ({
   desc,
   path,
   breadcrumbs,
+  specification,
 }) => {
   const [rawGallery, setRawGallery] = useState(productGallery);
   const [loading, setLoading] = useState(false);
@@ -73,6 +75,9 @@ const ProductDetails = ({
           setColor={setColor}
           breadcrumbs={breadcrumbs}
         />
+        <div className={`mt-10 col-span-4`}>
+          <Tabs specification={specification} productsDesc={desc} />
+        </div>
       </div>
     </div>
   );

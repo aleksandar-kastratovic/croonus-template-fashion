@@ -34,6 +34,7 @@ const Header = ({ categories }) => {
     name: null,
     slug: null,
     data: [],
+    image: null,
   });
 
   const [landingPagesList, setLandingPagesList] = useState([]);
@@ -62,12 +63,42 @@ const Header = ({ categories }) => {
       name: null,
       slug: null,
       data: [],
+      image: null,
     });
   };
 
+  let scrollPos = 0;
+  const [visible, setVisible] = useState("");
+  useEffect(() => {
+    let lastScroll = window.scrollY;
+    const handleScroll = () => {
+      if (window.scrollY < 40)
+        return setVisible(
+          "sticky top-0 translate-y-0 transition-all duration-500"
+        );
+      const currentScroll = window.scrollY;
+      if (currentScroll > lastScroll) {
+        setVisible(
+          "sticky top-0 -translate-y-full transition-all duration-500"
+        );
+        resetActiveCategory();
+      } else {
+        setVisible("sticky top-0 translate-y-0 transition-all duration-500");
+      }
+      lastScroll = currentScroll;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <header className="max-xl:hidden top-0 sticky w-full z-[101] bg-white border-b-4 border-topHeader">
+      <header
+        className={`max-xl:hidden ${visible} w-full z-[100] relative bg-white border-b-4 border-topHeader `}
+        id="header"
+      >
         <HeaderTop />
         <div className="py-5 px-[3rem] flex items-center justify-between">
           <Link href="/">
@@ -139,9 +170,9 @@ const Header = ({ categories }) => {
         </div>
         {activeCategory?.open && (
           <div
-            className={`absolute top-[110px] right-0 w-full bg-white z-50 h-[257px] max-lg:hidden`}
+            className={`absolute top-[110px] right-0 w-full bg-white z-[100] max-lg:hidden`}
           >
-            <div className="px-20 py-6 relative h-full">
+            <div className="px-20 py-6 relative h-full max-h-[380px]">
               <div className="flex justify-between h-full">
                 <div className="flex gap-x-[10rem]">
                   <div className={`flex flex-col items-start justify-start`}>
@@ -179,8 +210,12 @@ const Header = ({ categories }) => {
                                 category?.slug === activeSubCategory?.slug
                                   ? null
                                   : category?.slug,
-                              data: category?.children ?? [],
+                              data:
+                                category?.children === activeSubCategory?.data
+                                  ? []
+                                  : category?.children,
                               open: !activeSubCategory?.open,
+                              image: category?.image ?? null,
                             });
                           }}
                         >
@@ -211,10 +246,22 @@ const Header = ({ categories }) => {
                       );
                     })}
                   </div>
-                  <div className="h-[85%]">
+                  <div className="h-full">
                     <h3 className="text-[15px] uppercase text-black font-bold mb-4">
                       {activeSubCategory?.name}
                     </h3>
+                    {activeSubCategory?.name && (
+                      <Link
+                        className={`text-[15px] text-red-500 pb-4`}
+                        href={`/kategorije/${activeSubCategory?.slug}`}
+                        onClick={() => {
+                          resetActiveCategory();
+                        }}
+                      >
+                        Pogledaj sve
+                      </Link>
+                    )}
+
                     <div className="h-full flex flex-col flex-wrap gap-x-6">
                       {activeSubCategory &&
                         activeSubCategory?.data?.map((childCategory) => (
@@ -233,7 +280,11 @@ const Header = ({ categories }) => {
                 <div className={`ml-auto`}>
                   <div className="relative aspect-video h-[200px]">
                     <Image
-                      src={activeCategory?.image ?? "/fashion-img.png"}
+                      src={
+                        activeSubCategory?.image
+                          ? activeSubCategory?.image
+                          : activeCategory?.image
+                      }
                       alt="img-modal"
                       fill
                       priority
@@ -259,8 +310,8 @@ const Header = ({ categories }) => {
         }}
         className={
           activeCategory?.open
-            ? "fixed top-0 left-0 h-screen w-screen transition-all duration-500 bg-black/50 backdrop-blur-md opacity-100 visible z-[100]"
-            : "fixed top-0 left-0 h-screen w-screen transition-all duration-500 bg-black/50 backdrop-blur-md opacity-0 invisible z-[100]"
+            ? "fixed top-0 left-0 h-screen w-screen transition-all duration-500 bg-black/50 backdrop-blur-md opacity-100 visible z-[99]"
+            : "fixed top-0 left-0 h-screen w-screen transition-all duration-500 bg-black/50 backdrop-blur-md opacity-0 invisible z-[99]"
         }
       />
     </>

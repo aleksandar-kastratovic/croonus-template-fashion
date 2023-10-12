@@ -252,11 +252,11 @@ const ProductInfo = ({
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
                 <CampaignsDetails campaignsDate={campaignsDate} />
               )}
-
               <p
-                className="mt-7 max-md:mt-[1.5rem] max-w-[90%] text-sm font-regular"
-                dangerouslySetInnerHTML={{ __html: desc?.description }}
-              ></p>
+                className={`mt-3 max-md:mt-[1.5rem] max-w-[90%] text-sm !font-normal`}
+              >
+                {product?.data?.item?.basic_data?.short_description}
+              </p>
             </div>
             {product?.product_type === "variant" && (
               <div className="pt-12 pb-7 max-md:py-[1.5rem]">
@@ -401,7 +401,7 @@ const ProductInfo = ({
                 </div>
               </ul>
             </div>
-            <div className="max-md:hidden fixed z-[99] max-w-[114px] right-0 2xl:top-[28%] top-[20%] flex flex-col gap-[30px] px-5 2xl:py-[37px] py-5 bg-white drop-shadow-2xl rounded-l-lg">
+            <div className="max-md:hidden fixed z-[95] max-w-[114px] right-0 2xl:top-[28%] top-[20%] flex flex-col gap-[30px] px-5 2xl:py-[37px] py-5 bg-white drop-shadow-2xl rounded-l-lg">
               <div className="flex flex-col items-center text-center justify-center">
                 <Image
                   src={FreeDelivery}

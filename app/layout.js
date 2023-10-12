@@ -42,7 +42,7 @@ export default async function RootLayout({ children }) {
             {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/fflate.min.js"></script>*/}
           </head>
           <body className="relative">
-            <TrackingScripts />
+            {/*<TrackingScripts />*/}
             <Header categories={categories} />
             <NavigationMobile categories={categories} />
 

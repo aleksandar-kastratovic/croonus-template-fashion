@@ -140,7 +140,7 @@ const ProductMobileGallery = ({ productGallery, color, loading, setLoading }) =>
     }
   }, [productGallery]);
   return (
-    <div className="col-span-2 max-md:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:h-[650px] lg:h-[700px] xl:h-[780px] 2xl:h-[790px] 3xl:h-[878px]">
+    <div className="col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:h-[650px] lg:h-[700px] xl:h-[780px] 2xl:h-[790px] 3xl:h-[878px]">
       <Swiper
         spaceBetween={10}
         thumbs={{
