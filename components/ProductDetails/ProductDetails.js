@@ -11,7 +11,7 @@ const ProductDetails = ({
   desc,
   path,
   breadcrumbs,
-  specification,
+  specification,declaration
 }) => {
   const [rawGallery, setRawGallery] = useState(productGallery);
   const [loading, setLoading] = useState(false);
@@ -74,10 +74,11 @@ const ProductDetails = ({
           path={path}
           setColor={setColor}
           breadcrumbs={breadcrumbs}
+          specification={specification} declaration={declaration}
         />
-        <div className={`mt-10 col-span-4`}>
-          <Tabs specification={specification} productsDesc={desc} />
-        </div>
+        {/*<div className={`mt-10 col-span-4`}>*/}
+        {/*  <Tabs specification={specification} productsDesc={desc} />*/}
+        {/*</div>*/}
       </div>
     </div>
   );

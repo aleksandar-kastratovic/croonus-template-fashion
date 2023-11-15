@@ -13,6 +13,7 @@ const CategoryPage = ({
   products,
   productsFromSection,
   slug = "",
+  text = "",
 }) => {
   const [productData, setProductData] = useState({
     products: productsFromSection?.items ?? [],
@@ -191,7 +192,7 @@ const CategoryPage = ({
         {" "}
         <div className="px-[3%] max-md:z-[51] bg-white max-md:mt-[2rem] mt-[9rem] flex items-center justify-between max-md:sticky max-md:top-[56px] max-md:py-2">
           <h1 className="font-bold text-[1.313rem] max-md:text-[1rem] text-[#191919]">
-            {singleCategory?.basic_data?.name}
+            {singleCategory?.basic_data?.name ?? text ?? ""}
           </h1>
           <div
             className="border-2  max-md:border-none max-[365px]:w-[150px] max-md:h-[40px] max-md:w-[132px] w-[243px] h-[50px] border-[#171717] flex items-center md:gap-[30px] pl-[14px] cursor-pointer"

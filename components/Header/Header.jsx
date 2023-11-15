@@ -117,35 +117,45 @@ const Header = ({ categories }) => {
             {categoriesMain?.map((category, index) => {
               const isCategory = category?.isCategory ?? true;
               return isCategory ? (
-                <button
-                  key={index}
-                  className={`${
-                    category?.id === activeCategory?.id
-                      ? "activeCategory "
-                      : "font-normal"
-                  } text-[13px] uppercase block relative w-fit text-black activeCategoryHover`}
-                  onClick={() => {
-                    setActiveCategory({
-                      id:
-                        category?.id === activeCategory?.id
-                          ? null
-                          : category?.id,
-                      name:
-                        category?.name === activeCategory?.name
-                          ? null
-                          : category?.name,
-                      slug:
-                        category?.slug === activeCategory?.slug
-                          ? null
-                          : category?.slug,
-                      data: category?.children ?? [],
-                      image: category?.image ?? null,
-                      open: !activeCategory?.open,
-                    });
-                  }}
-                >
-                  {category?.name}
-                </button>
+                category?.children ? (
+                  <button
+                    key={index}
+                    className={`${
+                      category?.id === activeCategory?.id
+                        ? "activeCategory "
+                        : "font-normal"
+                    } text-[13px] uppercase block relative w-fit text-black activeCategoryHover`}
+                    onMouseEnter={() => {
+                      setActiveCategory({
+                        id:
+                          category?.id === activeCategory?.id
+                            ? null
+                            : category?.id,
+                        name:
+                          category?.name === activeCategory?.name
+                            ? null
+                            : category?.name,
+                        slug:
+                          category?.slug === activeCategory?.slug
+                            ? null
+                            : category?.slug,
+                        data: category?.children ?? [],
+                        image: category?.image ?? null,
+                        open: !activeCategory?.open,
+                      });
+                    }}
+                  >
+                    {category?.name}
+                  </button>
+                ) : (
+                  <Link href={`/kategorije/${category?.slug_path}`} key={index}>
+                    <span
+                      className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover`}
+                    >
+                      {category?.name}
+                    </span>
+                  </Link>
+                )
               ) : (
                 <Link
                   href={`${category?.slug}`}
@@ -172,9 +182,9 @@ const Header = ({ categories }) => {
           <div
             className={`absolute top-[110px] right-0 w-full bg-white z-[100] max-lg:hidden`}
           >
-            <div className="px-20 py-6 relative h-full max-h-[380px]">
+            <div className="px-20 py-6 relative h-full max-h-[270px]">
               <div className="flex justify-between h-full">
-                <div className="flex gap-x-[10rem]">
+                <div className="flex gap-x-[10rem] max-h-[270px]">
                   <div className={`flex flex-col items-start justify-start`}>
                     {landingPagesList?.items?.map((item, index) => {
                       return (
@@ -252,7 +262,7 @@ const Header = ({ categories }) => {
                     </h3>
                     {activeSubCategory?.name && (
                       <Link
-                        className={`text-[15px] text-red-500 pb-4`}
+                        className={`text-[15px] font-bold pb-7`}
                         href={`/kategorije/${activeSubCategory?.slug}`}
                         onClick={() => {
                           resetActiveCategory();
@@ -262,7 +272,7 @@ const Header = ({ categories }) => {
                       </Link>
                     )}
 
-                    <div className="h-full flex flex-col flex-wrap gap-x-6">
+                    <div className="h-full flex mt-3 flex-col flex-wrap gap-5 max-h-[180px]">
                       {activeSubCategory &&
                         activeSubCategory?.data?.map((childCategory) => (
                           <Link
@@ -279,17 +289,19 @@ const Header = ({ categories }) => {
                 </div>
                 <div className={`ml-auto`}>
                   <div className="relative aspect-video h-[200px]">
-                    <Image
-                      src={
-                        activeSubCategory?.image
-                          ? activeSubCategory?.image
-                          : activeCategory?.image
-                      }
-                      alt="img-modal"
-                      fill
-                      priority
-                      className="object-cover"
-                    />
+                    {(activeCategory?.image || activeSubCategory?.image) && (
+                      <Image
+                        src={
+                          activeSubCategory?.image
+                            ? activeSubCategory?.image
+                            : activeCategory?.image
+                        }
+                        alt="img-modal"
+                        fill
+                        priority
+                        className="object-cover"
+                      />
+                    )}
                   </div>
                 </div>
               </div>

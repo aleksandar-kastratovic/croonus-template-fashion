@@ -31,6 +31,8 @@ const ProductInfo = ({
   variantKey,
   setColor,
   breadcrumbs,
+  specification,
+  declaration,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
   const campaignsDate =
@@ -148,6 +150,10 @@ const ProductInfo = ({
     }
   }, [productVariant]);
 
+  const [openModal, setOpenModal] = useState(false);
+
+  const [activeTab, setActiveTab] = useState(1);
+  console.log(specification);
   return (
     <>
       {product ? (
@@ -268,7 +274,7 @@ const ProductInfo = ({
                   updateProductVariant={updateProductVariant}
                   setSelectedColor={setSelectedColor}
                   productVariant={productVariant}
-                  setVariant={setVariant}
+                  setVariant={false}
                   setVariantOnOff={setVariantOnOff}
                   slug={path}
                 />
@@ -281,7 +287,12 @@ const ProductInfo = ({
                 width={30}
                 height={20}
               />
-              <span className="text-[13px] font-bold">Pomoć za veličine</span>
+              <span
+                onClick={() => setOpenModal(!openModal)}
+                className="text-[13px] font-bold"
+              >
+                Pomoć za veličine
+              </span>
             </button>
             <div className="mt-[3rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
@@ -303,6 +314,9 @@ const ProductInfo = ({
                     product?.product_type === "variant" &&
                     productVariant?.id
                   ) {
+                    addToCart();
+                  }
+                  if (product?.product_type === "single") {
                     addToCart();
                   }
                   handleTextChangeAddToCart();
@@ -380,26 +394,123 @@ const ProductInfo = ({
               </div>
             </div>
             <div className="mt-[3.2rem] max-md:mt-[2rem] max-md:flex max-md:items-center max-md:justify-center max-md:w-full">
-              <ul className="flex flex-row gap-[47px] text-[13px] relative separate">
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setDeliveryModal(true)}
-                >
-                  Dostava
+              {/*<ul className="flex flex-row gap-[47px] text-[13px] relative separate">*/}
+              {/*  <div*/}
+              {/*    className="relative cursor-pointer"*/}
+              {/*    onClick={() => setDeliveryModal(true)}*/}
+              {/*  >*/}
+              {/*    Dostava*/}
+              {/*  </div>*/}
+              {/*  <div*/}
+              {/*    className="relative cursor-pointer"*/}
+              {/*    onClick={() => setInfoModal(true)}*/}
+              {/*  >*/}
+              {/*    Informacije*/}
+              {/*  </div>*/}
+              {/*  <div*/}
+              {/*    className="relative cursor-pointer"*/}
+              {/*    onClick={() => setReturnModal(true)}*/}
+              {/*  >*/}
+              {/*    Povraćaj*/}
+              {/*  </div>*/}
+              {/*</ul>*/}
+
+              <div className={`flex flex-col divide-y md:max-w-[80%]`}>
+                {specification?.length > 0 &&
+                  specification?.map((item) => {
+                    return (
+                      <div key={item?.set?.id}>
+                        <div
+                          onClick={() =>
+                            setActiveTab(
+                              activeTab === item?.set?.id ? null : item?.set?.id
+                            )
+                          }
+                          className={`pl-3 hover:bg-[#f8f8f8] ${
+                            activeTab === item?.set?.id && "bg-[#f8f8f8]"
+                          } py-3 cursor-pointer flex items-center justify-between`}
+                        >
+                          <span className={`uppercase`}>{item?.set?.name}</span>
+                          <i
+                            className={`fa fa-solid pr-2 transition-all duration-500 fa-chevron-${
+                              activeTab === item?.set?.id ? "up" : "down"
+                            }`}
+                          />
+                        </div>
+                        {activeTab === item?.set?.id && (
+                          <div
+                            className={`py-4 pl-6 pr-3 max-h-[150px] overflow-y-auto customScroll`}
+                          >
+                            <p className={`text-sm`}>
+                              {item?.groups[0]?.attributes[0]?.values?.map(
+                                (val) => (
+                                  <p className={`font-medium`} key={val?.id}>
+                                    - {val?.name}
+                                  </p>
+                                )
+                              )}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                <div>
+                  <div
+                    onClick={() =>
+                      setActiveTab(
+                        activeTab === "declaration" ? null : "declaration"
+                      )
+                    }
+                    className={`pl-3 hover:bg-[#f8f8f8] ${
+                      activeTab === 3 && "bg-[#f8f8f8]"
+                    } py-3 cursor-pointer flex items-center justify-between`}
+                  >
+                    DEKLARACIJA{" "}
+                    <i
+                      className={`fa fa-solid pr-2 transition-all duration-500 fa-chevron-${
+                        activeTab === "declaration" ? "up" : "down"
+                      }`}
+                    />
+                  </div>
+                  {activeTab === "declaration" && (
+                    <div
+                      className={`py-4 pl-6 pr-3 max-h-[150px] overflow-y-auto customScroll`}
+                    >
+                      <p className={`text-sm`}>
+                        {declaration?.manufacture_name && (
+                          <span>
+                            Proizvođač: {declaration?.manufacture_name}
+                          </span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.country_name && (
+                          <span>
+                            Zemlja porekla: {declaration?.country_name}
+                          </span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.name && (
+                          <span>Naziv: {declaration?.name}</span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.year && (
+                          <span>Godina proizvodnje: {declaration?.year}</span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.importer_name && (
+                          <span>Uvoznik: {declaration?.importer_name}</span>
+                        )}
+                      </p>
+                    </div>
+                  )}
                 </div>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setInfoModal(true)}
-                >
-                  Informacije
-                </div>
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setReturnModal(true)}
-                >
-                  Povraćaj
-                </div>
-              </ul>
+              </div>
             </div>
             <div className="max-md:hidden fixed z-[95] max-w-[114px] right-0 2xl:top-[28%] top-[20%] flex flex-col gap-[30px] px-5 2xl:py-[37px] py-5 bg-white drop-shadow-2xl rounded-l-lg">
               <div className="flex flex-col items-center text-center justify-center">
@@ -431,22 +542,24 @@ const ProductInfo = ({
               </div>
             </div>
           </div>
-          <DeliveryModal
-            deliveryModal={deliveryModal}
-            setDeliveryModal={setDeliveryModal}
-          />
-          <InfoModal infoModal={infoModal} setInfoModal={setInfoModal} />
-          <ReturnModal
-            returnModal={returnModal}
-            setReturnModal={setReturnModal}
-          />
-          {(deliveryModal || infoModal || returnModal) && (
+          {/*<DeliveryModal*/}
+          {/*  deliveryModal={deliveryModal}*/}
+          {/*  setDeliveryModal={setDeliveryModal}*/}
+          {/*/>*/}
+          {/*<InfoModal infoModal={infoModal} setInfoModal={setInfoModal} />*/}
+          {/*<ReturnModal*/}
+          {/*  returnModal={returnModal}*/}
+          {/*  setReturnModal={setReturnModal}*/}
+          {/*/>*/}
+
+          {(deliveryModal || infoModal || returnModal || openModal) && (
             <div
               className="fixed z-[100] bg-black bg-opacity-40 top-0 left-0 w-screen h-screen transition-all duration-500"
               onClick={() => {
                 setDeliveryModal(false);
                 setInfoModal(false);
                 setReturnModal(false);
+                setOpenModal(false);
               }}
             ></div>
           )}
@@ -455,6 +568,222 @@ const ProductInfo = ({
       ) : (
         notFound()
       )}
+      <div
+        className={
+          openModal
+            ? `border-l translate-x-0 fixed top-0 right-0 bg-white transition-all duration-500 z-[100] h-screen w-[50%]`
+            : `border-l translate-x-full fixed top-0 right-0 bg-white transition-all duration-500 z-[100] h-screen w-[50%]`
+        }
+      >
+        <div className={`p-5 overflow-y-auto h-full`}>
+          <h2 className={`text-[1.2rem] w-full pb-2 border-b`}>
+            Tabele mera za žene (gornji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>XS</th>
+                  <th className={`text-left`}>S</th>
+                  <th className={`text-left`}>M</th>
+                  <th className={`text-left`}>L</th>
+                  <th className={`text-left`}>XL</th>
+                  <th className={`text-left`}>XXL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 px-2 font-bold`}>
+                    Obim grudi
+                  </td>
+                  <td className={`text-left`}>80-84</td>
+                  <td className={`text-left`}>84-88</td>
+                  <td className={`text-left`}>88-92</td>
+                  <td className={`text-left`}>92-96</td>
+                  <td className={`text-left`}>89-102</td>
+                  <td className={`text-left`}>102-106</td>
+                </tr>
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>60-64</td>
+                  <td className={`text-left`}>64-68</td>
+                  <td className={`text-left`}>68-72</td>
+                  <td className={`text-left`}>72-76</td>
+                  <td className={`text-left`}>78-82</td>
+                  <td className={`text-left`}>82-86</td>
+                </tr>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left px-2 py-2 font-bold`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>88-92</td>
+                  <td className={`text-left`}>92-96</td>
+                  <td className={`text-left`}>96-100</td>
+                  <td className={`text-left`}>100-104</td>
+                  <td className={`text-left`}>106-110</td>
+                  <td className={`text-left`}>110-114</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
+            Tabele mera za žene (donji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>27</th>
+                  <th className={`text-left`}>28</th>
+                  <th className={`text-left`}>29</th>
+                  <th className={`text-left`}>30</th>
+                  <th className={`text-left`}>31</th>
+                  <th className={`text-left`}>32</th>
+                  <th className={`text-left`}>33</th>
+                  <th className={`text-left`}>34</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>62-65</td>
+                  <td className={`text-left`}>65-68</td>
+                  <td className={`text-left`}>68-72</td>
+                  <td className={`text-left`}>72-74</td>
+                  <td className={`text-left`}>74-78</td>
+                  <td className={`text-left`}>78-82</td>
+                  <td className={`text-left`}>82-28</td>
+                  <td className={`text-left`}>68-92</td>
+                </tr>
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 pl-2 font-bold`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>90-93</td>
+                  <td className={`text-left`}>93-96</td>
+                  <td className={`text-left`}>96-99</td>
+                  <td className={`text-left`}>99-102</td>
+                  <td className={`text-left`}>102-106</td>
+                  <td className={`text-left`}>105-110</td>
+                  <td className={`text-left`}>110-114</td>
+                  <td className={`text-left`}>114-118</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
+            Tabele mera za muškarce (gornji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>S</th>
+                  <th className={`text-left`}>M</th>
+                  <th className={`text-left`}>L</th>
+                  <th className={`text-left`}>XL</th>
+                  <th className={`text-left`}>2XL</th>
+                  <th className={`text-left`}>3XL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim grudi
+                  </td>
+                  <td className={`text-left`}>96-100</td>
+                  <td className={`text-left`}>100-104</td>
+                  <td className={`text-left`}>104-108</td>
+                  <td className={`text-left`}>110-114</td>
+                  <td className={`text-left`}>114-118</td>
+                  <td className={`text-left`}>118-112</td>
+                </tr>
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 pl-2 font-bold`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>80-84</td>
+                  <td className={`text-left`}>84-88</td>
+                  <td className={`text-left`}>88-92</td>
+                  <td className={`text-left`}>94-98</td>
+                  <td className={`text-left`}>98-102</td>
+                  <td className={`text-left`}>102-104</td>
+                </tr>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>98-102</td>
+                  <td className={`text-left`}>102-106</td>
+                  <td className={`text-left`}>106-110</td>
+                  <td className={`text-left`}>112-116</td>
+                  <td className={`text-left`}>116-120</td>
+                  <td className={`text-left`}>120-124</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
+            Tabele mera za muškarce (donji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>30</th>
+                  <th className={`text-left`}>31</th>
+                  <th className={`text-left`}>32</th>
+                  <th className={`text-left`}>33</th>
+                  <th className={`text-left`}>34</th>
+                  <th className={`text-left`}>36</th>
+                  <th className={`text-left`}>38</th>
+                  <th className={`text-left`}>40</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>78-81</td>
+                  <td className={`text-left`}>81-84</td>
+                  <td className={`text-left`}>84-87</td>
+                  <td className={`text-left`}>87-90</td>
+                  <td className={`text-left`}>90-94</td>
+                  <td className={`text-left`}>94-98</td>
+                  <td className={`text-left`}>98-102</td>
+                  <td className={`text-left`}>102-106</td>
+                </tr>
+
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>96-99</td>
+                  <td className={`text-left`}>99-102</td>
+                  <td className={`text-left`}>102-105</td>
+                  <td className={`text-left`}>105-108</td>
+                  <td className={`text-left`}>108-112</td>
+                  <td className={`text-left`}>112-116</td>
+                  <td className={`text-left`}>116-120</td>
+                  <td className={`text-left`}>120-124</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

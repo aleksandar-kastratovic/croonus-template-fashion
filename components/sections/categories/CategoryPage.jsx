@@ -9,13 +9,12 @@ import Thumb from "@/components/Thumb/Thumb";
 import Filters from "./Filters";
 import FiltersMobile from "./FilterMobile";
 
-const CategoryPage = ({ filter, singleCategory, products }) => {
+const CategoryPage = ({ filter, singleCategory, products, text, slug }) => {
   useEffect(() => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
     }
   }, []);
-  console.log(filter);
   const [productData, setProductData] = useState({
     products: products?.items,
     pagination: products?.pagination,
@@ -33,7 +32,9 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   useEffect(() => {
     const getProducts = async (limit, page, sort, selectedFilters) => {
       const getProductList = await list(
-        `/products/category/list/${singleCategory?.id}`,
+        !slug
+          ? `/products/category/list/${singleCategory?.id}`
+          : `/products/section/list/${slug}`,
         {
           sort: sort,
           page: page,
@@ -54,9 +55,8 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
   }, [limit, sort, page, selectedFilters]);
 
   useEffect(() => {
-    console.log("TU SAM");
     if (changeFilters) {
-      post(`/products/category/filters/${singleCategory?.id}`, {
+      post(!slug ? `/products/category/filters/${singleCategory?.id}`:`/products/section/filters/${slug}`, {
         filters: tempSelectedFilters,
       }).then((response) => {
         const lastSelectedFilterValues = tempSelectedFilters?.find((item) => {
@@ -138,7 +138,7 @@ const CategoryPage = ({ filter, singleCategory, products }) => {
       <div className="mt-[30px] md:mt-[80px] flex flex-col items-center justify-center">
         <div className="flex flex-row max-sm:flex-col items-center justify-center">
           <h1 className="text-[23px] md:text-[29px] font-normal uppercase">
-            {singleCategory?.basic_data?.name}
+            {singleCategory?.basic_data?.name ?? text ?? ""}
           </h1>
           <span className="text-[23px] md:text-[29px] font-normal uppercase">
             &nbsp;Kolekcija

@@ -128,11 +128,15 @@ const IndexSlider = ({ banners, mobileBanners }) => {
                         </h1>
                       )}
                       {banner?.subtitle && (
-                        <h1 className="text-white max-sm:text-xl text-4xl font-bold uppercase">
+                        <h2 className="text-white max-sm:text-xl text-4xl font-bold uppercase">
                           {banner?.subtitle}
-                        </h1>
+                        </h2>
                       )}
-
+                      {banner?.text && (
+                          <p className="text-white text-left sm:max-w-[60%] max-sm:text-[0.925rem] text-base font-normal">
+                            {banner?.text}
+                          </p>
+                      )}
                       {banner?.button && (
                         <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-2 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white max-sm:w-[250px]">
                           {banner?.button}
@@ -146,9 +150,9 @@ const IndexSlider = ({ banners, mobileBanners }) => {
           })}
         </div>
       </div>
-      <div className="relative">
+      <div className="relative max-sm:hidden">
         <div className="absolute max-sm:-top-[1rem] md:-top-[2rem] xl:-top-[2rem] 2xl:-top-20  w-full flex items-center justify-center z-[50]">
-          {banners.map((banner, index) => (
+          {banners?.map((banner, index) => (
             <div
               key={index}
               className={`${
@@ -158,7 +162,7 @@ const IndexSlider = ({ banners, mobileBanners }) => {
             ></div>
           ))}
 
-          {banners.map((banner, index) => (
+          {banners?.map((banner, index) => (
             <div
               key={index}
               className="absolute flex gap-10 items-center bottom-6"

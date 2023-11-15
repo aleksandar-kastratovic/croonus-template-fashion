@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -42,6 +42,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
       }
     });
   };
+
   const [swiper, setSwiper] = useState(null);
   const [loading, setLoading] = useState({
     id: null,
@@ -164,7 +165,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
           }
         >
           {" "}
-          <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative hoveredColor">
+          <div className="max-md:h-[250px] md:h-[450px] lg:h-[450px] 2xl:h-[500px] item relative hoveredColor">
             <Swiper
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
@@ -202,16 +203,17 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                     className="z-[100]"
                   >
                     {image && (
-                      <Image
-                        src={convertHttpToHttps(image)}
-                        alt={product?.basic_data?.name}
-                        fill
-                        sizes={
-                          "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
-                        }
-                        priority
-                        className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                      />
+                        <Image
+                            src={convertHttpToHttps(image)}
+                            alt={product?.basic_data?.name}
+                            fill
+                            sizes={
+                              "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                            }
+                            priority
+                            className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                        />
+
                     )}
                   </Link>
                 </SwiperSlide>
@@ -399,7 +401,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   product?.basic_data?.name
                 );
               }}
-              className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
+              className={`hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer`}
             >
               <Image
                 src={Wishlist}
@@ -521,15 +523,15 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
               spaceBetween: 10,
             },
             768: {
-              slidesPerView: 2,
+              slidesPerView: 2.5,
               spaceBetween: 10,
             },
             1024: {
-              slidesPerView: 3,
+              slidesPerView: 4,
               spaceBetween: 10,
             },
             1680: {
-              slidesPerView: 4,
+              slidesPerView: 5,
               spaceBetween: 10,
             },
           }}
