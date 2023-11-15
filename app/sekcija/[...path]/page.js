@@ -1,5 +1,5 @@
 import { get, list, post } from "@/app/api/api";
-import CategoryPage from "@/components/CategoryPage/CategoryPage";
+import CategoryPage from "@/components/sections/categories/CategoryPage";
 
 const fetchFilters = async (slug) => {
   const fetchFilters = await post(`/products/section/filters/${slug}`).then(
@@ -30,11 +30,7 @@ const Section = async ({ params: { path } }) => {
 
   return (
     <>
-      <CategoryPage
-        filter={filters}
-        productsFromSection={productsFromSection}
-        slug={slug}
-      />
+      <CategoryPage text={"Preporučeno"} slug={slug} filter={filters}/>
     </>
   );
 };

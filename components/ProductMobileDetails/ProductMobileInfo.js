@@ -27,6 +27,8 @@ const ProductInfo = ({
   variantKey,
   setColor,
   breadcrumbs,
+  specification,
+  declaration,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
   const campaignsDate =
@@ -131,7 +133,7 @@ const ProductInfo = ({
       setText2("Kupi odmah");
     }
   }, [productVariant]);
-
+  const [activeTab, setActiveTab] = useState(1);
   return (
     <>
       {product ? (
@@ -230,7 +232,7 @@ const ProductInfo = ({
                   updateProductVariant={updateProductVariant}
                   setSelectedColor={setSelectedColor}
                   productVariant={productVariant}
-                  setVariant={setVariant}
+                  setVariant={false}
                   setVariantOnOff={setVariantOnOff}
                   slug={path}
                 />
@@ -337,27 +339,103 @@ const ProductInfo = ({
                 <p className="text-sm regular">Povrat do 14 dana</p>
               </div>
             </div>
-            <div className="mt-[5.125rem] max-md:mt-[2rem] max-md:flex max-md:items-center max-md:justify-center max-md:w-full">
-              <ul className="flex flex-row gap-[47px] text-[13px] relative separate">
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => setDeliveryModal(true)}
-                >
-                  Dostava
+            <div className="mt-[5.125rem] max-md:mt-[2rem] max-md:w-full">
+              <div className={`flex flex-col divide-y`}>
+                {specification?.length > 0 &&
+                  specification?.map((item) => {
+                    return (
+                      <div key={item?.set?.id}>
+                        <div
+                          onClick={() =>
+                            setActiveTab(
+                              activeTab === item?.set?.id ? null : item?.set?.id
+                            )
+                          }
+                          className={`pl-3 hover:bg-[#f8f8f8] ${
+                            activeTab === item?.set?.id && "bg-[#f8f8f8]"
+                          } py-3 cursor-pointer flex items-center justify-between`}
+                        >
+                          <span className={`uppercase`}>{item?.set?.name}</span>
+                          <i
+                            className={`fa fa-solid pr-2 transition-all duration-500 fa-chevron-${
+                              activeTab === item?.set?.id ? "up" : "down"
+                            }`}
+                          />
+                        </div>
+                        {activeTab === item?.set?.id && (
+                          <div
+                            className={`py-4 pl-6 pr-3 max-h-[150px] overflow-y-auto customScroll`}
+                          >
+                            <p className={`text-sm`}>
+                              {item?.groups[0]?.attributes[0]?.values?.map(
+                                (val) => (
+                                  <p className={`font-medium`} key={val?.id}>
+                                    - {val?.name}
+                                  </p>
+                                )
+                              )}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                <div>
+                  <div
+                    onClick={() =>
+                      setActiveTab(
+                        activeTab === "declaration" ? null : "declaration"
+                      )
+                    }
+                    className={`pl-3 hover:bg-[#f8f8f8] ${
+                      activeTab === 3 && "bg-[#f8f8f8]"
+                    } py-3 cursor-pointer flex items-center justify-between`}
+                  >
+                    DEKLARACIJA{" "}
+                    <i
+                      className={`fa fa-solid pr-2 transition-all duration-500 fa-chevron-${
+                        activeTab === "declaration" ? "up" : "down"
+                      }`}
+                    />
+                  </div>
+                  {activeTab === "declaration" && (
+                    <div
+                      className={`py-4 pl-6 pr-3 max-h-[150px] overflow-y-auto customScroll`}
+                    >
+                      <p className={`text-sm`}>
+                        {declaration?.manufacture_name && (
+                          <span>
+                            Proizvođač: {declaration?.manufacture_name}
+                          </span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.country_name && (
+                          <span>
+                            Zemlja porekla: {declaration?.country_name}
+                          </span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.name && (
+                          <span>Naziv: {declaration?.name}</span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.year && (
+                          <span>Godina proizvodnje: {declaration?.year}</span>
+                        )}
+                      </p>
+                      <p className={`text-sm`}>
+                        {declaration?.importer_name && (
+                          <span>Uvoznik: {declaration?.importer_name}</span>
+                        )}
+                      </p>
+                    </div>
+                  )}
                 </div>
-                {/*<div*/}
-                {/*  className="relative cursor-pointer"*/}
-                {/*  onClick={() => setInfoModal(true)}*/}
-                {/*>*/}
-                {/*  Informacije*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*  className="relative cursor-pointer"*/}
-                {/*  onClick={() => setReturnModal(true)}*/}
-                {/*>*/}
-                {/*  Povraćaj*/}
-                {/*</div>*/}
-              </ul>
+              </div>
             </div>
             <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 top-[30%] flex flex-col gap-[30px] px-5 py-[37px] bg-white drop-shadow-2xl rounded-l-lg">
               <div className="flex flex-col items-center text-center justify-center">

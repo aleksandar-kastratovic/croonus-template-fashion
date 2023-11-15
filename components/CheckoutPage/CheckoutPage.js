@@ -85,9 +85,6 @@ const CheckoutPage = ({
     "zip_code",
     "object_number",
     "town",
-    "height",
-    "weight",
-    "product_size_agreement",
     "agreed",
     "shipping_first_name",
     "shipping_last_name",
@@ -240,7 +237,7 @@ const CheckoutPage = ({
 
         note: formData.note,
         gcaptcha: token,
-
+        id_country: 193,
         accept_rules: 1,
       };
       if (errors.length === 0) {
@@ -250,6 +247,13 @@ const CheckoutPage = ({
       post("/checkout/one-page", ret)
         .then((response) => {
           const creditCardForm = response?.payload?.payment_provider_data?.form;
+          const paypalForm = response?.payload?.payment_provider_data?.form;
+
+          if (paypalForm && paypalForm?.includes("paypal")) {
+            //redirect
+            window.location.href = paypalForm;
+          }
+
           const orderToken = response?.payload?.order?.order_token;
           if (response?.code === 200) {
             if (creditCardForm) {
@@ -293,7 +297,7 @@ const CheckoutPage = ({
     };
     getSummary();
   }, [cartItems]);
-
+  console.log(formData.payment);
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={true} />

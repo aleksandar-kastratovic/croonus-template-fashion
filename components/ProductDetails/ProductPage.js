@@ -38,13 +38,20 @@ const getSpecification = async (slug) => {
   );
 };
 
+const getDeclaration = async (slug) => {
+  return await get(`/product-details/declaration/${slug}`).then(
+    (res) => res?.payload
+  );
+};
+
 const ProductPage = async ({ path }) => {
   const product = await getProduct(path);
   const productGallery = await getProductGallery(path);
   const desc = await getProductLongDescription(path);
   const newProducts = await getNewProducts();
   const breadcrumbs = await getBreadcrumbs(path);
-const specification = await getSpecification(path);
+  const specification = await getSpecification(path);
+  const declaration = await getDeclaration(path);
   return (
     <div className="">
       <div className="hidden lg:block">
@@ -55,6 +62,7 @@ const specification = await getSpecification(path);
           path={path}
           breadcrumbs={breadcrumbs}
           specification={specification}
+          declaration={declaration}
         />
       </div>
       <div className="max-lg:block hidden">
@@ -65,6 +73,7 @@ const specification = await getSpecification(path);
           path={path}
           breadcrumbs={breadcrumbs}
           specification={specification}
+          declaration={declaration}
         />
       </div>
 
