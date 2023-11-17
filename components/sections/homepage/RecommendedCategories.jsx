@@ -9,7 +9,9 @@ const RecommendedCategories = async ({ categories }) => {
         <Link
           className="w-full h-[250px] lg:h-[500px] relative"
           key={category.id}
-          href={`/promo/${category?.url}`}
+          href={
+            category?.url ? `/promo/${category?.url}` : "/stranica-u-izradi"
+          }
         >
           <Image
             src={category?.image}

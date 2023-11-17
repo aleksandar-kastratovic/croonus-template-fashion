@@ -38,7 +38,7 @@ const Footer = () => {
                 </div>
                 <div className="flex max-xl:mt-10 items-center gap-[1.938rem]">
                     <a
-                        href="https://www.instagram.com/pazarishop/?hl=en"
+                        href="https://www.instagram.com/Croonusshop/?hl=en"
                         target={"_blank"}
                     >
                         <Image
@@ -62,7 +62,7 @@ const Footer = () => {
                             className="hover:scale-110 transition-all duration-300"
                         />
                     </a>
-                    <a href="https://www.facebook.com/pazarishop/" target={"_blank"}>
+                    <a href="https://www.facebook.com/Croonusshop/" target={"_blank"}>
                         <Image
                             src='/facebook.png'
                             width={30}

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import Croonus from "@/public/logo.png";
+import Croonus from "@/public/logo.svg";
 import Map from "@/components/MaloprodajePage/Map";
 
 const MaloprodajePage = () => {

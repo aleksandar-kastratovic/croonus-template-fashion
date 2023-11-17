@@ -61,7 +61,7 @@ export const metadata = {
   description: "Dobrodošli na Fashion Template Online Shop",
 
   robots: "index, follow",
-  og: {
+  openGraph: {
     title: "Fashion Template - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na Fashion Template Online Shop",
     type: "website",

@@ -153,7 +153,7 @@ const ZamenaZaIstiArtikal = () => {
             <span>&nbsp;</span>kurirskom službom
           </strong>
           , i da D-Espress-u obavezno napomenete, da se &scaron;alje O
-          TRO&Scaron;KU PAZARI-ja PREKO UGOVORA.
+          TRO&Scaron;KU Croonus-ja PREKO UGOVORA.
           <br />U slučaju da nam artikal po&scaron;aljete nekom drugom kurirskom
           službom, po&scaron;iljka neće biti primljena, već će Vam biti vraćena,
           i u tom slučaju sve tro&scaron;kove slanja i povrata ide na Va&scaron;
@@ -174,7 +174,7 @@ const ZamenaZaIstiArtikal = () => {
         </p>
         <p>
           Artikal ne možete samoinicijativno menjati u nekom od maloprodajnih
-          objekata PAZARI-ja.
+          objekata Croonus-ja.
         </p>
         <p>
           Artikal nije moguće menjati ukoliko je no&scaron;en &ndash; &scaron;to

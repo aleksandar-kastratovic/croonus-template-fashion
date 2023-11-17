@@ -11,7 +11,7 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "api.pazarishop.croonus.com",
+      "api.Croonusshop.croonus.com",
       "192.168.1.174",
       "192.168.1.83",
       "api.staging.croonus.com",

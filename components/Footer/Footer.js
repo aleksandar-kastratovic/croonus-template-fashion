@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import Image1 from "../../assets/Icons/master.png";
-import Image2 from "../../assets/Icons/visa.png";
-import Image3 from "../../assets/Icons/bancaIntesa.png";
-import Image4 from "../../assets/Icons/img1.png";
-import Image5 from "../../assets/Icons/img.png";
-import Image6 from "../../assets/Icons/img3.png";
-import Image7 from "../../assets/Icons/img4.png";
-import Image8 from "../../assets/Icons/american.png";
+import Image1 from "../../assets/Icons/master (1).webp";
+import Image2 from "../../assets/Icons/visa.webp";
+import Image3 from "../../assets/Icons/bancaIntesa.webp";
+import Image4 from "../../assets/Icons/img1.webp";
+import Image5 from "../../assets/Icons/img.webp";
+import Image6 from "../../assets/Icons/img3.webp";
+import Image7 from "../../assets/Icons/img4.webp";
+import Image8 from "../../assets/Icons/american.webp";
 import Instagram from "../../assets/Icons/instagram.png";
 import Youtube from "../../assets/Icons/youtube.png";
 import Facebook from "../../assets/Icons/facebook.png";
@@ -49,7 +49,7 @@ const Footer = () => {
         </div>
         <div className="flex max-xl:mt-10 items-center gap-[1.938rem]">
           <a
-            href="https://www.instagram.com/Croonusshop/?hl=en"
+            href="https://www.instagram.com/lifeatcroonus/"
             target={"_blank"}
           >
             <Image
@@ -61,7 +61,7 @@ const Footer = () => {
             />
           </a>
           <a
-            href="https://www.youtube.com/channel/UCP3vHNQyS-6mJTX_l-VfaZw"
+            href="https://www.youtube.com/channel/UCTCxl3sqxPqafMhOsKVVEMQ/videos?view_as=subscriber"
             target={"_blank"}
           >
             {" "}
@@ -73,7 +73,7 @@ const Footer = () => {
               className="hover:scale-110 transition-all duration-300"
             />
           </a>
-          <a href="https://www.facebook.com/Croonusshop/" target={"_blank"}>
+          <a href="https://www.facebook.com/Croonus/" target={"_blank"}>
             <Image
               src={Facebook}
               width={30}
@@ -307,7 +307,7 @@ const Footer = () => {
           </Link>
         </div>
         <p className="text-[0.813rem] font-normal text-[#191919] ">
-          &copy; {new Date().getFullYear()} Croonus.rs | Sva prava zadržana.
+          &copy; {new Date().getFullYear()} Croonus.com | Sva prava zadržana.
           Powered by{" "}
           <a
             href="https://www.croonus.com"

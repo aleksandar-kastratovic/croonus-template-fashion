@@ -12,7 +12,7 @@ import Wishlist from "../../assets/Icons/heart.png";
 import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
-import { get, post } from "@/app/api/api";
+import { get, list, post } from "@/app/api/api";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import { useCartContext } from "@/app/api/cartContext";
 
@@ -35,13 +35,22 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
           autoClose: 2000,
         });
       } else {
-        toast.error("Došlo je do nepoznate greške.", {
+        toast.warn("Proizvod je već dodat u listu želja!", {
           position: "top-center",
           autoClose: 2000,
         });
       }
     });
   };
+  const [allFromWishlist, setAllFromWishlist] = useState([]);
+  useEffect(() => {
+    const getAllFromWishlist = async () => {
+      return await list(`/wishlist`).then((response) => {
+        setAllFromWishlist(response?.payload?.items);
+      });
+    };
+    getAllFromWishlist();
+  }, [addToWishlist]);
 
   const [swiper, setSwiper] = useState(null);
   const [loading, setLoading] = useState({
@@ -147,6 +156,10 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
       return variant?.attribute?.slug === "boja";
     });
 
+    const isInWishlist = (allFromWishlist ?? [])?.find((item) => {
+      return item?.wishlist?.id_product === product?.basic_data?.id_product;
+    });
+
     return (
       <SwiperSlide key={product?.basic_data?.id} className="hoveredColor">
         <div
@@ -203,17 +216,16 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                     className="z-[100]"
                   >
                     {image && (
-                        <Image
-                            src={convertHttpToHttps(image)}
-                            alt={product?.basic_data?.name}
-                            fill
-                            sizes={
-                              "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
-                            }
-                            priority
-                            className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-                        />
-
+                      <Image
+                        src={convertHttpToHttps(image)}
+                        alt={product?.basic_data?.name}
+                        fill
+                        sizes={
+                          "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                        }
+                        priority
+                        className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                      />
                     )}
                   </Link>
                 </SwiperSlide>
@@ -401,14 +413,16 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   product?.basic_data?.name
                 );
               }}
-              className={`hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer`}
+              className={`hover:bg-red-500 ${
+                isInWishlist && "bg-red-500"
+              } max-md:hidden rounded-full p-1 favorites cursor-pointer`}
             >
               <Image
                 src={Wishlist}
                 alt="wishlist"
                 width={15}
                 height={15}
-                className="favorite"
+                className={`favorite ${isInWishlist && "favorited"}`}
               />
             </div>
           </div>
@@ -564,6 +578,11 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
       const variantOptionColor = product?.variant_options?.find((variant) => {
         return variant?.attribute?.slug === "boja";
       });
+
+      const isInWishlist = (allFromWishlist ?? [])?.find((item) => {
+        return item?.wishlist?.id_product === product?.basic_data?.id_product;
+      });
+
       return (
         <div
           className="col-span-1 relative item hoveredColor"
@@ -853,14 +872,16 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   product?.basic_data?.name
                 );
               }}
-              className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
+              className={`hover:bg-red-500 ${
+                isInWishlist && "bg-red-500"
+              } max-md:hidden rounded-full p-1 favorites cursor-pointer`}
             >
               <Image
                 src={Wishlist}
                 alt="wishlist"
                 width={15}
                 height={15}
-                className="favorite"
+                className={`favorite ${isInWishlist && "favorited"}`}
               />
             </div>
           </div>

@@ -23,33 +23,33 @@ export const generateMetadata = async ({ params: { path } }) => {
   // const productImage = await getProductGallery(path[path?.length - 1]);
   return {
     title: product?.name,
-    description: product?.short_description ?? "Pazari online Shop",
+    description: product?.short_description ?? "Croonus online Shop",
 
     openGraph: {
       title: product?.name,
-      description: product?.short_description ?? "Pazari online Shop",
+      description: product?.short_description ?? "Croonus online Shop",
       site_name: "croonus.com",
     },
 
     twitter: {
-      handle: "@pazarirs",
-      site: "@pazarirs",
+      handle: "@Croonusrs",
+      site: "@Croonusrs",
       cardType: "summary_large_image",
     },
     additionalMetaTags: [
       {
         name: "keywords",
         content: [
-          "pazari",
+          "Croonus",
           "online",
           "shop",
           "croonus.com",
           "farmerke",
           "trenerke",
           "dukserice",
-          "pazari obuca",
+          "Croonus obuca",
           "obuca",
-          "pazari online",
+          "Croonus online",
         ].join(", "),
       },
     ],

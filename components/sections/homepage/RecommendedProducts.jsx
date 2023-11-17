@@ -39,8 +39,8 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
                       <button
                           className={
                             selectedCategory === uniqueCategories[0]?.id
-                                ? `font-normal w-fit relative active-button  text-lg activeCategory text-black`
-                                : `font-normal w-fit relative  text-lg text-black`
+                                ? `font-normal activeCategoryHover w-fit relative active-button  text-lg activeCategory text-black`
+                                : `font-normal activeCategoryHover w-fit relative  text-lg text-black`
                           }
                           onClick={(e) => {
                             e.preventDefault();
