@@ -4,16 +4,16 @@ export const metadata = () => {
       "Najčešća pitanja - croonus.com - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
-      "pazari",
+      "Croonus",
       "online",
       "shop",
       "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
-      "pazari obuca",
+      "Croonus obuca",
       "obuca",
-      "pazari online",
+      "Croonus online",
     ],
   };
 };
@@ -108,7 +108,7 @@ const FAQ = () => {
               ipak menjate ili vraćate artikal, tro&scaron;kove povraćaja
               snosite Vi. Ukoliko Vam je stigla pogre&scaron;na veličina ili
               pogre&scaron;an artikal na&scaron;om gre&scaron;kom,
-              tro&scaron;kove povraćaja snosi PAZARI. Vi&scaron;e informacija o
+              tro&scaron;kove povraćaja snosi Croonus. Vi&scaron;e informacija o
               zameni kupljenog proizvoda možete pronaći na stranici &bdquo;
               <u>
                 <Link href="/reklamacije">Reklamacije&ldquo;</Link>

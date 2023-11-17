@@ -4,16 +4,16 @@ export const metadata = () => {
       "Uslovi korišćenja - croonus.com - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
-      "pazari",
+      "Croonus",
       "online",
       "shop",
       "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
-      "pazari obuca",
+      "Croonus obuca",
       "obuca",
-      "pazari online",
+      "Croonus online",
     ],
   };
 };
@@ -33,13 +33,11 @@ const UsloviKoriscenja = () => {
       </p>
       <p>Postavljanjem, upravljanjem i prodajom preko Veb-sajta rukovodi:</p>
       <p>
-        HARIS BEKTA&Scaron;EVIĆ PR TRGOVINA NA MALO POSREDSTVOM INTERNETA PAZARI
-        NOVI PAZAR
+       TRGOVINA NA MALO POSREDSTVOM INTERNETA Croonus
+
       </p>
-      <p>Paralovo bb, 36300 Novi Pazar</p>
-      <p>MB: 65242605</p>
-      <p>PIB: 111178213</p>
-      <p>Email:&nbsp;info@croonus.com&nbsp;(u daljem tekstu: PAZARI ili mi).</p>
+
+      <p>Email:&nbsp;info@croonus.com&nbsp;(u daljem tekstu: Croonus ili mi).</p>
       <p>
         <br />
       </p>
@@ -53,7 +51,7 @@ const UsloviKoriscenja = () => {
         <br />
       </p>
       <p>
-        PAZARI može da izmeni sadržaj ovih Uslova kori&scaron;ćenja, asortiman
+        Croonus može da izmeni sadržaj ovih Uslova kori&scaron;ćenja, asortiman
         proizvoda, cene proizvoda, kao i druge podatke koji se odnose na
         Veb-sajt, zbog čega su korisnici Veb-sajta dužni da prilikom svake
         posete pažljivo pregledaju sadržaj Veb-sajta. Prilikom kori&scaron;ćenja
@@ -62,9 +60,7 @@ const UsloviKoriscenja = () => {
         kori&scaron;ćenja i svrhom i načinom obrade Va&scaron;ih ličnih podataka
         molimo Vas da ne koristite Veb-sajt. Ako imate pitanja u vezi sa
         Uslovima kori&scaron;ćenja možete da nas kontaktirati na email
-        adresu:&nbsp;info@croonus.com&nbsp;ili adresu sedi&scaron;ta PAZARI Novi
-        Pazar: Paralovo bb, 36300 Novi Pazar odnosno putem broja telefona:
-        060/588-8564.
+        adresu:&nbsp;info@croonus.com&nbsp;ili adresu sedi&scaron;ta Croonus Cacak
       </p>
       <p>
         <br />
@@ -73,7 +69,7 @@ const UsloviKoriscenja = () => {
         <strong>Odricanje od odgovornosti</strong>
       </h5>
       <p>
-        PAZARI ne preuzima odgovornost za &scaron;tetu koju korisnik pretrpi
+        Croonus ne preuzima odgovornost za &scaron;tetu koju korisnik pretrpi
         usled: toga &scaron;to nije pročitao Uslove kori&scaron;ćenja;
         nemogućnosti da se izvr&scaron;i kupovina preko Veb-sajta iz opravdanih
         razloga; nemogućnosti kori&scaron;ćenja Veb-sajta zbog održavanja,
@@ -107,7 +103,7 @@ const UsloviKoriscenja = () => {
         su tačni, važeći i potpuni.
       </p>
       <p>
-        Naručivanjem proizvoda preko Veb-sajta pristajete da PAZARI upotrebljava
+        Naručivanjem proizvoda preko Veb-sajta pristajete da Croonus upotrebljava
         Va&scaron;e podatke, kao i da Vas kontaktira u svrhu izvr&scaron;enja
         Va&scaron;e narudžbine, ukoliko je to potrebno, a u skladu sa
         Obave&scaron;tenjem o obradi podataka o ličnosti. Ukoliko ne navedete
@@ -125,10 +121,10 @@ const UsloviKoriscenja = () => {
       <p>
         Prezentacija proizvoda na Veb-sajtu predstavlja ponudu za zaključenje
         ugovora o kupoprodaji proizvoda. &nbsp;Ugovor o kupoprodaji zaključujete
-        sa PAZARI kao prodavcem. Zaključenjem ugovora o kupoprodaji sa PAZARI
+        sa Croonus kao prodavcem. Zaključenjem ugovora o kupoprodaji sa Croonus
         imate sva prava predviđena važećim zakonima. Naručivanjem proizvoda
         preko Veb-sajta korisnik se obavezuje da izvr&scaron;i plaćanje
-        PAZARI-iju.
+        Croonus-iju.
       </p>
       <p>
         <br />
@@ -197,7 +193,7 @@ const UsloviKoriscenja = () => {
         Nakon obavljene narudžbine (kao &scaron;to je u prethodnom delu detaljno
         opisano), dobićete na svoj email obave&scaron;tenje u kome stoje svi
         podaci o narudžbini. Međutim, ukoliko iz nekog razloga isporuka naručene
-        robe ne bude moguća, PAZARI je dužan da Vas bez odlaganja o tome
+        robe ne bude moguća, Croonus je dužan da Vas bez odlaganja o tome
         obavesti.
       </p>
       <p>
@@ -276,7 +272,7 @@ const UsloviKoriscenja = () => {
       <p>
         Nakon &scaron;to ste izvr&scaron;ili naručivanje, status svoje
         narudžbine možete pratiti putem email obave&scaron;tenja koje ćete
-        dobiti od PAZARI ili putem stranice &bdquo;moj nalog&ldquo; na
+        dobiti od Croonus ili putem stranice &bdquo;moj nalog&ldquo; na
         Veb-sajtu, ali samo ukoliko ste registrovani korisnik Veb-sajta.
       </p>
       <p>
@@ -301,7 +297,7 @@ const UsloviKoriscenja = () => {
         dali za dostavu.
       </p>
       <p>
-        PAZARI će biti obave&scaron;ten da ste po&scaron;iljku primili, nakon
+        Croonus će biti obave&scaron;ten da ste po&scaron;iljku primili, nakon
         čega po&scaron;iljka dobija status &bdquo;zavr&scaron;eno&ldquo;.
       </p>
       <p>
@@ -314,7 +310,7 @@ const UsloviKoriscenja = () => {
       </p>
       <p>
         Va&scaron;a po&scaron;iljka će Vam biti dostavljena putem dostavljača sa
-        kojim PAZARI ima zaključen ugovor na adresu koju ste naveli za isporuku,
+        kojim Croonus ima zaključen ugovor na adresu koju ste naveli za isporuku,
         i to u periodu između 8h &ndash; 16h svakog radnog dana (subotom i
         nedeljom se ne vr&scaron;i isporuka). Iz tog razloga Vas molimo da u tom
         periodu obezbedite da na adresi koju ste naznačili za isporuku bude
@@ -326,7 +322,7 @@ const UsloviKoriscenja = () => {
         neuspe&scaron;an dostavljač će Vas pozvati telefonom na broj koji ste
         ostavili prilikom kreiranja narudžbine i ugovoriti sa Vama novi termin
         isporuke. Ukoliko ni tada ne bude mogla da se izvr&scaron;i isporuka,
-        po&scaron;iljka se vraća nama (PAZARI).
+        po&scaron;iljka se vraća nama (Croonus).
       </p>
       <p>
         Prilikom preuzimanja po&scaron;iljke, potrebno je da vizuelno pregledate
@@ -361,29 +357,29 @@ const UsloviKoriscenja = () => {
         popunjavanjem i slanjem izjave o odustanku od ugovora zaključenog na
         daljinu (dalje: obrazac za odustanak od ugovora), koji se nalazi na
         Veb-sajtu ili popunjavanjem i slanjem obrazca za odustanak od ugovora,
-        koji ste dobili uz kupljenu robu, po&scaron;tom na adresu PAZARI-ija.
+        koji ste dobili uz kupljenu robu, po&scaron;tom na adresu Croonus-ija.
         Takođe, od ugovora o kupoprodaji možete odustati i na drugi nedvosmislen
         način.
       </p>
       <p>
         Izjava o odustanku od ugovora proizvodi pravno dejstvo od dana kada je
-        poslata PAZAR-iju i smatra se blagovremenom ako je poslata u roku od 14
+        poslata Croonusu i smatra se blagovremenom ako je poslata u roku od 14
         dana od dana kada je roba dostavljena Vama, odnosno trećem licu koje ste
         odredili kao primaoca.
       </p>
       <p>
         U slučaju da odustanete od ugovora vi snosite tro&scaron;kove vraćanja
         robe i dužni ste da u roku od 14 dana od dana odustajanja od ugovora
-        vratite PAZARI-iju kupljenu robu.
+        vratite Croonus-iju kupljenu robu.
       </p>
       <p>
-        PAZARI je dužan da bez odlaganja, a najkasnije u roku od 14 dana od dana
+        Croonus je dužan da bez odlaganja, a najkasnije u roku od 14 dana od dana
         kada je primio obrazac za odustanak od ugovora izvr&scaron;i povraćaj
         uplata koje je primio za robu, uključujući i tro&scaron;kove isporuke s
         tim &scaron;to može da odloži povraćaj sredstava dok ne dobije robu koja
-        se vraća ili dok ne primi dokaz &nbsp;da ste robu poslali PAZARI-iju u
+        se vraća ili dok ne primi dokaz &nbsp;da ste robu poslali Croonus-iju u
         zavisnosti od toga &scaron;ta nastupa prvo, osim u slučaju kada je
-        PAZARI ponudio da sam preuzme robu.
+        Croonus ponudio da sam preuzme robu.
       </p>
       <p>
         Kupovinom robe putem Veb-sajta dajete izričitu saglasnost da se povraćaj
@@ -408,17 +404,17 @@ const UsloviKoriscenja = () => {
       <p>Ukoliko menjate za isti artikal</p>
       <p>Ukoliko menjate za drugi artikal</p>
       <p>
-        Pored slanja obrasca dužni ste da PAZARI-iju u roku od 14 dana od dana
+        Pored slanja obrasca dužni ste da Croonus-iju u roku od 14 dana od dana
         slanja obrasca dostavite kupljeni proizvod sa popunjenim obrascem za
         zamenu proizvoda.
       </p>
       <p>
-        PAZARI je dužan da Vam u roku od 14 dana od dana kada je primio proizvod
+        Croonus je dužan da Vam u roku od 14 dana od dana kada je primio proizvod
         koji želite da zamenite isporuči proizvod u skladu sa podacima iz
         obrasca za zamenu proizvoda.
       </p>
       <p>
-        U slučaju da PAZARI ne primi proizvod u roku od 14 dana od prijema
+        U slučaju da Croonus ne primi proizvod u roku od 14 dana od prijema
         obrasca smatraće se da niste ni podneli zahtev za zamenu.
       </p>
       <p>
@@ -426,7 +422,7 @@ const UsloviKoriscenja = () => {
         proizvoda.
       </p>
       <p>
-        PAZARI neće izvr&scaron;iti zamenu u slučaju da je proizvod
+        Croonus neće izvr&scaron;iti zamenu u slučaju da je proizvod
         kori&scaron;ćen.
       </p>
       <p>
@@ -436,7 +432,7 @@ const UsloviKoriscenja = () => {
         <strong>Zakonska odgovornost zbog nesaobraznosti robe ugovoru</strong>
       </h5>
       <p>
-        Obave&scaron;tavamo Vas da je saglasno zakonu PAZARI odgovoran za
+        Obave&scaron;tavamo Vas da je saglasno zakonu Croonus odgovoran za
         nesaobraznost robe ugovoru koja se pojavi u roku od dve godine od dana
         isporuke robe Vama ili trećem licu koje ste odredili kao primaoca.
       </p>
@@ -447,15 +443,15 @@ const UsloviKoriscenja = () => {
         nesaobraznosti.
       </p>
       <p>
-        PAZARI je dužan da isporuči robu koja je saobrazna ugovoru o
+        Croonus je dužan da isporuči robu koja je saobrazna ugovoru o
         kupoprodaji.
       </p>
       <p>
-        PAZARI odgovara za nesaobraznosti isporučene robe ugovoru ako: je
+        Croonus odgovara za nesaobraznosti isporučene robe ugovoru ako: je
         postojala u momentu isporuke robe Vama ili trećem licu koje ste odredili
         kao primaoca po&scaron;iljke, kao i u slučaju kad se nesaobraznost
         pojavila posle isporuke, a potiče od uzroka koji je postojao pre
-        isporuke, ukoliko je PAZARI izjavio da je roba saobrazna ugovoru. PAZARI
+        isporuke, ukoliko je Croonus izjavio da je roba saobrazna ugovoru. Croonus
         je odgovoran i za nesaobraznost nastalu zbog nepravilnog pakovanja.
       </p>
       <p>
@@ -464,7 +460,7 @@ const UsloviKoriscenja = () => {
         otkloniti zamenom, odgovarajućim umanjenjem cene ili da izjavite da
         raskidate ugovor. Ako se nesaobraznost pojavi po isteku roka od
         &scaron;est meseci od dana isporuke robe, imate pravo da izaberete da li
-        će PAZARI da otkloni nesaobraznost robe opravkom ili zamenom.
+        će Croonus da otkloni nesaobraznost robe opravkom ili zamenom.
       </p>
       <p>
         Ne možete da raskinete ugovor o kupoprodaji robe ako je nesaobraznost
@@ -473,7 +469,7 @@ const UsloviKoriscenja = () => {
       <p>
         Sve tro&scaron;kove koji su neophodni da bi se roba saobrazila ugovoru,
         a naročito tro&scaron;kove rada, materijala, preuzimanja i isporuke,
-        snosi PAZARI.
+        snosi Croonus.
       </p>
       <p>
         Obave&scaron;tenje o načinu i mestu prijema reklamacija i načinu
@@ -483,7 +479,7 @@ const UsloviKoriscenja = () => {
         Obave&scaron;tavamo Vas da reklamacije na robu kupljenu preko Veb-sajta
         možete da izjavite elektronskim putem na email
         adresu:&nbsp;reklamacije@croonus.com, ili po&scaron;tom na napred navedenu
-        adresu PAZARI-ja. Prilikom izjavljivanja reklamacije dužni ste da
+        adresu Croonus-ja. Prilikom izjavljivanja reklamacije dužni ste da
         dostavite robu na koju se reklamacija odnosi, kao i račun na uvid ili
         drugi dokaz o kupovini robe &nbsp;(kopija računa, slip i sl.).
       </p>

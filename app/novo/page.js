@@ -30,7 +30,7 @@ export const metadata = {
   title: "Novo - croonus.com - Farmerke, Muške farmerke, Muška odeća",
   description: "Dobrodošli na croonus.com Online Shop",
   keywords: [
-    "pazari",
+    "Croonus",
     "online",
     "shop",
     "croonus.com",
@@ -38,8 +38,8 @@ export const metadata = {
     "farmerke",
     "trenerke",
     "dukserice",
-    "pazari obuca",
+    "Croonus obuca",
     "obuca",
-    "pazari online",
+    "Croonus online",
   ],
 };

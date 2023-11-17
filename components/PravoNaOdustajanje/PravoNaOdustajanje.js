@@ -64,7 +64,7 @@ const PravoNaOdustajanje = () => {
         daljinu.
         <br />
         Obrazac za odustanak od ugovora možete pronaći&nbsp;
-        <a href="https://croonus.com/wp-content/uploads/2022/08/PAZARI-OBRAZAC-ZA-ODUSTANAK-OD-UGOVORA.pdf">
+        <a href="https://croonus.com/wp-content/uploads/2022/08/Croonus-OBRAZAC-ZA-ODUSTANAK-OD-UGOVORA.pdf">
           <strong>ovde.</strong>
         </a>
       </p>

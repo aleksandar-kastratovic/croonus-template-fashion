@@ -147,7 +147,7 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug }) => {
         <p
           className="text-center max-md:text-[0.85rem] max-md:mt-[20px] md:text-[16.48px] max-w-[36.075rem] font-normal sm:mt-[35px]"
           dangerouslySetInnerHTML={{
-            __html: singleCategory?.basic_data?.description,
+            __html: singleCategory?.basic_data?.short_description,
           }}
         ></p>
       </div>

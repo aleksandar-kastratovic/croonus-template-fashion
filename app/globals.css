@@ -298,6 +298,10 @@
   filter: invert(1);
 }
 
+.favorited {
+  filter: invert(1);
+}
+
 .slider .rs-slider-bar {
   background-color: black;
   border-radius: 3px;
@@ -853,14 +857,14 @@
 }
 
 .activeCategoryHover:hover::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: -2px;
-    margin: auto;
-    width: 110%;
-    height: 2px;
-    background-color: #000;
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: -2px;
+  margin: auto;
+  width: 110%;
+  height: 2px;
+  background-color: #000;
 }
 
 .customScroll::-webkit-scrollbar {
@@ -879,3 +883,6 @@
   background: #555;
 }
 
+.textArea textarea {
+  width: 100% !important;
+}

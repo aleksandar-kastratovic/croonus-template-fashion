@@ -94,7 +94,7 @@ const Reklamacije = () => {
       </h6>
       <p>
         Zahtev za reklamaciju može se dostaviti po&scaron;tom na adresu&nbsp;
-        <strong>PAZARI NOVI PAZAR</strong>, Paralovo bb, 36300 Novi Pazar, sa
+        <strong>Croonus NOVI PAZAR</strong>, Paralovo bb, 36300 Novi Pazar, sa
         naznakom:&nbsp;<strong>REKLAMACIJA</strong>.
       </p>
       <p>Tro&scaron;kove dostave snosi kupac.</p>
@@ -107,7 +107,7 @@ const Reklamacije = () => {
         <br />
         b. Dostavi popunjen reklamacioni list, koji je moguće preuzeti na
         sledećem linku &ndash;{" "}
-        <a href="https://croonus.com/wp-content/uploads/2022/08/PAZARI_REKLAMACIONI_LIST.pdf">
+        <a href="https://croonus.com/wp-content/uploads/2022/08/Croonus_REKLAMACIONI_LIST.pdf">
           REKLAMACIONI LIST
         </a>
         <br />

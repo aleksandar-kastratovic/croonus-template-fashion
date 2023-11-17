@@ -237,7 +237,6 @@ const CheckoutPage = ({
 
         note: formData.note,
         gcaptcha: token,
-        id_country: 193,
         accept_rules: 1,
       };
       if (errors.length === 0) {

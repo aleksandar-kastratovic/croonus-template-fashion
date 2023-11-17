@@ -4,16 +4,16 @@ export const metadata = () => {
       "Zaštita privatnosti - croonus.com - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
-      "pazari",
+      "Croonus",
       "online",
       "shop",
       "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
-      "pazari obuca",
+      "Croonus obuca",
       "obuca",
-      "pazari online",
+      "Croonus online",
     ],
   };
 };
@@ -32,24 +32,21 @@ const ZastitaPrivatnosti = () => {
       <p>
         Naziv:&nbsp;
         <strong>
-          HARIS BEKTA&Scaron;EVIĆ PR TRGOVINA NA MALO POSREDSTVOM INTERNETA
-          PAZARI NOVI PAZAR
+          TRGOVINA NA MALO POSREDSTVOM INTERNETA
+          Croonus
         </strong>
       </p>
       <p>
-        Adresa:&nbsp;<strong>Paralovo bb, 36300 Novi Pazar</strong>
+        Adresa:&nbsp;<strong>Kralja Petra Prvog 30</strong>
       </p>
-      <p>
-        Matični broj:&nbsp;<strong>65242605</strong>, PIB:&nbsp;
-        <strong>111178213</strong>
-      </p>
+
       <p>
         U slučaju bilo kakvih pitanja ili zahteva u vezi postupanja ili
         za&scaron;tite Va&scaron;ih ličnih podataka, možete nam se obratiti na
         e-mail adresu:&nbsp;zastitapodataka@croonus.com
       </p>
       <p>
-        U ime PAZARI Internet prodaje &ndash; obavezujemo se da ćemo čuvati
+        U ime Croonus Internet prodaje &ndash; obavezujemo se da ćemo čuvati
         privatnost podataka svih na&scaron;ih kupaca. Da bismo izvr&scaron;ili
         prodaju, odnosno uspe&scaron;no obradili va&scaron;u porudžbinu potrebni
         su nam va&scaron;i lični &ndash; osnovni podaci.

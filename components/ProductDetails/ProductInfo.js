@@ -33,6 +33,7 @@ const ProductInfo = ({
   breadcrumbs,
   specification,
   declaration,
+  color,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
   const campaignsDate =
@@ -134,13 +135,29 @@ const ProductInfo = ({
   const [text2, setText2] = useState("Kupi odmah");
 
   const handleTextChangeAddToCart = () => {
-    if (product?.product_type === "variant" && !productVariant?.id) {
-      setText("Izaberite veličinu");
+    switch (true) {
+      case product?.product_type === "variant" && !productVariant?.id && !color:
+        setText("Izaberite boju");
+        break;
+      case product?.product_type === "variant" &&
+        !productVariant?.id &&
+        color !== "":
+        setText("Izaberite veličinu");
+        break;
+      case product?.product_type === "variant" && productVariant?.id:
+        setText("Dodaj u korpu");
     }
   };
   const handleTextChangeBuyNow = () => {
-    if (product?.product_type === "variant" && !productVariant?.id) {
-      setText2("Izaberite veličinu");
+    switch (true) {
+      case product?.product_type === "variant" && !productVariant?.id && !color:
+        setText2("Izaberite boju");
+        break;
+      case product?.product_type === "variant" && !productVariant?.id && color:
+        setText2("Izaberite veličinu");
+        break;
+      case product?.product_type === "variant" && productVariant?.id:
+        setText2("Dodaj u korpu");
     }
   };
   useEffect(() => {
@@ -153,7 +170,14 @@ const ProductInfo = ({
   const [openModal, setOpenModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(1);
-  console.log(specification);
+
+  useEffect(() => {
+    if ((text2 === "Izaberite boju" || text === "Izaberite boju") && color) {
+      setText("Izaberite veličinu");
+      setText2("Izaberite veličinu");
+    }
+  }, [color]);
+
   return (
     <>
       {product ? (
@@ -299,12 +323,14 @@ const ProductInfo = ({
                 className={
                   productVariant === null || productVariant.length === 0
                     ? `max-sm:w-[8.5rem] ${
-                        text === "Izaberite veličinu"
+                        text === "Izaberite veličinu" ||
+                        text === "Izaberite boju"
                           ? `bg-red-500`
                           : `bg-[#2bc48a]`
                       } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
                     : `max-sm:w-[8.5rem] ${
-                        text === "Izaberite veličinu"
+                        text === "Izaberite veličinu" ||
+                        text === "Izaberite boju"
                           ? `bg-red-500`
                           : `bg-[#2bc48a]`
                       } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
@@ -328,12 +354,14 @@ const ProductInfo = ({
                 className={
                   productVariant === null || productVariant.length === 0
                     ? `max-sm:w-[8.5rem] ${
-                        text2 === "Izaberite veličinu"
+                        text2 === "Izaberite veličinu" ||
+                        text2 === "Izaberite boju"
                           ? `bg-red-500`
                           : `bg-[#191919]`
                       } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
                     : `max-sm:w-[8.5rem] ${
-                        text2 === "Izaberite veličinu"
+                        text2 === "Izaberite veličinu" ||
+                        text2 === "Izaberite boju"
                           ? `bg-red-500`
                           : `bg-[#191919]`
                       } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`

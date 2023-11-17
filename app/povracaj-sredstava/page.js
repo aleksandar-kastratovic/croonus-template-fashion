@@ -251,14 +251,14 @@ const Povracaj = () => {
                                   <br />
                                   Povraćaj novčanih sredstava se ne može
                                   zahtevati odlaskom u neki od maloprodajnih
-                                  objekata PAZARI-ja.
+                                  objekata Croonus-ja.
                                 </p>
                                 <p>
                                   U slučaju vraćanja robe ili povraćaja
                                   sredstava kupcu koji je prethodno
                                   izvr&scaron;io plaćanje nekom od platnih
                                   kartica (delimično ili u celosti), a bez
-                                  obzira na razlog vraćanja, PAZARI internet
+                                  obzira na razlog vraćanja, Croonus internet
                                   prodavnica je u obavezi da povraćaj
                                   izvr&scaron;i isključivo putem VISA i
                                   Mastercard metoda plaćanja, tako &scaron;to će
@@ -275,7 +275,7 @@ const Povracaj = () => {
                                   možete kontaktirati preko istog broja
                                   telefona.
                                   <br />
-                                  Va&scaron; PAZARI
+                                  Va&scaron; Croonus
                                 </p>
                               </div>
                             </div>
@@ -300,7 +300,7 @@ const Povracaj = () => {
               <input
                 type={`text`}
                 disabled
-                value={`Pazari`}
+                value={`Croonus`}
                 className={`mt-1 w-full border border-[#e0e0e0]`}
               />
             </div>

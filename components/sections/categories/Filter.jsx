@@ -122,10 +122,10 @@ const FilterRange = ({ filter, onChange, selected }) => {
         />
       </div>
       <div className={classes.valueHolder}>
-        <span className={`md:text-[0.9rem] max-md:text-[1rem] font-light`}>
+        <span className={`md:text-[1rem] max-md:text-[1rem] font-light`}>
           od: {selectedValue[0]}
         </span>
-        <span className={`md:text-[0.9rem] max-md:text-[1rem] font-light`}>
+        <span className={`md:text-[1rem] max-md:text-[1rem] font-light`}>
           {" "}
           do: {selectedValue[1]}
         </span>
@@ -139,16 +139,14 @@ const FilterWithinTree = ({ filter }) => {
   const [filterNumber, setFilterNumber] = useState(3);
   const numFiltersLoaded = Math.min(filterNumber, filter?.params?.items.length);
   const allFiltersLoaded = numFiltersLoaded === filter?.params?.items.length;
-  const handleFilterNumber = () => {
-    setFilterNumber(filterNumber + 3);
-  };
+
   return (
     <>
-      {(filter?.params?.items ?? []).slice(0, filterNumber).map((item) => (
+      {(filter?.params?.items ?? [])?.map((item) => (
         <div key={item.id}>
           <div className="mt-2 flex flex-row items-center gap-2 pl-4 text-[0.775rem]">
             <Link
-              className="pl-2 text-[1.2rem] font-light"
+              className="pl-2 text-[1rem] font-light hover:text-[#39ae00]"
               htmlFor={"chbx-" + item.id}
               href={`/kategorije/${item?.slug}`}
             >
@@ -157,14 +155,7 @@ const FilterWithinTree = ({ filter }) => {
           </div>
         </div>
       ))}
-      {allFiltersLoaded ? null : (
-        <div className="mt-[0.813rem] flex cursor-pointer items-center gap-1">
-          <span onClick={handleFilterNumber} className="text-[0.75rem] ">
-            Prikaži više
-          </span>
-          <i className="fa-solid fa-chevron-down text-xs"></i>{" "}
-        </div>
-      )}
+
     </>
   );
 };

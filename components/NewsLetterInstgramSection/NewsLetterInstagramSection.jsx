@@ -92,7 +92,7 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
             pomozite nam da ostanemo bolji.
           </p>
           <Link
-            href="/"
+            href="/anketa"
             className="text-base text-black mt-5 font-bold underline block"
           >
             Ostavite vaše mišljenje

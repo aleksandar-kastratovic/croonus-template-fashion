@@ -17,16 +17,16 @@ export async function generateMetadata({ params: { path } }, { searchParams }) {
     title: `${singleCategory?.basic_data?.name} - croonus.com - Farmerke, Muške farmerke, Muška odeća`,
     description: "Dobrodošli na croonus.com Online Shop",
     keywords: [
-      "pazari",
+      "Croonus",
       "online",
       "shop",
       "croonus.com",
       "farmerke",
       "trenerke",
       "dukserice",
-      "pazari obuca",
+      "Croonus obuca",
       "obuca",
-      "pazari online",
+      "Croonus online",
     ],
   };
 }

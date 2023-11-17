@@ -180,6 +180,16 @@ const Header = ({ categories }) => {
         </div>
         {activeCategory?.open && (
           <div
+            onMouseLeave={() => {
+              setActiveCategory({
+                id: null,
+                name: null,
+                slug: null,
+                data: [],
+                image: null,
+                open: false,
+              });
+            }}
             className={`absolute top-[110px] right-0 w-full bg-white z-[100] max-lg:hidden`}
           >
             <div className="px-20 py-6 relative h-full max-h-[270px]">
@@ -262,7 +272,7 @@ const Header = ({ categories }) => {
                     </h3>
                     {activeSubCategory?.name && (
                       <Link
-                        className={`text-[15px] font-bold pb-7`}
+                        className={`text-[15px] font-normal text-[#39ae00] hover:underline pb-7`}
                         href={`/kategorije/${activeSubCategory?.slug}`}
                         onClick={() => {
                           resetActiveCategory();
@@ -272,7 +282,7 @@ const Header = ({ categories }) => {
                       </Link>
                     )}
 
-                    <div className="h-full flex mt-3 flex-col flex-wrap gap-5 max-h-[180px]">
+                    <div className="h-full flex mt-3 flex-col flex-wrap gap-[0.62rem] max-h-[180px]">
                       {activeSubCategory &&
                         activeSubCategory?.data?.map((childCategory) => (
                           <Link

@@ -72,6 +72,7 @@ const ProductDetails = ({
           product={product}
           desc={desc}
           path={path}
+          color={color}
           setColor={setColor}
           breadcrumbs={breadcrumbs}
           specification={specification} declaration={declaration}
