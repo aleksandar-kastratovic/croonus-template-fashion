@@ -155,7 +155,6 @@ const FilterWithinTree = ({ filter }) => {
           </div>
         </div>
       ))}
-
     </>
   );
 };
@@ -167,6 +166,7 @@ const Filter = ({
   setTempSelectedFilters,
   setLastSelectedFilterKey,
   setChangeFilters,
+  setPage,
 }) => {
   const changeHandler = (data) => {
     let tmp = [...selectedFilters];
@@ -183,6 +183,7 @@ const Filter = ({
         tmp.push(data);
       }
     }
+    setPage(1);
     setSelectedFilters([...tmp]);
     setTempSelectedFilters([...tmp]);
     setLastSelectedFilterKey(data.column);

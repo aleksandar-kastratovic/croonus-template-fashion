@@ -330,6 +330,7 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug
           availableFilters={availableFilters}
           setSelectedFilters={setSelectedFilters}
           sort={sort}
+          setPage={setPage}
           setSort={setSort}
           changeFilters={changeFilters}
           pagination={productData?.pagination}

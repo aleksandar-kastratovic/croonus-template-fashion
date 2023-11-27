@@ -17,6 +17,7 @@ const Filters = ({
   setLastSelectedFilterKey,
   setChangeFilters,
   filter,
+  setPage,
 }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -121,6 +122,7 @@ const Filters = ({
                         setTempSelectedFilters={setTempSelectedFilters}
                         setLastSelectedFilterKey={setLastSelectedFilterKey}
                         setChangeFilters={setChangeFilters}
+                        setPage={setPage}
                       />
                     </div>
                   </div>
@@ -210,10 +212,10 @@ const Filters = ({
               </button>{" "}
               |{" "}
               <button
-                  onClick={() => setProductsPerView(3)}
-                  className={`2xl:hidden text-base ${
-                      productsPerView === 3 ? `font-medium` : `font-light`
-                  }`}
+                onClick={() => setProductsPerView(3)}
+                className={`2xl:hidden text-base ${
+                  productsPerView === 3 ? `font-medium` : `font-light`
+                }`}
               >
                 3
               </button>
@@ -225,7 +227,6 @@ const Filters = ({
               >
                 4
               </button>
-
             </div>
           </div>
         </div>
