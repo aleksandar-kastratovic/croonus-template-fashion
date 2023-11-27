@@ -39,6 +39,7 @@ const ProductMobileDetails = ({
         color={color}
         loading={loading}
         setLoading={setLoading}
+        product={product}
       />
       <ProductMobileInfo
         product={product}

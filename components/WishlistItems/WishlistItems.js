@@ -3,7 +3,7 @@ import { useGlobalRemoveFromWishlist } from "@/app/api/globals";
 import Link from "next/link";
 import Image from "next/image";
 import { currencyFormat } from "@/helpers/functions";
-import { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Heart from "../../assets/Icons/heart.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import { toast, ToastContainer } from "react-toastify";
@@ -66,7 +66,7 @@ const WishlistItems = ({ items, product, border }) => {
 
   return (
     <>
-      <div className="col-span-1 relative item mt-[2rem] lg:mt-[9rem]">
+      <div className="col-span-1 relative item mt-[2rem] lg:mt-[5rem]">
         <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
           {product?.image[0] && (
             <Link href={`/proizvod/${product?.slug}`} scroll={true}>
@@ -86,6 +86,24 @@ const WishlistItems = ({ items, product, border }) => {
           {/*    -35%*/}
           {/*  </span>*/}
           {/*</div>*/}
+          {product?.price?.discount?.active && (
+            <div
+              className={`absolute right-2 top-2 z-[1] text-white text-[13px]`}
+            >
+              <div
+                className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
+              >
+                -
+                {(
+                  ((product?.price?.price?.original -
+                    product?.price?.price?.discount) /
+                    product?.price?.price?.original) *
+                  100
+                ).toFixed(0)}
+                %
+              </div>
+            </div>
+          )}
         </div>
         {/* <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
             <div>

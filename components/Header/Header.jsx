@@ -192,9 +192,9 @@ const Header = ({ categories }) => {
             }}
             className={`absolute top-[110px] right-0 w-full bg-white z-[100] max-lg:hidden`}
           >
-            <div className="px-20 py-6 relative h-full max-h-[270px]">
+            <div className="px-20 py-6 relative h-full  pb-2">
               <div className="flex justify-between h-full">
-                <div className="flex gap-x-[10rem] max-h-[270px]">
+                <div className="flex gap-x-[10rem]  pb-2">
                   <div className={`flex flex-col items-start justify-start`}>
                     {landingPagesList?.items?.map((item, index) => {
                       return (
@@ -282,7 +282,7 @@ const Header = ({ categories }) => {
                       </Link>
                     )}
 
-                    <div className="h-full flex mt-3 flex-col flex-wrap gap-[0.62rem] max-h-[180px]">
+                    <div className="h-full flex mt-3 flex-col flex-wrap gap-x-[3.3rem] gap-y-[0.1rem] max-h-[180px]">
                       {activeSubCategory &&
                         activeSubCategory?.data?.map((childCategory) => (
                           <Link

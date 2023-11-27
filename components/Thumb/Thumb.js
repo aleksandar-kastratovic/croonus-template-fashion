@@ -17,7 +17,7 @@ import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import { useCartContext } from "@/app/api/cartContext";
 
 const Thumb = ({ data, slider, productsPerViewMobile }) => {
-  const [, , , mutateWishList] = useCartContext();
+  const [, , wishlist, mutateWishList] = useCartContext();
 
   const addToWishlist = async (id, name) => {
     await post("/wishlist", {
@@ -50,7 +50,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
       });
     };
     getAllFromWishlist();
-  }, [addToWishlist]);
+  }, [wishlist]);
 
   const [swiper, setSwiper] = useState(null);
   const [loading, setLoading] = useState({
@@ -219,7 +219,8 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                       <Image
                         src={convertHttpToHttps(image)}
                         alt={product?.basic_data?.name}
-                        fill
+                        width={0}
+                        height={0}
                         sizes={
                           "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
                         }
@@ -596,7 +597,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
           <div
             className={`max-md:h-[250px] ${
               productsPerViewMobile === 1 && "!h-[500px]"
-            } md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative`}
+            } md:h-[450px] lg:h-[450px] xl:h-[470px] 2xl:h-[500px] 3xl:h-[575px] item relative`}
           >
             <Swiper
               modules={[Navigation, Pagination]}
@@ -641,13 +642,13 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                             : item
                         )}
                         alt={product?.basic_data?.name}
-                        fill
                         sizes={
                           "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, (min-width: 1600px) 50vw"
                         }
-                        style={{ objectFit: "cover" }}
+                        width={0}
+                        height={0}
                         priority={true}
-                        className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+                        className={`transition-all duration-200 opacity-100 object-fill w-full h-full`}
                       />
                     </Link>
                   </SwiperSlide>

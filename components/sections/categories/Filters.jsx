@@ -31,7 +31,6 @@ const Filters = ({
   }, [selectedFilters]);
 
   const filterRef = useRef(null);
-  console.log(openIndex);
 
   const handleClickInsideAndOutside = (e) => {
     // Close the filter if the click occurred outside of it or if the user clicked on the filter
@@ -211,13 +210,22 @@ const Filters = ({
               </button>{" "}
               |{" "}
               <button
+                  onClick={() => setProductsPerView(3)}
+                  className={`2xl:hidden text-base ${
+                      productsPerView === 3 ? `font-medium` : `font-light`
+                  }`}
+              >
+                3
+              </button>
+              <button
                 onClick={() => setProductsPerView(4)}
-                className={`text-base ${
+                className={`max-2xl:hidden text-base ${
                   productsPerView === 4 ? `font-medium` : `font-light`
                 }`}
               >
                 4
               </button>
+
             </div>
           </div>
         </div>

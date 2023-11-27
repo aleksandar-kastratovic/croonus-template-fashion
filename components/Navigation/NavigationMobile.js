@@ -452,7 +452,7 @@ const NavigationMobile = () => {
             <form onSubmit={handleSearch} className="relative w-[90%] ">
               <input
                 type="text"
-                className="w-full border  border-[#191919] focus:border-[#191919] focus:outline-none focus:ring-0 placeholder:text-xs text-xs rounded-lg pl-10"
+                className="w-full border  border-[#191919] focus:border-[#191919] focus:outline-none focus:ring-0 placeholder:text-base rounded-lg pl-10"
                 placeholder="Unesite pojam za pretragu "
                 value={searchTerm}
                 onChange={(e) => {

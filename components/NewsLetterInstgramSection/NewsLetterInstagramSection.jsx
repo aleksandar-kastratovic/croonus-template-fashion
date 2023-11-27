@@ -17,7 +17,6 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("data");
     await post("/newsletter", { email: email }).then((response) => {
       if (!response?.code) {
         setEmail("");

@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 
 const InstagramSection = ({ instagramImages }) => {
-    console.log(instagramImages)
   return (
     <div>
       <h2 className="text-[29px] font-bold text-black mb-8">

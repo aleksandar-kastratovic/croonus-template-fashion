@@ -8,6 +8,7 @@
     font-family: "Open Sans", sans-serif;
     color: black;
     top: 0 !important;
+    scroll-behavior: smooth;
   }
 }
 

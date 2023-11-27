@@ -5,34 +5,37 @@ import Image from "next/image";
 import { list } from "@/app/api/api";
 import Link from "next/link";
 import { currencyFormat } from "@/helpers/functions";
+import useDebounce from "@/hooks/useDebounce";
+import { useQuery } from "@tanstack/react-query";
 
 const SearchProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  const [searchData, setSearchData] = useState([]);
+  // const [searchData, setSearchData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const debouncedSearch = useDebounce(searchTerm, 500);
 
-  useEffect(() => {
-    if (searchTerm?.length > 0) {
-      const getData = async (search) => {
-        await list(`/products/search/list`, {
-          search: search,
-        }).then((response) => {
-          setSearchData(response?.payload);
+  const { data: searchData, isFetching } = useQuery({
+    queryKey: ["searchData", debouncedSearch],
+    queryFn: async () => {
+      if (debouncedSearch?.length >= 3) {
+        return await list(`/products/search/list`, {
+          search: debouncedSearch,
+        }).then((res) => {
           setLoading(false);
+          return res?.payload;
         });
-      };
-      getData(searchTerm);
-    }
-  }, [searchTerm]);
+      }
+    },
+    refetchOnWindowFocus: false,
+    enabled: true,
+  });
 
   const handleSearch = (e) => {
     e.preventDefault();
     router.push(`/search?search=${searchTerm}`);
     setSearchTerm("");
   };
-
-  console.log(searchData);
 
   return (
     <div className="py-4 w-1/5 rounded-[10px] bg-topHeader relative">
@@ -47,23 +50,31 @@ const SearchProducts = () => {
           }}
           value={searchTerm}
         />
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 py-2">
-          <Image
-            src={"/search.png"}
-            width={20}
-            height={20}
-            className="object-cover"
-            alt="search"
-          />
-        </div>
+        {searchTerm?.length >= 1 && searchTerm?.length < 3 ? (
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 py-2">
+            <span className={`text-[0.8rem] font-normal text-red-500`}>
+              Unesite barem 3 karaktera
+            </span>
+          </div>
+        ) : (
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 py-2">
+            <Image
+              src={"/search.png"}
+              width={20}
+              height={20}
+              className="object-cover"
+              alt="search"
+            />
+          </div>
+        )}
         <div
           className={`${
-            searchTerm?.length > 0
+            debouncedSearch?.length >= 3
               ? `absolute flex flex-col h-[420px] hidescrollbar overflow-y-auto bg-white top-[30px] right-0 w-full border rounded-b-lg`
               : `hidden`
           } `}
         >
-          {searchData?.items?.length > 0 && searchTerm?.length > 0 && (
+          {searchData?.items?.length > 0 && debouncedSearch?.length >= 3 ? (
             <div className="w-[95%] mx-auto mt-5">
               <h1 className="text-[1rem] font-normal">Rezultati pretrage</h1>
               <div className="flex flex-col gap-5 mt-3 pb-5">
@@ -102,13 +113,21 @@ const SearchProducts = () => {
                 })}
               </div>
             </div>
+          ) : (
+            !isFetching && (
+              <div className={`w-[95%] mx-auto mt-5`}>
+                <span className={`text-[0.9rem] font-normal`}>
+                  Nema rezultata pretrage
+                </span>
+              </div>
+            )
           )}
           {loading && (
             <div className={`w-[95%] mx-auto text-center mt-5`}>
               <i className={`fas fa-spinner fa-spin text-xl text-black`}></i>
             </div>
           )}
-          {!loading && (
+          {!loading && searchData?.items?.length > 0 && (
             <div
               className={`sticky bottom-0 w-full bg-croonus-2 py-2 mt-auto text-center hover:bg-opacity-80`}
             >

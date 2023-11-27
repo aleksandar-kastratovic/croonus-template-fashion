@@ -22,7 +22,7 @@ const WishlistPage = () => {
   return (
     <>
       {wishlistData?.length > 0 ? (
-        <div className="mt-10 mx-[0.625rem] grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4">
+        <div className="mt-5 mx-[0.625rem] grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4">
           {wishlistData?.map((item) => (
             <div key={item?.wishlist?.id}>
               <WishlistItems

@@ -14,7 +14,15 @@ const deliveryOptions = async () => {
 };
 
 const getRecommendedProducts = async () => {
-  return await list("/products/section/list/recommendation").then((res) => res?.payload?.items);
+  return await list("/products/section/list/recommendation").then(
+    (res) => res?.payload?.items
+  );
+};
+
+const getCountries = async () => {
+  return await get(`/checkout/ddl/id_country`).then(
+    (res) => res?.payload
+  );
 };
 
 export const metadata = () => {
@@ -39,13 +47,14 @@ const Cart = async () => {
   const paymentoptions = await paymentOptions();
   const deliveryoptions = await deliveryOptions();
   const recommendedProducts = await getRecommendedProducts();
-  
+  const countries = await getCountries();
   return (
     <div className="">
       <CheckoutPage
         paymentoptions={paymentoptions}
         deliveryoptions={deliveryoptions}
         recommendedProducts={recommendedProducts}
+        countries={countries}
       />
     </div>
   );
