@@ -13,7 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/components/sections/categories/Loader";
 import LoadingProducts from "@/components/LoadingProducts";
 
-const CategoryPage = ({ filter, singleCategory, products, text, slug }) => {
+const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug }) => {
   useEffect(() => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
@@ -42,6 +42,7 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug }) => {
       limit,
       params?.get("sort"),
       params?.get("filteri"),
+      slug,
     ],
     queryFn: async () => {
       // router.refresh();
@@ -182,41 +183,88 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug }) => {
     let queryString = "";
 
     switch (true) {
-      case sort_tmp && !page_tmp && !filters_tmp:
-        queryString = `${slug_path}?sort=${sort_tmp}`;
+      case slug:
+        switch (true) {
+          case sort_tmp && !page_tmp && !filters_tmp:
+            queryString = `${sectionSlug}?sort=${sort_tmp}`;
 
-        break;
-      case sort_tmp && page_tmp && !filters_tmp:
-        queryString = `${slug_path}?sort=${sort_tmp}&strana=${page_tmp}`;
+            break;
+          case sort_tmp && page_tmp && !filters_tmp:
+            queryString = `${sectionSlug}?sort=${sort_tmp}&strana=${page_tmp}`;
 
-        break;
-      case sort_tmp && filters_tmp && !page_tmp:
-        queryString = `${slug_path}?filteri=${filters_tmp}&sort=${sort_tmp}`;
+            break;
+          case sort_tmp && filters_tmp && !page_tmp:
+            queryString = `${sectionSlug}?filteri=${filters_tmp}&sort=${sort_tmp}`;
 
-        break;
-      case page_tmp && !sort_tmp && !filters_tmp:
-        queryString = `${slug_path}?strana=${page_tmp}`;
+            break;
+          case page_tmp && !sort_tmp && !filters_tmp:
+            queryString = `${sectionSlug}?strana=${page_tmp}`;
 
-        break;
-      case page_tmp && sort_tmp && !filters_tmp:
-        queryString = `${slug_path}?sort=${sort_tmp}&strana=${page_tmp}`;
+            break;
+          case page_tmp && sort_tmp && !filters_tmp:
+            queryString = `${sectionSlug}?sort=${sort_tmp}&strana=${page_tmp}`;
 
-        break;
-      case filters_tmp && !sort_tmp && !page_tmp:
-        queryString = `${slug_path}?filteri=${filters_tmp}`;
+            break;
+          case filters_tmp && !sort_tmp && !page_tmp:
+            queryString = `${sectionSlug}?filteri=${filters_tmp}`;
 
-        break;
-      case page_tmp && sort_tmp && filters_tmp:
-        queryString = `${slug_path}?filteri=${filters_tmp}&sort=${sort_tmp}&strana=${page_tmp}`;
+            break;
+          case page_tmp && sort_tmp && filters_tmp:
+            queryString = `${sectionSlug}?filteri=${filters_tmp}&sort=${sort_tmp}&strana=${page_tmp}`;
 
-        break;
-      case !sort_tmp && !page_tmp && !filters_tmp:
-        queryString = slug_path;
+            break;
+          case !sort_tmp && !page_tmp && !filters_tmp:
+            queryString = sectionSlug;
 
+            break;
+          default:
+            queryString = sectionSlug;
+
+            break;
+        }
         break;
+      case !slug:
+        switch (true) {
+          case sort_tmp && !page_tmp && !filters_tmp:
+            queryString = `${slug_path}?sort=${sort_tmp}`;
+
+            break;
+          case sort_tmp && page_tmp && !filters_tmp:
+            queryString = `${slug_path}?sort=${sort_tmp}&strana=${page_tmp}`;
+
+            break;
+          case sort_tmp && filters_tmp && !page_tmp:
+            queryString = `${slug_path}?filteri=${filters_tmp}&sort=${sort_tmp}`;
+
+            break;
+          case page_tmp && !sort_tmp && !filters_tmp:
+            queryString = `${slug_path}?strana=${page_tmp}`;
+
+            break;
+          case page_tmp && sort_tmp && !filters_tmp:
+            queryString = `${slug_path}?sort=${sort_tmp}&strana=${page_tmp}`;
+
+            break;
+          case filters_tmp && !sort_tmp && !page_tmp:
+            queryString = `${slug_path}?filteri=${filters_tmp}`;
+
+            break;
+          case page_tmp && sort_tmp && filters_tmp:
+            queryString = `${slug_path}?filteri=${filters_tmp}&sort=${sort_tmp}&strana=${page_tmp}`;
+
+            break;
+          case !sort_tmp && !page_tmp && !filters_tmp:
+            queryString = slug_path;
+
+            break;
+          default:
+            queryString = slug_path;
+
+            break;
+        }
+        break;
+
       default:
-        queryString = slug_path;
-
         break;
     }
     router.push(queryString);
@@ -394,20 +442,14 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug }) => {
                     1
                   </span>
                   {num - 1 !== 1 && (
-                    <span
-                      className={`select-none py-1 px-3 rounded-lg`}
-                    >
+                    <span className={`select-none py-1 px-3 rounded-lg`}>
                       ...
                     </span>
                   )}
                 </>
               )}
               {index > 0 && num - array[index - 1] > 1 && (
-                <span
-                  className={`select-none py-1 px-3 rounded-lg`}
-                >
-                  ...
-                </span>
+                <span className={`select-none py-1 px-3 rounded-lg`}>...</span>
               )}
               <span
                 className={`${
@@ -427,9 +469,7 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug }) => {
                 num !== productData.pagination.total_pages && (
                   <>
                     {productData.pagination.total_pages - num !== 1 && (
-                      <span
-                        className={`select-none py-1 px-3  rounded-lg`}
-                      >
+                      <span className={`select-none py-1 px-3  rounded-lg`}>
                         ...
                       </span>
                     )}
