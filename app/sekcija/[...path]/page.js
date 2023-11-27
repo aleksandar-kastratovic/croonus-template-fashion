@@ -30,7 +30,12 @@ const Section = async ({ params: { path } }) => {
 
   return (
     <>
-      <CategoryPage text={"Preporučeno"} slug={slug} filter={filters}/>
+      <CategoryPage
+        text={"Preporučeno"}
+        slug={slug}
+        filter={filters}
+        sectionSlug={path[path?.length - 1]}
+      />
     </>
   );
 };
