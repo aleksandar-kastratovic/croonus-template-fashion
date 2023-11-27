@@ -126,7 +126,6 @@ useEffect(() => {
                 note: formData.note,
                 set_default: formData.set_default
             }
-            console.log("ret", ret)
             post("/customers/shipping-address", ret)
                 .then((response) => {
                     if (response?.code === 200) {

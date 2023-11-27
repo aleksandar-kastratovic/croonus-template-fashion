@@ -258,7 +258,6 @@ const ProductInfo = ({
                       } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
                 onClick={() => {
-                  console.log(productVariant);
                   if (
                     product?.product_type === "variant" &&
                     productVariant?.id

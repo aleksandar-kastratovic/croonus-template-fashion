@@ -11,7 +11,13 @@ import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
-const ProductMobileGallery = ({ productGallery, color, loading, setLoading }) => {
+const ProductMobileGallery = ({
+  productGallery,
+  color,
+  loading,
+  setLoading,
+  product,
+}) => {
   function ImageMagnifier({
     src,
     width,
@@ -193,6 +199,24 @@ const ProductMobileGallery = ({ productGallery, color, loading, setLoading }) =>
           </SwiperSlide>
         ) : (
           productImage
+        )}
+        {product?.data?.item?.price?.discount?.active && (
+          <div
+            className={`absolute right-2 top-2 z-[1] text-white text-[13px]`}
+          >
+            <div
+              className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
+            >
+              -
+              {(
+                ((product?.data?.item?.price?.price?.original -
+                  product?.data?.item?.price?.price?.discount) /
+                  product?.data?.item?.price?.price?.original) *
+                100
+              ).toFixed(0)}
+              %
+            </div>
+          </div>
         )}
       </Swiper>
       <Swiper

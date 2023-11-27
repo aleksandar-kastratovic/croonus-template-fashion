@@ -1,4 +1,7 @@
-const PlusMinusInputOne = ({ className, amount, setCount }) => {
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+
+const PlusMinusInputOne = ({ className, amount, setCount, maxAmount }) => {
   // If minus is clicked
   const onMinusHandler = (e) => {
     e.preventDefault();
@@ -21,6 +24,15 @@ const PlusMinusInputOne = ({ className, amount, setCount }) => {
     }
   };
 
+  useEffect(() => {
+    if (amount > maxAmount) {
+      setCount(+maxAmount);
+      toast.error("Na lageru trenutno nema željena količina artikala.", {
+        position: "top-center",
+      });
+    }
+  }, [amount]);
+
   return (
     <div className="bg-[#fbfbfb] px-3 border max-md:h-full py-0.5 border-[#eaeaea] max-md:border-[#919191]">
       <div className="flex items-center w-full">
@@ -32,6 +44,7 @@ const PlusMinusInputOne = ({ className, amount, setCount }) => {
         </span>
         <input
           maxLength="2"
+          max={max}
           type="number"
           value={amount}
           onChange={onInputChange}

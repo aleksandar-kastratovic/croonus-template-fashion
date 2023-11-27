@@ -11,7 +11,13 @@ import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
-const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
+const ProductGallery = ({
+  productGallery,
+  color,
+  loading,
+  setLoadingc,
+  product,
+}) => {
   function ImageMagnifier({
     src,
     width,
@@ -143,7 +149,9 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
     <div className="col-span-2 max-lg:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:h-[650px] lg:h-[700px] xl:h-[780px] 2xl:h-[790px] 3xl:h-[878px]">
       <Swiper
         spaceBetween={10}
-        thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
         pagination={true}
         modules={[FreeMode, Thumbs, Pagination, Navigation]}
         initialSlide={color ? newImage : 0}
@@ -191,6 +199,22 @@ const ProductGallery = ({ productGallery, color, loading, setLoading }) => {
           </SwiperSlide>
         ) : (
           productImage
+        )}
+        {product?.data?.item?.price?.discount?.active && (
+          <div className={`absolute right-2 top-2 z-[1] text-white text-[13px]`}>
+            <div
+              className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
+            >
+              -
+              {(
+                ((product?.data?.item?.price?.price?.original -
+                  product?.data?.item?.price?.price?.discount) /
+                  product?.data?.item?.price?.price?.original) *
+                100
+              ).toFixed(0)}
+              %
+            </div>
+          </div>
         )}
       </Swiper>
       <Swiper

@@ -26,6 +26,7 @@ const CheckoutPage = ({
   paymentoptions,
   deliveryoptions,
   recommendedProducts,
+  countries,
 }) => {
   const router = useRouter();
   const { asPath } = router;
@@ -69,7 +70,9 @@ const CheckoutPage = ({
     shipping_company_name: "",
     gcaptcha: token,
     delivery: null,
+    id_country_shipping: 193,
     payment: null,
+    country: "",
     height: "",
     weight: "",
     foot_size: "",
@@ -97,8 +100,8 @@ const CheckoutPage = ({
     "shipping_town",
     "delivery",
     "payment",
+    "id_country_shipping",
   ];
-
   const companyrequired = [
     "company_name",
     "pib",
@@ -110,7 +113,6 @@ const CheckoutPage = ({
   const errorCheck = "Morate prihvatiti uslove";
 
   const [errors, setErrors] = useState([]);
-
   const getCart = useCallback(() => {
     list("/cart")
       .then((response) => {
@@ -135,6 +137,15 @@ const CheckoutPage = ({
       setFormData({ ...formData, [target.name]: target.value });
     }
   };
+
+  // useEffect(() => {
+  //   if (formData.id_country_shipping === "-") {
+  //     setErrors({
+  //       ...errors,
+  //       id_country_shipping,
+  //     });
+  //   }
+  // }, [formData.id_country_shipping]);
 
   const formSubmitHandler = () => {
     setRefreshReCaptcha((r) => !r);
@@ -199,7 +210,7 @@ const CheckoutPage = ({
           : formData.zip_code,
         id_municipality_shipping: null,
         municipality_name_shipping: "",
-        id_country_shipping: null,
+        id_country_shipping: formData?.id_country_shipping,
         country_name_shipping: "Srbija",
         note_shipping: secondAddress ? formData.shipping_note : formData.note,
         id_company_billing: null,
@@ -271,23 +282,13 @@ const CheckoutPage = ({
               setLoading(false);
             }
           } else {
-            return (
-              <div className="flex flex-row items-center justify-center rounded-2xl border border-croonus-1">
-                <div className="flex flex-col items-center justify-center">
-                  <h1 className="text-2xl font-medium">Greška</h1>
-                  <p className="text-base">
-                    Došlo je do nepoznate greške pri obrađivanju Vašeg zahteva.
-                  </p>
-                </div>
-              </div>
-            );
+            setLoading(false);
           }
         })
         .catch((error) => console.warn(error));
     }
   };
   const [checkoutSummary, setCheckoutSummary] = useState([]);
-
   useEffect(() => {
     const getSummary = async () => {
       return await get(`/checkout/summary`).then((response) => {
@@ -296,7 +297,6 @@ const CheckoutPage = ({
     };
     getSummary();
   }, [cartItems]);
-  console.log(formData.payment);
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={true} />
@@ -438,6 +438,34 @@ const CheckoutPage = ({
                             placeholder="Email*"
                           />
                         </div>
+                        <div className="flex flex-col gap-2">
+                          <label htmlFor="email" className="hidden">
+                            Država:
+                            <span className="snap-mandatory text-red-500">
+                              *
+                            </span>
+                          </label>
+                          <select
+                            className={`ml-2 h-[58px] max-sm:text-sm rounded-md ${
+                              errors.includes("id_country_shipping")
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-none focus:border-none"
+                            }  focus:ring-0 bg-[#f5f5f7] max-xl:mx-3`}
+                            placeholder="Država*"
+                            name="id_country_shipping"
+                            id="id_country_shipping"
+                            value={formData.id_country_shipping}
+                            onChange={formChangeHandler}
+                          >
+                            {countries.map((country) => {
+                              return (
+                                <option key={country?.id} value={country?.id}>
+                                  {country?.name}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
                       </div>
                       <div className="flex flex-col gap-3 max-xl:col-span-3 xl:col-span-1 xl:col-start-2 xl:col-end-3">
                         <div className="flex flex-col gap-2 max-xl:mt-2">
@@ -561,7 +589,11 @@ const CheckoutPage = ({
                             id="note"
                             value={formData.note}
                             onChange={formChangeHandler}
-                            className="ml-2 max-sm:text-sm rounded-md border-none focus:border-none focus:ring-0 bg-[#f5f5f7] max-xl:mx-3"
+                            className={`ml-2 max-sm:text-sm rounded-md border-none focus:border-none focus:ring-0 bg-[#f5f5f7] max-xl:mx-3 ${
+                              errors.includes("note")
+                                ? "border-red-500 focus:border-red-500"
+                                : "border-none focus:border-none"
+                            }`}
                             placeholder="Napomena"
                           />
                         </div>

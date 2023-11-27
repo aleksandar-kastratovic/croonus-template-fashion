@@ -25,12 +25,11 @@ const CartProductItem = ({ item }) => {
   const total = item?.product?.price?.cost;
   const currency = item?.product?.price?.currency;
   const [sureCheck, setSureCheck] = useState(false);
-  console.log(item);
   return (
     <>
       <div className="col-span-2 grid grid-cols-3 gap-x-10 mt-1 relative">
         <div className="relative col-span-1 w-full flex items-center">
-          <div className="xl:h-[186px] xl:w-[139px]  ">
+          <div className="xl:h-[186px] xl:w-[139px] relative ">
             <Link href={`/proizvod/${item?.product?.slug}`}>
               <Image
                 src={convertHttpToHttps(item?.product?.image[0])}
@@ -40,6 +39,18 @@ const CartProductItem = ({ item }) => {
                 className="object-cover h-full"
               />
             </Link>
+            {item?.product?.price?.per_item?.discount?.active && (
+              <div className={`absolute top-2 right-2 bg-[#c23d27] px-[0.85rem] py-0.5 rounded-lg font-thin text-xs text-white`}>
+                -{(
+                  (
+                    ((item?.product?.price?.per_item?.price_with_vat -
+                      item?.product?.price?.per_item?.price_discount) /
+                      item?.product?.price?.per_item?.price_with_vat) *
+                    100
+                  ).toFixed(0)
+                )}%
+              </div>
+            )}
           </div>
         </div>
         <div className="col-span-2 flex  flex-col ">

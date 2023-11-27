@@ -9,6 +9,7 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Wishlist from "../../assets/Icons/heart.png";
+import WishlistActive from "../../assets/Icons/heart-active.png";
 import DeliveryStatus from "../../assets/Icons/delivery-status.png";
 import Calendar from "../../assets/Icons/calendar.png";
 import FreeDelivery from "../../assets/Icons/package.png";
@@ -18,7 +19,7 @@ import CampaignsDetails from "./CampaignsDetails";
 import DeliveryModal from "./DeliveryModal";
 import InfoModal from "./InfoModal";
 import ReturnModal from "./ReturnModal";
-import { post } from "@/app/api/api";
+import { get, post } from "@/app/api/api";
 import { useCartContext } from "@/app/api/cartContext";
 
 const ProductInfo = ({
@@ -93,6 +94,20 @@ const ProductInfo = ({
       }
     });
   };
+
+  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  useEffect(() => {
+    const getIsInWishlist = async () => {
+      return await get(
+        `/wishlist/product-in-wishlist/${product?.data?.item?.basic_data?.id_product}`
+      ).then((res) => {
+        setIsInWishlist(res?.payload?.exist);
+      });
+    };
+
+    getIsInWishlist();
+  }, [addToWishlist, product]);
 
   const addToCart = (e) => {
     if (product.product_type === "single") {
@@ -384,7 +399,7 @@ const ProductInfo = ({
                 onClick={addToWishlist}
               >
                 <Image
-                  src={Wishlist}
+                  src={isInWishlist ? WishlistActive : Wishlist}
                   alt="wishlist"
                   width={39}
                   height={35}

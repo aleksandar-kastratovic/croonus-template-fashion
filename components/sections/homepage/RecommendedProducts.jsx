@@ -23,46 +23,51 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
       <div className="max-lg:col-span-1 lg:col-span-4 2xl:col-span-4 4xl:col-span-5">
         <div className="relative flex flex-col justify-between max-lg:gap-3 lg:flex-row lg:items-center">
           <h1 className={`text-[25px] font-bold`}>{action4}</h1>
-          {!pathname.includes("korpa") && (<><div className="flex flex-row max-md:hidden items-center gap-6">
-            {recommendedProducts?.map((category) => {
-              const uniqueCategories = category?.categories?.filter(
-                  (item, index, arr) =>
+          {!pathname.includes("korpa") && (
+            <>
+              <div className="flex flex-row max-md:hidden items-center gap-6">
+                {recommendedProducts?.map((category) => {
+                  const uniqueCategories = category?.categories?.filter(
+                    (item, index, arr) =>
                       arr.findIndex((el) => el.name === item.name) === index
-              );
+                  );
 
-              if (uniqueNames.includes(uniqueCategories[0]?.name)) {
-                return null;
-              } else {
-                uniqueNames.push(uniqueCategories[0]?.name);
-                return (
-                    <div className="" key={category.id}>
-                      <button
+                  if (uniqueNames.includes(uniqueCategories[0]?.name)) {
+                    return null;
+                  } else {
+                    uniqueNames.push(uniqueCategories[0]?.name);
+                    return (
+                      <div className="" key={category.id}>
+                        <button
                           className={
                             selectedCategory === uniqueCategories[0]?.id
-                                ? `font-normal activeCategoryHover w-fit relative active-button  text-lg activeCategory text-black`
-                                : `font-normal activeCategoryHover w-fit relative  text-lg text-black`
+                              ? `font-normal activeCategoryHover w-fit relative active-button  text-lg activeCategory text-black`
+                              : `font-normal activeCategoryHover w-fit relative  text-lg text-black`
                           }
                           onClick={(e) => {
                             e.preventDefault();
                             let newProducts = [...recommendedProducts];
-                            newProducts = recommendedProducts?.filter((item) => {
-                              return (
-                                  item?.categories[0]?.id === uniqueCategories[0]?.id
-                              );
-                            });
+                            newProducts = recommendedProducts?.filter(
+                              (item) => {
+                                return (
+                                  item?.categories[0]?.id ===
+                                  uniqueCategories[0]?.id
+                                );
+                              }
+                            );
                             setProducts(newProducts);
                             setSelectedCategory(uniqueCategories[0]?.id);
                           }}
-                      >
-                        {uniqueCategories[0]?.name}
-                      </button>
-                    </div>
-                );
-              }
-            })}
-          </div>
-            <div className="md:hidden">
-              <select
+                        >
+                          {uniqueCategories[0]?.name}
+                        </button>
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              <div className="md:hidden">
+                <select
                   onChange={(e) => {
                     let newProducts = [...recommendedProducts];
                     newProducts = recommendedProducts?.filter((item) => {
@@ -71,39 +76,41 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
                     setProducts(newProducts);
                   }}
                   className="rounded-md border-2 border-[#f7f7f7] focus:border-[#f7f7f7] focus:outline-0 focus:ring-0 text-black w-full max-md:text-[0.9rem]"
-              >
-                {recommendedProducts?.map((category) => {
-                  const uniqueCategories = category?.categories?.filter(
+                >
+                  {recommendedProducts?.map((category) => {
+                    const uniqueCategories = category?.categories?.filter(
                       (item, index, arr) =>
-                          arr.findIndex((el) => el.name === item.name) === index
-                  );
+                        arr.findIndex((el) => el.name === item.name) === index
+                    );
 
-                  // check if category ID has already been rendered
-                  if (uniqueIds.includes(uniqueCategories[0]?.id)) {
-                    return null;
-                  } else {
-                    uniqueIds.push(uniqueCategories[0]?.id); // add ID to array
-                    return (
+                    // check if category ID has already been rendered
+                    if (uniqueIds.includes(uniqueCategories[0]?.id)) {
+                      return null;
+                    } else {
+                      uniqueIds.push(uniqueCategories[0]?.id); // add ID to array
+                      return (
                         <option
-                            key={uniqueCategories[0]?.id}
-                            value={Number(uniqueCategories[0]?.id)}
-                            className={`max-md:text-[0.9rem]`}
+                          key={uniqueCategories[0]?.id}
+                          value={Number(uniqueCategories[0]?.id)}
+                          className={`max-md:text-[0.9rem]`}
                         >
                           {uniqueCategories[0]?.name}
                         </option>
-                    );
-                  }
-                })}
-              </select>
-            </div><div className="flex items-center gap-3">
-              <Link
+                      );
+                    }
+                  })}
+                </select>
+              </div>
+              <div className="flex items-center gap-3">
+                <Link
                   className="max-md:text-[0.9rem] text-lg underline text-[#171717] block"
                   href={`/sekcija/preporuceno`}
-              >
-                Pogledajte sve proizvode
-              </Link>
-            </div></>)}
-
+                >
+                  Pogledajte sve proizvode
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="max-sm:mt-[1rem] mt-[2.5rem]">
