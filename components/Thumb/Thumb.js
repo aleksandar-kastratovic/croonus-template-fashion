@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import Wishlist from "../../assets/Icons/heart.png";
+import WishlistActive from "../../assets/Icons/heart-active.png";
 import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
@@ -414,17 +415,25 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   product?.basic_data?.name
                 );
               }}
-              className={`hover:bg-red-500 ${
-                isInWishlist && "bg-red-500"
-              } max-md:hidden rounded-full p-1 favorites cursor-pointer`}
+              className={`${!isInWishlist && "hover:bg-red-500"} max-md:hidden rounded-full p-1 favorites cursor-pointer`}
             >
-              <Image
-                src={Wishlist}
-                alt="wishlist"
-                width={15}
-                height={15}
-                className={`favorite ${isInWishlist && "favorited"}`}
-              />
+              {isInWishlist ? (
+                  <Image
+                      src={WishlistActive}
+                      alt="wishlist"
+                      width={15}
+                      height={15}
+                      className={``}
+                  />
+              ) : (
+                  <Image
+                      src={Wishlist}
+                      alt="wishlist"
+                      width={15}
+                      height={15}
+                      className={`favorite`}
+                  />
+              )}
             </div>
           </div>
           <div className=" flex items-center gap-1 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
@@ -873,17 +882,25 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   product?.basic_data?.name
                 );
               }}
-              className={`hover:bg-red-500 ${
-                isInWishlist && "bg-red-500"
-              } max-md:hidden rounded-full p-1 favorites cursor-pointer`}
+              className={`${!isInWishlist && "hover:bg-red-500"} max-md:hidden rounded-full p-1 favorites cursor-pointer`}
             >
-              <Image
-                src={Wishlist}
-                alt="wishlist"
-                width={15}
-                height={15}
-                className={`favorite ${isInWishlist && "favorited"}`}
-              />
+              {isInWishlist ? (
+                <Image
+                  src={WishlistActive}
+                  alt="wishlist"
+                  width={15}
+                  height={15}
+                  className={``}
+                />
+              ) : (
+                <Image
+                  src={Wishlist}
+                  alt="wishlist"
+                  width={15}
+                  height={15}
+                  className={`favorite`}
+                />
+              )}
             </div>
           </div>
           <div className=" flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">
