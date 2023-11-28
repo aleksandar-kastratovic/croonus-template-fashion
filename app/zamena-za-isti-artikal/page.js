@@ -159,8 +159,7 @@ const ZamenaZaIstiArtikal = () => {
           i u tom slučaju sve tro&scaron;kove slanja i povrata ide na Va&scaron;
           tro&scaron;ak.
           <br />
-          Artikal nam &scaron;aljete na adresu sa računa (Paralovo bb, 36300
-          Novi Pazar), sa naznakom problema koji je nastao, uz račun, odnosno
+          Artikal nam &scaron;aljete na adresu sa računa (Kralja Petra I 30,32000 Čačak), sa naznakom problema koji je nastao, uz račun, odnosno
           dokaz o kupovini.
         </p>
         <p>
@@ -187,8 +186,7 @@ const ZamenaZaIstiArtikal = () => {
           veličina, molimo Vas da nas kontaktirate putem forme ispod.
           <br />I u ovom slučaju, artikal nam možete poslati bilo kojom
           kurirskom službom o&nbsp;<u>Va&scaron;em tro&scaron;ku</u>.<br />
-          Artikal nam &scaron;aljete na adresu sa računa (Paralovo bb, 36300
-          Novi Pazar), uz račun, odnosno dokaz o kupovini.
+          Artikal nam &scaron;aljete na adresu sa računa (Kralja Petra I 30,32000 Čačak), uz račun, odnosno dokaz o kupovini.
           <br />
           Dostava zamenskog artikla takođe ide o Va&scaron;em tro&scaron;ku.
         </p>

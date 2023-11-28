@@ -1,8 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { list, post } from "@/app/api/api";
-// import Filters from "./Filters";
-// import FiltersMobile from "./FilterMobile";
 import Image from "next/image";
 import Link from "next/link";
 import Thumb from "@/components/Thumb/Thumb";
@@ -14,11 +12,7 @@ import Loading from "@/components/sections/categories/Loader";
 import LoadingProducts from "@/components/LoadingProducts";
 
 const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug }) => {
-  useEffect(() => {
-    if (window.scrollY > 0) {
-      window.scrollTo(0, 0);
-    }
-  }, []);
+
   const params = useSearchParams();
   const router = useRouter();
   // const [productData, setProductData] = useState({
@@ -309,7 +303,7 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug
         )}
       </div>
       <div className="mt-[30px] md:mt-[80px] flex flex-col items-center justify-center">
-        <div className="flex flex-row max-sm:flex-col items-center justify-center">
+        <div className="flex flex-row  items-center justify-center">
           <h1 className="text-[23px] md:text-[29px] font-normal uppercase">
             {singleCategory?.basic_data?.name ?? text ?? ""}
           </h1>

@@ -603,7 +603,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
               pagination={true}
-              direction={"vertical"}
+              direction={"horizontal"}
               loop={true}
               initialSlide={product?.image?.findIndex(
                 (item) => item === product?.image[0]
@@ -899,7 +899,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
               </span>
             )}
           </div>{" "}
-          <div className={` w-full`}>
+          <div className={`absolute bottom-[-20px] w-full`}>
             <div
               className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
             >

@@ -533,22 +533,11 @@
   /* Display the tooltip when button is hovered */
 }
 
-.categoryImageSwiper .swiper-pagination-vertical.swiper-pagination-bullets,
-.categoryImageSwiper
-  .swiper-vertical
-  > .categoryImageSwiper
-  .swiper-pagination-bullets {
-  right: 2px;
-  left: auto !important;
-  bottom: auto !important;
-  top: 50% !important;
-  justify-content: center;
-  align-items: center;
-  margin: auto 0;
-  transform: translate3d(0px, -50%, 0);
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+.categoryImageSwiper .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: var(--swiper-pagination-bottom,8px);
+  top: var(--swiper-pagination-top,auto);
+  left: 0;
+  width: 100% !important;
 }
 
 .categoryImageSwiper .swiper-pagination-bullet {

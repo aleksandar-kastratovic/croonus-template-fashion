@@ -39,7 +39,7 @@ const HeaderContainerLinks = ({ categoriesMain }) => {
             }}
             key={index}
             className={`${
-              (isActive || pathname) === category?.slug
+              isActive===category?.slug || pathname.includes(category?.slug)
                 ? "border-b-2 border-black"
                 : ""
             } mx-2 text-sm font-normal text-black uppercase 2xl:mr-8`}

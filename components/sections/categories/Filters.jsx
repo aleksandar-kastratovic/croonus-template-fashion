@@ -3,6 +3,7 @@ import Filter from "./Filter";
 import { sortKeys } from "@/helpers/const";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 const Filters = ({
   availableFilters,
   selectedFilters,
@@ -21,7 +22,13 @@ const Filters = ({
 }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [openSort, setOpenSort] = useState(false);
+  const [openSort, setOpenSort] = useState({
+    open: false,
+    key: {
+      field: "",
+      direction: "",
+    },
+  });
   const [activeFilter, setActiveFilter] = useState(null);
   const handleClick = (filter) => {
     setActiveFilter(filter);
@@ -60,7 +67,10 @@ const Filters = ({
         e.target?.classList?.contains("sortref")) &&
       openSort !== false
     ) {
-      setOpenSort(false);
+      setOpenSort({
+        ...openSort,
+        open: false,
+      });
     }
   };
 
@@ -71,6 +81,20 @@ const Filters = ({
     };
   }, [openSort]);
 
+  const params = useSearchParams();
+  const sortParam = params?.get("sort") ?? "_";
+
+  const keys = sortParam?.split("_");
+
+  useEffect(() => {
+    if (sortParam) {
+      setSort({
+        field: keys[0],
+        direction: keys[1],
+      });
+    }
+  }, [sortParam]);
+  console.log(sort);
   return (
     <>
       <div className=" px-[50px] flex items-center justify-between bg-[#f2f2f2]">
@@ -157,12 +181,17 @@ const Filters = ({
           <div className="col-span-1 col-start-8 flex items-center justify-end relative">
             <div
               className="flex gap-2 items-center cursor-pointer"
-              onClick={() => setOpenSort(!openSort)}
+              onClick={() =>
+                setOpenSort({
+                  ...openSort,
+                  open: !openSort.open,
+                })
+              }
             >
               <h1 className=" text-base  font-light text-center">Sortiranje</h1>
               <Image
                 className={
-                  openSort
+                  openSort.open
                     ? `rotate-180 transition-all duration-500`
                     : `rotate-0 transition-all duration-500`
                 }
@@ -172,30 +201,46 @@ const Filters = ({
                 height={15}
               />
             </div>
-            {openSort && (
+            {openSort?.open && (
               <div
                 ref={sortRef}
                 className="absolute sortref z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]"
               >
-                {sortKeys.map((key) => (
-                  <div
-                    className={`flex sortref items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
-                      sort === key?.key
-                        ? "bg-[#f2f2f2] text-black"
-                        : "bg-white "
-                    }`}
-                    onClick={() =>
-                      setSort({ field: key?.field, direction: key?.direction })
-                    }
-                  >
-                    <h1
-                      className="uppercase sortref font-light text-[0.775rem] text-center"
-                      onClick={() => setOpenSort(false)}
+                {sortKeys.map((key) => {
+                  const isActive =
+                    openSort?.key?.field === key?.field &&
+                    openSort?.key?.direction === key?.direction;
+                  return (
+                    <div
+                      className={`flex sortref items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
+                        isActive ? "bg-[#f2f2f2] text-black" : "bg-white "
+                      }`}
+                      onClick={() =>
+                        setSort({
+                          field: key?.field,
+                          direction: key?.direction,
+                        })
+                      }
                     >
-                      {key?.label}
-                    </h1>
-                  </div>
-                ))}
+                      <h1
+                        className={`uppercase sortref ${
+                          isActive ? `font-medium` : `font-light`
+                        } text-[0.775rem] text-center`}
+                        onClick={() =>
+                          setOpenSort({
+                            open: false,
+                            key: {
+                              field: key?.field,
+                              direction: key?.direction,
+                            },
+                          })
+                        }
+                      >
+                        {key?.label}
+                      </h1>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

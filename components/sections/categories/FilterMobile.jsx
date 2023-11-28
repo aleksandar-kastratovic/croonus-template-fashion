@@ -34,7 +34,7 @@ const FiltersMobile = ({
   const [sortingActive, setSortingActive] = useState(false);
   return (
     <>
-      <div className="h-full flex flex-col">
+      <div className="h-full flex flex-col px-[0.7rem]">
         <div
           className={`sticky w-full top-0 border-b py-3 text-center flex items-center justify-center`}
         >

@@ -10,6 +10,8 @@ import { useRouter, usePathname } from "next/navigation";
 import User from "../../assets/Icons/user.png";
 import Cart from "../../assets/Icons/shopping-bag.png";
 import { currencyFormat } from "@/helpers/functions";
+import useDebounce from "@/hooks/useDebounce";
+import { useQuery } from "@tanstack/react-query";
 
 const NavigationMobile = () => {
   const router = useRouter();
@@ -140,21 +142,21 @@ const NavigationMobile = () => {
     getLandingPages();
   }, []);
 
-  const [searchData, setSearchData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (searchTerm?.length > 0) {
-      const getData = async (search) => {
-        await list(`/products/search/list`, {
-          search: search,
-        }).then((response) => {
-          setSearchData(response?.payload);
-          setLoading(false);
+  const debouncedSearch = useDebounce(searchTerm, 500);
+  const { data: searchData, isFetching } = useQuery({
+    queryKey: ["searchData", debouncedSearch],
+    queryFn: async () => {
+      if (debouncedSearch?.length >= 3) {
+        return await list(`/products/search/list`, {
+          search: debouncedSearch,
+        }).then((res) => {
+          return res?.payload;
         });
-      };
-      getData(searchTerm);
-    }
-  }, [searchTerm]);
+      }
+    },
+    refetchOnWindowFocus: false,
+    enabled: true,
+  });
 
   const categoriesMain = [
     { name: "Brendovi", slug: "/brendovi" },
@@ -330,9 +332,31 @@ const NavigationMobile = () => {
             }}
           >
             {!activeCategory?.firstCategory && (
-              <div className="flex items-center gap-2">
-                <i className="fa-solid fa-chevron-left text-base"></i>
-                <h1 className="text-[0.9rem] font-normal">Nazad</h1>
+              <div className={`w-full flex items-center justify-between`}>
+                <div className="flex items-center gap-2">
+                  <i className="fa-solid fa-chevron-left text-base"></i>
+                  <h1 className="text-[0.9rem] font-normal">Nazad</h1>
+                </div>
+                <Link
+                  href={`/kategorije/${activeCategory?.id}`}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setActiveCategory({
+                      id: categories[0]?.id,
+                      data: categories[0]?.children,
+                      parentCategory: categories[0]?.id,
+                    });
+                    setActiveImage(categories[0]?.image);
+                    setGenerateBreadcrumbs();
+                    setLastActiveCategory({
+                      id: categories[0]?.id,
+                      data: categories[0]?.children,
+                    });
+                  }}
+                  className={`text-[0.9rem] font-normal text-[#39ae00]`}
+                >
+                  Pogledaj sve
+                </Link>
               </div>
             )}
           </button>
@@ -457,16 +481,21 @@ const NavigationMobile = () => {
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
-                  setLoading(true);
                 }}
               />
               <i className="fas fa-search absolute top-1/2 transform -translate-y-1/2 text-sm left-3 text-[#191919]"></i>
+              {searchTerm?.length >= 1 && searchTerm?.length < 3 ? (
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 py-2">
+                  <span className={`text-[0.8rem] font-normal text-red-500`}>
+                    Unesite najmanje 3 karaktera.
+                  </span>
+                </div>
+              ) : null}
             </form>
             <p
               className="text-xs"
               onClick={() => {
                 setSearchOpen(false);
-                setLoading(false);
                 setSearchTerm("");
                 setSearchData([]);
               }}
@@ -513,27 +542,29 @@ const NavigationMobile = () => {
                     </Link>
                   );
                 })}
-                <Link
-                  href={`/search?search=${searchTerm}`}
-                  className={`text-[0.9rem] text-center text-white bg-[#191919] mt-4 py-3 w-[80%] mx-auto font-normal`}
-                  onClick={(e) => {
-                    setSearchData([]);
-                    setSearchOpen(false);
-                    handleSearch(e);
-                    setSearchTerm("");
-                  }}
-                >
-                  {`Pogledaj sve rezultate ( još ${
-                    searchData?.pagination?.total_items -
-                    (searchData?.items?.length > 6
-                      ? 6
-                      : searchData?.items?.length)
-                  } )`}
-                </Link>
+                {searchData?.items?.length > 6 && (
+                  <Link
+                    href={`/search?search=${searchTerm}`}
+                    className={`text-[0.9rem] text-center text-white bg-[#191919] mt-4 py-3 w-[80%] mx-auto font-normal`}
+                    onClick={(e) => {
+                      setSearchData([]);
+                      setSearchOpen(false);
+                      handleSearch(e);
+                      setSearchTerm("");
+                    }}
+                  >
+                    {`Pogledaj sve rezultate ( još ${
+                      searchData?.pagination?.total_items -
+                      (searchData?.items?.length > 6
+                        ? 6
+                        : searchData?.items?.length)
+                    } )`}
+                  </Link>
+                )}
               </div>
             </div>
           )}
-          {loading && (
+          {isFetching && (
             <div className={`w-[95%] mx-auto text-center mt-5`}>
               <i className={`fas fa-spinner fa-spin text-xl text-black`}></i>
             </div>

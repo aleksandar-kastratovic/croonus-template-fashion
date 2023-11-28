@@ -44,7 +44,7 @@ const PlusMinusInputOne = ({ className, amount, setCount, maxAmount }) => {
         </span>
         <input
           maxLength="2"
-          max={max}
+          max={maxAmount}
           type="number"
           value={amount}
           onChange={onInputChange}
