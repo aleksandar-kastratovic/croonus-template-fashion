@@ -2,12 +2,12 @@ export const sortKeys = [
   {
     label: "Novo",
     field: "new",
-    direction: "asc",
+    direction: "desc",
   },
   {
     label: "Staro",
-    field: "old",
-    direction: "desc",
+    field: "new",
+    direction: "asc",
   },
   {
     label: "Cena od niže prema višoj",
