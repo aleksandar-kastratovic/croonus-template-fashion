@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import Image1 from "../../assets/Icons/master (1).webp";
@@ -11,14 +12,27 @@ import Image8 from "../../assets/Icons/american.webp";
 import Instagram from "../../assets/Icons/instagram.png";
 import Youtube from "../../assets/Icons/youtube.png";
 import Facebook from "../../assets/Icons/facebook.png";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const [open, setOpen] = useState({
+    id: null,
+  });
+
+  const pathname = usePathname();
+
   return (
     <div className="max-md:mt-[3rem] mt-[7.75rem] bg-[#f7f7f7]">
       <div className="mx-[5rem] max-xl:flex-col py-[2.625rem] flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white">
         <div>
           <Link href={`/`}>
-            <Image src={'/logo.png'} width={214} height={45} alt="Croonus Logo" />
+            <Image
+              src={"/logo.png"}
+              width={214}
+              height={45}
+              alt="Croonus Logo"
+            />
           </Link>
         </div>
         <div className="flex max-xl:flex-col max-xl:gap-[2rem] max-xl:mt-10 items-center gap-[5.625rem]">
@@ -48,10 +62,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex max-xl:mt-10 items-center gap-[1.938rem]">
-          <a
-            href="https://www.instagram.com/lifeatcroonus/"
-            target={"_blank"}
-          >
+          <a href="https://www.instagram.com/lifeatcroonus/" target={"_blank"}>
             <Image
               src={Instagram}
               width={30}
@@ -85,106 +96,212 @@ const Footer = () => {
         </div>
       </div>
       <div className="mx-[5rem] max-md:w-[95%] max-md:mx-auto py-[2.75rem] mt-[1.75rem] max-xl:flex-col flex items-center justify-between border-l-0 border-t-0 border-r-0 border-b-2 border-b-white text-[#191919]">
-        <div className="flex items-center max-md:justify-between max-md:flex-wrap max-md:w-full md:gap-[100px] 2xl:gap-[150px] 3xl:gap-[220px]">
-          <div className="flex flex-col self-start gap-[40px]">
+        <div className="flex items-center max-md:hidden max-md:flex-col max-md:items-center max-md:justify-center max-md:gap-5 max-md:w-full md:gap-[100px] 2xl:gap-[150px] 3xl:gap-[220px]">
+          <div className="flex flex-col self-start gap-[40px] max-md:self-center">
             <h1 className="text-[1.063rem] font-bold">Korisnička podrška</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
               <Link
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kako-kupiti" && "text-[#e10000]"}`}
                 href="/kako-kupiti"
               >
                 Kako kupiti
               </Link>
               <Link
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/reklamacije" && "text-[#e10000]"}`}
                 href="/reklamacije"
               >
                 Reklamacije
               </Link>
               <Link
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/povracaj-sredstava" && "text-[#e10000]"}`}
                 href="/povracaj-sredstava"
               >
                 Povraćaj sredstava
               </Link>
               <Link
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/zamena-za-isti-artikal" && "text-[#e10000]"}`}
                 href="/zamena-za-isti-artikal"
               >
                 Zamena za isti artikal
               </Link>
               <Link
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/zamena-za-drugi-artikal" && "text-[#e10000]"}`}
                 href="/zamena-za-drugi-artikal"
               >
                 Zamena za drugi artikal
               </Link>
               <Link
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/pravo-na-odustajanje" && "text-[#e10000]"}`}
                 href="/pravo-na-odustajanje"
               >
                 Pravo na odustajanje
               </Link>
             </div>
           </div>
-          <div className="flex flex-col self-start gap-[40px]">
+          <div className="flex flex-col self-start gap-[40px] max-md:self-center">
             <h1 className="text-[1.063rem] font-bold">O nama</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
               <Link
                 href={`/stranica-u-izradi`}
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/stranica-u-izradi" && "text-[#e10000]"}`}
               >
                 Više o kompaniji Croonus
               </Link>
 
               <Link
                 href={`/stranica-u-izradi`}
-                className="cursor-pointer hover:text-[#e10000]"
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/stranica-u-izradi" && "text-[#e10000]"}`}
               >
                 Ponude za posao
               </Link>
 
               <Link
-                href={`/stranica-u-izradi`}
-                className="cursor-pointer hover:text-[#e10000]"
+                href={`/maloprodaje`}
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/maloprodaje" && "text-[#e10000]"}`}
               >
                 Naše prodavnice
               </Link>
             </div>
           </div>
-          <div className="flex max-[493px]:mt-10 flex-col self-start gap-[40px]">
+          <div className="flex max-[493px]:mt-10 flex-col self-start gap-[40px] max-md:self-center">
             <h1 className="text-[1.063rem] font-bold">Možda te interesuje</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
               <Link
-                href={`/kategorije/muska-odeca/farmerice`}
-                className="cursor-pointer hover:text-[#e10000]"
+                href={`/kategorije/zene/odeca/topovi`}
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kategorije/zene/odeca/topovi" && "text-[#e10000]"}`}
               >
-                Farmerice
+                Topovi
               </Link>
               <Link
-                href={`/kategorije/muska-odeca/komplet-trenerke`}
-                className="cursor-pointer hover:text-[#e10000]"
+                href={`/kategorije/zene/odeca/haljine`}
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kategorije/zene/odeca/haljine" && "text-[#e10000]"}`}
               >
-                Trenerke
+                Haljine
               </Link>
               <Link
-                href={`/kategorije/muska-odeca/zimske-jakne`}
-                className="cursor-pointer hover:text-[#e10000]"
-              >
-                Zimske jakne
-              </Link>
-              <Link
-                href={`/kategorije/muska-obuca`}
-                className="cursor-pointer hover:text-[#e10000]"
+                href={`/kategorije/zene/obuca`}
+                className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kategorije/zene/obuca" && "text-[#e10000]"}`}
               >
                 Obuća
               </Link>
-              {/*<span className="cursor-pointer hover:text-[#e10000]">*/}
+
+              {/*<span className={`cursor-pointer hover:text-[#e10000]`}>*/}
               {/*  Outlet*/}
               {/*</span>*/}
             </div>
           </div>
         </div>
+        <div className="flex md:hidden items-center max-md:flex-col max-md:items-center max-md:justify-center max-md:gap-5 max-md:w-full md:gap-[100px] 2xl:gap-[150px] 3xl:gap-[220px]">
+          <div
+            onClick={() => setOpen({ id: open?.id === 1 ? null : 1 })}
+            className="flex flex-col self-start gap-[40px] max-md:self-center"
+          >
+            <h1 className="text-[1.063rem] font-bold">Korisnička podrška</h1>
+            {open?.id === 1 && (
+              <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
+                <Link
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kako-kupiti" && "text-[#e10000]"}`}
+                  href="/kako-kupiti"
+                >
+                  Kako kupiti
+                </Link>
+                <Link
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/reklamacije" && "text-[#e10000]"}`}
+                  href="/reklamacije"
+                >
+                  Reklamacije
+                </Link>
+                <Link
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/povracaj-sredstava" && "text-[#e10000]"}`}
+                  href="/povracaj-sredstava"
+                >
+                  Povraćaj sredstava
+                </Link>
+                <Link
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/zamena-za-isti-artikal" && "text-[#e10000]"}`}
+                  href="/zamena-za-isti-artikal"
+                >
+                  Zamena za isti artikal
+                </Link>
+                <Link
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/zamena-za-drugi-artikal" && "text-[#e10000]"}`}
+                  href="/zamena-za-drugi-artikal"
+                >
+                  Zamena za drugi artikal
+                </Link>
+                <Link
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/pravo-na-odustajanje" && "text-[#e10000]"}`}
+                  href="/pravo-na-odustajanje"
+                >
+                  Pravo na odustajanje
+                </Link>
+              </div>
+            )}
+          </div>
+          <div
+            onClick={() => setOpen({ id: open?.id === 2 ? null : 2 })}
+            className="flex flex-col self-start gap-[40px] max-md:self-center text-center"
+          >
+            <h1 className="text-[1.063rem] font-bold">O nama</h1>
+            {open?.id === 2 && (
+              <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
+                <Link
+                  href={`/stranica-u-izradi`}
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/stranica-u-izradi" && "text-[#e10000]"}`}
+                >
+                  Više o kompaniji Croonus
+                </Link>
+
+                <Link
+                  href={`/stranica-u-izradi`}
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/stranica-u-izradi" && "text-[#e10000]"}`}
+                >
+                  Ponude za posao
+                </Link>
+
+                <Link
+                  href={`/maloprodaje`}
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/maloprodaje" && "text-[#e10000]"}`}
+                >
+                  Naše prodavnice
+                </Link>
+              </div>
+            )}
+          </div>
+          <div
+            onClick={() => setOpen({ id: open?.id === 3 ? null : 3 })}
+            className="flex flex-col self-start gap-[40px] max-md:self-center"
+          >
+            <h1 className="text-[1.063rem] font-bold">Možda te interesuje</h1>
+            {open?.id === 3 && (
+              <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
+                <Link
+                  href={`/kategorije/zene/odeca/topovi`}
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kategorije/zene/odeca/topovi" && "text-[#e10000]"}`}
+                >
+                  Topovi
+                </Link>
+                <Link
+                  href={`/kategorije/zene/odeca/haljine`}
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kategorije/zene/odeca/haljine" && "text-[#e10000]"}`}
+                >
+                  Haljine
+                </Link>
+                <Link
+                  href={`/kategorije/zene/obuca`}
+                  className={`cursor-pointer hover:text-[#e10000] ${pathname === "/kategorije/zene/obuca" && "text-[#e10000]"}`}
+                >
+                  Obuća
+                </Link>
+
+                {/*<span className={`cursor-pointer hover:text-[#e10000]`}>*/}
+                {/*  Outlet*/}
+                {/*</span>*/}
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="flex max-xl:mt-5 flex-col max-md:mt-10 self-start gap-[1.25rem] max-xl:w-full xl:max-w-[450px] 2xl:max-w-[450px] 3xl:max-w-[578px]">
           <div className="flex items-center gap-1 ">
             <div>

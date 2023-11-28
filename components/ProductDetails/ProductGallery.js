@@ -17,6 +17,7 @@ const ProductGallery = ({
   loading,
   setLoadingc,
   product,
+  setLoading,
 }) => {
   function ImageMagnifier({
     src,
@@ -127,7 +128,6 @@ const ProductGallery = ({
 
   const [newImage, setNewImage] = useState(0);
   const [swiper, setSwiper] = useState(null);
-
   useEffect(() => {
     if (color) {
       const newImage = productGallery?.findIndex((item) =>
@@ -201,7 +201,9 @@ const ProductGallery = ({
           productImage
         )}
         {product?.data?.item?.price?.discount?.active && (
-          <div className={`absolute right-2 top-2 z-[1] text-white text-[13px]`}>
+          <div
+            className={`absolute right-2 top-2 z-[1] text-white text-[13px]`}
+          >
             <div
               className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
             >

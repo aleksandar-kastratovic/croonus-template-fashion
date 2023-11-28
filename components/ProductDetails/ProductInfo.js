@@ -110,26 +110,45 @@ const ProductInfo = ({
   }, [addToWishlist, product]);
 
   const addToCart = (e) => {
-    if (product.product_type === "single") {
-      globalAddToCart(product.data.item.basic_data.id_product, 1);
-      toast.success(
-        `Proizvod ${product.data.item.basic_data?.name} dodat u korpu!`,
-        {
-          position: toast.POSITION.TOP_CENTER,
+    switch (true) {
+      case product?.product_type === "single":
+        switch (true) {
+          case product?.data?.item?.inventory?.inventory_defined:
+            globalAddToCart(product?.data?.item?.basic_data?.id_product, 1);
+            toast.success(`Proizvod dodat u korpu!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            break;
+          case !product?.data?.item?.inventory?.inventory_defined:
+            toast.error(`Proizvod nije na stanju!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
         }
-      );
-    } else {
-      if (productVariant) {
-        globalAddToCart(productVariant?.basic_data?.id_product, 1);
-        toast.success(
-          `Proizvod ${productVariant?.basic_data?.name} dodat u korpu!`,
-          {
-            position: toast.POSITION.TOP_CENTER,
-          }
-        );
-      }
+        break;
+      case product?.product_type === "variant":
+        switch (true) {
+          case !productVariant?.id:
+            toast.error(`Izaberite varijaciju!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            break;
+          case productVariant?.id &&
+            productVariant?.inventory?.inventory_defined:
+            globalAddToCart(productVariant?.basic_data?.id_product, 1);
+            toast.success(`Proizvod dodat u korpu!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            break;
+          case productVariant?.id &&
+            !productVariant?.inventory?.inventory_defined:
+            toast.error(`Proizvod nije na stanju!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+        }
+        break;
+      default:
+        break;
     }
-    setProductAmount(1);
   };
   const [deliveryModal, setDeliveryModal] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
@@ -238,6 +257,33 @@ const ProductInfo = ({
                   ? productVariant?.basic_data?.sku
                   : product?.data?.item?.basic_data?.sku}
               </h2>
+              {productVariant?.id ? (
+                <>
+                  {!productVariant?.inventory?.inventory_defined && (
+                    <>
+                      <p
+                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                      >
+                        Nije dostupno
+                      </p>
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {
+                    !product?.data?.item?.inventory?.inventory_defined && (
+                      <>
+                        <p
+                          className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                        >
+                          Nije dostupno
+                        </p>
+                      </>
+                    )
+                  }
+                </>
+              )}
               <div
                 className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
               >
@@ -286,13 +332,41 @@ const ProductInfo = ({
               </div>
               {product?.data?.item?.price?.discount?.active && (
                 <div className="mt-3">
-                  <h2 className="text-[17px] text-[#2bc48a] font-semibold">
+                  <h2 className="text-[12px] text-[#2bc48a] font-semibold">
                     Ušteda:{" "}
                     {currencyFormat(
                       product?.data?.item?.price?.discount?.amount
                     )}
                   </h2>
                 </div>
+              )}
+              {productVariant?.id ? (
+                <>
+                  {productVariant?.inventory?.amount >= 2 &&
+                    productVariant?.inventory?.amount <= 4 && (
+                      <>
+                        <p
+                          className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
+                        >
+                          Male količine
+                        </p>
+                      </>
+                    )}
+                </>
+              ) : (
+                <>
+                  {product?.data?.item?.inventory?.amount >= 2 &&
+                    product?.data?.item?.inventory?.amount <= 4 && (
+                      <>
+                        <p
+                          className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
+                        >
+                          Male količine
+
+                        </p>
+                      </>
+                    )}
+                </>
               )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
                 <CampaignsDetails campaignsDate={campaignsDate} />
@@ -333,6 +407,7 @@ const ProductInfo = ({
                 Pomoć za veličine
               </span>
             </button>
+            {console.log(productVariant)}
             <div className="mt-[3rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
                 className={

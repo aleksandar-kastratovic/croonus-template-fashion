@@ -8,6 +8,7 @@ import { get, list } from "@/app/api/api";
 import HeaderIcons from "./HeaderIcons";
 import SearchProducts from "./SearchProducts";
 import Translate from "../Translate/Translate";
+import {usePathname} from "next/navigation";
 
 const Header = ({ categories }) => {
   const categoriesMain = [
@@ -92,7 +93,7 @@ const Header = ({ categories }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+const pathname = usePathname();
   return (
     <>
       <header
@@ -212,7 +213,7 @@ const Header = ({ categories }) => {
                         <button
                           key={index}
                           className={`${
-                            category?.id === activeSubCategory?.id
+                            category?.id === activeSubCategory?.id || pathname.includes(category?.slug)
                               ? "font-bold"
                               : "font-normal"
                           } text-lg uppercase hover:underline block text-black`}
@@ -289,7 +290,9 @@ const Header = ({ categories }) => {
                             href={`/kategorije/${childCategory?.slug_path}`}
                             onClick={resetActiveCategory}
                             key={childCategory?.id}
-                            className="text-[15px] lowercase text-black first-letter:uppercase block hover:underline"
+                            className={`text-[15px] lowercase text-black first-letter:uppercase block hover:underline ${
+                              pathname?.includes(childCategory?.slug_path) ? "font-bold" : "font-normal"
+                            }`}
                           >
                             {childCategory.name}
                           </Link>

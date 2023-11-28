@@ -69,6 +69,7 @@ const CartProductItem = ({ item }) => {
                 setCount={setProductAmount}
                 count={productAmount}
                 amount={productAmount}
+                maxAmount={+item?.product?.inventory?.amount}
               />
             </div>
             <div className="flex items-center gap-3 md:hidden">

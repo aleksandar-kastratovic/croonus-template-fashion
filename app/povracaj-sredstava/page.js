@@ -269,7 +269,7 @@ const Povracaj = () => {
                                   Ukoliko iz nekog razloga ne možete poslati
                                   zahtev za povraćaj novčanih sredstava preko
                                   forme za povraćaj sredstava, možete nas
-                                  kontaktirati preko telefona 060/588 8564.
+                                  kontaktirati preko telefona {process.env.TELEPHONE}.
                                   <br />
                                   Takođe, ako imate dodatna pitanja, uvek nas
                                   možete kontaktirati preko istog broja
@@ -309,7 +309,7 @@ const Povracaj = () => {
               <input
                 type={`text`}
                 disabled
-                value={`Paralovo bb, 36300 Novi Pazar`}
+                value={`Kralja Petra I 30, 32000 Čačak`}
                 className={`mt-1 w-full border border-[#e0e0e0]`}
               />
             </div>
@@ -318,7 +318,7 @@ const Povracaj = () => {
               <input
                 type={`text`}
                 disabled
-                value={`+381 60 588 8564`}
+                value={`${process.env.TELEPHONE}`}
                 className={`mt-1 w-full border border-[#e0e0e0]`}
               />
             </div>
