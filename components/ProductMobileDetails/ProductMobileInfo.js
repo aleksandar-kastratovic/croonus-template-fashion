@@ -16,6 +16,8 @@ import { notFound } from "next/navigation";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import Link from "next/link";
 import CampaignsDetails from "../ProductDetails/CampaignsDetails";
+import { get } from "@/app/api/api";
+import WishlistActive from "@/assets/Icons/heart-active.png";
 
 const ProductInfo = ({
   product,
@@ -78,26 +80,45 @@ const ProductInfo = ({
     );
   };
   const addToCart = (e) => {
-    if (product.product_type === "single") {
-      globalAddToCart(product.data.item.basic_data.id_product, 1);
-      toast.success(
-        `Proizvod ${product.data.item.basic_data?.name} dodat u korpu!`,
-        {
-          position: toast.POSITION.TOP_CENTER,
+    switch (true) {
+      case product?.product_type === "single":
+        switch (true) {
+          case product?.data?.item?.inventory?.inventory_defined:
+            globalAddToCart(product?.data?.item?.basic_data?.id_product, 1);
+            toast.success(`Proizvod dodat u korpu!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            break;
+          case !product?.data?.item?.inventory?.inventory_defined:
+            toast.error(`Proizvod nije na stanju!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
         }
-      );
-    } else {
-      if (productVariant) {
-        globalAddToCart(productVariant?.basic_data?.id_product, 1);
-        toast.success(
-          `Proizvod ${productVariant?.basic_data?.name} dodat u korpu!`,
-          {
-            position: toast.POSITION.TOP_CENTER,
-          }
-        );
-      }
+        break;
+      case product?.product_type === "variant":
+        switch (true) {
+          case !productVariant?.id:
+            toast.error(`Izaberite varijaciju!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            break;
+          case productVariant?.id &&
+            productVariant?.inventory?.inventory_defined:
+            globalAddToCart(productVariant?.basic_data?.id_product, 1);
+            toast.success(`Proizvod dodat u korpu!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            break;
+          case productVariant?.id &&
+            !productVariant?.inventory?.inventory_defined:
+            toast.error(`Proizvod nije na stanju!`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+        }
+        break;
+      default:
+        break;
     }
-    setProductAmount(1);
   };
   const [deliveryModal, setDeliveryModal] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
@@ -134,6 +155,21 @@ const ProductInfo = ({
     }
   }, [productVariant]);
   const [activeTab, setActiveTab] = useState(1);
+
+  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  useEffect(() => {
+    const getIsInWishlist = async () => {
+      return await get(
+        `/wishlist/product-in-wishlist/${product?.data?.item?.basic_data?.id_product}`
+      ).then((res) => {
+        setIsInWishlist(res?.payload?.exist);
+      });
+    };
+
+    getIsInWishlist();
+  }, [addToWishlist, product]);
+
   return (
     <>
       {product ? (
@@ -181,6 +217,31 @@ const ProductInfo = ({
                   ? productVariant?.basic_data?.sku
                   : product?.data?.item?.basic_data?.sku}
               </h2>
+              {productVariant?.id ? (
+                <>
+                  {!productVariant?.inventory?.inventory_defined && (
+                    <>
+                      <p
+                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                      >
+                        Nije dostupno
+                      </p>
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {!product?.data?.item?.inventory?.inventory_defined && (
+                    <>
+                      <p
+                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                      >
+                        Nije dostupno
+                      </p>
+                    </>
+                  )}
+                </>
+              )}
               <div
                 className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
               >
@@ -214,6 +275,16 @@ const ProductInfo = ({
                   </h2>
                 </div>
               )}
+              {product?.data?.item?.inventory?.amount >= 2 &&
+                product?.data?.item?.inventory?.amount <= 4 && (
+                  <>
+                    <p
+                      className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
+                    >
+                      Male količine
+                    </p>
+                  </>
+                )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
                 <CampaignsDetails campaignsDate={campaignsDate} />
               )}
@@ -301,7 +372,7 @@ const ProductInfo = ({
                 onClick={addToWishlist}
               >
                 <Image
-                  src={Wishlist}
+                  src={isInWishlist ? WishlistActive : Wishlist}
                   alt="wishlist"
                   width={39}
                   height={35}

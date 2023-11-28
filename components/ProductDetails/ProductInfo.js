@@ -340,34 +340,17 @@ const ProductInfo = ({
                   </h2>
                 </div>
               )}
-              {productVariant?.id ? (
-                <>
-                  {productVariant?.inventory?.amount >= 2 &&
-                    productVariant?.inventory?.amount <= 4 && (
+              {product?.data?.item?.inventory?.amount >= 2 &&
+                  product?.data?.item?.inventory?.amount <= 4 && (
                       <>
                         <p
-                          className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
-                        >
-                          Male količine
-                        </p>
-                      </>
-                    )}
-                </>
-              ) : (
-                <>
-                  {product?.data?.item?.inventory?.amount >= 2 &&
-                    product?.data?.item?.inventory?.amount <= 4 && (
-                      <>
-                        <p
-                          className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
+                            className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
                         >
                           Male količine
 
                         </p>
                       </>
-                    )}
-                </>
-              )}
+                  )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
                 <CampaignsDetails campaignsDate={campaignsDate} />
               )}
