@@ -184,7 +184,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
               pagination={true}
-              direction={"vertical"}
+              direction={"horizontal"}
               loop={true}
               navigation={
                 navigationEnabled.enabled === true &&
