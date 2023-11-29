@@ -82,7 +82,6 @@ const SearchProducts = () => {
                     <Link
                       href={`/proizvod/${item?.slug_path}`}
                       onClick={(e) => {
-                        setSearchData([]);
                         setSearchTerm("");
                       }}
                     >
@@ -133,7 +132,6 @@ const SearchProducts = () => {
               <button
                 onClick={() => {
                   handleSearch();
-                  setSearchData([]);
                 }}
                 className={`text-white w-full h-full font-light text-center`}
               >

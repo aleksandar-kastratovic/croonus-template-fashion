@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import InstragramSection from "../sections/homepage/InstagramSection";
 import { post } from "@/app/api/api";
@@ -18,33 +18,38 @@ const NewsLetterInstagramSection = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await post("/newsletter", { email: email }).then((response) => {
-      if (!response?.code) {
-        setEmail("");
-        toast.error(response?.payload?.message || "Error 404", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        setError(true);
-      } else {
-        setEmail("");
-        setError(false);
-        toast.success(response?.payload?.message, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      }
-    });
+    if (!email?.includes("@")) {
+      setError(true);
+    } else {
+      setError(false)
+      await post("/newsletter", { email: email }).then((response) => {
+        if (!response?.code) {
+          setEmail("");
+          toast.error(response?.payload?.message || "Error 404", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setError(true);
+        } else {
+          setEmail("");
+          setError(false);
+          toast.success(response?.payload?.message, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+      });
+    }
   };
 
   const { data: instagramImages } = useQuery({
@@ -75,9 +80,8 @@ const NewsLetterInstagramSection = () => {
           <form className="relative w-full" onSubmit={onSubmit}>
             <input
               placeholder="Unesite svoj email"
-              required
-              pattern={/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
-              type="email"
+              title="Unesite validan email"
+              type="text"
               id="email"
               name="email"
               onChange={changeHandler}

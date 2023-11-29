@@ -213,7 +213,7 @@ const Filters = ({
                   return (
                     <div
                       className={`flex sortref items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
-                        isActive ? "bg-[#f2f2f2] text-black" : "bg-white "
+                        isActive ? "" : "bg-white "
                       }`}
                       onClick={() =>
                         setSort({
@@ -224,8 +224,8 @@ const Filters = ({
                     >
                       <h1
                         className={`uppercase sortref ${
-                          isActive ? `font-medium` : `font-light`
-                        } text-[0.775rem] text-center`}
+                          isActive ? `text-[#39ae00]` : `font-light`
+                        } text-[0.775rem] text-center hover:text-[#39ae00]`}
                         onClick={() =>
                           setOpenSort({
                             open: false,

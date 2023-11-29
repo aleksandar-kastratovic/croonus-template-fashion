@@ -1,16 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
+import {useRouter} from "next/navigation";
 
 const Translate = () => {
   const baseLanguage = "/auto/sr-Latn";
   const languages = [
     { label: `Srpski`, value: "/auto/sr-Latn", shortLabel: 'SRB'},
-    { label: "Engleski", value: "/auto/en", shortLabel: 'EN' },
-    { label: "Nemački", value: "/auto/de", shortLabel: 'DE' },
+    { label: "English", value: "/auto/en", shortLabel: 'EN' },
   ];
   const [selected, setSelected] = useState(baseLanguage);
-
+const router = useRouter()
   useEffect(() => {
     const googleTranslateElementInit = () => {
       new window.google.translate.TranslateElement(
@@ -56,6 +56,7 @@ const Translate = () => {
       setSelected(value);
     }
     window.location.reload();
+    router.refresh()
   };
 
   return (
@@ -72,15 +73,17 @@ const Translate = () => {
       ></div>{" "}
       <div className="notranslate flex items-center gap-5">
         <select
-          className=" h-8 rounded-lg border-none text-sm font-bold uppercase text-black focus:ring-0 cursor-pointer p-0"
+          className="rounded-lg text-sm  text-black focus:ring-2 focus:ring-[#04b400] cursor-pointer focus:border-transparent !border border-slate-200"
           onChange={(e) => langChange(e.target.value)}
+          value={selected}
         >
-          <option className=''>{selected?.split('/')[selected?.split('/').length - 1] || 'SRB'}</option>
+          {/*<option className=''>{selected?.split('/')[selected?.split('/').length - 1] || 'SRB'}</option>*/}
           {languages.map((language) => (
             <option
               key={language.value}
-              onChange={() => langChange(language.value)}
+              // onChange={() => langChange(language.value)}
               value={language.value}
+              className={`!border border-slate-200`}
             >
               {language.label}
             </option>

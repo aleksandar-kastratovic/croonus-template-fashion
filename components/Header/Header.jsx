@@ -8,11 +8,11 @@ import { get, list } from "@/app/api/api";
 import HeaderIcons from "./HeaderIcons";
 import SearchProducts from "./SearchProducts";
 import Translate from "../Translate/Translate";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Header = ({ categories }) => {
   const categoriesMain = [
-    { name: "Početna", slug: "/", isCategory: false },
+    { name: "Početna", slug: "/", isCategory: false, id: 0 },
     ...categories,
     { name: "Brendovi", slug: "/brendovi", isCategory: false },
     { name: "Blog", slug: "/blog", isCategory: false },
@@ -33,7 +33,7 @@ const Header = ({ categories }) => {
     open: false,
     id: null,
     name: null,
-    slug: null,
+    slug_path: null,
     data: [],
     image: null,
   });
@@ -93,7 +93,7 @@ const Header = ({ categories }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-const pathname = usePathname();
+  const pathname = usePathname();
   return (
     <>
       <header
@@ -122,8 +122,9 @@ const pathname = usePathname();
                   <button
                     key={index}
                     className={`${
-                      category?.id === activeCategory?.id
-                        ? "activeCategory "
+                      category?.id === activeCategory?.id ||
+                      pathname.includes(category?.slug)
+                        ? "activeCategory"
                         : "font-normal"
                     } text-[13px] uppercase block relative w-fit text-black activeCategoryHover`}
                     onMouseEnter={() => {
@@ -151,7 +152,11 @@ const pathname = usePathname();
                 ) : (
                   <Link href={`/kategorije/${category?.slug_path}`} key={index}>
                     <span
-                      className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover`}
+                      className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover ${
+                        pathname?.includes(category?.slug) && category?.id !== 0
+                          ? "activeCategory"
+                          : ""
+                      }`}
                     >
                       {category?.name}
                     </span>
@@ -164,7 +169,14 @@ const pathname = usePathname();
                   onClick={resetActiveCategory}
                 >
                   <span
-                    className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover`}
+                    className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover ${
+                      pathname?.includes(category?.slug) && category?.id !== 0
+                        ? "activeCategory"
+                        : pathname === category?.slug &&
+                          category?.id === 0
+                        ? "activeCategory"
+                        : ""
+                    }`}
                   >
                     {category?.name}
                   </span>
@@ -213,7 +225,8 @@ const pathname = usePathname();
                         <button
                           key={index}
                           className={`${
-                            category?.id === activeSubCategory?.id || pathname.includes(category?.slug)
+                            category?.id === activeSubCategory?.id ||
+                            pathname.includes(category?.slug)
                               ? "font-bold"
                               : "font-normal"
                           } text-lg uppercase hover:underline block text-black`}
@@ -227,10 +240,10 @@ const pathname = usePathname();
                                 category?.name === activeSubCategory?.name
                                   ? null
                                   : category?.name,
-                              slug:
-                                category?.slug === activeSubCategory?.slug
+                              slug_path:
+                                category?.slug_path === activeSubCategory?.slug_path
                                   ? null
-                                  : category?.slug,
+                                  : category?.slug_path,
                               data:
                                 category?.children === activeSubCategory?.data
                                   ? []
@@ -274,7 +287,7 @@ const pathname = usePathname();
                     {activeSubCategory?.name && (
                       <Link
                         className={`text-[15px] font-normal text-[#39ae00] hover:underline pb-7`}
-                        href={`/kategorije/${activeSubCategory?.slug}`}
+                        href={`/kategorije/${activeSubCategory?.slug_path}`}
                         onClick={() => {
                           resetActiveCategory();
                         }}
@@ -291,7 +304,9 @@ const pathname = usePathname();
                             onClick={resetActiveCategory}
                             key={childCategory?.id}
                             className={`text-[15px] lowercase text-black first-letter:uppercase block hover:underline ${
-                              pathname?.includes(childCategory?.slug_path) ? "font-bold" : "font-normal"
+                              pathname?.includes(childCategory?.slug_path)
+                                ? "font-bold"
+                                : "font-normal"
                             }`}
                           >
                             {childCategory.name}
