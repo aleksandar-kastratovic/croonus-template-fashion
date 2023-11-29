@@ -22,8 +22,10 @@ const getProductLongDescription = async (slug) => {
   );
 };
 
-const getNewProducts = async () => {
-  return await list("/products/new-in/list").then((res) => res?.payload?.items);
+const getNewProducts = async (slug) => {
+  return await list(`/product-details/cross-sell/${slug}`).then(
+    (res) => res?.payload?.items
+  );
 };
 
 const getBreadcrumbs = async (slug) => {
@@ -48,7 +50,7 @@ const ProductPage = async ({ path }) => {
   const product = await getProduct(path);
   const productGallery = await getProductGallery(path);
   const desc = await getProductLongDescription(path);
-  const newProducts = await getNewProducts();
+  const crossSell = await getNewProducts(path);
   const breadcrumbs = await getBreadcrumbs(path);
   const specification = await getSpecification(path);
   const declaration = await getDeclaration(path);
@@ -77,7 +79,7 @@ const ProductPage = async ({ path }) => {
         />
       </div>
 
-      <RecommendedProducts products={newProducts} />
+      {crossSell?.length > 0 && <RecommendedProducts products={crossSell} />}
     </div>
   );
 };

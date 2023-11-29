@@ -262,9 +262,9 @@ const ProductInfo = ({
                   {!productVariant?.inventory?.inventory_defined && (
                     <>
                       <p
-                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                        className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
                       >
-                        Nije dostupno
+                        Proizvod nije dostupan.
                       </p>
                     </>
                   )}
@@ -274,9 +274,9 @@ const ProductInfo = ({
                   {!product?.data?.item?.inventory?.inventory_defined && (
                     <>
                       <p
-                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                        className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
                       >
-                        Nije dostupno
+                        Proizvod nije dostupan.
                       </p>
                     </>
                   )}
@@ -387,9 +387,13 @@ const ProductInfo = ({
                 Pomoć za veličine
               </span>
             </button>
-            {console.log(productVariant)}
             <div className="mt-[3rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
+                disabled={
+                  productVariant?.id
+                    ? !productVariant?.inventory?.inventory_defined
+                    : !product?.data?.item?.inventory?.inventory_defined
+                }
                 className={
                   productVariant === null || productVariant.length === 0
                     ? `max-sm:w-[8.5rem] ${
@@ -421,6 +425,11 @@ const ProductInfo = ({
                 {text}
               </button>
               <button
+                disabled={
+                  productVariant?.id
+                    ? !productVariant?.inventory?.inventory_defined
+                    : !product?.data?.item?.inventory?.inventory_defined
+                }
                 className={
                   productVariant === null || productVariant.length === 0
                     ? `max-sm:w-[8.5rem] ${
@@ -513,7 +522,7 @@ const ProductInfo = ({
               {/*  </div>*/}
               {/*</ul>*/}
 
-              <div className={`flex flex-col divide-y md:max-w-[80%]`}>
+              <div className={`flex flex-col divide-y md:max-w-[80%] h-[310px] overflow-y-auto`}>
                 {specification?.length > 0 &&
                   specification?.map((item) => {
                     return (
@@ -578,31 +587,49 @@ const ProductInfo = ({
                     >
                       <p className={`text-sm`}>
                         {declaration?.manufacture_name && (
-                         <> <span className={`font-bold`}>
-                            Proizvođač: </span>{declaration?.manufacture_name}
-                         </>
+                          <>
+                            {" "}
+                            <span className={`font-bold`}>Proizvođač: </span>
+                            {declaration?.manufacture_name}
+                          </>
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.country_name && (
-                            <> <span className={`font-bold`}>
-                            Zemlja porekla:</span> {declaration?.country_name}</>
-
+                          <>
+                            {" "}
+                            <span className={`font-bold`}>
+                              Zemlja porekla:
+                            </span>{" "}
+                            {declaration?.country_name}
+                          </>
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.name && (
-                            <> <span className={`font-bold`}>Naziv:</span> {declaration?.name}</>
+                          <>
+                            {" "}
+                            <span className={`font-bold`}>Naziv:</span>{" "}
+                            {declaration?.name}
+                          </>
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.year && (
-                            <><span className={`font-bold`}>Godina proizvodnje:</span> {declaration?.year}</>
+                          <>
+                            <span className={`font-bold`}>
+                              Godina proizvodnje:
+                            </span>{" "}
+                            {declaration?.year}
+                          </>
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.importer_name && (
-                            <><span className={`font-bold`}>Uvoznik:</span> {declaration?.importer_name}</>
+                          <>
+                            <span className={`font-bold`}>Uvoznik:</span>{" "}
+                            {declaration?.importer_name}
+                          </>
                         )}
                       </p>
                     </div>
@@ -630,7 +657,10 @@ const ProductInfo = ({
                     <div
                       className={`py-4 pl-6 pr-3 max-h-[150px] overflow-y-auto customScroll`}
                     >
-                      <p className={`text-sm`} dangerouslySetInnerHTML={{__html:desc?.description}}></p>
+                      <p
+                        className={`text-sm`}
+                        dangerouslySetInnerHTML={{ __html: desc?.description }}
+                      ></p>
                     </div>
                   )}
                 </div>
