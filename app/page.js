@@ -35,7 +35,7 @@ const fetchAction4 = async () => {
 
 const getInstagramPost = async () => {
   const resData = await fetch(
-    `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=${process.env.NEXT_PUBLIC_INSTAGRAM_KEY}`
+    `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=${process.env.INSTAGRAM}`
   );
 
   const data = await resData.json();
