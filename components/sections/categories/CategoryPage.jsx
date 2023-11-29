@@ -11,8 +11,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/components/sections/categories/Loader";
 import LoadingProducts from "@/components/LoadingProducts";
 
-const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug }) => {
-
+const CategoryPage = ({
+  filter,
+  singleCategory,
+  products,
+  text,
+  slug,
+  sectionSlug,
+}) => {
   const params = useSearchParams();
   const router = useRouter();
   // const [productData, setProductData] = useState({
@@ -28,6 +34,25 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug
   const [tempSelectedFilters, setTempSelectedFilters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lastSelectedFilterKey, setLastSelectedFilterKey] = useState("");
+
+  const [lastScrollPos, setLastScrollPos] = useState(0);
+
+  useEffect(() => {
+    const savedScrollPos = parseInt(localStorage.getItem("scrollPos"), 10);
+    if (!isNaN(savedScrollPos)) {
+      setLastScrollPos(savedScrollPos);
+    }
+    const handleScroll = () => {
+      const scrollPos = window.pageYOffset;
+      setLastScrollPos(scrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const { data: productData, isFetching } = useQuery({
     queryKey: [
@@ -82,7 +107,10 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug
             ? filters_arr_tmp
             : [],
         }
-      ).then((res) => res?.payload);
+      ).then((res) => {
+        setChangeFilters(true);
+        return res?.payload;
+      });
     },
     refetchOnWindowFocus: false,
   });
@@ -261,7 +289,7 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug
       default:
         break;
     }
-    router.push(queryString);
+    router.push(queryString, { scroll: false });
   }, [sort, selectedFilters, page]);
 
   const getPaginationArray = (selectedPage, totalPages) => {
@@ -496,6 +524,7 @@ const CategoryPage = ({ filter, singleCategory, products, text, slug,sectionSlug
           availableFilters={availableFilters}
           setSelectedFilters={setSelectedFilters}
           sort={sort}
+          setPage={setPage}
           setSort={setSort}
           changeFilters={changeFilters}
           pagination={productData?.pagination}

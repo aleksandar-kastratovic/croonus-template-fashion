@@ -158,7 +158,7 @@ const ProductMobileGallery = ({
         navigation={true}
         loop={true}
         onSwiper={(swiper) => setSwiper(swiper)}
-        className={`${classes.mySwiper2} mySwiper2`}
+        className={`${classes.mySwiper2} productDetailsSwiper`}
         breakpoints={{
           768: {
             direction: "horizontal",
@@ -322,7 +322,7 @@ const ProductMobileGallery = ({
                         src={image?.image}
                         alt={`Croonus`}
                         layout="fill"
-                        objectFit="cover"
+                        objectFit="contain"
                         priority={true}
                         className="cursor-pointer w-full h-auto"
                       />

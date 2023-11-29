@@ -15,7 +15,7 @@ const FiltersMobile = ({
   changeFilters,
   setChangeFilters,
   setFilterOpen,
-  setLastSelectedFilterKey,
+  setLastSelectedFilterKey,setPage
 }) => {
   const [openIndex, setOpenIndex] = useState({
     key: null,
@@ -134,6 +134,7 @@ const FiltersMobile = ({
                     changeFilters={changeFilters}
                     setChangeFilters={setChangeFilters}
                     setSelectedFilters={setSelectedFilters}
+                    setPage={setPage}
                     tempSelectedFilters={tempSelectedFilters}
                     setLastSelectedFilterKey={setLastSelectedFilterKey}
                   />

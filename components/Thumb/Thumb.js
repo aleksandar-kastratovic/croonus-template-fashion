@@ -184,7 +184,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
               pagination={true}
-              direction={"horizontal"}
+              // direction={"horizontal"}
               loop={true}
               navigation={
                 navigationEnabled.enabled === true &&
@@ -203,7 +203,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   pagination: {
                     enabled: false,
                   },
-                  direction: "horizontal",
+                  // direction: "horizontal",
                 },
               }}
               className={`categoryImageSwiper relative`}
@@ -227,11 +227,14 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                         }
                         priority
                         className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
+
                       />
                     )}
                   </Link>
                 </SwiperSlide>
               ))}
+
+
             </Swiper>
             {product?.price?.discount?.active && (
               <div

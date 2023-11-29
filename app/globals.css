@@ -533,11 +533,22 @@
   /* Display the tooltip when button is hovered */
 }
 
-.categoryImageSwiper .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
-  bottom: var(--swiper-pagination-bottom,8px);
-  top: var(--swiper-pagination-top,auto);
+.categoryImageSwiper .swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+  bottom: var(--swiper-pagination-bottom, 8px);
+  top: var(--swiper-pagination-top, auto);
   left: 0;
   width: 100% !important;
+}
+
+.productDetailsSwiper .swiper-pagination-vertical.swiper-pagination-bullets, .swiper-vertical>.swiper-pagination-bullets {
+  right: var(--swiper-pagination-right,8px);
+  left: var(--swiper-pagination-left,auto);
+  top: 50%;
+  transform: translate3d(0px,-50%,0);
+  width: auto!important;
 }
 
 .categoryImageSwiper .swiper-pagination-bullet {
