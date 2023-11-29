@@ -5,8 +5,9 @@ import Link from "next/link";
 import InstragramSection from "../sections/homepage/InstagramSection";
 import { post } from "@/app/api/api";
 import { toast, ToastContainer } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
-const NewsLetterInstagramSection = ({ instagramImages }) => {
+const NewsLetterInstagramSection = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
 
@@ -45,6 +46,20 @@ const NewsLetterInstagramSection = ({ instagramImages }) => {
       }
     });
   };
+
+  const { data: instagramImages } = useQuery({
+    queryKey: ["instagramImages"],
+    queryFn: async () => {
+      const resData = await fetch(
+        `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=${process.env.INSTAGRAM}`
+      );
+
+      const data = await resData.json();
+
+      return data;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div>
