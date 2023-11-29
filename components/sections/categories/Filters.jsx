@@ -204,7 +204,7 @@ const Filters = ({
             {openSort?.open && (
               <div
                 ref={sortRef}
-                className="absolute sortref z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[200px]"
+                className="absolute sortref z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[250px]"
               >
                 {sortKeys.map((key) => {
                   const isActive =
@@ -223,9 +223,9 @@ const Filters = ({
                       }
                     >
                       <h1
-                        className={`uppercase sortref ${
-                          isActive ? `text-[#39ae00]` : `font-light`
-                        } text-[0.775rem] text-center hover:text-[#39ae00]`}
+                        className={` sortref ${
+                          isActive ? `text-[#39ae00]` : ``
+                        } text-[1rem] text-center hover:text-[#39ae00] font-light`}
                         onClick={() =>
                           setOpenSort({
                             open: false,

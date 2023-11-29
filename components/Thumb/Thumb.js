@@ -227,14 +227,11 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                         }
                         priority
                         className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-
                       />
                     )}
                   </Link>
                 </SwiperSlide>
               ))}
-
-
             </Swiper>
             {product?.price?.discount?.active && (
               <div
@@ -418,17 +415,10 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   product?.basic_data?.name
                 );
               }}
-              className={`${!isInWishlist && "hover:bg-red-500"} max-md:hidden rounded-full p-1 favorites cursor-pointer`}
+              className={` max-md:hidden rounded-full p-1 favorites cursor-pointer `}
             >
-              {isInWishlist ? (
-                  <Image
-                      src={WishlistActive}
-                      alt="wishlist"
-                      width={15}
-                      height={15}
-                      className={``}
-                  />
-              ) : (
+              {!isInWishlist ? (
+                <>
                   <Image
                       src={Wishlist}
                       alt="wishlist"
@@ -436,6 +426,22 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                       height={15}
                       className={`favorite`}
                   />
+                  <Image
+                      src={WishlistActive}
+                      alt="wishlist"
+                      width={15}
+                      height={15}
+                      className={`activeWishlist !hidden`}
+                  />
+                </>
+              ) : (
+                <><Image
+                    src={WishlistActive}
+                    alt="wishlist"
+                    width={15}
+                    height={15}
+                    className={``}
+                /></>
               )}
             </div>
           </div>
@@ -885,25 +891,25 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
                   product?.basic_data?.name
                 );
               }}
-              className={`${!isInWishlist && "hover:bg-red-500"} max-md:hidden rounded-full p-1 favorites cursor-pointer`}
+              className={` max-md:hidden rounded-full p-1 favorites cursor-pointer`}
             >
-              {isInWishlist ? (
-                <Image
-                  src={WishlistActive}
-                  alt="wishlist"
-                  width={15}
-                  height={15}
-                  className={``}
-                />
-              ) : (
-                <Image
-                  src={Wishlist}
-                  alt="wishlist"
-                  width={15}
-                  height={15}
-                  className={`favorite`}
-                />
-              )}
+              <Image
+                src={WishlistActive}
+                alt="wishlist"
+                width={15}
+                height={15}
+                className={`activeWishlist ${
+                  isInWishlist ? `block` : `hidden`
+                }`}
+              />
+
+              <Image
+                src={Wishlist}
+                alt="wishlist"
+                width={15}
+                height={15}
+                className={`favorite ${isInWishlist && "hidden"}`}
+              />
             </div>
           </div>
           <div className=" flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem]  min-w-[5.938rem] max-w-max">

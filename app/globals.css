@@ -296,11 +296,11 @@
 }
 
 .favorites:hover > .favorite {
-  filter: invert(1);
+  display: none;
 }
 
-.favorited {
-  filter: invert(1);
+.favorites:hover > .activeWishlist {
+ display: block !important;
 }
 
 .slider .rs-slider-bar {
