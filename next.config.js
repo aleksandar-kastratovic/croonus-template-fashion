@@ -8,6 +8,7 @@ const nextConfig = {
     EMAIL: process.env.EMAIL,
     TELEPHONE: process.env.TELEPHONE,
     CAPTCHAKEY: process.env.CAPTCHAKEY,
+    INSTAGRAM: process.env.INSTAGRAM,
   },
   images: {
     domains: [
