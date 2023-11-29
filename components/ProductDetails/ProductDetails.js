@@ -31,6 +31,7 @@ const ProductDetails = ({
       setGallery((prev) => [newImage, ...prev]);
     }
   }, [color]);
+
   return (
     <div className="max-md:mt-[1rem]  max-md:w-[95%]  max-md:mx-auto md:mx-[3rem] mt-6">
       <div className="flex items-center gap-2 flex-wrap max-lg:hidden">

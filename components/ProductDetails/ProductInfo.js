@@ -271,17 +271,15 @@ const ProductInfo = ({
                 </>
               ) : (
                 <>
-                  {
-                    !product?.data?.item?.inventory?.inventory_defined && (
-                      <>
-                        <p
-                          className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
-                        >
-                          Nije dostupno
-                        </p>
-                      </>
-                    )
-                  }
+                  {!product?.data?.item?.inventory?.inventory_defined && (
+                    <>
+                      <p
+                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                      >
+                        Nije dostupno
+                      </p>
+                    </>
+                  )}
                 </>
               )}
               <div
@@ -341,16 +339,15 @@ const ProductInfo = ({
                 </div>
               )}
               {product?.data?.item?.inventory?.amount >= 2 &&
-                  product?.data?.item?.inventory?.amount <= 4 && (
-                      <>
-                        <p
-                            className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
-                        >
-                          Male količine
-
-                        </p>
-                      </>
-                  )}
+                product?.data?.item?.inventory?.amount <= 4 && (
+                  <>
+                    <p
+                      className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
+                    >
+                      Male količine
+                    </p>
+                  </>
+                )}
               {product?.data?.item?.price?.discount?.campaigns?.length > 0 && (
                 <CampaignsDetails campaignsDate={campaignsDate} />
               )}
@@ -565,7 +562,7 @@ const ProductInfo = ({
                       )
                     }
                     className={`pl-3 hover:bg-[#f8f8f8] ${
-                      activeTab === 3 && "bg-[#f8f8f8]"
+                      activeTab === "declaration" && "bg-[#f8f8f8]"
                     } py-3 cursor-pointer flex items-center justify-between`}
                   >
                     DEKLARACIJA{" "}
@@ -581,33 +578,59 @@ const ProductInfo = ({
                     >
                       <p className={`text-sm`}>
                         {declaration?.manufacture_name && (
-                          <span>
-                            Proizvođač: {declaration?.manufacture_name}
-                          </span>
+                         <> <span className={`font-bold`}>
+                            Proizvođač: </span>{declaration?.manufacture_name}
+                         </>
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.country_name && (
-                          <span>
-                            Zemlja porekla: {declaration?.country_name}
-                          </span>
+                            <> <span className={`font-bold`}>
+                            Zemlja porekla:</span> {declaration?.country_name}</>
+
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.name && (
-                          <span>Naziv: {declaration?.name}</span>
+                            <> <span className={`font-bold`}>Naziv:</span> {declaration?.name}</>
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.year && (
-                          <span>Godina proizvodnje: {declaration?.year}</span>
+                            <><span className={`font-bold`}>Godina proizvodnje:</span> {declaration?.year}</>
                         )}
                       </p>
                       <p className={`text-sm`}>
                         {declaration?.importer_name && (
-                          <span>Uvoznik: {declaration?.importer_name}</span>
+                            <><span className={`font-bold`}>Uvoznik:</span> {declaration?.importer_name}</>
                         )}
                       </p>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <div
+                    onClick={() =>
+                      setActiveTab(
+                        activeTab === "description" ? null : "description"
+                      )
+                    }
+                    className={`pl-3 hover:bg-[#f8f8f8] ${
+                      activeTab === "description" && "bg-[#f8f8f8]"
+                    } py-3 cursor-pointer flex items-center justify-between`}
+                  >
+                    OPIS{" "}
+                    <i
+                      className={`fa fa-solid pr-2 transition-all duration-500 fa-chevron-${
+                        activeTab === "description" ? "up" : "down"
+                      }`}
+                    />
+                  </div>
+                  {activeTab === "description" && (
+                    <div
+                      className={`py-4 pl-6 pr-3 max-h-[150px] overflow-y-auto customScroll`}
+                    >
+                      <p className={`text-sm`} dangerouslySetInnerHTML={{__html:desc?.description}}></p>
                     </div>
                   )}
                 </div>
