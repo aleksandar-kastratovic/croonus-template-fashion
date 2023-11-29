@@ -497,7 +497,6 @@ const NavigationMobile = () => {
               onClick={() => {
                 setSearchOpen(false);
                 setSearchTerm("");
-                setSearchData([]);
               }}
             >
               Otkaži
