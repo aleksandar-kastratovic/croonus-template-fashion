@@ -33,15 +33,6 @@ const fetchAction4 = async () => {
   return fetchAction4;
 };
 
-const getInstagramPost = async () => {
-  const resData = await fetch(
-    `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=${process.env.INSTAGRAM}`
-  );
-
-  const data = await resData.json();
-
-  return data;
-};
 const getNew = async () => {
   return await list("/categories/section/recommended").then(
     (res) => res?.payload
@@ -52,7 +43,6 @@ export const revalidate = 30;
 const Home = async () => {
   const banners = await getBanners();
   const recommendedProducts = await getRecommendedProducts();
-  const instagramImages = await getInstagramPost();
   const action4 = await fetchAction4();
   const categories = await getBannersCategories();
   const mobileBanners = await getMobileBanners();
@@ -74,7 +64,7 @@ const Home = async () => {
         </div>
         <RecommendedCategories categories={categories} />
         <NewCategoriesSections categories={recommendedCategories} />
-        <NewsLetterInstagramSection instagramImages={instagramImages} />
+        <NewsLetterInstagramSection />
       </div>
     </>
   );
