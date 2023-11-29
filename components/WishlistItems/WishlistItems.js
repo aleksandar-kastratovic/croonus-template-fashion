@@ -12,7 +12,12 @@ import { useGlobalAddToCart } from "@/app/api/globals";
 import { get, list, deleteMethod as DELETE } from "@/app/api/api";
 import CartProductBox from "../CartProductBox";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper";
+import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 const WishlistItems = ({ items, product, border }) => {
   const removeFromWishList = useGlobalRemoveFromWishlist();
   const globalAddToCart = useGlobalAddToCart();
@@ -24,6 +29,8 @@ const WishlistItems = ({ items, product, border }) => {
   const [modal, setModal] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [cartData, setCartData] = useState([]);
+  const addToCart = useGlobalAddToCart();
+
   const getCartCount = useCallback(() => {
     get("/cart/badge-count")
       .then((response) => {
@@ -31,7 +38,12 @@ const WishlistItems = ({ items, product, border }) => {
       })
       .catch((error) => console.warn(error));
   }, []);
-
+  const [selected, setSelected] = useState([]);
+  const [loading, setLoading] = useState({
+    status: false,
+    id: null,
+  });
+  const [swiper, setSwiper] = useState(null);
   useEffect(() => {
     getCartCount();
   }, [getCartCount, cart]);
@@ -46,6 +58,7 @@ const WishlistItems = ({ items, product, border }) => {
   }, [cart]);
   const isStickerHovered = stickerHovered === product?.id;
   const [, , , mutateWishList] = useCartContext();
+  const [idProduct, setIdProduct] = useState(null);
 
   const removeFromWishlist = async (id, name) => {
     return DELETE(`/wishlist/${id}`).then((response) => {
@@ -63,23 +76,153 @@ const WishlistItems = ({ items, product, border }) => {
       }
     });
   };
-
+  const variantOptionSize = product?.variant_options?.find((variant) => {
+    return variant?.attribute?.slug === "velicina";
+  });
+  const variantOptionColor = product?.variant_options?.find((variant) => {
+    return variant?.attribute?.slug === "boja";
+  });
+  useEffect(() => {
+    if (selected?.length === 2) {
+      setLoading({
+        id: idProduct,
+        status: true,
+      });
+      const getVariant = async (selected) => {
+        const res = await get(`/product-details/basic-data/${idProduct}`);
+        if (
+          res?.payload?.data?.variant_items &&
+          res?.code === 200 &&
+          selected?.length === 2
+        ) {
+          const variantItems = res?.payload?.data?.variant_items;
+          const variant = variantItems?.find((item) =>
+            item?.variant_key_array?.every((variantKey) =>
+              selected?.some(
+                (selection) =>
+                  selection?.attribute_key === variantKey?.attribute_key &&
+                  selection?.value_key === variantKey?.value_key
+              )
+            )
+          );
+          !variant?.basic_data?.name
+            ? toast.error(`Došlo je do greške, molimo Vas pokušajte ponovo.`, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              })
+            : toast.success(
+                `Proizvod ${variant?.basic_data?.name} je dodat u korpu`,
+                {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                }
+              );
+          addToCart(variant?.basic_data?.id_product, 1);
+          setSelected([]);
+          setIdProduct(null);
+          setLoading({
+            id: null,
+            status: false,
+          });
+          return variant;
+        }
+      };
+      getVariant(selected);
+    }
+  }, [selected, idProduct]);
+  const onSwiperRightClick = () => {
+    swiper.slideNext();
+  };
+  const [navigationEnabled, setNavigationEnabled] = useState({
+    enabled: false,
+    id: null,
+  });
+  const [image, setImage] = useState({
+    image: null,
+    id: null,
+  });
   return (
     <>
-      <div className="col-span-1 relative item mt-[2rem] lg:mt-[5rem]">
+      <div
+        className="col-span-1 relative item mt-[2rem] lg:mt-[5rem] hoveredColor"
+        onMouseEnter={() => {
+          setNavigationEnabled({
+            enabled: true,
+            id: product?.basic_data?.id_product,
+          });
+        }}
+        onMouseLeave={() =>
+          setNavigationEnabled({
+            enabled: false,
+            id: null,
+          })
+        }
+      >
         <div className="max-md:h-[250px] md:h-[450px] lg:h-[500px] 2xl:h-[575px] item relative">
-          {product?.image[0] && (
-            <Link href={`/proizvod/${product?.slug}`} scroll={true}>
-              <Image
-                src={product?.image[0]}
-                alt={product?.basic_data?.name}
-                fill={true}
-                style={{ objectFit: "cover" }}
-                priority={true}
-                className={`transition-all duration-200 opacity-100 object-cover w-full h-full`}
-              />
-            </Link>
-          )}
+          <Swiper
+            modules={[Navigation, Pagination]}
+            // onSwiper={(swiper) => setSwiper(swiper)}
+            pagination={true}
+            direction={"horizontal"}
+            loop={true}
+            initialSlide={product?.image?.findIndex(
+              (item) => item === product?.image[0]
+            )}
+            navigation={
+              navigationEnabled.enabled === true &&
+              navigationEnabled.id === product?.basic_data?.id_product
+            }
+            breakpoints={{
+              320: {
+                navigation: {
+                  enabled: false,
+                },
+              },
+              1024: {
+                navigation: {
+                  enabled: true,
+                },
+                pagination: {
+                  enabled: false,
+                },
+                direction: "horizontal",
+              },
+            }}
+            className={`categoryImageSwiper relative`}
+            onSwiper={(swiper) => setSwiper(swiper)}
+          >
+            {product?.image?.map((item, index) => {
+              return (
+                <SwiperSlide>
+                  <Link href={`/proizvod/${product?.slug}`} className="z-50">
+                    <Image
+                      src={convertHttpToHttps(
+                        image?.id === product?.basic_data?.id_product
+                          ? image?.image
+                          : item
+                      )}
+                      alt={product?.basic_data?.name}
+                      sizes={
+                        "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, (min-width: 1600px) 50vw"
+                      }
+                      width={0}
+                      height={0}
+                      priority={true}
+                      className={`transition-all duration-200 opacity-100 object-fill w-full h-full`}
+                    />
+                  </Link>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
 
           {/*<div className="absolute bottom-2 left-4">*/}
           {/*  <span className="text-[0.75rem] text-black bg-white px-3.5 font-bold py-1 rounded-md">*/}
@@ -104,69 +247,139 @@ const WishlistItems = ({ items, product, border }) => {
               </div>
             </div>
           )}
+          {product?.variant_options?.length > 0 ? (
+            <div className="absolute z-[100] py-2 left-0 bottom-0 w-full mx-auto bg-white chevrons opacity-90">
+              <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
+                {/* <h1 className="text-[0.938rem] font-semibold text-center">
+                    Izaberi veličinu
+                  </h1> */}
+                <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
+                  <Swiper
+                    slidesPerView={3}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 3,
+                      },
+                      1024: {
+                        slidesPerView: 3,
+                      },
+                      1300: {
+                        slidesPerView: 4,
+                      },
+                      1680: {
+                        slidesPerView: 5,
+                      },
+                    }}
+                    className="variantsSwiper"
+                    loop={true}
+                    rewind={true}
+                    dir={"ltr"}
+                    modules={[Navigation]}
+                    navigation={
+                      variantOptionSize?.values?.length >
+                      swiper?.params?.slidesPerView
+                    }
+                    style={{ width: "100%", display: "block" }}
+                    onSwiper={(swiper) => {
+                      setSwiper(swiper);
+                    }}
+                  >
+                    {variantOptionSize?.values?.map((item3) => {
+                      const variantAttributeKey =
+                        variantOptionSize?.attribute?.key;
+                      const isSelected = selected?.find(
+                        (selection) =>
+                          selection?.attribute_key === variantAttributeKey &&
+                          selection?.value_key === item3?.key
+                      );
+                      return (
+                        <SwiperSlide key={Math.random()}>
+                          <div
+                            className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${
+                              isSelected &&
+                              variantAttributeKey === variantAttributeKey
+                                ? `border-[#242424] bg-[#242424] text-white`
+                                : ``
+                            }`}
+                            onClick={() => {
+                              if (product?.variant_options?.length > 1) {
+                                setSelected((prevSelected) => {
+                                  const filteredSelections =
+                                    prevSelected?.filter(
+                                      (selection) =>
+                                        selection?.attribute_key !==
+                                        variantAttributeKey
+                                    );
+
+                                  return [
+                                    ...filteredSelections,
+                                    {
+                                      attribute_key: variantAttributeKey,
+                                      value_key: item3?.key,
+                                    },
+                                  ];
+                                });
+                                setIdProduct(product?.basic_data?.id_product);
+                              } else {
+                                const productVariantGet = async () => {
+                                  const res = await get(
+                                    `/product-details/basic-data/${product?.basic_data?.id_product}`
+                                  );
+                                  const data = res?.payload?.data;
+                                  if (data?.variant_items) {
+                                    const clickedVariant =
+                                      data?.variant_items?.find(
+                                        (variantItem) => {
+                                          return variantItem?.variant_key_array?.some(
+                                            (variantKey) => {
+                                              return (
+                                                variantKey?.value_key ===
+                                                item3.key
+                                              );
+                                            }
+                                          );
+                                        }
+                                      );
+                                    setProductVariant(
+                                      clickedVariant?.basic_data?.id_product
+                                    );
+                                    addToCart(
+                                      clickedVariant?.basic_data?.id_product,
+                                      1,
+                                      false
+                                    );
+                                    toast.success(
+                                      `Proizvod ${clickedVariant.basic_data.name} je dodat u korpu!`,
+                                      {
+                                        position: "top-center",
+                                        autoClose: 3000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                      }
+                                    );
+                                  }
+                                };
+                                productVariantGet();
+                              }
+                            }}
+                          >
+                            {item3?.name}
+                          </div>
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
+
+                  <p onClick={() => onSwiperRightClick()}>&nbsp;</p>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
-        {/* <div className="absolute  px-4 top-0 left-0 w-full h-full chevrons items-center justify-between">
-            <div>
-              <Image
-                className="cursor-pointer rotate-180"
-                src={Chevron}
-                alt="chevron"
-                width={15}
-                height={15}
-                onClick={() => {
-                  if (imageIndex === 0) {
-                    setImageIndex(product?.image.length - 1);
-                  } else {
-                    setImageIndex(imageIndex - 1);
-                  }
-                }}
-              />
-            </div>
-            <div>
-              <Image
-                className="cursor-pointer rotate-0"
-                src={Chevron}
-                alt="chevron"
-                width={15}
-                height={15}
-                onClick={() => {
-                  if (imageIndex === product?.image.length - 1) {
-                    setImageIndex(0);
-                  } else {
-                    setImageIndex(imageIndex + 1);
-                  }
-                }}
-              />
-            </div>
-          </div> */}
-        {/*{product?.variant_options?.length > 0 ? (*/}
-        {/*  <div className="absolute rounded-lg py-5 left-3 bottom-[4.5rem] w-[95%] mx-auto bg-white chevrons">*/}
-        {/*    <div className="flex flex-col items-center justify-center w-full">*/}
-        {/*      <h1 className="text-[0.938rem] font-semibold text-center">*/}
-        {/*        Izaberi veličinu*/}
-        {/*      </h1>*/}
-        {/*      <div className="flex flex-row items-center justify-center gap-3 w-full mt-2">*/}
-        {/*        <>*/}
-        {/*          {product?.variant_options?.slice(0, 1).map((item2) => {*/}
-        {/*            return (*/}
-        {/*              <>*/}
-        {/*                {item2?.values.map((item3) => {*/}
-        {/*                  return (*/}
-        {/*                    <>*/}
-        {/*                      <div className="rounded-full cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border">*/}
-        {/*                        {item3?.name}*/}
-        {/*                      </div>*/}
-        {/*                    </>*/}
-        {/*                  );*/}
-        {/*                })}*/}
-        {/*              </>*/}
-        {/*            );*/}
-        {/*          })}*/}
-        {/*        </>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*) : null}*/}
+
         <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
           <h1 className="text-[0.813rem] clamp">{product?.basic_data?.name}</h1>
           <div
@@ -190,6 +403,80 @@ const WishlistItems = ({ items, product, border }) => {
               {currencyFormat(product?.price?.price?.original)}
             </span>
           )}
+          <div className={` w-full`}>
+            <div
+              className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
+            >
+              {loading?.status &&
+              loading?.id === product?.basic_data?.id_product ? (
+                <i
+                  className={`fa fa-solid fa-spinner animate-spin text-xl`}
+                ></i>
+              ) : (
+                <>
+                  {variantOptionColor?.values?.map((item3) => {
+                    const variantAttributeKey =
+                      variantOptionColor?.attribute?.key;
+                    const isSelected = selected.find(
+                      (item) =>
+                        item?.attribute_key === variantAttributeKey &&
+                        item?.value_key === item3?.key
+                    );
+
+                    return (
+                      <div
+                        key={item3?.key}
+                        className={`max-sm:scale-[0.8] ${
+                          isSelected ? `border border-[#242424] p-[0.5px]` : ``
+                        } rounded-full  cursor-pointer flex items-center justify-center text-center text-xs w-[9px] md:w-[15px] h-[9px] md:h-[15px] border hover:border-[#242424] transition-all relative duration-500`}
+                        onClick={() => {
+                          setSelected((prevSelected) => {
+                            // Remove previous selections with the same variantAttributeKey
+                            const filteredSelections = prevSelected.filter(
+                              (selection) =>
+                                selection.attribute_key !== variantAttributeKey
+                            );
+                            return [
+                              ...filteredSelections,
+                              {
+                                attribute_key: variantAttributeKey,
+                                value_key: item3?.key,
+                              },
+                            ];
+                          });
+                          setIdProduct(product?.basic_data?.id_product);
+                        }}
+                      >
+                        {item3?.image && (
+                          <Image
+                            src={item3?.image}
+                            alt=""
+                            className="rounded-full"
+                            fill
+                            sizes={
+                              "(max-width: 639px) 15px, (max-width: 767px) 15px, (max-width: 1023px) 15px, (max-width: 1279px) 15px, 15px"
+                            }
+                            style={{ objectFit: "cover" }}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+            {variantOptionColor?.values?.length > 1 && (
+              <div className={`text-[0.75rem] text-left mt-1 hoveredColor1`}>
+                + {variantOptionColor?.values?.length - 1}{" "}
+                {variantOptionColor?.values?.length - 1 === 1
+                  ? "boja"
+                  : variantOptionColor?.values?.length - 1 >= 2 &&
+                    variantOptionColor?.values?.length - 1 <= 4
+                  ? "boje"
+                  : "boja"}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <ToastContainer />
