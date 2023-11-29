@@ -32,6 +32,9 @@ module.exports = {
         "croonus-4": "#faf9f8",
         topHeader: "#f7f7f7",
       },
+      aspectRatio: {
+        '2/3': '2/3',
+      },
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],

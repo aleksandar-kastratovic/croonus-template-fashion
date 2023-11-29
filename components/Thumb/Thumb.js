@@ -179,7 +179,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
           }
         >
           {" "}
-          <div className="max-md:h-[250px] md:h-[450px] lg:h-[450px] 2xl:h-[500px] item relative hoveredColor">
+          <div className="aspect-2/3 w-full item relative hoveredColor">
             <Swiper
               modules={[Navigation, Pagination]}
               // onSwiper={(swiper) => setSwiper(swiper)}
@@ -609,7 +609,7 @@ const Thumb = ({ data, slider, productsPerViewMobile }) => {
           <div
             className={`max-md:h-[250px] ${
               productsPerViewMobile === 1 && "!h-[500px]"
-            } md:h-[450px] lg:h-[450px] xl:h-[470px] 2xl:h-[500px] 3xl:h-[575px] item relative`}
+            } aspect-2/3 w-full item relative`}
           >
             <Swiper
               modules={[Navigation, Pagination]}
