@@ -222,9 +222,9 @@ const ProductInfo = ({
                   {!productVariant?.inventory?.inventory_defined && (
                     <>
                       <p
-                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                        className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
                       >
-                        Nije dostupno
+                        Proizvod nije dostupan.
                       </p>
                     </>
                   )}
@@ -234,9 +234,9 @@ const ProductInfo = ({
                   {!product?.data?.item?.inventory?.inventory_defined && (
                     <>
                       <p
-                        className={`text-[#e10000] w-fit text-sm font-normal mt-5`}
+                        className={`text-[#e10000] w-fit text-sm font-bold mt-5`}
                       >
-                        Nije dostupno
+                        Proizvod nije dostupan.
                       </p>
                     </>
                   )}
@@ -315,6 +315,11 @@ const ProductInfo = ({
             {/*</div>*/}
             <div className="mt-[4.188rem] max-md:mt-[2rem] flex items-center gap-3">
               <button
+                disabled={
+                  productVariant?.id
+                    ? !productVariant?.inventory?.inventory_defined
+                    : !product?.data?.item?.inventory?.inventory_defined
+                }
                 className={
                   productVariant === null || productVariant.length === 0
                     ? `max-sm:w-[8.5rem] ${
@@ -341,6 +346,11 @@ const ProductInfo = ({
                 {text}
               </button>
               <button
+                disabled={
+                  productVariant?.id
+                    ? !productVariant?.inventory?.inventory_defined
+                    : !product?.data?.item?.inventory?.inventory_defined
+                }
                 className={
                   productVariant === null || productVariant.length === 0
                     ? `max-sm:w-[8.5rem] ${
@@ -410,7 +420,7 @@ const ProductInfo = ({
               </div>
             </div>
             <div className="mt-[5.125rem] max-md:mt-[2rem] max-md:w-full">
-              <div className={`flex flex-col divide-y`}>
+              <div className={`flex flex-col divide-y h-[310px] overflow-y-auto`}>
                 {specification?.length > 0 &&
                   specification?.map((item) => {
                     return (
