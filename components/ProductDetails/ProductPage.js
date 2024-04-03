@@ -22,11 +22,7 @@ const getProductLongDescription = async (slug) => {
   );
 };
 
-const getNewProducts = async (slug) => {
-  return await list(`/product-details/cross-sell/${slug}`).then(
-    (res) => res?.payload?.items
-  );
-};
+
 
 const getBreadcrumbs = async (slug) => {
   return await get(`/product-details/breadcrumbs/${slug}`).then(
@@ -45,15 +41,38 @@ const getDeclaration = async (slug) => {
     (res) => res?.payload
   );
 };
+const upsellProductsList = async (id) => {
+  const upsellProducts = await list(`/product-details/up-sell/${id}`).then(
+    (response) => response?.payload?.items
+  );
+  return upsellProducts;
+};
+const relatedProductsList = async (id) => {
+  const relatedProducts = await list(`/product-details/recommended/${id}`).then(
+    (response) => response?.payload?.items
+  );
+  return relatedProducts;
+};
+
+const crosssellProductsList = async (id) => {
+  const crosssellProducts = await list(`/product-details/cross-sell/${id}`).then(
+    (response) => response?.payload?.items
+  );
+  return crosssellProducts;
+};
 
 const ProductPage = async ({ path }) => {
   const product = await getProduct(path);
   const productGallery = await getProductGallery(path);
   const desc = await getProductLongDescription(path);
-  const crossSell = await getNewProducts(path);
+
+  const relatedProducts = await relatedProductsList(path);
+  const upsellProducts = await upsellProductsList(path);
+  const crosssellProducts = await crosssellProductsList(path);
   const breadcrumbs = await getBreadcrumbs(path);
   const specification = await getSpecification(path);
   const declaration = await getDeclaration(path);
+
   return (
     <div className="">
       <div className="hidden lg:block">
@@ -65,6 +84,9 @@ const ProductPage = async ({ path }) => {
           breadcrumbs={breadcrumbs}
           specification={specification}
           declaration={declaration}
+          relatedProducts={relatedProducts}
+          upsellProducts={upsellProducts}
+          crosssellProducts={crosssellProducts}
         />
       </div>
       <div className="max-lg:block hidden">
@@ -79,7 +101,7 @@ const ProductPage = async ({ path }) => {
         />
       </div>
 
-      {crossSell?.length > 0 && <RecommendedProducts products={crossSell} />}
+     
     </div>
   );
 };
