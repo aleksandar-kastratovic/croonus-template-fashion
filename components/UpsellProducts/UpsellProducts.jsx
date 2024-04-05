@@ -7,7 +7,7 @@ import Link from "next/link";
 import classes from "../RelatedProducts/RelatedProducts.module.css";
 import Thumb from "../Thumb/Thumb";
 
-const UpsellProducts = ({ upsellProducts = [], loading }) => {
+const UpsellProducts = ({ upsellProducts = [], loading,text = "Preporučujemo" }) => {
   const globalAddToWishlist = useGlobalAddToWishList();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -20,7 +20,7 @@ const UpsellProducts = ({ upsellProducts = [], loading }) => {
     >
       <div className="flex justify-between w-full items-center">
         <h5 className="text-[1.5rem] font-bold max-md:text-[1.1rem] ">
-        Preporučujemo
+          {text}
         </h5>
       </div>
       <div className="max-sm:mt-[1rem] mt-[2.5rem]">

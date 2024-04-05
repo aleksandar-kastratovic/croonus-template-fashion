@@ -91,13 +91,21 @@ const ProductDetails = ({
         {/*</div>*/}
       </div>
       {relatedProducts?.length > 0 && (
-        <UpsellProducts upsellProducts={relatedProducts} loading={loading} />
+        <UpsellProducts
+          upsellProducts={relatedProducts}
+          loading={loading}
+          text={`Možda će vas zanimati`}
+        />
       )}
       {upsellProducts?.length > 0 && (
         <UpsellProducts upsellProducts={upsellProducts} loading={loading} />
       )}
       {crosssellProducts?.length > 0 && (
-        <UpsellProducts upsellProducts={crosssellProducts} loading={loading} />
+        <UpsellProducts
+          upsellProducts={crosssellProducts}
+          loading={loading}
+          text={`Možda će Vam biti potrebno`}
+        />
       )}
     </div>
   );
