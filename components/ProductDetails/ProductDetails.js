@@ -8,14 +8,14 @@ import CrosssellProducts from "../CrosssellProducts/CrosssellProducts";
 import UpsellProducts from "../UpsellProducts/UpsellProducts";
 import RelatedProducts from "../RelatedProducts/RelatedProducts";
 
-
 const ProductDetails = ({
   product,
   productGallery,
   desc,
   path,
   breadcrumbs,
-  specification,declaration, 
+  specification,
+  declaration,
   relatedProducts,
   upsellProducts,
   crosssellProducts,
@@ -38,9 +38,7 @@ const ProductDetails = ({
       setGallery((prev) => [newImage, ...prev]);
     }
   }, [color]);
-  console.log("kkk", crosssellProducts)
-  console.log("sssss", relatedProducts)
-  console.log(crosssellProducts.length)
+
   return (
     <div className="max-md:mt-[1rem]  max-md:w-[95%]  max-md:mx-auto md:mx-[3rem] mt-6">
       <div className="flex items-center gap-2 flex-wrap max-lg:hidden">
@@ -85,28 +83,22 @@ const ProductDetails = ({
           color={color}
           setColor={setColor}
           breadcrumbs={breadcrumbs}
-          specification={specification} declaration={declaration}
+          specification={specification}
+          declaration={declaration}
         />
         {/*<div className={`mt-10 col-span-4`}>*/}
         {/*  <Tabs specification={specification} productsDesc={desc} />*/}
         {/*</div>*/}
-        
       </div>
       {relatedProducts?.length > 0 && (
-            <RelatedProducts
-              relatedProducts={relatedProducts}
-              loading={loading}
-            />
-          )}
-          {upsellProducts?.length > 0 && (
-            <UpsellProducts upsellProducts={upsellProducts} loading={loading} />
-          )}
-          {crosssellProducts?.length > 0 && (
-            <CrosssellProducts
-              crosssellProducts={crosssellProducts}
-              loading={loading}
-            />
-          )}
+        <UpsellProducts upsellProducts={relatedProducts} loading={loading} />
+      )}
+      {upsellProducts?.length > 0 && (
+        <UpsellProducts upsellProducts={upsellProducts} loading={loading} />
+      )}
+      {crosssellProducts?.length > 0 && (
+        <UpsellProducts upsellProducts={crosssellProducts} loading={loading} />
+      )}
     </div>
   );
 };

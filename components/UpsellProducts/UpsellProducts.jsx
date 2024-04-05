@@ -16,7 +16,7 @@ const UpsellProducts = ({ upsellProducts = [], loading }) => {
     return (
       <>
       <div
-      className="max-sm:w-[95%] max-sm:mx-auto md:mx-[3rem] max-sm:mt-[3rem]  overflow-visible"
+      className="max-sm:w-[95%] mt-[6rem] max-sm:mx-auto md:mx-[3rem] max-sm:mt-[3rem]  overflow-visible"
     >
       <div className="flex justify-between w-full items-center">
         <h5 className="text-[1.5rem] font-bold max-md:text-[1.1rem] ">
