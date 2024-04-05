@@ -12,7 +12,6 @@ const CrossselProducts = ({ crosssellProducts = [], loading }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
-console.log(crosssellProducts, "cros::")
     return (
       <>
       <div
