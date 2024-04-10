@@ -6,12 +6,23 @@ import { usePathname } from "next/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ToastContainer } from "react-toastify";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { list } from "@/app/api/api";
 const RecommendedProducts = ({ recommendedProducts, action4 }) => {
   const [products, setProducts] = useState(recommendedProducts);
+
   const uniqueNames = [];
   const uniqueIds = [];
   const pathname = usePathname();
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (recommendedProducts) {
+      setLoading(false);
+    }
+  }, [recommendedProducts]);
 
   return (
     <>
@@ -109,56 +120,59 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
             )}
           </div>
         </div>
-        <div className="max-sm:mt-[1rem] mt-[2.5rem]">
-          {products?.length && (
-            <Swiper
-              slidesPerView={2}
-              spaceBetween={10}
-              navigation={true}
-              modules={[Navigation]}
-              fadeEffect={{ crossFade: true }}
-              loop={true}
-              className="mySwiper3 w-full select-none"
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
-                },
-                768: {
-                  slidesPerView: 2.5,
-                  spaceBetween: 10,
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 10,
-                },
-                1680: {
-                  slidesPerView: 5,
-                  spaceBetween: 10,
-                },
-              }}
-            >
-              {products?.map(({ id }) => {
-                return (
-                  <Suspense
-                    fallback={
-                      <SwiperSlide
-                        key={id}
-                        className="aspect-2/3 h-full w-full animate-pulse bg-slate-300"
-                      />
-                    }
+          {!loading && (
+              <div className="max-sm:mt-[1rem] mt-[2.5rem]">
+                  <Swiper
+                      slidesPerView={2}
+                      spaceBetween={10}
+                      navigation={true}
+                      modules={[Navigation]}
+                      fadeEffect={{crossFade: true}}
+                      loop={true}
+                      className="mySwiper3 w-full select-none"
+                      breakpoints={{
+                          640: {
+                              slidesPerView: 2,
+                              spaceBetween: 10,
+                          },
+                          768: {
+                              slidesPerView: 2.5,
+                              spaceBetween: 10,
+                          },
+                          1024: {
+                              slidesPerView: 4,
+                              spaceBetween: 10,
+                          },
+                          1680: {
+                              slidesPerView: 5,
+                              spaceBetween: 10,
+                          },
+                      }}
                   >
-                    <SwiperSlide key={id} className="hoveredColor">
-                      <Thumb id={id} slug={id} />
-                    </SwiperSlide>
-                  </Suspense>
-                );
-              })}
-            </Swiper>
+                      {products?.map(({id}) => {
+                          return (
+                              <SwiperSlide key={id} className="hoveredColor">
+                                  <Suspense
+                                      fallback={
+                                          <div
+                                              key={id}
+                                              className="aspect-2/3 h-full w-full animate-pulse bg-slate-300"
+                                          />
+                                      }
+                                  >
+                                      <Thumb id={id} slug={id}/>
+                                  </Suspense>
+                              </SwiperSlide>
+                          );
+                      })}
+                  </Swiper>
+              </div>
           )}
-        </div>
+
+
       </div>
-      <ToastContainer />
+
+        <ToastContainer/>
     </>
   );
 };

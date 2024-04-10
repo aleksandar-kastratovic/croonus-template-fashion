@@ -15,7 +15,7 @@ const nextConfig = {
       "api.Croonusshop.croonus.com",
       "192.168.1.174",
       "192.168.1.83",
-      "api. .croonus.com",
+      "api.londessa.croonus.com",
       "scontent.cdninstagram.com",
       "api.fashiondemo.croonus.com",
       "video.cdninstagram.com",
