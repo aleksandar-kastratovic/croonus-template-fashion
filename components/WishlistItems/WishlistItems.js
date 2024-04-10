@@ -13,7 +13,7 @@ import { get, list, deleteMethod as DELETE } from "@/app/api/api";
 import CartProductBox from "../CartProductBox";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import "swiper/css";
 import "swiper/css/navigation";

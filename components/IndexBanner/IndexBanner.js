@@ -1,16 +1,12 @@
 "use client";
-import Aos from "aos";
 import Image from "next/image";
 import { useEffect } from "react";
 import Link from "next/link";
 
 const IndexBanner = ({ banner }) => {
-  useEffect(() => {
-    Aos.init();
-  });
+
   return (
     <div
-      data-aos="fade-up-left"
       className="block max-sm:w-[95%] max-sm:mx-auto mx-[20px] max-sm:mt-[5rem] mt-[7.5rem] transition-all duration-500 "
     >
       <Link href={`${banner[0]?.url ?? "/stranica-u-izradi"}`}>

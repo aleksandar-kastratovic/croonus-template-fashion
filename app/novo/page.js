@@ -11,7 +11,7 @@ const Novo = () => {
               return (
                 <div
                   key={i}
-                  className="max-md:h-[250px] h-[500px] w-full col-span-1 bg-slate-300 object-cover animate-pulse"
+                  className="aspect-2/3 w-full col-span-1 bg-slate-300 object-cover animate-pulse"
                 />
               );
             })}

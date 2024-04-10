@@ -8,54 +8,37 @@ import TrackingScripts from "@/components/GTAG/GTAG";
 import { UserProvider } from "@/context/userContext";
 import CookieAlert from "@/components/CookieAlert/CookieAlert";
 import Header from "@/components/Header/Header";
-import HeaderModal from "@/components/Header/HeaderModal";
 import { get } from "@/app/api/api";
 import { QueryProvider } from "@/components/QueryProvider";
-const getCategories = async () => {
-  return await get("/categories/product/tree").then(
-    (response) => response?.payload
-  );
-};
-export default async function RootLayout({ children }) {
-  const categories = await getCategories();
-  return (
-    <QueryProvider>
-      <UserProvider>
-        <CartContextProvider>
-          <html lang="en">
-            <head>
-              <Script
-                crossOrigin="anonymous"
-                src="https://kit.fontawesome.com/f141ac3909.js"
-              />{" "}
-              <link
-                rel="stylesheet"
-                href="https://unpkg.com/aos@next/dist/aos.css"
-              />
-              <link
-                href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
-                rel="stylesheet"
-              ></link>
-              {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>*/}
-              {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/FBXLoader.js"></script>*/}
-              {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/MTLLoader.js"></script>*/}
-              {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/OBJLoader.js"></script>*/}
-              {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>*/}
-              {/*<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/fflate.min.js"></script>*/}
-            </head>
-            <body className="relative">
-              {/*<TrackingScripts />*/}
-              <Header categories={categories} />
-              <NavigationMobile categories={categories} />
 
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <Script
+          crossOrigin="anonymous"
+          src="https://kit.fontawesome.com/f141ac3909.js"
+        />{" "}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        ></link>
+      </head>
+      <body className="relative">
+        <QueryProvider>
+          <UserProvider>
+            <CartContextProvider>
+              {/*<TrackingScripts />*/}
+              <Header/>
+              <NavigationMobile/>
               {children}
               <Footer />
-              <CookieAlert />
-            </body>
-          </html>
-        </CartContextProvider>
-      </UserProvider>
-    </QueryProvider>
+            </CartContextProvider>
+          </UserProvider>
+        </QueryProvider>
+        <CookieAlert />
+      </body>
+    </html>
   );
 }
 

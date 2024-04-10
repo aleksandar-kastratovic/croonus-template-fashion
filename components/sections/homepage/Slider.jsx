@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Aos from "aos";
 
 const Slider = ({ banners }) => {
     const [currentSlide, setCurrentSlide] = useState({
@@ -55,9 +54,7 @@ const Slider = ({ banners }) => {
     };
 
 
-    useEffect(() => {
-        Aos.init();
-    });
+
     const intervalRef = useRef(null);
 
     useEffect(() => {
@@ -86,7 +83,6 @@ const Slider = ({ banners }) => {
 
     return (
         <div
-            data-aos="zoom-out"
             className=" w-screen block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[860px] 2xl:h-[1000px] 3xl:h-[1057px]"
             ref={sliderRef}
         >

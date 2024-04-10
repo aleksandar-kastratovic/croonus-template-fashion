@@ -1,34 +1,38 @@
 import { get } from "@/app/api/api";
 import { Suspense } from "react";
-import ProductPage from "@/components/ProductDetails/ProductPage";
+import { ProductPage } from "@/components/ProductDetails/ProductPage";
 import Loader from "@/components/Loader";
 
-const ProductDetailPage = async ({ params: { path } }) => {
-  return (
-    <Suspense fallback={<Loader />}>
-      <ProductPage path={path[path?.length - 1]} />
-    </Suspense>
-  );
+const ProductDetailPage = ({ params: { path } }) => {
+  return <ProductPage path={path[path?.length - 1]} />;
 };
 
 export default ProductDetailPage;
 
 export const generateMetadata = async ({ params: { path } }) => {
-  const getProduct = async (slug) => {
-    return await get(`/product-details/basic-data/${slug}`).then((res) => {
-      return res?.payload?.data?.item?.basic_data;
+  const getProductSEO = (slug) => {
+    return get(`/product-details/seo/${slug}`).then((res) => {
+      return res?.payload;
     });
   };
-  const product = await getProduct(path[path?.length - 1]);
+  const product = await getProductSEO(path[path?.length - 1]);
   // const productImage = await getProductGallery(path[path?.length - 1]);
   return {
-    title: product?.name,
-    description: product?.short_description ?? "Croonus online Shop",
+    title: product?.meta_title,
+    description: product?.meta_description ?? "Croonus online Shop",
 
     openGraph: {
-      title: product?.name,
-      description: product?.short_description ?? "Croonus online Shop",
+      title: product?.meta_title,
+      description: product?.meta_description ?? "Croonus online Shop",
       site_name: "croonus.com",
+      images: [
+        {
+          url: product?.meta_image,
+          width: 800,
+          height: 600,
+          alt: product?.meta_description,
+        },
+      ],
     },
 
     twitter: {
@@ -36,23 +40,6 @@ export const generateMetadata = async ({ params: { path } }) => {
       site: "@Croonusrs",
       cardType: "summary_large_image",
     },
-    additionalMetaTags: [
-      {
-        name: "keywords",
-        content: [
-          "Croonus",
-          "online",
-          "shop",
-          "croonus.com",
-          "farmerke",
-          "trenerke",
-          "dukserice",
-          "Croonus obuca",
-          "obuca",
-          "Croonus online",
-        ].join(", "),
-      },
-    ],
   };
 };
 

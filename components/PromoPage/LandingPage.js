@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { get, list } from "@/app/api/api";
 import Image from "next/image";
-import Thumb from "@/components/Thumb/Thumb";
+import {Thumb} from "@/components/Thumb/Thumb";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import { Pagination } from "swiper/modules";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 

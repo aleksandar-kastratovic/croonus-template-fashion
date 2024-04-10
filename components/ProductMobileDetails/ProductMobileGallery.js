@@ -7,7 +7,7 @@ import "swiper/css/thumbs";
 import "swiper/css/pagination";
 import "swiper/css/zoom";
 
-import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper";
+import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper/modules";
 import Image from "next/image";
 import classes from "./styles.module.css";
 
@@ -39,17 +39,18 @@ const ProductMobileGallery = ({
           position: "relative",
           zIndex: 100,
         }}
-        className="h-full w-full object-cover"
+        className="h-full w-full aspect-2/3 object-cover"
         onClick={onClick}
       >
         <Image
           src={src}
-          fill
+          width={0}
+          height={0}
           sizes={
             "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, 25vw, 20vw"
           }
           priority={true}
-          className="h-full w-full object-cover"
+          className="!h-full !w-full !object-cover"
           onMouseEnter={(e) => {
             const elem = e.currentTarget;
             const { width, height } = elem.getBoundingClientRect();

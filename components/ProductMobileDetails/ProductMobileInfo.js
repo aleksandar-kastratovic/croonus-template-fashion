@@ -18,6 +18,7 @@ import Link from "next/link";
 import CampaignsDetails from "../ProductDetails/CampaignsDetails";
 import { get } from "@/app/api/api";
 import WishlistActive from "@/assets/Icons/heart-active.png";
+import {useAddToCart, useAddToWishlist, useIsInWishlist, useRemoveFromWishlist} from "@/hooks/ecommerce.hooks";
 
 const ProductInfo = ({
   product,
@@ -31,6 +32,7 @@ const ProductInfo = ({
   breadcrumbs,
   specification,
   declaration,
+  stickers,
 }) => {
   const [productVariant, setProductVariant] = useState(null);
   const campaignsDate =
@@ -59,6 +61,7 @@ const ProductInfo = ({
   };
 
   const [selectedColor, setSelectedColor] = useState(null);
+  const [setVariant, setVariantOnOff] = useState(true);
 
   useEffect(() => {
     if (selectedColor !== null) {
@@ -67,31 +70,22 @@ const ProductInfo = ({
   }, [selectedColor]);
 
   const [productAmount, setProductAmount] = useState(1);
-  const globalAddToCart = useGlobalAddToCart();
-  const globalAddToWishList = useGlobalAddToWishList();
-  const [setVariant, setVariantOnOff] = useState(true);
-  const addToWishlist = (e) => {
-    globalAddToWishList(product.data.item.basic_data?.id_product);
-    toast.success(
-      `Proizvod ${product.data.item.basic_data?.name} dodat u listu želja!`,
-      {
-        position: toast.POSITION.TOP_CENTER,
-      }
-    );
-  };
+  const { mutate: addToWishlist, isSuccess: isAdded } = useAddToWishlist();
+  const { mutate: addItemToCart } = useAddToCart();
+  const { mutate: removeFromWishlist, isSuccess: isRemoved } =
+      useRemoveFromWishlist();
+  const { data: isInWishlist, refetch } = useIsInWishlist({
+    id: product?.data?.item?.basic_data?.id_product,
+  });
+
   const addToCart = (e) => {
     switch (true) {
       case product?.product_type === "single":
         switch (true) {
           case product?.data?.item?.inventory?.inventory_defined:
-            globalAddToCart(product?.data?.item?.basic_data?.id_product, 1);
-            toast.success(`Proizvod dodat u korpu!`, {
-              position: toast.POSITION.TOP_CENTER,
-            });
-            break;
-          case !product?.data?.item?.inventory?.inventory_defined:
-            toast.error(`Proizvod nije na stanju!`, {
-              position: toast.POSITION.TOP_CENTER,
+            addItemToCart({
+              id: product?.data?.item?.basic_data?.id_product,
+              quantity: productAmount,
             });
         }
         break;
@@ -103,16 +97,10 @@ const ProductInfo = ({
             });
             break;
           case productVariant?.id &&
-            productVariant?.inventory?.inventory_defined:
-            globalAddToCart(productVariant?.basic_data?.id_product, 1);
-            toast.success(`Proizvod dodat u korpu!`, {
-              position: toast.POSITION.TOP_CENTER,
-            });
-            break;
-          case productVariant?.id &&
-            !productVariant?.inventory?.inventory_defined:
-            toast.error(`Proizvod nije na stanju!`, {
-              position: toast.POSITION.TOP_CENTER,
+          productVariant?.inventory?.inventory_defined:
+            addItemToCart({
+              id: productVariant?.basic_data?.id_product,
+              quantity: 1,
             });
         }
         break;
@@ -157,19 +145,6 @@ const ProductInfo = ({
   }, [productVariant]);
   const [activeTab, setActiveTab] = useState(1);
 
-  const [isInWishlist, setIsInWishlist] = useState(false);
-
-  useEffect(() => {
-    const getIsInWishlist = async () => {
-      return await get(
-        `/wishlist/product-in-wishlist/${product?.data?.item?.basic_data?.id_product}`
-      ).then((res) => {
-        setIsInWishlist(res?.payload?.exist);
-      });
-    };
-
-    getIsInWishlist();
-  }, [addToWishlist, product]);
 
   return (
     <>
@@ -209,6 +184,17 @@ const ProductInfo = ({
               </h1>
             </div>
             <div className="flex flex-col ">
+              <div className={`flex items-center gap-3 flex-wrap my-3`}>
+                {stickers?.map(({ name }) => {
+                  return (
+                    <div
+                      className={`text-[13px] bg-[#39ae00] text-white px-[0.85rem] py-1 rounded-lg font-bold`}
+                    >
+                      {name}
+                    </div>
+                  );
+                })}
+              </div>
               <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold">
                 {product?.data?.item?.basic_data?.name}
               </h1>
@@ -312,14 +298,14 @@ const ProductInfo = ({
             )}
             <button className="flex items-center gap-2">
               <Image
-                  src={"/icons/measure.png"}
-                  alt="measure"
-                  width={30}
-                  height={20}
+                src={"/icons/measure.png"}
+                alt="measure"
+                width={30}
+                height={20}
               />
               <span
-                  onClick={() => setOpenModal(!openModal)}
-                  className="text-[13px] font-bold"
+                onClick={() => setOpenModal(!openModal)}
+                className="text-[13px] font-bold"
               >
                 Pomoć za veličine
               </span>
@@ -431,7 +417,9 @@ const ProductInfo = ({
               </div>
             </div>
             <div className="mt-[5.125rem] max-md:mt-[2rem] max-md:w-full">
-              <div className={`flex flex-col divide-y h-[310px] overflow-y-auto`}>
+              <div
+                className={`flex flex-col divide-y h-[310px] overflow-y-auto`}
+              >
                 {specification?.length > 0 &&
                   specification?.map((item) => {
                     return (
@@ -611,236 +599,241 @@ const ProductInfo = ({
             </div>
           </div>
           {(deliveryModal || infoModal || returnModal || openModal) && (
-              <div
-                  className="fixed z-[100] bg-black bg-opacity-40 top-0 left-0 w-screen h-screen transition-all duration-500"
-                  onClick={() => {
-                    setDeliveryModal(false);
-                    setInfoModal(false);
-                    setReturnModal(false);
-                    setOpenModal(false);
-                  }}
-              ></div>
+            <div
+              className="fixed z-[100] bg-black bg-opacity-40 top-0 left-0 w-screen h-screen transition-all duration-500"
+              onClick={() => {
+                setDeliveryModal(false);
+                setInfoModal(false);
+                setReturnModal(false);
+                setOpenModal(false);
+              }}
+            ></div>
           )}
           <ToastContainer />
         </>
       ) : (
         notFound()
-      )}<div
+      )}
+      <div
         className={
           openModal
-              ? `border-l translate-x-0 fixed top-0 right-0 bg-white transition-all duration-500 z-[1000000000000000000] h-screen w-full`
-              : `border-l translate-x-full fixed top-0 right-0 bg-white transition-all duration-500 z-[1000000000000000000] h-screen w-full`
+            ? `border-l translate-x-0 fixed top-0 right-0 bg-white transition-all duration-500 z-[1000000000000000000] h-screen w-full`
+            : `border-l translate-x-full fixed top-0 right-0 bg-white transition-all duration-500 z-[1000000000000000000] h-screen w-full`
         }
-    ><i className={`fas ml-auto p-2 text-lg fa-times cursor-pointer`} onClick={() => setOpenModal(false)}></i>
-      <div className={`p-1 overflow-y-auto h-full mt-5`}>
-        <h2 className={`text-[1.2rem] w-full pb-2 border-b`}>
-          Tabele mera za žene (gornji deo)
-        </h2>
-        <div className={`mt-5`}>
-          <table className={`w-full`}>
-            <thead>
-            <tr className={`border-b`}>
-              <th className={`text-left`}></th>
-              <th className={`text-left`}>XS</th>
-              <th className={`text-left`}>S</th>
-              <th className={`text-left`}>M</th>
-              <th className={`text-left`}>L</th>
-              <th className={`text-left`}>XL</th>
-              <th className={`text-left`}>XXL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
-              <td className={`text-left py-2 px-2 font-bold`}>
-                Obim grudi
-              </td>
-              <td className={`text-left`}>80-84</td>
-              <td className={`text-left`}>84-88</td>
-              <td className={`text-left`}>88-92</td>
-              <td className={`text-left`}>92-96</td>
-              <td className={`text-left`}>89-102</td>
-              <td className={`text-left`}>102-106</td>
-            </tr>
-            <tr className={`border-b !py-2`}>
-              <td className={`text-left py-2 font-bold pl-2`}>
-                Obim struka
-              </td>
-              <td className={`text-left`}>60-64</td>
-              <td className={`text-left`}>64-68</td>
-              <td className={`text-left`}>68-72</td>
-              <td className={`text-left`}>72-76</td>
-              <td className={`text-left`}>78-82</td>
-              <td className={`text-left`}>82-86</td>
-            </tr>
-            <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
-              <td className={`text-left px-2 py-2 font-bold`}>
-                Obim kukova
-              </td>
-              <td className={`text-left`}>88-92</td>
-              <td className={`text-left`}>92-96</td>
-              <td className={`text-left`}>96-100</td>
-              <td className={`text-left`}>100-104</td>
-              <td className={`text-left`}>106-110</td>
-              <td className={`text-left`}>110-114</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+      >
+        <i
+          className={`fas ml-auto p-2 text-lg fa-times cursor-pointer`}
+          onClick={() => setOpenModal(false)}
+        ></i>
+        <div className={`p-1 overflow-y-auto h-full mt-5`}>
+          <h2 className={`text-[1.2rem] w-full pb-2 border-b`}>
+            Tabele mera za žene (gornji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>XS</th>
+                  <th className={`text-left`}>S</th>
+                  <th className={`text-left`}>M</th>
+                  <th className={`text-left`}>L</th>
+                  <th className={`text-left`}>XL</th>
+                  <th className={`text-left`}>XXL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 px-2 font-bold`}>
+                    Obim grudi
+                  </td>
+                  <td className={`text-left`}>80-84</td>
+                  <td className={`text-left`}>84-88</td>
+                  <td className={`text-left`}>88-92</td>
+                  <td className={`text-left`}>92-96</td>
+                  <td className={`text-left`}>89-102</td>
+                  <td className={`text-left`}>102-106</td>
+                </tr>
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>60-64</td>
+                  <td className={`text-left`}>64-68</td>
+                  <td className={`text-left`}>68-72</td>
+                  <td className={`text-left`}>72-76</td>
+                  <td className={`text-left`}>78-82</td>
+                  <td className={`text-left`}>82-86</td>
+                </tr>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left px-2 py-2 font-bold`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>88-92</td>
+                  <td className={`text-left`}>92-96</td>
+                  <td className={`text-left`}>96-100</td>
+                  <td className={`text-left`}>100-104</td>
+                  <td className={`text-left`}>106-110</td>
+                  <td className={`text-left`}>110-114</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
-          Tabele mera za žene (donji deo)
-        </h2>
-        <div className={`mt-5`}>
-          <table className={`w-full`}>
-            <thead>
-            <tr className={`border-b`}>
-              <th className={`text-left`}></th>
-              <th className={`text-left`}>27</th>
-              <th className={`text-left`}>28</th>
-              <th className={`text-left`}>29</th>
-              <th className={`text-left`}>30</th>
-              <th className={`text-left`}>31</th>
-              <th className={`text-left`}>32</th>
-              <th className={`text-left`}>33</th>
-              <th className={`text-left`}>34</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
-              <td className={`text-left py-2 font-bold pl-2`}>
-                Obim struka
-              </td>
-              <td className={`text-left`}>62-65</td>
-              <td className={`text-left`}>65-68</td>
-              <td className={`text-left`}>68-72</td>
-              <td className={`text-left`}>72-74</td>
-              <td className={`text-left`}>74-78</td>
-              <td className={`text-left`}>78-82</td>
-              <td className={`text-left`}>82-28</td>
-              <td className={`text-left`}>68-92</td>
-            </tr>
-            <tr className={`border-b !py-2`}>
-              <td className={`text-left py-2 pl-2 font-bold`}>
-                Obim kukova
-              </td>
-              <td className={`text-left`}>90-93</td>
-              <td className={`text-left`}>93-96</td>
-              <td className={`text-left`}>96-99</td>
-              <td className={`text-left`}>99-102</td>
-              <td className={`text-left`}>102-106</td>
-              <td className={`text-left`}>105-110</td>
-              <td className={`text-left`}>110-114</td>
-              <td className={`text-left`}>114-118</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+          <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
+            Tabele mera za žene (donji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>27</th>
+                  <th className={`text-left`}>28</th>
+                  <th className={`text-left`}>29</th>
+                  <th className={`text-left`}>30</th>
+                  <th className={`text-left`}>31</th>
+                  <th className={`text-left`}>32</th>
+                  <th className={`text-left`}>33</th>
+                  <th className={`text-left`}>34</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>62-65</td>
+                  <td className={`text-left`}>65-68</td>
+                  <td className={`text-left`}>68-72</td>
+                  <td className={`text-left`}>72-74</td>
+                  <td className={`text-left`}>74-78</td>
+                  <td className={`text-left`}>78-82</td>
+                  <td className={`text-left`}>82-28</td>
+                  <td className={`text-left`}>68-92</td>
+                </tr>
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 pl-2 font-bold`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>90-93</td>
+                  <td className={`text-left`}>93-96</td>
+                  <td className={`text-left`}>96-99</td>
+                  <td className={`text-left`}>99-102</td>
+                  <td className={`text-left`}>102-106</td>
+                  <td className={`text-left`}>105-110</td>
+                  <td className={`text-left`}>110-114</td>
+                  <td className={`text-left`}>114-118</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
-          Tabele mera za muškarce (gornji deo)
-        </h2>
-        <div className={`mt-5`}>
-          <table className={`w-full`}>
-            <thead>
-            <tr className={`border-b`}>
-              <th className={`text-left`}></th>
-              <th className={`text-left`}>S</th>
-              <th className={`text-left`}>M</th>
-              <th className={`text-left`}>L</th>
-              <th className={`text-left`}>XL</th>
-              <th className={`text-left`}>2XL</th>
-              <th className={`text-left`}>3XL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
-              <td className={`text-left py-2 font-bold pl-2`}>
-                Obim grudi
-              </td>
-              <td className={`text-left`}>96-100</td>
-              <td className={`text-left`}>100-104</td>
-              <td className={`text-left`}>104-108</td>
-              <td className={`text-left`}>110-114</td>
-              <td className={`text-left`}>114-118</td>
-              <td className={`text-left`}>118-112</td>
-            </tr>
-            <tr className={`border-b !py-2`}>
-              <td className={`text-left py-2 pl-2 font-bold`}>
-                Obim struka
-              </td>
-              <td className={`text-left`}>80-84</td>
-              <td className={`text-left`}>84-88</td>
-              <td className={`text-left`}>88-92</td>
-              <td className={`text-left`}>94-98</td>
-              <td className={`text-left`}>98-102</td>
-              <td className={`text-left`}>102-104</td>
-            </tr>
-            <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
-              <td className={`text-left py-2 font-bold pl-2`}>
-                Obim kukova
-              </td>
-              <td className={`text-left`}>98-102</td>
-              <td className={`text-left`}>102-106</td>
-              <td className={`text-left`}>106-110</td>
-              <td className={`text-left`}>112-116</td>
-              <td className={`text-left`}>116-120</td>
-              <td className={`text-left`}>120-124</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+          <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
+            Tabele mera za muškarce (gornji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>S</th>
+                  <th className={`text-left`}>M</th>
+                  <th className={`text-left`}>L</th>
+                  <th className={`text-left`}>XL</th>
+                  <th className={`text-left`}>2XL</th>
+                  <th className={`text-left`}>3XL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim grudi
+                  </td>
+                  <td className={`text-left`}>96-100</td>
+                  <td className={`text-left`}>100-104</td>
+                  <td className={`text-left`}>104-108</td>
+                  <td className={`text-left`}>110-114</td>
+                  <td className={`text-left`}>114-118</td>
+                  <td className={`text-left`}>118-112</td>
+                </tr>
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 pl-2 font-bold`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>80-84</td>
+                  <td className={`text-left`}>84-88</td>
+                  <td className={`text-left`}>88-92</td>
+                  <td className={`text-left`}>94-98</td>
+                  <td className={`text-left`}>98-102</td>
+                  <td className={`text-left`}>102-104</td>
+                </tr>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>98-102</td>
+                  <td className={`text-left`}>102-106</td>
+                  <td className={`text-left`}>106-110</td>
+                  <td className={`text-left`}>112-116</td>
+                  <td className={`text-left`}>116-120</td>
+                  <td className={`text-left`}>120-124</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
-          Tabele mera za muškarce (donji deo)
-        </h2>
-        <div className={`mt-5`}>
-          <table className={`w-full`}>
-            <thead>
-            <tr className={`border-b`}>
-              <th className={`text-left`}></th>
-              <th className={`text-left`}>30</th>
-              <th className={`text-left`}>31</th>
-              <th className={`text-left`}>32</th>
-              <th className={`text-left`}>33</th>
-              <th className={`text-left`}>34</th>
-              <th className={`text-left`}>36</th>
-              <th className={`text-left`}>38</th>
-              <th className={`text-left`}>40</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
-              <td className={`text-left py-2 font-bold pl-2`}>
-                Obim struka
-              </td>
-              <td className={`text-left`}>78-81</td>
-              <td className={`text-left`}>81-84</td>
-              <td className={`text-left`}>84-87</td>
-              <td className={`text-left`}>87-90</td>
-              <td className={`text-left`}>90-94</td>
-              <td className={`text-left`}>94-98</td>
-              <td className={`text-left`}>98-102</td>
-              <td className={`text-left`}>102-106</td>
-            </tr>
+          <h2 className={`text-[1.2rem] mt-10 w-full pb-2 border-b`}>
+            Tabele mera za muškarce (donji deo)
+          </h2>
+          <div className={`mt-5`}>
+            <table className={`w-full`}>
+              <thead>
+                <tr className={`border-b`}>
+                  <th className={`text-left`}></th>
+                  <th className={`text-left`}>30</th>
+                  <th className={`text-left`}>31</th>
+                  <th className={`text-left`}>32</th>
+                  <th className={`text-left`}>33</th>
+                  <th className={`text-left`}>34</th>
+                  <th className={`text-left`}>36</th>
+                  <th className={`text-left`}>38</th>
+                  <th className={`text-left`}>40</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={`border-b !py-2 bg-[#f8f8f8]`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim struka
+                  </td>
+                  <td className={`text-left`}>78-81</td>
+                  <td className={`text-left`}>81-84</td>
+                  <td className={`text-left`}>84-87</td>
+                  <td className={`text-left`}>87-90</td>
+                  <td className={`text-left`}>90-94</td>
+                  <td className={`text-left`}>94-98</td>
+                  <td className={`text-left`}>98-102</td>
+                  <td className={`text-left`}>102-106</td>
+                </tr>
 
-            <tr className={`border-b !py-2`}>
-              <td className={`text-left py-2 font-bold pl-2`}>
-                Obim kukova
-              </td>
-              <td className={`text-left`}>96-99</td>
-              <td className={`text-left`}>99-102</td>
-              <td className={`text-left`}>102-105</td>
-              <td className={`text-left`}>105-108</td>
-              <td className={`text-left`}>108-112</td>
-              <td className={`text-left`}>112-116</td>
-              <td className={`text-left`}>116-120</td>
-              <td className={`text-left`}>120-124</td>
-            </tr>
-            </tbody>
-          </table>
+                <tr className={`border-b !py-2`}>
+                  <td className={`text-left py-2 font-bold pl-2`}>
+                    Obim kukova
+                  </td>
+                  <td className={`text-left`}>96-99</td>
+                  <td className={`text-left`}>99-102</td>
+                  <td className={`text-left`}>102-105</td>
+                  <td className={`text-left`}>105-108</td>
+                  <td className={`text-left`}>108-112</td>
+                  <td className={`text-left`}>112-116</td>
+                  <td className={`text-left`}>116-120</td>
+                  <td className={`text-left`}>120-124</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

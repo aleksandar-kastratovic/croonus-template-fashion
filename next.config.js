@@ -19,8 +19,8 @@ const nextConfig = {
       "scontent.cdninstagram.com",
       "api.fashiondemo.croonus.com",
       "video.cdninstagram.com",
-
     ],
+    minimumCacheTTL: 60 * 60 * 24 * 90,
   },
 };
 

@@ -5,7 +5,7 @@ import { Swiper as Slider, SwiperSlide as Slide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Navigation } from "swiper";
+import { Navigation } from "swiper/modules";
 
 const SinglePost = ({ post }) => {
   const [blogGallery, setBlogGallery] = useState([
