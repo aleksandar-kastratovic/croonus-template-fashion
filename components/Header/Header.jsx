@@ -136,14 +136,14 @@ const Header = () => {
                             : category?.slug,
                         data: category?.children ?? [],
                         image: category?.image ?? null,
-                        open: !activeCategory?.open,
+                        open: true,
                       });
                     }}
                   >
                     {category?.name}
                   </button>
                 ) : (
-                  <Link href={`/kategorije/${category?.slug_path}`} key={index}>
+                  <Link href={`/kategorije/${category?.slug_path}`} key={index} onClick={() => resetActiveCategory()}>
                     <span
                       className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover ${
                         pathname?.includes(category?.slug) && category?.id !== 0
