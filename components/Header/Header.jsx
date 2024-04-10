@@ -9,8 +9,12 @@ import HeaderIcons from "./HeaderIcons";
 import SearchProducts from "./SearchProducts";
 import Translate from "../Translate/Translate";
 import { usePathname } from "next/navigation";
+import { useCategoryTree, useLandingPages } from "@/hooks/ecommerce.hooks";
 
-const Header = ({ categories }) => {
+const Header = () => {
+  const { data: categories } = useCategoryTree();
+  const { data: landingPagesList } = useLandingPages();
+
   const categoriesMain = [
     { name: "Početna", slug: "/", isCategory: false, id: 0 },
     ...categories,
@@ -37,17 +41,6 @@ const Header = ({ categories }) => {
     data: [],
     image: null,
   });
-
-  const [landingPagesList, setLandingPagesList] = useState([]);
-
-  useEffect(() => {
-    const getLandingPages = async () => {
-      const data = await list(`/landing-pages/list`).then((response) =>
-        setLandingPagesList(response?.payload)
-      );
-    };
-    getLandingPages();
-  }, []);
 
   const resetActiveCategory = () => {
     setActiveCategory({
@@ -172,8 +165,7 @@ const Header = ({ categories }) => {
                     className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover ${
                       pathname?.includes(category?.slug) && category?.id !== 0
                         ? "activeCategory"
-                        : pathname === category?.slug &&
-                          category?.id === 0
+                        : pathname === category?.slug && category?.id === 0
                         ? "activeCategory"
                         : ""
                     }`}
@@ -241,7 +233,8 @@ const Header = ({ categories }) => {
                                   ? null
                                   : category?.name,
                               slug_path:
-                                category?.slug_path === activeSubCategory?.slug_path
+                                category?.slug_path ===
+                                activeSubCategory?.slug_path
                                   ? null
                                   : category?.slug_path,
                               data:

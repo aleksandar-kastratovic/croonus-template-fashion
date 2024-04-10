@@ -39,7 +39,7 @@ const SearchProducts = () => {
 
   return (
     <div className="py-4 w-1/5 rounded-[10px] bg-topHeader relative">
-      <form onSubmit={handleSearch}>
+      <form onSubmit={(e) => handleSearch(e)}>
         <input
           type="text"
           placeholder="PRETRAGA"
@@ -130,8 +130,8 @@ const SearchProducts = () => {
               className={`sticky bottom-0 w-full bg-croonus-2 py-2 mt-auto text-center hover:bg-opacity-80`}
             >
               <button
-                onClick={() => {
-                  handleSearch();
+                onClick={(e) => {
+                  handleSearch(e);
                 }}
                 className={`text-white w-full h-full font-light text-center`}
               >

@@ -270,7 +270,7 @@ const CheckoutPage = ({
               const dom = document.createElement("div");
               dom.innerHTML = creditCardForm;
               document.body.appendChild(dom);
-              setLoading(false);
+              // setLoading(false);
 
               const formData = document.getElementById("bank_send_form");
               formData.submit();
@@ -279,7 +279,7 @@ const CheckoutPage = ({
               router.push(`/kupovina/${orderToken}`);
 
               mutateCart();
-              setLoading(false);
+              // setLoading(false);
             }
           } else {
             setLoading(false);

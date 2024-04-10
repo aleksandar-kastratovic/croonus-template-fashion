@@ -2,7 +2,6 @@
 import { get, list } from "@/app/api/api";
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import { useCartContext } from "@/app/api/cartContext";
 import Link from "next/link";
 import Burger from "../../assets/Icons/hamburger.png";
 import Search from "../../assets/Icons/search.png";
@@ -12,58 +11,29 @@ import Cart from "../../assets/Icons/shopping-bag.png";
 import { currencyFormat } from "@/helpers/functions";
 import useDebounce from "@/hooks/useDebounce";
 import { useQuery } from "@tanstack/react-query";
+import {
+  useCartBadge,
+  useCategoryTree,
+  useLandingPages,
+  useNewProducts,
+  useWishlistBadge,
+} from "@/hooks/ecommerce.hooks";
 
 const NavigationMobile = () => {
   const router = useRouter();
-  const [cart, , wishList] = useCartContext();
   const pathname = usePathname();
 
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { data: categories } = useCategoryTree();
+  const { data: landingPagesList } = useLandingPages();
+  const { data: products } = useNewProducts();
+  const { data: cartCount, refetch } = useCartBadge();
+  const { data: wishlistCount } = useWishlistBadge();
+
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const [wishlistCount, setWishlistCount] = useState(0);
-  const getCartCount = useCallback(() => {
-    get("/cart/badge-count")
-      .then((response) => {
-        setCartCount(response?.payload?.summary?.items_count ?? 0);
-      })
-      .catch((error) => console.warn(error));
-  }, []);
-  useEffect(() => {
-    getCartCount();
-  }, [getCartCount, cart]);
 
-  const getWishlistCount = useCallback(() => {
-    get("/wishlist/badge-count")
-      .then((response) => {
-        setWishlistCount(response?.payload?.summary?.items_count ?? 0);
-      })
-      .catch((error) => console.warn(error));
-  }, []);
-  useEffect(() => {
-    getWishlistCount();
-  }, [getWishlistCount, wishList]);
-
-  useEffect(() => {
-    const getCategories = async () => {
-      const getCategories = await get("/categories/product/tree").then((res) =>
-        setCategories(res?.payload)
-      );
-    };
-    getCategories();
-  }, []);
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const getProducts = await list("/products/new-in/list").then((res) =>
-        setProducts(res?.payload?.items)
-      );
-    };
-    getProducts();
-  }, []);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [activeCategory, setActiveCategory] = useState({
     id: undefined,
     data: [],
@@ -77,6 +47,7 @@ const NavigationMobile = () => {
   });
   let exActiveIds = [];
   const [activeImage, setActiveImage] = useState();
+
   const handleSearch = (e) => {
     e.preventDefault();
     router.push(`/search?search=${searchTerm}`);
@@ -127,20 +98,10 @@ const NavigationMobile = () => {
 
   useEffect(() => {
     if (pathname?.includes("/korpa/")) {
-      getCartCount();
+      refetch();
       router?.refresh();
     }
   }, [pathname]);
-  const [landingPagesList, setLandingPagesList] = useState([]);
-
-  useEffect(() => {
-    const getLandingPages = async () => {
-      const data = await list(`/landing-pages/list`).then((response) =>
-        setLandingPagesList(response?.payload)
-      );
-    };
-    getLandingPages();
-  }, []);
 
   const debouncedSearch = useDebounce(searchTerm, 500);
   const { data: searchData, isFetching } = useQuery({

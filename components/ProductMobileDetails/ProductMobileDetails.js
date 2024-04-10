@@ -13,9 +13,9 @@ const ProductMobileDetails = ({
   specification,
   declaration,
 }) => {
-  const [rawGallery, setRawGallery] = useState(productGallery);
+  const [rawGallery, setRawGallery] = useState(productGallery?.gallery);
   const [loading, setLoading] = useState(false);
-  const filteredImages = productGallery?.filter((image) => {
+  const filteredImages = productGallery?.gallery?.filter((image) => {
     return !image?.variant_key;
   });
   const [gallery, setGallery] = useState(filteredImages);
@@ -44,6 +44,7 @@ const ProductMobileDetails = ({
       <ProductMobileInfo
         product={product}
         desc={desc}
+        stickers={productGallery?.stickers}
         path={path}
         setColor={setColor}
         breadcrumbs={breadcrumbs}

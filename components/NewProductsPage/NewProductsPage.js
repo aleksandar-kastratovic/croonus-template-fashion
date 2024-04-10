@@ -1,21 +1,31 @@
-import { list } from "@/app/api/api";
-import Thumb from "@/components/Thumb/Thumb";
+"use client";
+import { Thumb } from "@/components/Thumb/Thumb";
 import Image from "next/image";
 import Link from "next/link";
+import { useNewProducts } from "@/hooks/ecommerce.hooks";
+import { Suspense } from "react";
 
-const getNewProducts = async () => {
-  return await list(`/products/new-in/list`).then((res) => res?.payload?.items);
-};
-
-const NewProductsPage = async () => {
-  const newProducts = await getNewProducts();
+const NewProductsPage = () => {
+  const { data: newProducts } = useNewProducts({ render: false });
   return (
-    <div className="mx-[0.625rem] max-md:mt-[2rem] mt-[9rem]">
-      {newProducts ? (
+    <div className="md:px-[3rem] max-md:w-[95%] mx-auto max-md:mt-[2rem] mt-[5rem]">
+      {newProducts?.items?.length > 0 ? (
         <>
           <h1 className="text-2xl font-bold">Novo u ponudi</h1>
           <div className="grid max-md:grid-cols-2 mt-10 gap-y-[40px] md:grid-cols-3 2xl:grid-cols-4 gap-[11px]">
-            <Thumb slider={false} data={newProducts} />
+            {newProducts?.items?.map(({ id }) => {
+              return (
+                <Suspense
+                  fallback={
+                    <div
+                      className={`aspect-2/3 animate-pulse bg-slate-300 w-full h-full`}
+                    />
+                  }
+                >
+                  <Thumb slug={id} key={id} />
+                </Suspense>
+              );
+            })}
           </div>
         </>
       ) : (

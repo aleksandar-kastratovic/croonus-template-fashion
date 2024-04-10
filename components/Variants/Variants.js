@@ -305,6 +305,18 @@ export default function Variants({
 
     setSelected(temp_selected);
   };
+
+  useEffect(() => {
+    if (variant_options?.length === 1) {
+      updateProductVariant(variant_items[0]);
+      setSelected(variant_items[0]?.variant_key_array);
+      onChangeHandler(
+        variant_items[0]?.variant_key_array[0]?.attribute_key,
+        variant_items[0]?.variant_key_array[0]?.value_key
+      );
+    }
+  }, [variant_options]);
+
   return (
     <div className="flex flex-col-reverse max-md:gap-7 gap-[25px] max-lg:w-full  ">
       {variantOptions?.map((item) => {

@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Aos from "aos";
 
 const IndexSlider = ({ banners, mobileBanners }) => {
   const [currentSlide, setCurrentSlide] = useState({
@@ -60,9 +59,7 @@ const IndexSlider = ({ banners, mobileBanners }) => {
     setDraggingIndex(index);
     setIsDragging(true);
   };
-  useEffect(() => {
-    Aos.init();
-  });
+
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -91,7 +88,6 @@ const IndexSlider = ({ banners, mobileBanners }) => {
 
   return (
     <div
-      data-aos="zoom-out"
       className="absolute w-screen block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[700px] 2xl:h-[750px] 3xl:h-[800px]"
       ref={sliderRef}
     >

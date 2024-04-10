@@ -7,18 +7,31 @@ import "swiper/css/thumbs";
 import "swiper/css/pagination";
 import "swiper/css/zoom";
 
-import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper";
+import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper/modules";
 import Image from "next/image";
 import classes from "./styles.module.css";
+import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { get } from "@/app/api/api";
+import { useSearchParams } from "next/navigation";
 
-const ProductGallery = ({
-  productGallery,
-  color,
-  loading,
-  setLoadingc,
-  product,
-  setLoading,
-}) => {
+export const ProductGallery = ({ slug }) => {
+  const [loading, setLoading] = useState(false);
+  const { data: productGallery } = useSuspenseQuery({
+    queryKey: ["productGallery", slug],
+    queryFn: async () => {
+      return await get(`/product-details/gallery/${slug}`).then(
+        (res) => res?.payload
+      );
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  const [gallery, setGallery] = useState(productGallery?.gallery);
+
+  const params = useSearchParams();
+  const color = params?.get("color");
+
   function ImageMagnifier({
     src,
     width,
@@ -40,17 +53,17 @@ const ProductGallery = ({
           position: "relative",
           zIndex: 100,
         }}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover aspect-2/3"
         onClick={onClick}
       >
         <Image
           src={src}
-          fill
-          sizes={
-            "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, 25vw, 20vw"
-          }
+          width={0}
+          height={0}
+          ref={mainSliderRef}
+          sizes={`(max-width: 768px) 100vw, (min-width: 1200px) 70vw`}
           priority={true}
-          className="h-full w-full object-cover"
+          className="!h-full !object-cover w-full"
           onMouseEnter={(e) => {
             const elem = e.currentTarget;
             const { width, height } = elem.getBoundingClientRect();
@@ -67,7 +80,7 @@ const ProductGallery = ({
           onMouseLeave={() => {
             setShowMagnifier(false);
           }}
-          alt={`Croonus Template`}
+          alt={`Croonus Shop`}
         />
 
         <div
@@ -95,15 +108,17 @@ const ProductGallery = ({
       </div>
     );
   }
+
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [modalImage, setModalImage] = useState(null);
-  const productImage = productGallery?.map((image, index) => {
+
+  const productImage = gallery?.map((image, index) => {
     return (
-      <SwiperSlide key={index} className="w-full">
+      <SwiperSlide key={index} className="w-full relative">
         <ImageMagnifier
-          src={image?.image}
-          width={2000}
-          height={2000}
+          src={convertHttpToHttps(image?.image)}
+          width={0}
+          height={0}
           onClick={() => {
             setModalImage(image?.image);
           }}
@@ -111,16 +126,18 @@ const ProductGallery = ({
       </SwiperSlide>
     );
   });
-  const thumbImage = productGallery?.map((image, index) => {
+
+  const thumbImage = gallery?.map((image, index) => {
     return (
-      <SwiperSlide key={index}>
+      <SwiperSlide key={index} className={`!overflow-hidden !aspect-2/3`}>
         <Image
-          src={image?.image}
-          alt={`Croonus`}
-          width={2000}
-          height={2000}
+          src={convertHttpToHttps(image?.image)}
+          alt={`croonus Shop`}
+          width={0}
+          height={0}
           priority={true}
-          className="cursor-pointer max-md:hidden"
+          sizes={`(max-width: 768px) 100vw, (min-width: 1200px) 70vw`}
+          className="cursor-pointer max-md:hidden w-full !h-full !object-cover"
         />
       </SwiperSlide>
     );
@@ -128,25 +145,49 @@ const ProductGallery = ({
 
   const [newImage, setNewImage] = useState(0);
   const [swiper, setSwiper] = useState(null);
-  useEffect(() => {
-    if (color) {
-      const newImage = productGallery?.findIndex((item) =>
-        item?.variant_key?.includes(color)
-      );
-      setNewImage(newImage);
-      swiper?.slideTo(newImage);
-    }
-  }, [color]);
 
   useEffect(() => {
-    if (productGallery?.length) {
+    if (color) {
+      setLoading(true);
+      const newImages = productGallery?.gallery?.filter((item) =>
+        item?.variant_key?.includes(color)
+      );
+
+      const nonVariantImages = productGallery.gallery?.filter(
+        (item) => item?.variant_key_array?.length === 0
+      );
+
+      setGallery([...newImages, ...nonVariantImages]);
+    }
+    if (productGallery?.gallery?.length) {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
     }
-  }, [productGallery]);
+  }, [color]);
+
+  const [mainSliderHeight, setMainSliderHeight] = useState();
+
+  const mainSliderRef = useRef(null);
+
+  useEffect(() => {
+    const updateMainSliderHeight = () => {
+      if (mainSliderRef.current) {
+        const thumbsSwiper = document.getElementById("thumbsSwiper");
+        thumbsSwiper.style.height = `${mainSliderRef.current.clientHeight}px`;
+      }
+    };
+
+    updateMainSliderHeight();
+
+    window.addEventListener("resize", updateMainSliderHeight);
+    return () => {
+      window.removeEventListener("resize", updateMainSliderHeight);
+    };
+  }, []);
+
   return (
-    <div className="col-span-2 max-lg:col-span-4 max-md:h-[500px] md:flex md:flex-row-reverse gap-5 md:h-[650px] lg:h-[700px] xl:h-[780px] 2xl:h-[790px] 3xl:h-[878px]">
+    <div className="col-span-2 max-lg:col-span-4 max-md:aspect-2/3 md:flex md:flex-row-reverse gap-5 h-fit overflow-hidden">
       <Swiper
         spaceBetween={10}
         thumbs={{
@@ -158,7 +199,7 @@ const ProductGallery = ({
         navigation={true}
         loop={true}
         onSwiper={(swiper) => setSwiper(swiper)}
-        className={`${classes.mySwiper2} mySwiper2`}
+        className={`${classes.mySwiper2} mySwiper2 !relative`}
         breakpoints={{
           768: {
             direction: "horizontal",
@@ -195,33 +236,30 @@ const ProductGallery = ({
       >
         {loading ? (
           <SwiperSlide>
-            <div className="h-full w-full bg-gray-200 animate-pulse"></div>
+            <div className="h-full aspect-2/3 w-full bg-gray-200 animate-pulse"></div>
           </SwiperSlide>
         ) : (
-          productImage
+          <>{productImage}</>
         )}
-        {product?.data?.item?.price?.discount?.active && (
-          <div
-            className={`absolute right-2 top-2 z-[1] text-white text-[13px]`}
-          >
-            <div
-              className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
-            >
-              -
-              {(
-                ((product?.data?.item?.price?.price?.original -
-                  product?.data?.item?.price?.price?.discount) /
-                  product?.data?.item?.price?.price?.original) *
-                100
-              ).toFixed(0)}
-              %
-            </div>
-          </div>
-        )}
+        <div className={`absolute z-50 flex flex-col gap-1 top-2 right-2`}>
+          {productGallery?.stickers?.length > 0 &&
+            productGallery?.stickers?.map((sticker) => {
+              return (
+                <div
+                  key={sticker?.id}
+                  className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
+                >
+                  <span className={`text-[0.75rem] text-white`}>{sticker?.name}</span>
+                </div>
+              );
+            })}
+        </div>
       </Swiper>
+
       <Swiper
         onSwiper={(swiper) => setThumbsSwiper(swiper)}
         spaceBetween={10}
+        id={`thumbsSwiper`}
         slidesPerView={0}
         loop={true}
         breakpoints={{
@@ -249,7 +287,7 @@ const ProductGallery = ({
         {thumbImage}
         <div
           className={`absolute ${
-            productGallery?.length > swiper?.params?.slidesPerView
+            productGallery?.gallery?.length > swiper?.params?.slidesPerView
               ? `block`
               : `hidden`
           } bottom-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
@@ -266,7 +304,7 @@ const ProductGallery = ({
         </div>
         <div
           className={`absolute ${
-            productGallery?.length > swiper?.params?.slidesPerView
+            productGallery?.gallery?.length > swiper?.params?.slidesPerView
               ? `block`
               : `hidden`
           } top-0 left-0 w-full py-1 right-0 flex items-center justify-center z-50 cursor-pointer bg-white/80`}
@@ -296,7 +334,7 @@ const ProductGallery = ({
                 toggle: true,
                 minRatio: 1,
               }}
-              initialSlide={productGallery?.findIndex(
+              initialSlide={productGallery?.gallery?.findIndex(
                 (item) => item?.image === modalImage
               )}
               className={`${classes.mySwiper2} modalSwiper swiper-zoom-container`}
@@ -314,13 +352,13 @@ const ProductGallery = ({
                 },
               }}
             >
-              {productGallery?.map((image, index) => {
+              {productGallery?.gallery?.map((image, index) => {
                 return (
                   <SwiperSlide key={index} className="w-full">
                     <div className="swiper-zoom-container">
                       <Image
                         src={image?.image}
-                        alt={`Croonus`}
+                        alt={`Croonus Shop`}
                         layout="fill"
                         objectFit="cover"
                         priority={true}
@@ -343,5 +381,3 @@ const ProductGallery = ({
     </div>
   );
 };
-
-export default ProductGallery;
