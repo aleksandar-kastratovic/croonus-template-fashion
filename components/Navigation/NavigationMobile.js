@@ -50,9 +50,11 @@ const NavigationMobile = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    router.push(`/search?search=${searchTerm}`);
-    setSearchOpen(false);
-    setSearchTerm("");
+    if (searchTerm?.length >= 3) {
+      router.push(`/search?search=${searchTerm}`);
+      setSearchOpen(false);
+      setSearchTerm("");
+    }
   };
   useEffect(() => {
     const handleBodyOverflow = () => {
