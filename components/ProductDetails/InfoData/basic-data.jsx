@@ -183,11 +183,9 @@ export const BasicData = ({
           </span>
         )}
       </div>
-      <Suspense
-        fallback={<div className={`h-10 w-full bg-slate-300 animate-pulse`} />}
-      >
-        <Description path={path} />
-      </Suspense>
+      <p className={`text-sm mt-5 max-w-full md:max-w-[90%]`}>
+        {product?.data?.item?.basic_data?.short_description}
+      </p>
       {product?.product_type === "variant" && (
         <div className="py-[2rem] max-md:py-[1.5rem]">
           <Variants

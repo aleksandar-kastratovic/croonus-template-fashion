@@ -28,7 +28,9 @@ const makeRequest = async (method, path, payload) => {
     });
 
     return response.data;
-  } catch (error) { }
+  } catch (error) {
+    return error.response.data;
+  }
 };
 
 export const get = async (path) => {
