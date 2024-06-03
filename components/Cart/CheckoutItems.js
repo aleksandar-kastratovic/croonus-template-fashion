@@ -8,7 +8,7 @@ import {
 } from "@/hooks/ecommerce.hooks";
 import { useEffect, useState } from "react";
 import { currencyFormat } from "@/helpers/functions";
-import PlusMinusInput from "@/components/PlusMinusInputOne";
+import PlusMinusInput from "@/components/PlusMinusInput";
 import Link from "next/link";
 
 const CheckoutItems = ({
