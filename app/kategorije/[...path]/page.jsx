@@ -15,7 +15,7 @@ export async function generateMetadata({ params: { path } }) {
   };
   const category_seo = await fetchCategorySEO(path[path?.length - 1]);
   return {
-    title: `${category_seo?.title} - Croonus.rs - Farmerke, Muške farmerke, Muška odeća`,
+    title: `${category_seo?.title}`,
     description:
       category_seo?.description ?? "Dobrodošli na Croonus.rs Online Shop",
     keywords: [
@@ -31,7 +31,7 @@ export async function generateMetadata({ params: { path } }) {
       "Croonus online",
     ],
     openGraph: {
-      title: `${category_seo?.title} - Croonus.rs - Farmerke, Muške farmerke, Muška odeća`,
+      title: `${category_seo?.title}`,
       description: "Dobrodošli na Croonus.rs Online Shop",
       keywords: [
         "Croonus",
