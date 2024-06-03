@@ -1,5 +1,7 @@
 import CheckoutPage from "@/components/CheckoutPage/CheckoutPage";
 import { get, list } from "../api/api";
+import { Suspense } from "react";
+
 const paymentOptions = async () => {
   const paymentOptions = await get("/checkout/payment-options").then(
     (response) => response?.payload
@@ -50,12 +52,14 @@ const Cart = async () => {
   const countries = await getCountries();
   return (
     <div className="">
-      <CheckoutPage
-        paymentoptions={paymentoptions}
-        deliveryoptions={deliveryoptions}
-        recommendedProducts={recommendedProducts}
-        countries={countries}
-      />
+       <Suspense fallback={``}>
+        <CheckoutPage
+          paymentoptions={paymentoptions}
+          deliveryoptions={deliveryoptions}
+          recommendedProducts={recommendedProducts}
+          countries={countries}
+        />
+      </Suspense>
     </div>
   );
 };
