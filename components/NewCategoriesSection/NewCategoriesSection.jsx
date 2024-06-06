@@ -18,7 +18,7 @@ const NewCategoriesSections = ({ categories }) => {
             className={`${
               index === 1 ? "row-span-2 h-full" : ""
             } aspect-square relative w-full overflow-hidden`}
-            href={`/kategorije/${category?.slug_path}`}
+            href={`/${category?.slug_path}`}
           >
             {category?.images?.image && (
               <Image

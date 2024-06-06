@@ -560,7 +560,7 @@ export const useProduct = ({ slug, id }) => {
   });
 };
 
-export const useProductThumb = ({ slug, id }) => {
+export const useProductThumb = ({ slug, id, categoryId }) => {
   return useSuspenseQuery({
     queryKey: [
       "productThumb",
@@ -569,7 +569,9 @@ export const useProductThumb = ({ slug, id }) => {
       },
     ],
     queryFn: async () => {
-      return await GET(`/product-details/thumb/${slug}`).then((res) => {
+      return await GET(
+        `/product-details/thumb/${slug}?categoryId=${categoryId}`
+      ).then((res) => {
         return res?.payload;
       });
     },

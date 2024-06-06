@@ -170,7 +170,7 @@ const Thumb = ({ data, slider }) => {
 							{product?.image?.map((image, index) => (
 								<SwiperSlide key={index}>
 									<Link
-										href={`/proizvod/${product?.slug}`}
+										href={`/${product?.slug}`}
 										scroll={true}
 										className="z-[100]"
 									>
@@ -321,7 +321,7 @@ const Thumb = ({ data, slider }) => {
 					</div>
 					<div className="mt-[0.813rem] max-md:text-left  flex max-md:items-start items-center justify-between relative z-[50]">
 						<Link
-							href={`/proizvod/${product?.slug}`}
+							href={`/${product?.slug}`}
 							scroll={true}
 							className="relative z-[5]"
 						>
@@ -537,7 +537,7 @@ const Thumb = ({ data, slider }) => {
 							{product?.image?.map((item, index) => {
 								return (
 									<SwiperSlide>
-										<Link href={`/proizvod/${product?.slug}`} className="z-50">
+										<Link href={`/${product?.slug}`} className="z-50">
 											<Image
 												src={convertHttpToHttps(
 													image?.id === product?.basic_data?.id_product
@@ -730,7 +730,7 @@ const Thumb = ({ data, slider }) => {
           </div> */}
 					<div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
 						<Link
-							href={`/proizvod/${product?.slug}`}
+							href={`/${product?.slug}`}
 							className="text-[0.813rem] relative max-md:leading-4 clamp"
 						>
 							{product?.basic_data?.name}

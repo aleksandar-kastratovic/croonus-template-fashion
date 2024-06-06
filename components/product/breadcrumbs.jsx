@@ -16,8 +16,8 @@ export const Breadcrumbs = ({ path }) => {
             <Link
               href={
                 index === arr.length - 1
-                  ? `/kategorije/${breadcrumb?.slug}`
-                  : `/kategorije/${breadcrumb?.slug}`
+                  ? `/${breadcrumb?.slug_path}`
+                  : `/${breadcrumb?.slug_path}`
               }
               className="text-[#000] text-[0.95rem] font-normal "
             >

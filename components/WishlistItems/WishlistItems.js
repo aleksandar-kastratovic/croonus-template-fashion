@@ -202,7 +202,7 @@ const WishlistItems = ({ items, product, border }) => {
             {product?.image?.map((item, index) => {
               return (
                 <SwiperSlide>
-                  <Link href={`/proizvod/${product?.slug}`} className="z-50">
+                  <Link href={`/${product?.slug}`} className="z-50">
                     <Image
                       src={convertHttpToHttps(
                         image?.id === product?.basic_data?.id_product

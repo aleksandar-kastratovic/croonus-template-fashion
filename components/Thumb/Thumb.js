@@ -26,9 +26,14 @@ export const Thumb = ({
   slug,
   slider,
   productsPerViewMobile,
+  categoryId,
   refreshWishlist = () => {},
 }) => {
-  const { data: product } = useProductThumb({ slug: slug, id: slug });
+  const { data: product } = useProductThumb({
+    slug: slug,
+    id: slug,
+    categoryId: categoryId ?? "*",
+  });
   const { mutate: addToWishlist, isSuccess: isAdded } = useAddToWishlist();
   const { mutate: removeFromWishlist, isSuccess: isRemoved } =
     useRemoveFromWishlist();
@@ -210,7 +215,7 @@ export const Thumb = ({
           {product?.image?.map((item, index) => {
             return (
               <SwiperSlide>
-                <Link href={`/proizvod/${product?.slug_path}`} className="z-50">
+                <Link href={`/${product?.slug_path}`} className="z-50">
                   <Image
                     src={convertHttpToHttps(
                       image?.id === product?.basic_data?.id_product
@@ -372,7 +377,7 @@ export const Thumb = ({
       </div>
       <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
         <Link
-          href={`/proizvod/${product?.slug_path}`}
+          href={`/${product?.slug_path}`}
           className="max-md:text-[0.85] text-[0.813rem] relative max-md:leading-4 max-sm:line-clamp-1"
         >
           {product?.basic_data?.name}
@@ -415,7 +420,11 @@ export const Thumb = ({
         </div>
       </div>
       <div className="flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem] min-w-[5.938rem] max-w-max">
-        <div className={`${product?.price?.discount?.active && "bg-[#f8ce5d] px-2"}  md:mt-3 font-bold text-center`}>
+        <div
+          className={`${
+            product?.price?.discount?.active && "bg-[#f8ce5d] px-2"
+          }  md:mt-3 font-bold text-center`}
+        >
           <ProductPrice price={product?.price} inventory={product?.inventory} />
         </div>
         {product?.price?.discount?.active && (

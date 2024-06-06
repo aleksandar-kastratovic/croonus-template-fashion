@@ -333,7 +333,7 @@ const NoStockModal = ({
                     key={id}
                     className={`flex items-start gap-2 py-[1.55rem]`}
                   >
-                    <Link href={`/proizvod/${slug}`}>
+                    <Link href={`/${slug}`}>
                       <Image
                         src={image[0]}
                         alt={name ?? sku ?? slug ?? "Ecommerce"}
@@ -344,7 +344,7 @@ const NoStockModal = ({
                     </Link>
                     <div className={`flex flex-col`}>
                       <Link
-                        href={`/proizvod/${slug}`}
+                        href={`/${slug}`}
                         className={`text-sm font-normal ${className}`}
                       >
                         {name}

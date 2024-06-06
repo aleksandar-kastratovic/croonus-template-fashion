@@ -67,7 +67,7 @@ const NavigationMobile = () => {
     handleBodyOverflow();
   }, [menuOpen]);
   useEffect(() => {
-    if (!pathname?.includes("/kategorije/")) {
+    if (!pathname?.includes("/")) {
       setActiveCategory({
         id: categories[0]?.id ?? 0,
         data: categories[0]?.children ?? [],
@@ -301,7 +301,7 @@ const NavigationMobile = () => {
                   <h1 className="text-[0.9rem] font-normal">Nazad</h1>
                 </div>
                 <Link
-                  href={`/kategorije/${activeCategory?.id}`}
+                  href={`/${activeCategory?.id}`}
                   onClick={() => {
                     setMenuOpen(false);
                     setActiveCategory({
@@ -368,7 +368,7 @@ const NavigationMobile = () => {
                     </div>
                   ) : (
                     <Link
-                      href={`/kategorije/${category?.slug_path}`}
+                      href={`/${category?.slug_path}`}
                       className={`${
                         activeCategory.firstCategory
                           ? `uppercase w-full`
@@ -472,7 +472,7 @@ const NavigationMobile = () => {
                 {searchData?.items?.slice(0, 6)?.map((item) => {
                   return (
                     <Link
-                      href={`/proizvod/${item?.slug_path}`}
+                      href={`/${item?.slug_path}`}
                       onClick={(e) => {
                         setSearchData([]);
                         setSearchOpen(false);

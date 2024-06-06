@@ -30,7 +30,7 @@ const Breadcrumbs = ({ className, parents = [], name = "" }) => {
             return (
               <div key={id}>
                 <Link
-                  href={`/kategorije/${slug}`}
+                  href={`/${slug}`}
                   className={`${className} text-[1rem] font-light hover:underline`}
                 >
                   {name}

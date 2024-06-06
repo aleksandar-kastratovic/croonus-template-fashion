@@ -77,7 +77,7 @@ const CheckoutItems = ({
             removeFromCart({ id: id });
           }}
         ></i>
-        <Link href={`/proizvod/${slug_path}`} className={`col-span-1`}>
+        <Link href={`/${slug_path}`} className={`col-span-1`}>
           <Image
             src={image[0] ?? "/comr.png"}
             alt={`Comr`}

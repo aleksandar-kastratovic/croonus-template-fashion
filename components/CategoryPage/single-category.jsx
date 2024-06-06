@@ -21,7 +21,7 @@ export const SingleCategory = ({ slug }) => {
               return (
                 <div className="flex items-center gap-2">
                   <Link
-                    href={`/kategorije/${breadcrumb?.slug}`}
+                    href={`/${breadcrumb?.slug_path}`}
                     className="text-[#191919] text-[0.95rem] font-normal"
                   >
                     {breadcrumb?.name}

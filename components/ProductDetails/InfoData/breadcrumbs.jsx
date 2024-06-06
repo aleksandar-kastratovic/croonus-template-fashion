@@ -4,11 +4,11 @@ import React from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { get } from "@/app/api/api";
 
-export const Breadcrumbs = ({ path }) => {
+export const Breadcrumbs = ({ path ,categoryId}) => {
   const { data: breadcrumbs } = useSuspenseQuery({
     queryKey: ["breadcrumbs", path],
     queryFn: async () => {
-      return await get(`/product-details/breadcrumbs/${path}`).then(
+      return await get(`/product-details/breadcrumbs/${path}?categoryId=${categoryId ?? "*"}`).then(
         (res) => res?.payload
       );
     },
@@ -26,8 +26,8 @@ export const Breadcrumbs = ({ path }) => {
             <Link
               href={
                 index === arr.length - 1
-                  ? `/kategorije/${breadcrumb?.slug}`
-                  : `/kategorije/${breadcrumb?.slug}`
+                  ? `/${breadcrumb?.slug_path}`
+                  : `/${breadcrumb?.slug_path}`
               }
               className="text-[#000] text-[0.95rem] font-normal "
             >

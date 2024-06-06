@@ -85,7 +85,7 @@ const Success = ({
               }) => {
                 return (
                   <div key={id} className={`col-span-1`}>
-                    <Link href={`/proizvod/${slug}`}>
+                    <Link href={`/${slug}`}>
                       <Image
                         src={image}
                         alt={`${name} - ${slug}`}
