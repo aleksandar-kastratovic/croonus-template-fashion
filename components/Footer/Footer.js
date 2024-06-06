@@ -185,27 +185,27 @@ const Footer = () => {
             <h1 className="text-[1.063rem] font-bold">Možda te interesuje</h1>
             <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
               <Link
-                href={`/kategorije/zene/odeca/topovi`}
+                href={`/zene/odeca/topovi`}
                 className={`cursor-pointer hover:text-[#04b400] ${
-                  pathname === "/kategorije/zene/odeca/topovi" &&
+                  pathname === "/zene/odeca/topovi" &&
                   "text-[#04b400]"
                 }`}
               >
                 Topovi
               </Link>
               <Link
-                href={`/kategorije/zene/odeca/haljine`}
+                href={`/zene/odeca/haljine`}
                 className={`cursor-pointer hover:text-[#04b400] ${
-                  pathname === "/kategorije/zene/odeca/haljine" &&
+                  pathname === "/zene/odeca/haljine" &&
                   "text-[#04b400]"
                 }`}
               >
                 Haljine
               </Link>
               <Link
-                href={`/kategorije/zene/obuca`}
+                href={`/zene/obuca`}
                 className={`cursor-pointer hover:text-[#04b400] ${
-                  pathname === "/kategorije/zene/obuca" && "text-[#04b400]"
+                  pathname === "/zene/obuca" && "text-[#04b400]"
                 }`}
               >
                 Obuća
@@ -320,27 +320,27 @@ const Footer = () => {
             {open?.id === 3 && (
               <div className="flex flex-col items-center justify-center gap-[0.4rem] text-[0.813rem] font-normal">
                 <Link
-                  href={`/kategorije/zene/odeca/topovi`}
+                  href={`/zene/odeca/topovi`}
                   className={`cursor-pointer hover:text-[#04b400] ${
-                    pathname === "/kategorije/zene/odeca/topovi" &&
+                    pathname === "/zene/odeca/topovi" &&
                     "text-[#04b400]"
                   }`}
                 >
                   Topovi
                 </Link>
                 <Link
-                  href={`/kategorije/zene/odeca/haljine`}
+                  href={`/zene/odeca/haljine`}
                   className={`cursor-pointer hover:text-[#04b400] ${
-                    pathname === "/kategorije/zene/odeca/haljine" &&
+                    pathname === "/zene/odeca/haljine" &&
                     "text-[#04b400]"
                   }`}
                 >
                   Haljine
                 </Link>
                 <Link
-                  href={`/kategorije/zene/obuca`}
+                  href={`/zene/obuca`}
                   className={`cursor-pointer hover:text-[#04b400] ${
-                    pathname === "/kategorije/zene/obuca" && "text-[#04b400]"
+                    pathname === "/zene/obuca" && "text-[#04b400]"
                   }`}
                 >
                   Obuća

@@ -165,8 +165,8 @@ const ProductInfo = ({
                     <Link
                       href={
                         index === arr.length - 1
-                          ? `/kategorije/${breadcrumb?.slug}`
-                          : `/kategorije/${breadcrumb?.slug}`
+                          ? `/${breadcrumb?.slug_path}`
+                          : `/${breadcrumb?.slug_path}`
                       }
                       className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
                     >

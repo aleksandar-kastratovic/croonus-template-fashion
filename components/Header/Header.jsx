@@ -143,7 +143,7 @@ const Header = () => {
                     {category?.name}
                   </button>
                 ) : (
-                  <Link href={`/kategorije/${category?.slug_path}`} key={index} onClick={() => resetActiveCategory()}>
+                  <Link href={`/${category?.slug_path}`} key={index} onClick={() => resetActiveCategory()}>
                     <span
                       className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover ${
                         pathname?.includes(category?.slug) && category?.id !== 0
@@ -250,7 +250,7 @@ const Header = () => {
                         </button>
                       ) : (
                         <Link
-                          href={`/kategorije/${category?.slug_path}`}
+                          href={`/${category?.slug_path}`}
                           key={index}
                           className={`${
                             category?.id === activeCategory?.id
@@ -280,7 +280,7 @@ const Header = () => {
                     {activeSubCategory?.name && (
                       <Link
                         className={`text-[15px] font-normal text-[#39ae00] hover:underline pb-7`}
-                        href={`/kategorije/${activeSubCategory?.slug_path}`}
+                        href={`/${activeSubCategory?.slug_path}`}
                         onClick={() => {
                           resetActiveCategory();
                         }}
@@ -293,7 +293,7 @@ const Header = () => {
                       {activeSubCategory &&
                         activeSubCategory?.data?.map((childCategory) => (
                           <Link
-                            href={`/kategorije/${childCategory?.slug_path}`}
+                            href={`/${childCategory?.slug_path}`}
                             onClick={resetActiveCategory}
                             key={childCategory?.id}
                             className={`text-[15px] lowercase text-black first-letter:uppercase block hover:underline ${

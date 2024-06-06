@@ -217,7 +217,7 @@ export const CategoryProducts = ({
                       />
                     }
                   >
-                    <Thumb slug={id} key={id} />
+                    <Thumb slug={id} key={id} categoryId={slug ?? "*"} />
                   </Suspense>
                 );
               })}

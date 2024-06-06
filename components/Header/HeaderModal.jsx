@@ -72,7 +72,7 @@ const HeaderModal = () => {
                 {chooseChildCategory &&
                   chooseChildCategory?.children?.map((childCategory) => (
                     <Link
-                      href={`/kategorije/${childCategory?.slug_path}`}
+                      href={`/${childCategory?.slug_path}`}
                       onClick={() => mutateOpenHeader(false)}
                       key={childCategory?.id}
                       className="text-[15px] lowercase text-black first-letter:uppercase block"

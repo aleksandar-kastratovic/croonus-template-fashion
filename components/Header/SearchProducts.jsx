@@ -83,7 +83,7 @@ const SearchProducts = () => {
                 {searchData?.items?.slice(0, 6)?.map((item) => {
                   return (
                     <Link
-                      href={`/proizvod/${item?.slug_path}`}
+                      href={`/${item?.slug_path}`}
                       onClick={(e) => {
                         setSearchTerm("");
                       }}

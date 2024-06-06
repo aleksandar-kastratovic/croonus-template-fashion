@@ -145,25 +145,25 @@ const Footer = () => {
                         <h1 className="text-[1.063rem] font-bold">Možda te interesuje</h1>
                         <div className="flex flex-col items-start gap-[0.4rem] text-[0.813rem] font-normal">
                             <Link
-                                href={`/kategorije/muska-odeca/farmerice`}
+                                href={`/muska-odeca/farmerice`}
                                 className="cursor-pointer hover:text-[#e10000]"
                             >
                                 Farmerice
                             </Link>
                             <Link
-                                href={`/kategorije/muska-odeca/komplet-trenerke`}
+                                href={`/muska-odeca/komplet-trenerke`}
                                 className="cursor-pointer hover:text-[#e10000]"
                             >
                                 Trenerke
                             </Link>
                             <Link
-                                href={`/kategorije/muska-odeca/zimske-jakne`}
+                                href={`/muska-odeca/zimske-jakne`}
                                 className="cursor-pointer hover:text-[#e10000]"
                             >
                                 Zimske jakne
                             </Link>
                             <Link
-                                href={`/kategorije/muska-obuca`}
+                                href={`/muska-obuca`}
                                 className="cursor-pointer hover:text-[#e10000]"
                             >
                                 Obuća

@@ -199,7 +199,7 @@ const CategoryLogicPage = ({ singleCategory }) => {
                                                 null,
                                                 "",
                                                 singleCategory
-                                                    ? `/kategorije/${singleCategory.slug_path}`
+                                                    ? `/${singleCategory.slug_path}`
                                                     : `/sekcija/${slug}`
                                             );
                                         }
@@ -221,7 +221,7 @@ const CategoryLogicPage = ({ singleCategory }) => {
                                                     null,
                                                     "",
                                                     singleCategory
-                                                        ? `/kategorije/${singleCategory.slug_path}`
+                                                        ? `/${singleCategory.slug_path}`
                                                         : `/sekcija/${slug}`
                                                 );
                                             }

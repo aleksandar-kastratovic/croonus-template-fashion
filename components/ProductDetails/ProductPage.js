@@ -4,14 +4,14 @@ import { ProductInfo } from "@/components/ProductDetails/ProductInfo";
 import { Breadcrumbs } from "@/components/ProductDetails/InfoData/breadcrumbs";
 import UpsellProducts from "@/components/UpsellProducts/UpsellProducts";
 
-export const ProductPage = ({ path }) => {
+export const ProductPage = ({ path, categoryId }) => {
   return (
     <>
       <div className="max-md:mt-[1rem]  max-md:w-[95%]  max-md:mx-auto md:mx-[3rem] mt-6 max-lg:hidden">
         <Suspense
           fallback={<div className={`h-2 bg-slate-300 animate-pulse w-full`} />}
         >
-          <Breadcrumbs path={path} />
+          <Breadcrumbs path={path} categoryId={categoryId} />
         </Suspense>
       </div>
       <div className="max-md:mt-[1.01rem] mt-[2rem] max-md:w-[95%]  max-md:mx-auto mx-[3rem] gap-x-[3.063rem] grid grid-cols-4">

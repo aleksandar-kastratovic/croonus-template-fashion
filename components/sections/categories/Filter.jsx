@@ -148,7 +148,7 @@ const FilterWithinTree = ({ filter }) => {
             <Link
               className="pl-2 text-[1rem] font-light hover:text-[#39ae00]"
               htmlFor={"chbx-" + item.id}
-              href={`/kategorije/${item?.slug}`}
+              href={`/${item?.slug}`}
             >
               {item.label}
             </Link>

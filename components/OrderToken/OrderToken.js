@@ -160,7 +160,7 @@ const OrderSuccess = ({ order }) => {
               </h1>
               {order?.items?.map((item) => {
                 return (
-                  <Link href={`/proizvod/${item?.basic_data?.slug}`}>
+                  <Link href={`/${item?.basic_data?.slug}`}>
                     <div
                       className={`flex mt-3 items-center gap-10`}
                       key={Math.random()}
@@ -378,7 +378,7 @@ const OrderSuccess = ({ order }) => {
             </h1>
             {order?.items?.map((item) => {
               return (
-                <Link href={`/proizvod/${item?.basic_data?.slug}`}>
+                <Link href={`/${item?.basic_data?.slug}`}>
                   <div
                     className={`flex mt-3 items-center gap-10`}
                     key={Math.random()}

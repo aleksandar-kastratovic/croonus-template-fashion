@@ -5,59 +5,7 @@ import { get } from "@/app/api/api";
 import Loading from "@/components/sections/categories/Loader";
 import Category from "@/components/sections/categories/Category";
 import { CategoryData } from "@/components/sections/categories/CategoryPage";
-import {convertHttpToHttps} from "@/helpers/convertHttpToHttps";
-
-export async function generateMetadata({ params: { path } }) {
-  const fetchCategorySEO = (slug) => {
-    return get(`/categories/product/single/seo/${slug}`).then(
-        (res) => res?.payload
-    );
-  };
-  const category_seo = await fetchCategorySEO(path[path?.length - 1]);
-  return {
-    title: `${category_seo?.title}`,
-    description:
-      category_seo?.description ?? "Dobrodošli na Croonus.rs Online Shop",
-    keywords: [
-      "Croonus",
-      "online",
-      "shop",
-      "Croonus.rs",
-      "farmerke",
-      "trenerke",
-      "dukserice",
-      "Croonus obuca",
-      "obuca",
-      "Croonus online",
-    ],
-    openGraph: {
-      title: `${category_seo?.title}`,
-      description: "Dobrodošli na Croonus.rs Online Shop",
-      keywords: [
-        "Croonus",
-        "online",
-        "shop",
-        "Croonus.rs",
-        "farmerke",
-        "trenerke",
-        "dukserice",
-        "Croonus obuca",
-        "obuca",
-        "Croonus online",
-        category_seo?.keywords,
-      ],
-      images: [
-        {
-          url: convertHttpToHttps(category_seo?.image) ?? "",
-          width: 800,
-          height: 600,
-          alt: category_seo?.description ?? "Croonus.rs",
-        },
-      ],
-    },
-  };
-}
-
+import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 
 const CategoryPage = ({
   params: { path },

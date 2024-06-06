@@ -118,7 +118,7 @@ const NavigationDesktop = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setVisible((scrollY === 0 && pathname === "/") || (open && scrollY > 0));
-      pathname?.includes("/kategorija" || "/proizvod") &&
+      pathname?.includes("/kategorija" || "") &&
         setVisible(false) &&
         setOpen(false);
     };
@@ -165,7 +165,7 @@ const NavigationDesktop = () => {
   }, []);
 
   useEffect(() => {
-    if (pathname?.includes("/kategorija" || "/proizvod")) {
+    if (pathname?.includes("/kategorija" || "")) {
       setOpen(false);
       setVisible(false);
     }
@@ -354,7 +354,7 @@ const NavigationDesktop = () => {
                         {searchData?.items?.slice(0, 6)?.map((item) => {
                           return (
                             <Link
-                              href={`/proizvod/${item?.slug_path}`}
+                              href={`/${item?.slug_path}`}
                               onClick={(e) => {
                                 setSearchData([]);
                                 setSearchOpen(false);
@@ -523,7 +523,7 @@ const NavigationDesktop = () => {
                   }}
                 >
                   <Link
-                    href={`/kategorije/${item?.slug_path}`}
+                    href={`/${item?.slug_path}`}
                     className="uppercase px-5 py-1 text-[0.8rem] hover:bg-black hover:text-white px-5 rounded cursor-pointer hover:translate-x-5 hover:text-slate-500 transition-all duration-300 font-medium"
                   >
                     {item?.name}
@@ -599,7 +599,7 @@ const NavigationDesktop = () => {
                         </h1>
                       ) : (
                         <Link
-                          href={`/kategorije/${category?.slug_path}`}
+                          href={`/${category?.slug_path}`}
                           onClick={() => {
                             setOpen(false);
                             setVisible(false);
@@ -646,7 +646,7 @@ const NavigationDesktop = () => {
                       } text-xs hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium`}
                   >
                     <Link
-                      href={`/kategorije/${category?.slug_path}`}
+                      href={`/${category?.slug_path}`}
                       onClick={() => {
                         setOpen(false);
                         setVisible(false);
