@@ -24,12 +24,12 @@ const getProductSEO = async (id) => {
 };
 
 const defaultMetadata = {
-  title: "Početna - Fashion Template",
+  title: "Početna | Fashion Template",
   description: "Dobrodošli na Fashion Template Online Shop",
 
   robots: "index, follow",
   openGraph: {
-    title: "Fashion Template - Farmerke, Muške farmerke, Muška odeća",
+    title: "Početna | Fashion Template",
     description: "Dobrodošli na Fashion Template Online Shop",
     type: "website",
     url: "https://croonus.com",
@@ -60,13 +60,13 @@ export async function generateMetadata({ params: { path } }) {
 
       if (category) {
         return {
-          title: `${category?.title}` ?? "",
+          title: `${category?.title} | Fashion Template` ?? "",
           description: category?.description ?? "",
           keywords: category?.keywords ?? "",
           type: category?.type ?? "",
           image: image_category ?? "",
           openGraph: {
-            title: `${category?.title}` ?? "",
+            title: `${category?.title} | Fashion Template` ?? "",
             description: category?.description ?? "",
             type: category?.type ?? "",
             images: [
@@ -94,7 +94,7 @@ export async function generateMetadata({ params: { path } }) {
         "https://croonus.com/images/logo.png";
       if (productSEO) {
         return {
-          title: productSEO?.meta_title ?? "",
+          title: `${productSEO?.meta_title} | Fashion Template` ?? "",
           description: productSEO?.meta_description ?? "",
           keywords: productSEO?.meta_keywords ?? "",
           openGraph: {

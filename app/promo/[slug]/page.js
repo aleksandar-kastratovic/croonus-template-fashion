@@ -11,6 +11,6 @@ const PromoPage = async ({ params: { slug } }) => {
 export default PromoPage;
 
 export const metadata = {
-  title: "Promocije",
+  title: "Promocije | Fashion Template",
   description: "Promocije",
 };

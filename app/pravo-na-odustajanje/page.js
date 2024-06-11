@@ -1,9 +1,8 @@
 import PravoNaOdustajanje from "@/components/PravoNaOdustajanje/PravoNaOdustajanje";
 export const metadata = () => {
   return {
-    title:
-      "Pravo na odustajanje - croonus.com - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na croonus.com Online Shop",
+    title: "Pravo na odustajanje | Fashion Template",
+    description: "Dobrodošli na Fashion Online Shop",
     keywords: [
       "Croonus",
       "online",

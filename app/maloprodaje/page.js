@@ -24,3 +24,8 @@ const Maloprodaje = () => {
 };
 
 export default Maloprodaje;
+
+export const metadata = {
+  title: "Maloprodaje | Fashion Template",
+  description: "Maloprodaje",
+};

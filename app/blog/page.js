@@ -39,3 +39,8 @@ const Blog = async () => {
 export default Blog;
 
 export const revalidate = 30;
+
+export const metadata = {
+  title: "Blog | Fashion Template",
+  description: "Fashion Template Blog",
+};

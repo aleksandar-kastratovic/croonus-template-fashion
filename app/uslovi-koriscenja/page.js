@@ -1,8 +1,7 @@
 export const metadata = () => {
   return {
-    title:
-      "Uslovi korišćenja - croonus.com - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na croonus.com Online Shop",
+    title: "Uslovi korišćenja | Fashion Template",
+    description: "Dobrodošli na Fashion Online Shop",
     keywords: [
       "Croonus",
       "online",
@@ -28,16 +27,15 @@ const UsloviKoriscenja = () => {
       </h5>
       <p>
         Ovaj dokument (zajedno sa ovde spomenutim drugim dokumentima) utvrđuje
-        op&scaron;te uslove za kori&scaron;ćenje veb-sajta: croonus.com (u daljem
-        tekstu: Veb-sajt) i kupovine proizvoda preko Veb-sajta.
+        op&scaron;te uslove za kori&scaron;ćenje veb-sajta: croonus.com (u
+        daljem tekstu: Veb-sajt) i kupovine proizvoda preko Veb-sajta.
       </p>
       <p>Postavljanjem, upravljanjem i prodajom preko Veb-sajta rukovodi:</p>
+      <p>TRGOVINA NA MALO POSREDSTVOM INTERNETA Croonus</p>
+
       <p>
-       TRGOVINA NA MALO POSREDSTVOM INTERNETA Croonus
-
+        Email:&nbsp;info@croonus.com&nbsp;(u daljem tekstu: Croonus ili mi).
       </p>
-
-      <p>Email:&nbsp;info@croonus.com&nbsp;(u daljem tekstu: Croonus ili mi).</p>
       <p>
         <br />
       </p>
@@ -60,7 +58,8 @@ const UsloviKoriscenja = () => {
         kori&scaron;ćenja i svrhom i načinom obrade Va&scaron;ih ličnih podataka
         molimo Vas da ne koristite Veb-sajt. Ako imate pitanja u vezi sa
         Uslovima kori&scaron;ćenja možete da nas kontaktirati na email
-        adresu:&nbsp;info@croonus.com&nbsp;ili adresu sedi&scaron;ta Croonus Cacak
+        adresu:&nbsp;info@croonus.com&nbsp;ili adresu sedi&scaron;ta Croonus
+        Cacak
       </p>
       <p>
         <br />
@@ -103,14 +102,14 @@ const UsloviKoriscenja = () => {
         su tačni, važeći i potpuni.
       </p>
       <p>
-        Naručivanjem proizvoda preko Veb-sajta pristajete da Croonus upotrebljava
-        Va&scaron;e podatke, kao i da Vas kontaktira u svrhu izvr&scaron;enja
-        Va&scaron;e narudžbine, ukoliko je to potrebno, a u skladu sa
-        Obave&scaron;tenjem o obradi podataka o ličnosti. Ukoliko ne navedete
-        sve podatke koji su nam potrebni, nećete moći da &nbsp;izvr&scaron;ite
-        kupovinu proizvoda. Kada vr&scaron;ite naručivanje proizvoda preko
-        Veb-sajta, potvrđujete da imate vi&scaron;e od 18 godina i da ste
-        sposobni za zaključenje obavezujućih ugovora.
+        Naručivanjem proizvoda preko Veb-sajta pristajete da Croonus
+        upotrebljava Va&scaron;e podatke, kao i da Vas kontaktira u svrhu
+        izvr&scaron;enja Va&scaron;e narudžbine, ukoliko je to potrebno, a u
+        skladu sa Obave&scaron;tenjem o obradi podataka o ličnosti. Ukoliko ne
+        navedete sve podatke koji su nam potrebni, nećete moći da
+        &nbsp;izvr&scaron;ite kupovinu proizvoda. Kada vr&scaron;ite naručivanje
+        proizvoda preko Veb-sajta, potvrđujete da imate vi&scaron;e od 18 godina
+        i da ste sposobni za zaključenje obavezujućih ugovora.
       </p>
       <p>
         <br />
@@ -310,11 +309,11 @@ const UsloviKoriscenja = () => {
       </p>
       <p>
         Va&scaron;a po&scaron;iljka će Vam biti dostavljena putem dostavljača sa
-        kojim Croonus ima zaključen ugovor na adresu koju ste naveli za isporuku,
-        i to u periodu između 8h &ndash; 16h svakog radnog dana (subotom i
-        nedeljom se ne vr&scaron;i isporuka). Iz tog razloga Vas molimo da u tom
-        periodu obezbedite da na adresi koju ste naznačili za isporuku bude
-        osoba koja može preuzeti po&scaron;iljku.
+        kojim Croonus ima zaključen ugovor na adresu koju ste naveli za
+        isporuku, i to u periodu između 8h &ndash; 16h svakog radnog dana
+        (subotom i nedeljom se ne vr&scaron;i isporuka). Iz tog razloga Vas
+        molimo da u tom periodu obezbedite da na adresi koju ste naznačili za
+        isporuku bude osoba koja može preuzeti po&scaron;iljku.
       </p>
       <p>
         Dužnost dostavljača je da dva puta poku&scaron;a da isporuči
@@ -373,13 +372,13 @@ const UsloviKoriscenja = () => {
         vratite Croonus-iju kupljenu robu.
       </p>
       <p>
-        Croonus je dužan da bez odlaganja, a najkasnije u roku od 14 dana od dana
-        kada je primio obrazac za odustanak od ugovora izvr&scaron;i povraćaj
-        uplata koje je primio za robu, uključujući i tro&scaron;kove isporuke s
-        tim &scaron;to može da odloži povraćaj sredstava dok ne dobije robu koja
-        se vraća ili dok ne primi dokaz &nbsp;da ste robu poslali Croonus-iju u
-        zavisnosti od toga &scaron;ta nastupa prvo, osim u slučaju kada je
-        Croonus ponudio da sam preuzme robu.
+        Croonus je dužan da bez odlaganja, a najkasnije u roku od 14 dana od
+        dana kada je primio obrazac za odustanak od ugovora izvr&scaron;i
+        povraćaj uplata koje je primio za robu, uključujući i tro&scaron;kove
+        isporuke s tim &scaron;to može da odloži povraćaj sredstava dok ne
+        dobije robu koja se vraća ili dok ne primi dokaz &nbsp;da ste robu
+        poslali Croonus-iju u zavisnosti od toga &scaron;ta nastupa prvo, osim u
+        slučaju kada je Croonus ponudio da sam preuzme robu.
       </p>
       <p>
         Kupovinom robe putem Veb-sajta dajete izričitu saglasnost da se povraćaj
@@ -409,9 +408,9 @@ const UsloviKoriscenja = () => {
         zamenu proizvoda.
       </p>
       <p>
-        Croonus je dužan da Vam u roku od 14 dana od dana kada je primio proizvod
-        koji želite da zamenite isporuči proizvod u skladu sa podacima iz
-        obrasca za zamenu proizvoda.
+        Croonus je dužan da Vam u roku od 14 dana od dana kada je primio
+        proizvod koji želite da zamenite isporuči proizvod u skladu sa podacima
+        iz obrasca za zamenu proizvoda.
       </p>
       <p>
         U slučaju da Croonus ne primi proizvod u roku od 14 dana od prijema
@@ -451,8 +450,9 @@ const UsloviKoriscenja = () => {
         postojala u momentu isporuke robe Vama ili trećem licu koje ste odredili
         kao primaoca po&scaron;iljke, kao i u slučaju kad se nesaobraznost
         pojavila posle isporuke, a potiče od uzroka koji je postojao pre
-        isporuke, ukoliko je Croonus izjavio da je roba saobrazna ugovoru. Croonus
-        je odgovoran i za nesaobraznost nastalu zbog nepravilnog pakovanja.
+        isporuke, ukoliko je Croonus izjavio da je roba saobrazna ugovoru.
+        Croonus je odgovoran i za nesaobraznost nastalu zbog nepravilnog
+        pakovanja.
       </p>
       <p>
         Ako se nesaobraznost pojavi u roku od &scaron;est meseci od dana
@@ -478,9 +478,9 @@ const UsloviKoriscenja = () => {
       <p>
         Obave&scaron;tavamo Vas da reklamacije na robu kupljenu preko Veb-sajta
         možete da izjavite elektronskim putem na email
-        adresu:&nbsp;reklamacije@croonus.com, ili po&scaron;tom na napred navedenu
-        adresu Croonus-ja. Prilikom izjavljivanja reklamacije dužni ste da
-        dostavite robu na koju se reklamacija odnosi, kao i račun na uvid ili
+        adresu:&nbsp;reklamacije@croonus.com, ili po&scaron;tom na napred
+        navedenu adresu Croonus-ja. Prilikom izjavljivanja reklamacije dužni ste
+        da dostavite robu na koju se reklamacija odnosi, kao i račun na uvid ili
         drugi dokaz o kupovini robe &nbsp;(kopija računa, slip i sl.).
       </p>
       <p>Prilikom dostavljanja robe niste dužni da dostavite ambalažu.</p>
