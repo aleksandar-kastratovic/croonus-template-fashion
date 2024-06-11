@@ -1,8 +1,8 @@
 export const metadata = () => {
   return {
     title:
-      "Najčešća pitanja - croonus.com - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na croonus.com Online Shop",
+      "Najčešća pitanja | Fashion Template",
+    description: "Dobrodošli na Fashion Online Shop",
     keywords: [
       "Croonus",
       "online",

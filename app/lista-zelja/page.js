@@ -1,8 +1,8 @@
 import WishlistPage from "@/components/Wishlist/Wishlist";
 export const metadata = () => {
   return {
-    title: "Lista želja - croonus.com - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na croonus.com Online Shop",
+    title: "Lista želja | Fashion Template",
+    description: "Dobrodošli na Fashion Online Shop",
     keywords: [
       "Croonus",
       "online",

@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -33,3 +32,8 @@ const PageInConstruction = () => {
 };
 
 export default PageInConstruction;
+
+export const metadata = {
+  title: "Stranica u izradi | Fashion Template",
+  description: "Stranica u izradi | Fashion Template",
+};

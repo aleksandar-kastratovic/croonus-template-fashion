@@ -1,16 +1,16 @@
-'use client'
+"use client";
 import Link from "next/link";
 import React from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { get } from "@/app/api/api";
 
-export const Breadcrumbs = ({ path ,categoryId}) => {
+export const Breadcrumbs = ({ path, categoryId }) => {
   const { data: breadcrumbs } = useSuspenseQuery({
     queryKey: ["breadcrumbs", path],
     queryFn: async () => {
-      return await get(`/product-details/breadcrumbs/${path}?categoryId=${categoryId ?? "*"}`).then(
-        (res) => res?.payload
-      );
+      return await get(
+        `/product-details/breadcrumbs/${path}?categoryId=${categoryId ?? "*"}`
+      ).then((res) => res?.payload);
     },
     refetchOnWindowFocus: false,
   });
@@ -29,7 +29,7 @@ export const Breadcrumbs = ({ path ,categoryId}) => {
                   ? `/${breadcrumb?.slug_path}`
                   : `/${breadcrumb?.slug_path}`
               }
-              className="text-[#000] text-[0.95rem] font-normal "
+              className="text-[#000] text-[0.95rem] font-normal"
             >
               {breadcrumb?.name}
             </Link>

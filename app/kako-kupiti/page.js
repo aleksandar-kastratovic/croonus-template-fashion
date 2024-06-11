@@ -1,8 +1,8 @@
 import HowToBuy from "@/components/HowToBuy/HowToBuy";
 export const metadata = () => {
   return {
-    title: "Kako kupiti - croonus.com - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na croonus.com Online Shop",
+    title: "Kako kupiti | Fashion Template",
+    description: "Dobrodošli na Fashion Online Shop",
     keywords: [
       "Croonus",
       "online",

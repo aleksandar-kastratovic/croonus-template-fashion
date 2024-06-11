@@ -13,3 +13,8 @@ const orderToken = async ({ params: { orderToken } }) => {
 };
 
 export default orderToken;
+
+export const metadata = {
+  title: "Kupovina | Fashion Template",
+  description: "Kupovina | Fashion Template",
+};

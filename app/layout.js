@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
 }
 
 export const metadata = {
-  title: "Početna - Fashion Template",
+  title: "Početna | Fashion Template",
   description: "Dobrodošli na Fashion Template Online Shop",
 
   robots: "index, follow",

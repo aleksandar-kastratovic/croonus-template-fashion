@@ -24,3 +24,8 @@ const Kontakt = () => {
 };
 
 export default Kontakt;
+
+export const metadata = {
+  title: "Kontakt | Fashion Template",
+  description: "Kontaktirajte nas",
+};

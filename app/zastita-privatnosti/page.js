@@ -1,8 +1,7 @@
 export const metadata = () => {
   return {
-    title:
-      "Zaštita privatnosti - croonus.com - Farmerke, Muške farmerke, Muška odeća",
-    description: "Dobrodošli na croonus.com Online Shop",
+    title: "Zaštita privatnosti | Fashion Template",
+    description: "Dobrodošli na Fashion Online Shop",
     keywords: [
       "Croonus",
       "online",
@@ -31,10 +30,7 @@ const ZastitaPrivatnosti = () => {
       </p>
       <p>
         Naziv:&nbsp;
-        <strong>
-          TRGOVINA NA MALO POSREDSTVOM INTERNETA
-          Croonus
-        </strong>
+        <strong>TRGOVINA NA MALO POSREDSTVOM INTERNETA Croonus</strong>
       </p>
       <p>
         Adresa:&nbsp;<strong>Kralja Petra Prvog 30</strong>
@@ -140,7 +136,9 @@ const ZastitaPrivatnosti = () => {
       <p>
         Ukoliko želite da povučete saglasnost za obradu podataka, molimo da nam
         uputite zahtev na sledeću email adresu:{" "}
-        <a href="mailto:zastitapodataka@croonus.com">zastitapodataka@croonus.com</a>
+        <a href="mailto:zastitapodataka@croonus.com">
+          zastitapodataka@croonus.com
+        </a>
         . Mi ćemo na osnovu Va&scaron;eg zahteva dalje postupiti u skladu sa
         zakonom.
       </p>

@@ -5,3 +5,8 @@ const AnketaPage = async () => {
 };
 
 export default AnketaPage;
+
+export const metadata = {
+  title: "Anketa | Fashion Template",
+  description: "Anketa | Fashion Template",
+};
