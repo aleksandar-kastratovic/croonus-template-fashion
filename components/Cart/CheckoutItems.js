@@ -35,36 +35,13 @@ const CheckoutItems = ({
   }, [isSuccess]);
 
   const { mutate: updateCart } = useAddToCart();
-  const [productQuantity, setProductQuantity] = useState(quantity);
-
-  const [initialAddToCart, setInitialAddToCart] = useState(false);
-  const debounceQuantity = useDebounce(productQuantity, 500);
+  const [productQuantity, setProductQuantity] = useState(Number(quantity));
 
   useEffect(() => {
-    if (productQuantity !== quantity) {
-      setInitialAddToCart(true);
-      updateCart({
-        id: id,
-        quantity: debounceQuantity,
-        message: `Uspešno izmenjena količina.`,
-        type: true,
-      });
-    }
-    if (productQuantity === quantity && initialAddToCart) {
-      updateCart({
-        id: id,
-        quantity: debounceQuantity,
-        message: `Uspešno izmenjena količina.`,
-        type: true,
-      });
-      if (productQuantity === 0) {
-        removeFromCart({ id: id });
-      }
-    }
-    setTimeout(() => {
-      refreshSummary();
-    }, 500);
-  }, [debounceQuantity, updateCart, refreshSummary, quantity]);
+    setProductQuantity(Number(quantity));
+  }, [quantity]);
+
+  const debounceQuantity = useDebounce(productQuantity, 500);
 
   return (
     <>
@@ -105,6 +82,7 @@ const CheckoutItems = ({
               setQuantity={setProductQuantity}
               updateCart={updateCart}
               id={id}
+
             />
           </div>
           <p className={`text-center ${className} text-[0.9rem] font-normal`}>

@@ -3,15 +3,34 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const PlusMinusInput = ({ className, quantity, maxAmount, setQuantity }) => {
+const PlusMinusInput = ({
+  className,
+  quantity,
+  maxAmount,
+  setQuantity,
+  updateCart,
+  id,
+}) => {
   const onPlus = () => {
     if (quantity < maxAmount) {
       setQuantity(quantity + 1);
+      updateCart({
+        id: id,
+        quantity: quantity + 1,
+        message: `Uspešno izmenjena količina.`,
+        type: true,
+      });
     }
   };
   const onMinus = () => {
     if (quantity > 1 && quantity <= maxAmount) {
       setQuantity(quantity - 1);
+      updateCart({
+        id: id,
+        quantity: quantity - 1,
+        message: `Uspešno izmenjena količina.`,
+        type: true,
+      });
     }
   };
 
