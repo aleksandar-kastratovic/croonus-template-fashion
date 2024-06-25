@@ -34,7 +34,7 @@ const CheckoutItems = ({
     }
   }, [isSuccess]);
 
-  const { mutate: updateCart } = useAddToCart();
+  const { mutate: updateCart, isSuccess: isUpdated } = useAddToCart();
   const [productQuantity, setProductQuantity] = useState(Number(quantity));
 
   useEffect(() => {
@@ -42,6 +42,13 @@ const CheckoutItems = ({
   }, [quantity]);
 
   const debounceQuantity = useDebounce(productQuantity, 500);
+
+  useEffect(() => {
+    if (isUpdated) {
+      refreshCart();
+      refreshSummary();
+    }
+  }, [isUpdated]);
 
   return (
     <>
@@ -82,7 +89,8 @@ const CheckoutItems = ({
               setQuantity={setProductQuantity}
               updateCart={updateCart}
               id={id}
-
+              refreshSummary={refreshSummary}
+              refreshCart={refreshCart}
             />
           </div>
           <p className={`text-center ${className} text-[0.9rem] font-normal`}>
