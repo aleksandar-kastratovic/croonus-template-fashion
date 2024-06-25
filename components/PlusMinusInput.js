@@ -10,6 +10,8 @@ const PlusMinusInput = ({
   setQuantity,
   updateCart,
   id,
+  refreshCart,
+  refreshSummary,
 }) => {
   const onPlus = () => {
     if (quantity < maxAmount) {
