@@ -30,7 +30,7 @@ const CheckoutPage = ({
   deliveryoptions,
   recommendedProducts,
   countries,
-  className
+  className,
 }) => {
   const router = useRouter();
   const { asPath } = router;
@@ -133,25 +133,25 @@ const CheckoutPage = ({
   const errorSelect = "Morate izabrati jednu opciju";
   const errorCheck = "Morate prihvatiti uslove";
 
-//fetchujemo sve artikle iz korpe
-const {
-  data: { items },
-  refetch: refreshCart,
-  isFetching,
-} = useCart();
+  //fetchujemo sve artikle iz korpe
+  const {
+    data: { items },
+    refetch: refreshCart,
+    isFetching,
+  } = useCart();
 
-//fetchujemo summary korpe (iznos,popuste,dostavu itd)
-const {
-  data: {
-    summary,
-    summary: { options, totals },
-  },
-  refetch: refreshSummary,
-} = useSummary({
-  items: items?.map((item) => {
-    return Number(item?.cart?.quantity);
-  }),
-});
+  //fetchujemo summary korpe (iznos,popuste,dostavu itd)
+  const {
+    data: {
+      summary,
+      summary: { options, totals },
+    },
+    refetch: refreshSummary,
+  } = useSummary({
+    items: items?.map((item) => {
+      return Number(item?.cart?.quantity);
+    }),
+  });
 
   const [errors, setErrors] = useState([]);
 
@@ -164,8 +164,10 @@ const {
     };
     getSummary();
   }, [items]);
+
   const cartItems = items ?? [];
   const cartCost = items.summary?.total ?? 0;
+
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={true} />
@@ -239,75 +241,69 @@ const {
 
                 <h1 className="text-xl   font-bold ">Informacije</h1>
                 <form
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-              className={`mt-20 grid grid-cols-5 gap-[3.75rem]`}
-            >
-              <CheckoutData
-                setFormData={setFormData}
-                formData={formData}
-                className={className}
-                deliveryoptions={deliveryoptions}
-                paymentoptions={paymentoptions}
-                items={items}
-                refreshSummary={refreshSummary}
-                summary={summary}
-                options={options}
-                totals={totals}
-                refreshCart={refreshCart}
-                errors={errors}
-                setErrors={setErrors}
-                
-              />
-            </form>
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
+                  className={`mt-20 grid grid-cols-5 gap-[3.75rem]`}
+                >
+                  <CheckoutData
+                    setFormData={setFormData}
+                    formData={formData}
+                    className={className}
+                    deliveryoptions={deliveryoptions}
+                    paymentoptions={paymentoptions}
+                    items={items}
+                    refreshSummary={refreshSummary}
+                    summary={summary}
+                    options={options}
+                    totals={totals}
+                    refreshCart={refreshCart}
+                    errors={errors}
+                    setErrors={setErrors}
+                  />
+                </form>
               </div>
-            
-              
-            
-          </div>
+            </div>
 
             <RecommendedProducts
               recommendedProducts={recommendedProducts}
               action4={`Gledali ste i ove modele`}
             />
           </>
-        ) : (
-          isFetching ? null : (
-            <>
-              <div className="nocontent-holder mt-[1.2rem] lg:mt-[13rem] flex items-center justify-center max-md:w-[95%] mx-auto">
-                <div className="text-center justify-center items-center flex flex-col border border-[#f8f8f8] rounded-3xl p-10">
-                  <div className="text-center">
-                    <span className="text-2xl font-medium">Vaša korpa</span>
-                  </div>
-                  <div className="mt-6 text-center text-lg font-medium">
-                    Trenutno ne postoji sadržaj u Vašoj korpi.
-                  </div>
-                  <div className="mt-5 text-center">
-                    <Link href="/">
-                      <button className="bg-[#2bc48a] mt-10 px-10 font-medium text-white hover:bg-opacity-80 py-4">
-                        Vrati se na početnu stranu
-                      </button>
-                    </Link>
-                  </div>
-                  <div className="help-container mt-10 text-center">
-                    <p className="font-medium">Pomoć pri kupovini:</p>
-                    <ul className="mt-2">
-                      <li>
-                        - Ukoliko Vam je potrebna pomoć u svakom trenutku nas
-                        možete kontaktirati pozivom na broj call centra{" "}
-                        <a href={`tel:${process.env.TELEPHONE}`}>
-                          ${process.env.TELEPHONE}
-                        </a>
-                        .
-                      </li>
-                      <li>- Pogledajte uputstvo za pomoć pri kupovini.</li>
-                    </ul>
-                  </div>
+        ) : isFetching ? null : (
+          <>
+            <div className="nocontent-holder mt-[1.2rem] lg:mt-[13rem] flex items-center justify-center max-md:w-[95%] mx-auto">
+              <div className="text-center justify-center items-center flex flex-col border border-[#f8f8f8] rounded-3xl p-10">
+                <div className="text-center">
+                  <span className="text-2xl font-medium">Vaša korpa</span>
+                </div>
+                <div className="mt-6 text-center text-lg font-medium">
+                  Trenutno ne postoji sadržaj u Vašoj korpi.
+                </div>
+                <div className="mt-5 text-center">
+                  <Link href="/">
+                    <button className="bg-[#2bc48a] mt-10 px-10 font-medium text-white hover:bg-opacity-80 py-4">
+                      Vrati se na početnu stranu
+                    </button>
+                  </Link>
+                </div>
+                <div className="help-container mt-10 text-center">
+                  <p className="font-medium">Pomoć pri kupovini:</p>
+                  <ul className="mt-2">
+                    <li>
+                      - Ukoliko Vam je potrebna pomoć u svakom trenutku nas
+                      možete kontaktirati pozivom na broj call centra{" "}
+                      <a href={`tel:${process.env.TELEPHONE}`}>
+                        ${process.env.TELEPHONE}
+                      </a>
+                      .
+                    </li>
+                    <li>- Pogledajte uputstvo za pomoć pri kupovini.</li>
+                  </ul>
                 </div>
               </div>
-            </>
-          )
+            </div>
+          </>
         )}
         {loading && (
           <div className="fixed top-0 left-0 bg-black bg-opacity-40 h-screen w-screen flex items-center justify-center">

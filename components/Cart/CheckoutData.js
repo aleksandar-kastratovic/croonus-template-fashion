@@ -56,7 +56,6 @@ const CheckoutData = ({
     "zip_code_shipping",
     "object_number_shipping",
     "accept_rules",
-    
   ];
 
   const router = useRouter();
@@ -120,7 +119,7 @@ const CheckoutData = ({
       }
     }
   }, [isCheckoutSuccess]);
-  console.log(status);
+
   return (
     <>
       <div className={`col-span-5 flex flex-col gap-5 lg:col-span-3`}>
@@ -163,25 +162,23 @@ const CheckoutData = ({
               cart: { quantity },
             }) => {
               return (
-                <Suspense fallback={<div>Loading...</div>}>
-                  <CheckoutItems
-                    key={id_product}
-                    id={id_product}
-                    name={name}
-                    price={price}
-                    isClosed={isClosed}
-                    refreshSummary={refreshSummary}
-                    quantity={+quantity}
-                    inventory={inventory}
-                    image={image}
-                    sku={sku}
-                    className={className}
-                    refreshCart={refreshCart}
-                    slug_path={slug_path}
-                  />
-                </Suspense>
+                <CheckoutItems
+                  key={id_product}
+                  id={id_product}
+                  name={name}
+                  price={price}
+                  isClosed={isClosed}
+                  refreshSummary={refreshSummary}
+                  quantity={+quantity}
+                  inventory={inventory}
+                  image={image}
+                  sku={sku}
+                  className={className}
+                  refreshCart={refreshCart}
+                  slug_path={slug_path}
+                />
               );
-            },
+            }
           )}
         </div>
         <div className={`bg-[#f7f7f7] p-3`}>
@@ -208,9 +205,7 @@ const CheckoutData = ({
                 ...formData,
                 accept_rules: e.target.checked,
               });
-              setErrors(
-                errors?.filter((error) => error !== "accept_rules"),
-              );
+              setErrors(errors?.filter((error) => error !== "accept_rules"));
             }}
             checked={formData.accept_rules}
             className="focus:ring-0 focus:border-none rounded-full focus:outline-none text-[#191919] bg-white"
@@ -221,7 +216,7 @@ const CheckoutData = ({
               errors?.includes("accept_rules") ? `text-red-500` : ``
             }`}
           >
-            Saglasan sam sa 
+            Saglasan sam sa
             <a
               className={`text-[#e10000] underline max-md:text-[1.15rem]`}
               href={`/stranica-u-izradi`}
@@ -358,7 +353,7 @@ const NoStockModal = ({
                             >
                               {error}
                             </li>
-                          ),
+                          )
                         )}
                       </ul>
                       <button
@@ -368,7 +363,7 @@ const NoStockModal = ({
                           //nakon brisanja, iz postErrors.fields filtriramo taj item i izbacujemo ga
                           let arr = [];
                           arr = postErrors?.fields?.filter(
-                            (item) => item.product.id !== id_product,
+                            (item) => item.product.id !== id_product
                           );
                           setPostErrors({
                             ...postErrors,
@@ -383,7 +378,7 @@ const NoStockModal = ({
                     </div>
                   </div>
                 );
-              },
+              }
             )}
           </div>
         </div>
