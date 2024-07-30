@@ -434,7 +434,6 @@ const Thumb = ({ data, slider }) => {
 	if (slider) {
 		return (
 			<>
-				<ToastContainer />
 				<Swiper
 					slidesPerView={2}
 					spaceBetween={10}
@@ -868,7 +867,6 @@ const Thumb = ({ data, slider }) => {
 		return (
 			<>
 				{products}
-				<ToastContainer />
 			</>
 		);
 	}

@@ -691,7 +691,7 @@ export const useCrossSell = ({ slug }) => {
 
 //hook za dobijanje svih artikala u korpi
 export const useCart = () => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
       return await LIST(`/cart`).then((res) => res?.payload ?? []);
@@ -727,7 +727,10 @@ export const useSummary = ({ items }) => {
   return useSuspenseQuery({
     queryKey: ["summary", { items: items }],
     queryFn: async () => {
-      return await GET(`/checkout/summary`).then((res) => res?.payload);
+      return await GET(`/checkout/summary`).then((res) => {
+        console.log(res);
+        return res?.payload;
+      });
     },
     refetchOnWindowFocus: false,
   });
@@ -785,6 +788,104 @@ export const useContact = () => {
             });
             break;
         }
+      });
+    },
+  });
+};
+
+export const useAddPromoCode = () => {
+  return useMutation({
+    mutationKey: ["addPromoCode"],
+    mutationFn: async ({ promo_codes }) => {
+      return await POST(`/checkout/promo-code`, {
+        promo_codes: promo_codes,
+      }).then((res) => {
+        switch (res?.code) {
+          case 200:
+            toast.success("Uspešno ste dodali promo kod", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+          default:
+            toast.error(res?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+        }
+        return res;
+      });
+    },
+  });
+};
+
+export const usePromoCodesList = () => {
+  return useQuery({
+    queryKey: ["promoCodeList"],
+    queryFn: async () => {
+      return await LIST(`/checkout/promo-code`).then((res) => {
+        return res?.payload;
+      });
+    },
+  });
+};
+
+export const useRemovePromoCode = () => {
+  return useMutation({
+    mutationKey: ["promoCodeDelete"],
+    mutationFn: async ({ id_promo_code }) => {
+      return await DELETE(`/checkout/promo-code/${id_promo_code}`).then(
+        (res) => {
+          switch (res?.code) {
+            case 200:
+              toast.success(res?.payload?.message, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+              break;
+            default:
+              toast.error(res?.message, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+              break;
+          }
+        }
+      );
+    },
+  });
+};
+
+export const usePromoCode = () => {
+  return useQuery({
+    queryKey: ["promoCodeDelete"],
+    queryFn: async ({ id_promo_code }) => {
+      return await LIST(`/checkout/promo-code/${id_promo_code}`).then((res) => {
+        return res?.payload;
+      });
+    },
+  });
+};
+
+export const usePromoCodeOptions = () => {
+  return useQuery({
+    queryKey: ["promoCodeOptions"],
+    queryFn: async () => {
+      return await GET(`/checkout/promo-code-options`).then((res) => {
+        return res?.payload;
       });
     },
   });

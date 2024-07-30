@@ -10,6 +10,7 @@ import Spinner from "@/components/UI/Spinner";
 import { useCheckout, useRemoveFromCart } from "@/hooks/ecommerce.hooks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import {PromoCode} from "@/components/Cart/PromoCode";
 
 const CheckoutData = ({
   className,
@@ -181,6 +182,7 @@ const CheckoutData = ({
             }
           )}
         </div>
+        <PromoCode/>
         <div className={`bg-[#f7f7f7] p-3`}>
           <h3
             className={`pb-4 text-[0.965rem] font-light ${className} uppercase underline`}

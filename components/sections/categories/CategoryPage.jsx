@@ -58,7 +58,6 @@ export const CategoryData = ({
           allFilters={allFilters}
         />
       </Suspense>
-      <ToastContainer />
     </>
   );
 };
