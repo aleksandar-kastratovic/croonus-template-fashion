@@ -172,7 +172,6 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
 
       </div>
 
-        <ToastContainer/>
     </>
   );
 };

@@ -118,9 +118,9 @@ const Contact = () => {
       });
     }
   };
+
   return (
     <Provider reCaptchaKey={process.env.CAPTCHAKEY}>
-      <ToastContainer />
       <ReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={refreshReCaptcha} />
       <div
         className={`w-[95%] mx-auto lg:w-full lg:px-[3rem] mt-5 grid grid-cols-3 gap-x-10 gap-y-10`}

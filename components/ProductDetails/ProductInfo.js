@@ -314,7 +314,6 @@ export const ProductInfo = ({ path, setColor = () => {} }) => {
             }}
           ></div>
         )}
-        <ToastContainer />
         <Table openModal={infoModal} setOpenModal={setInfoModal} />
       </>
     </>

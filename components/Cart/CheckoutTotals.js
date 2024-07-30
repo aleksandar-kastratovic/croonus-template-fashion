@@ -19,8 +19,9 @@ const CheckoutTotals = ({ className, options, totals, summary, formData }) => {
           Iznos ostvarenog popusta:
         </p>
         <p className={`${className} text-[1rem] font-light`}>
+          -
           {currencyFormat(
-            totals?.items_discount_amount + totals?.cart_discount_amount,
+            totals?.items_discount_amount + totals?.cart_discount_amount
           )}
         </p>
       </div>
@@ -34,6 +35,18 @@ const CheckoutTotals = ({ className, options, totals, summary, formData }) => {
           {currencyFormat(totals?.cart_discount)}
         </p>
       </div>
+      {totals?.promo_code_amount > 0 && (
+        <div
+          className={`flex items-center justify-between border-t border-t-white py-2`}
+        >
+          <p className={`${className} text-[0.965rem] font-normal`}>
+            Iznos promo koda:
+          </p>
+          <p className={`${className} text-[1rem] font-light`}>
+            -{currencyFormat(totals?.promo_code_amount)}
+          </p>
+        </div>
+      )}
       <div
         className={`flex items-center justify-between border-t border-t-white py-2`}
       >

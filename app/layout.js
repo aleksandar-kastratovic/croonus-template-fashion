@@ -10,6 +10,7 @@ import CookieAlert from "@/components/CookieAlert/CookieAlert";
 import Header from "@/components/Header/Header";
 import { get } from "@/app/api/api";
 import { QueryProvider } from "@/components/QueryProvider";
+import { ToastContainer } from "react-toastify";
 
 export default function RootLayout({ children }) {
   return (
@@ -29,10 +30,11 @@ export default function RootLayout({ children }) {
           <UserProvider>
             <CartContextProvider>
               {/*<TrackingScripts />*/}
-              <Header/>
-              <NavigationMobile/>
+              <Header />
+              <NavigationMobile />
               {children}
               <Footer />
+              <ToastContainer />
             </CartContextProvider>
           </UserProvider>
         </QueryProvider>

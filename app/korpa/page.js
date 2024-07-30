@@ -52,14 +52,12 @@ const Cart = async () => {
   const countries = await getCountries();
   return (
     <div className="">
-       <Suspense fallback={``}>
         <CheckoutPage
           paymentoptions={paymentoptions}
           deliveryoptions={deliveryoptions}
           recommendedProducts={recommendedProducts}
           countries={countries}
         />
-      </Suspense>
     </div>
   );
 };

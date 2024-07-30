@@ -50,7 +50,6 @@ const fetchShippingAddresses = async () => {
 
        return(
         <div>
-          <ToastContainer />
           <div className='flex max-md:flex-col gap-4 justify-between items-center sm:w-[90%] bg-[#f8f8f8] rounded-lg p-[1.4rem] mb-[2rem] min-h-[7rem]'>
             <h1 className="text-3xl pb-0">Adrese dostave</h1> 
               <Link href="/nova-shipping-adresa" className='text-[#919191] opacity-[0.5] hover:opacity-100 px-[1rem] text-xl h-fit py-[0.6rem] max-sm:px-[0.5rem] whitespace-nowrap rounded-md hover:translate-y-0.5 transition-all ease cursor-pointer font-semibold flex'> 

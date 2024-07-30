@@ -134,7 +134,6 @@ const Povracaj = () => {
 
     return (
         <Provider reCaptchaKey={process.env.CAPTCHAKEY}>
-            <ToastContainer />
             <Captcha onVerify={verifyCaptcha} refreshReCaptcha={true} />
             <div className="mt-[1.2rem] prose md:mt-[9rem] w-[95%] mx-auto md:w-[60%]">
                 <h1 className="text-center pb-7 text-[#262626] text-[1.313rem] font-bold">

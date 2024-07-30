@@ -479,7 +479,6 @@ const WishlistItems = ({ items, product, border }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };
