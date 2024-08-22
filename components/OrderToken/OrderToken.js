@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Image1 from "../../assets/uspesno.png";
 import { useRouter } from "next/navigation";
-import { useCartContext } from "@/app/api/cartContext";
-import { get } from "@/app/api/api";
+import { useCartContext } from "@/api/cartContext";
+import { get } from "@/api/api";
 import { useEffect, useState } from "react";
 import { currencyFormat } from "@/helpers/functions";
 const OrderSuccess = ({ order }) => {

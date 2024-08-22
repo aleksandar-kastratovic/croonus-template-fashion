@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 import { Thumb } from "../Thumb/Thumb";
 import Image from "next/image";
 import Link from "next/link";

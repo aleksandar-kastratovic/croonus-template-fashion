@@ -1,4 +1,4 @@
-import {get, list} from '@/app/api/api'
+import {get, list} from '@/api/api'
 import CustomerProfilComponent from "@/components/CustomerProfilComponent/CustomerProfilComponent";
 
 // const fetchCustomerData= async () => {

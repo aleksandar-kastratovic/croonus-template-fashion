@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
-import { post as POST } from "@/app/api/api";
+import { post as POST } from "@/api/api";
 import {
     GoogleReCaptcha as Captcha,
     GoogleReCaptchaProvider as Provider,

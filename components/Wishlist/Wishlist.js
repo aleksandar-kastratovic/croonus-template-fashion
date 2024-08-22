@@ -1,8 +1,8 @@
 "use client";
 
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 import { Suspense, useEffect, useState } from "react";
-import { useCartContext } from "@/app/api/cartContext";
+import { useCartContext } from "@/api/cartContext";
 import WishlistItems from "../WishlistItems/WishlistItems";
 import Link from "next/link";
 import { useWishlist } from "@/hooks/ecommerce.hooks";

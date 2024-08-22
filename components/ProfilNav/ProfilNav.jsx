@@ -1,6 +1,6 @@
 "use client";
 import Cookies from "js-cookie";
-import { post } from "@/app/api/api";
+import { post } from "@/api/api";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";

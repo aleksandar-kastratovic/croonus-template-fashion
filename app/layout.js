@@ -1,4 +1,4 @@
-import { CartContextProvider } from "./api/cartContext";
+import { CartContextProvider } from "@/api/cartContext";
 import "./globals.css";
 import Script from "next/script";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,7 +8,7 @@ import TrackingScripts from "@/components/GTAG/GTAG";
 import { UserProvider } from "@/context/userContext";
 import CookieAlert from "@/components/CookieAlert/CookieAlert";
 import Header from "@/components/Header/Header";
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import { QueryProvider } from "@/components/QueryProvider";
 import { ToastContainer } from "react-toastify";
 

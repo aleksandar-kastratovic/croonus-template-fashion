@@ -1,5 +1,5 @@
 import CheckoutPage from "@/components/CheckoutPage/CheckoutPage";
-import { get, list } from "../api/api";
+import { get, list } from "@/api/api";
 import { Suspense } from "react";
 
 const paymentOptions = async () => {

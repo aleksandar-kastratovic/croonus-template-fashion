@@ -1,4 +1,4 @@
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import OrderSuccess from "@/components/OrderToken/OrderToken";
 const userOrderToken = async (orderToken) => {
   const userOrderToken = await get(`/checkout/info/${orderToken}`).then(

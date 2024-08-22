@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import InstragramSection from "../sections/homepage/InstagramSection";
-import { post } from "@/app/api/api";
+import { post } from "@/api/api";
 import { toast, ToastContainer } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 

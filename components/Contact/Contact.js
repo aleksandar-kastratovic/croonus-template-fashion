@@ -4,7 +4,7 @@ import {
   GoogleReCaptchaProvider as Provider,
   GoogleReCaptcha as ReCaptcha,
 } from "react-google-recaptcha-v3";
-import { post as POST } from "@/app/api/api";
+import { post as POST } from "@/api/api";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -7,9 +7,10 @@ import {
   deleteMethod as DELETE,
   list as LIST,
   get as GET,
-} from "@/app/api/api";
+  fetch as FETCH,
+} from "@/api/api";
 import { toast } from "react-toastify";
-import { useCartContext } from "@/app/api/cartContext";
+import { useCartContext } from "@/api/cartContext";
 
 //hook za prepoznavanje mobilnih uredjaja, vraca true ili false
 export const useIsMobile = () => {
@@ -723,12 +724,16 @@ export const useCheckout = ({ formData, setPostErrors, setLoading }) => {
 };
 
 //hook za dobijanje info o cenama,popustima itd u korpi
-export const useSummary = ({ items }) => {
+export const useSummary = ({ items, formData }) => {
   return useSuspenseQuery({
-    queryKey: ["summary", { items: items }],
+    queryKey: [
+      "summary",
+      { items: items, delivery_method: formData?.delivery_method },
+    ],
     queryFn: async () => {
-      return await GET(`/checkout/summary`).then((res) => {
-        console.log(res);
+      return await FETCH(`/checkout/summary`, {
+        ...formData,
+      }).then((res) => {
         return res?.payload;
       });
     },

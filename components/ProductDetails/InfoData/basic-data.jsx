@@ -2,7 +2,7 @@ import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import { currencyFormat } from "@/helpers/functions";
 import React, { Suspense, useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import Variants from "@/components/Variants/Variants";
 import { notFound, useRouter } from "next/navigation";
 import { Description } from "@/components/ProductDetails/InfoData/desc";

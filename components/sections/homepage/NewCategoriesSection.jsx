@@ -1,4 +1,4 @@
-import { list } from '@/app/api/api';
+import { list } from '@/api/api';
 import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link'

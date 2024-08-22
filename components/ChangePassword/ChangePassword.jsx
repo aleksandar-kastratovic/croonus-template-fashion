@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { post } from "@/app/api/api";
+import { post } from "@/api/api";
 import { ToastContainer, toast } from "react-toastify";
 import Image from "next/image";
 import show from "@/assets/Icons/show-password.png";

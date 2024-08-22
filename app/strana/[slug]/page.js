@@ -1,5 +1,5 @@
 import StaticPage from "@/components/StaticPage/StaticPage";
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 
 const DynamicStaticPage = ({ params: { slug } }) => {
   return <StaticPage slug={slug} />;

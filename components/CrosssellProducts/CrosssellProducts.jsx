@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { useGlobalAddToWishList } from "@/app/api/globals";
+import { useGlobalAddToWishList } from "@/api/globals";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";

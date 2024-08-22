@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useGlobalAddToWishList, useGlobalAddToCart } from "@/app/api/globals";
+import { useGlobalAddToWishList, useGlobalAddToCart } from "@/api/globals";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./RelatedProducts.module.css";

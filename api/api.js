@@ -1,35 +1,46 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const generateCustomerToken = () => {
+const generateDeviceToken = () => {
   return "device_" + Math.random().toString(12) + Date.now();
 };
 
-const getCustomerToken = () => {
-  let token = Cookies.get("customer_token");
-  if (!token) {
-    token = generateCustomerToken();
-    Cookies.set("customer_token", token, { expires: 365 });
-    Cookies.set("device_token", token, { expires: 365 });
+const getDeviceToken = () => {
+  let device_token = Cookies.get("device_token");
+  if (!device_token) {
+    device_token = generateDeviceToken();
+    Cookies.set("device_token", device_token, { expires: 365 });
   }
-  return token;
+  return device_token;
 };
+
+const getCustomerToken = () => {
+  let customer_token = Cookies.get("customer_token");
+
+  if (!customer_token) {
+    customer_token = getDeviceToken();
+    Cookies.set("customer_token", customer_token, { expires: 365 });
+  }
+  return customer_token;
+};
+
 const makeRequest = async (method, path, payload) => {
+  const device_token = getDeviceToken();
   const customer_token = getCustomerToken();
   try {
     const response = await axios({
       method: method,
       url: process.env.API_URL + path.replace(/^\//, ""),
       headers: {
+        "device-token": device_token,
         "customer-token": customer_token,
-        "device_token": customer_token,
       },
       data: payload,
+      cache: "no-store",
     });
-
     return response.data;
   } catch (error) {
-    return error.response.data;
+    return error?.response?.data;
   }
 };
 
@@ -53,10 +64,6 @@ export const deleteMethod = async (path) => {
   return makeRequest("DELETE", path);
 };
 
-export const apiHandler = () => {
-  let token = Cookies.get("token");
-  if (!token) {
-    token = generateCustomerToken();
-    Cookies.set("token", token, { expires: 365 });
-  }
+export const fetch = async (path, payload) => {
+  return makeRequest("FETCH", path, payload);
 };

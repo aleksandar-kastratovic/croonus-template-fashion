@@ -1,7 +1,7 @@
 
 "use client"
 import { useEffect, useState } from 'react';
-import { get, post } from '@/app/api/api';
+import { get, post } from '@/api/api';
 import { useParams } from "next/navigation";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';

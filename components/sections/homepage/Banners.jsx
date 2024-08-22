@@ -1,6 +1,6 @@
 import React from 'react'
 import Slider from './Slider';
-import { get } from '@/app/api/api';
+import { get } from '@/api/api';
 
 
 

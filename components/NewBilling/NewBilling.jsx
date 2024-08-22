@@ -1,7 +1,7 @@
 
 "use client"
 import { useEffect, useState } from 'react';
-import { get, post } from '@/app/api/api';
+import { get, post } from '@/api/api';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from "react-toastify";
 import Image from 'next/image';

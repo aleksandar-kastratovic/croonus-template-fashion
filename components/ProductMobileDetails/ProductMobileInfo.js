@@ -2,7 +2,7 @@
 import Variants from "../Variants/Variants";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
+import { useGlobalAddToCart, useGlobalAddToWishList } from "@/api/globals";
 import { currencyFormat } from "@/helpers/functions";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
@@ -16,7 +16,7 @@ import { notFound } from "next/navigation";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import Link from "next/link";
 import CampaignsDetails from "../ProductDetails/CampaignsDetails";
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import WishlistActive from "@/assets/Icons/heart-active.png";
 import {useAddToCart, useAddToWishlist, useIsInWishlist, useRemoveFromWishlist} from "@/hooks/ecommerce.hooks";
 

@@ -2,8 +2,8 @@
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useCartContext } from "@/app/api/cartContext";
-import { list } from "@/app/api/api";
+import { useCartContext } from "@/api/cartContext";
+import { list } from "@/api/api";
 
 const HeaderContainerLinks = ({ categoriesMain }) => {
   const [, , , , , , openHeader, mutateOpenHeader, , mutateChooseCategory] =

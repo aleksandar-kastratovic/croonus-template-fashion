@@ -1,5 +1,5 @@
 import IndexSlider from "@/components/IndexSlider/IndexSlider";
-import { get, list } from "./api/api";
+import { get, list } from "@/api/api";
 import RecommendedCategories from "@/components/sections/homepage/RecommendedCategories";
 import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
 import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";

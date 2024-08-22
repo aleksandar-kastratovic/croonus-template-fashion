@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 import Image from "next/image";
 import Link from "next/link";
 

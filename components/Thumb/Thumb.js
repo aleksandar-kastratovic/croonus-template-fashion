@@ -12,7 +12,7 @@ import Wishlist from "../../assets/Icons/heart.png";
 import WishlistActive from "../../assets/Icons/heart-active.png";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
-import { get, list, post } from "@/app/api/api";
+import { get, list, post } from "@/api/api";
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import {
   useAddToCart,

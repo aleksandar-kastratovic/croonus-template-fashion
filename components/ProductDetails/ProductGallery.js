@@ -12,7 +12,7 @@ import Image from "next/image";
 import classes from "./styles.module.css";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import { useSearchParams } from "next/navigation";
 
 export const ProductGallery = ({ slug }) => {

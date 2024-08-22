@@ -1,9 +1,9 @@
 "use client";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useCartContext } from "@/app/api/cartContext";
+import { useCartContext } from "@/api/cartContext";
 import { useState, useCallback, useEffect, useRef } from "react";
-import { get, list } from "@/app/api/api";
+import { get, list } from "@/api/api";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import LogoDark from "../../assets/Logo/Croonus-logo-dark.png";
