@@ -62,6 +62,10 @@ const CheckoutData = ({
   useEffect(() => {
     if (formData?.delivery_method === "in_store_pickup") {
       setRequired([...required, "delivery_method_options"]);
+    } else {
+      setRequired(
+        required?.filter((item) => item !== "delivery_method_options")
+      );
     }
   }, [formData?.delivery_method]);
 
