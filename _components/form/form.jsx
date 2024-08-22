@@ -56,12 +56,13 @@ export const Select = ({
     },
   });
 
+  const [selected, setSelected] = useState({
+    id: null,
+    name: null,
+  });
+
   if (ddl_options) {
     const { values } = ddl_options;
-    const [selected, setSelected] = useState({
-      id: null,
-      name: null,
-    });
 
     return (
       <div className={`flex flex-col gap-1 mt-2 `}>
