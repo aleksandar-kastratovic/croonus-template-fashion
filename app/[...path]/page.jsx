@@ -1,4 +1,4 @@
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import CategoryPage from "@/app/kategorije/[...path]/page";
 import ProductPage from "@/app/proizvod/[...path]/page";
 import { Suspense } from "react";

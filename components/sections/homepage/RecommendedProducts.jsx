@@ -7,7 +7,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ToastContainer } from "react-toastify";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 const RecommendedProducts = ({ recommendedProducts, action4 }) => {
   const [products, setProducts] = useState(recommendedProducts);
 

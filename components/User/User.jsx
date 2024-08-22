@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { post } from "@/app/api/api";
+import { post } from "@/api/api";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,7 +12,7 @@ import hide from "@/assets/Icons/hide-password.png";
 import show from "@/assets/Icons/show-password.png";
 
 import Registration from "../Registration/Registration";
-import { useCartContext } from "@/app/api/cartContext";
+import { useCartContext } from "@/api/cartContext";
 import { userContext } from "@/context/userContext";
 
 const UserPage = () => {

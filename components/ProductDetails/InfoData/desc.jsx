@@ -1,6 +1,6 @@
 import React from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 
 export const Description = ({ path }) => {
   const { data: desc } = useSuspenseQuery({

@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense, useRef } from "react";
 import Image from "next/image";
 
-import { list, post } from "@/app/api/api";
+import { list, post } from "@/api/api";
 
 import Thumb from "@/components/product/Thumb";
 import Filters from "./Filters";

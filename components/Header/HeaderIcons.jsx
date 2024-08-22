@@ -1,10 +1,10 @@
 "use client";
-import { useCartContext } from "@/app/api/cartContext";
+import { useCartContext } from "@/api/cartContext";
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import { useCartBadge, useWishlistBadge } from "@/hooks/ecommerce.hooks";
 
 const HeaderIcons = () => {

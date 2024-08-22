@@ -1,4 +1,4 @@
-import { list as LIST } from "@/app/api/api";
+import { list as LIST } from "@/api/api";
 import Image from "next/image";
 import AllPosts from "@/components/Blog/AllPosts";
 import Link from "next/link";

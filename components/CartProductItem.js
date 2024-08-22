@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useGlobalAddToCart } from "@/app/api/globals";
-import { useGlobalRemoveFromCart } from "@/app/api/globals";
+import { useGlobalAddToCart } from "@/api/globals";
+import { useGlobalRemoveFromCart } from "@/api/globals";
 import { currencyFormat } from "../helpers/functions";
 import PlusMinusInputOne from "./PlusMinusInputOne";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";

@@ -1,6 +1,6 @@
 "use client";
 import { Suspense, useState } from "react";
-import { useGlobalAddToWishList } from "@/app/api/globals";
+import { useGlobalAddToWishList } from "@/api/globals";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { Thumb } from "../Thumb/Thumb";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 
 const UpsellProducts = ({
   upsellProducts = [],

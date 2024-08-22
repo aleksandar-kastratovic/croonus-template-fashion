@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 import Link from "next/link";
 import { currencyFormat } from "@/helpers/functions";
 import useDebounce from "@/hooks/useDebounce";

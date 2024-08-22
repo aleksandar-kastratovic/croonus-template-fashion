@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { get, post } from "@/app/api/api";
+import { get, post } from "@/api/api";
 import { ToastContainer, toast } from "react-toastify";
 
 const MyProfile = () => {

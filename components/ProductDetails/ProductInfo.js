@@ -13,8 +13,8 @@ import Cancel from "../../assets/Icons/cancel.png";
 // import info from "../../assets/Icons/info.png";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { get, post } from "@/app/api/api";
-import { useCartContext } from "@/app/api/cartContext";
+import { get, post } from "@/api/api";
+import { useCartContext } from "@/api/cartContext";
 import {
   useAddToCart,
   useAddToWishlist,

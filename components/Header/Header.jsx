@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import HeaderTop from "./HeaderTop";
 import Image from "next/image";
 import HeaderContainerLinks from "./HeaderContainerLinks";
-import { get, list } from "@/app/api/api";
+import { get, list } from "@/api/api";
 import HeaderIcons from "./HeaderIcons";
 import SearchProducts from "./SearchProducts";
 import Translate from "../Translate/Translate";

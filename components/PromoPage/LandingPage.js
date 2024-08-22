@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { get, list } from "@/app/api/api";
+import { get, list } from "@/api/api";
 import Image from "next/image";
 import {Thumb} from "@/components/Thumb/Thumb";
 import { Swiper, SwiperSlide } from "swiper/react";

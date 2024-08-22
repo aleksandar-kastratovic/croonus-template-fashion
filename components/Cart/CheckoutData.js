@@ -10,7 +10,7 @@ import Spinner from "@/components/UI/Spinner";
 import { useCheckout, useRemoveFromCart } from "@/hooks/ecommerce.hooks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {PromoCode} from "@/components/Cart/PromoCode";
+import { PromoCode } from "@/components/Cart/PromoCode";
 
 const CheckoutData = ({
   className,
@@ -45,7 +45,7 @@ const CheckoutData = ({
     setLoading: setLoading,
   });
 
-  const required = [
+  const [required, setRequired] = useState([
     "payment_method",
     "delivery_method",
     "first_name_shipping",
@@ -57,7 +57,13 @@ const CheckoutData = ({
     "zip_code_shipping",
     "object_number_shipping",
     "accept_rules",
-  ];
+  ]);
+
+  useEffect(() => {
+    if (formData?.delivery_method === "in_store_pickup") {
+      setRequired([...required, "delivery_method_options"]);
+    }
+  }, [formData?.delivery_method]);
 
   const router = useRouter();
 
@@ -182,7 +188,7 @@ const CheckoutData = ({
             }
           )}
         </div>
-        <PromoCode/>
+        <PromoCode />
         <div className={`bg-[#f7f7f7] p-3`}>
           <h3
             className={`pb-4 text-[0.965rem] font-light ${className} uppercase underline`}
@@ -236,8 +242,8 @@ const CheckoutData = ({
           } h-[3rem] text-center uppercase text-white ${className} border border-[#747579] bg-black py-2 font-light transition-all duration-500 hover:border-[#747579] hover:bg-white hover:text-black`}
           onClick={() => {
             let err = [];
-            required.forEach((key) => {
-              if (!formData[key]) {
+            (required ?? [])?.forEach((key) => {
+              if (!formData[key] || formData[key]?.length === 0) {
                 err.push(key);
               }
             });

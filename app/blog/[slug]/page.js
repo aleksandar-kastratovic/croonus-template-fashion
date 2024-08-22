@@ -1,4 +1,4 @@
-import { get as GET } from "@/app/api/api";
+import { get as GET } from "@/api/api";
 import Link from "next/link";
 import SinglePost from "@/components/Blog/SinglePost";
 

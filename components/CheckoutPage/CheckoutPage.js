@@ -8,9 +8,9 @@ const CartProductBox = dynamic(
   () => import("../../components/CartProductBox"),
   { loading: () => <p>Loading...</p> }
 );
-import { useCartContext } from "@/app/api/cartContext";
+import { useCartContext } from "@/api/cartContext";
 import { useRouter } from "next/navigation";
-import { get, list, post } from "@/app/api/api";
+import { get, list, post } from "@/api/api";
 import classes from "./Cart.module.css";
 import {
   GoogleReCaptchaProvider,
@@ -74,7 +74,7 @@ const CheckoutPage = ({
     country_name_billing: "Srbija",
     note_billing: "",
     payment_method: "",
-    delivery_method: "",
+    delivery_method: null,
     note: "",
     gcaptcha: token,
     company_name_billing: null,
@@ -102,30 +102,6 @@ const CheckoutPage = ({
     accept_rules: false,
   });
 
-  const required = [
-    "first_name",
-    "last_name",
-    "email",
-    "phone",
-    "address",
-    "zip_code",
-    "object_number",
-    "town",
-    "agreed",
-    "shipping_first_name",
-    "shipping_last_name",
-    "shipping_email",
-    "shipping_phone",
-    "shipping_address",
-    "shipping_object_number",
-    "shipping_address",
-    "shipping_zip_code",
-    "shipping_town",
-    "delivery",
-    "payment",
-    "id_country_shipping",
-  ];
-
   const companyrequired = [
     "company_name",
     "pib",
@@ -145,6 +121,7 @@ const CheckoutPage = ({
     items: items?.items?.map((item) => {
       return Number(item?.cart?.quantity);
     }),
+    formData: formData,
   });
 
   const [errors, setErrors] = useState([]);

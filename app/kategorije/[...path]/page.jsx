@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 
 import Loading from "@/components/sections/categories/Loader";
 import Category from "@/components/sections/categories/Category";

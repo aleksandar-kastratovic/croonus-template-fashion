@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import Link from "next/link";
-import { useCartContext } from "@/app/api/cartContext";
+import { useCartContext } from "@/api/cartContext";
 import Image from "next/image";
-import { list } from "@/app/api/api";
+import { list } from "@/api/api";
 
 const HeaderModal = () => {
   const [, , , , , , openHeader, mutateOpenHeader, chooseCategory] =

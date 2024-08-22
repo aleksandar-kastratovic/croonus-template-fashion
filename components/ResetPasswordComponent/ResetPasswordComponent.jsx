@@ -2,7 +2,7 @@
 "use client"
 import { useState } from 'react';
 import Image from 'next/image';
-import { post } from "@/app/api/api";
+import { post } from "@/api/api";
 import Link from 'next/link';
 import back from '@/assets/Icons/right-chevron.png'
 import hide from '@/assets/Icons/hide-password.png'

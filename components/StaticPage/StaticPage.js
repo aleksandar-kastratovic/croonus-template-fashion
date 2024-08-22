@@ -1,6 +1,6 @@
 "use client";
 
-import { get, list } from "@/app/api/api";
+import { get, list } from "@/api/api";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";

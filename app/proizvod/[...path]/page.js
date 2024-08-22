@@ -1,4 +1,4 @@
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import { Suspense } from "react";
 import { ProductPage } from "@/components/ProductDetails/ProductPage";
 import Loader from "@/components/Loader";

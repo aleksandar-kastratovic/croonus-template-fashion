@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { deleteMethod, list } from '@/app/api/api';
+import { deleteMethod, list } from '@/api/api';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ToastContainer, toast } from "react-toastify";

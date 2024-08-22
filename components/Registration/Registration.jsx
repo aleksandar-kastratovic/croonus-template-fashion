@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import classes from "./Registration.module.css";
 import { useRouter } from "next/navigation";
-import { post } from "@/app/api/api";
+import { post } from "@/api/api";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 

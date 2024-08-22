@@ -1,4 +1,4 @@
-import { list, post, get } from "@/app/api/api";
+import { list, post, get } from "@/api/api";
 import CategoryPage from "./CategoryPage";
 import { notFound } from "next/navigation";
 

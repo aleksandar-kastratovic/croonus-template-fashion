@@ -8,9 +8,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
-import { useGlobalAddToCart, useGlobalAddToWishList } from "@/app/api/globals";
+import { useGlobalAddToCart, useGlobalAddToWishList } from "@/api/globals";
 import { ToastContainer, toast } from "react-toastify";
-import { get } from "@/app/api/api";
+import { get } from "@/api/api";
 import ProductPrice from "./ProductPrice";
 import { currencyFormat } from "@/helpers/function";
 

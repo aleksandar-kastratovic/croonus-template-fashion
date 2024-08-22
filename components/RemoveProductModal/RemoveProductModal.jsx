@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGlobalRemoveFromCart } from "@/app/api/globals";
+import { useGlobalRemoveFromCart } from "@/api/globals";
 
 const RemoveProductModal = ({isOpen, onClose, item}) => {
     const removeFromCart = useGlobalRemoveFromCart();
