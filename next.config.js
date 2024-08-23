@@ -12,7 +12,6 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "api.staging.croonus.com",
       "scontent.cdninstagram.com",
       "api.fashiondemo.croonus.com",
       "video.cdninstagram.com",
