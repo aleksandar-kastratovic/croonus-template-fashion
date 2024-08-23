@@ -281,6 +281,20 @@ const CheckoutPage = ({
             </div>
           </>
         );
+      default:
+        return (
+          <div
+            className={`mx-auto text-sm 4xl:container mt-[1rem] lg:mt-[4rem] placeholder`}
+          >
+            <div className={`h-10 w-full bg-slate-300 mt-5`} />
+            <div className={`h-10 w-full bg-slate-300 mt-5`} />
+            <div className={`h-10 w-full bg-slate-300 mt-5`} />
+            <div className={`h-10 w-full bg-slate-300 mt-5`} />
+            <div className={`h-10 w-full bg-slate-300 mt-5`} />
+            <div className={`h-10 w-full bg-slate-300 mt-5`} />
+            <div className={`h-10 w-full bg-slate-300 mt-5`} />
+          </div>
+        );
     }
   };
 
