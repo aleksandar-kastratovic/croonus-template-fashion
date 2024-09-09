@@ -1,10 +1,12 @@
 import { get as GET } from "@/api/api";
 import Link from "next/link";
 import SinglePost from "@/components/Blog/SinglePost";
+import { headers } from "next/headers";
 
 const getBlogPost = async (slug) => {
   return await GET(`/news/details/${slug}`).then((res) => res?.payload);
 };
+
 const BlogPostDetails = async ({ params: { slug } }) => {
   const post = await getBlogPost(slug);
   return (
@@ -26,7 +28,6 @@ const BlogPostDetails = async ({ params: { slug } }) => {
         >
           {post?.basic_data?.title}
         </h1>
-
       </div>
       <SinglePost post={post} />
     </>
@@ -34,3 +35,41 @@ const BlogPostDetails = async ({ params: { slug } }) => {
 };
 
 export default BlogPostDetails;
+
+export const generateMetadata = async ({ params: { slug } }) => {
+  let blog_post = await getBlogPost(slug);
+  const headersList = headers();
+  let canonical = headersList.get("x-pathname");
+  if (blog_post) {
+    const {
+      basic_data: { title, short_description },
+      images: { thumb_image },
+    } = blog_post;
+
+    return {
+      title: `${title} | Fashion Template`,
+      description: short_description,
+      robots: {
+        index: true,
+        follow: true,
+      },
+      alternates: {
+        canonical: canonical,
+      },
+      openGraph: {
+        title: `${title} | Fashion Template`,
+        description: short_description,
+        type: "article",
+        images: [
+          {
+            url: thumb_image ?? "",
+            width: 800,
+            height: 600,
+          },
+        ],
+        site_name: "Fashion Template",
+        locale: "sr_RS",
+      },
+    };
+  }
+};

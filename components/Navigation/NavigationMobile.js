@@ -207,7 +207,7 @@ const NavigationMobile = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             onMouseDown={() => setSearchOpen(true)}
           />
-          <h1 className="absolute left-8 text-sm">Pretraga</h1>
+          <p className="absolute left-8 text-sm">Pretraga</p>
           <i className="text-xs text-white fa-solid fa-search absolute left-2 top-5"></i>
         </form>
       </div>
@@ -233,7 +233,7 @@ const NavigationMobile = () => {
                 className="flex flex-row items-center justify-between gap-5"
                 key={category?.id}
               >
-                <h1
+                <p
                   className={
                     isActive
                       ? `font-bold uppercase text-[0.9rem]`
@@ -251,7 +251,7 @@ const NavigationMobile = () => {
                   }}
                 >
                   {category?.name}
-                </h1>
+                </p>
               </div>
             );
           })}{" "}
@@ -298,7 +298,7 @@ const NavigationMobile = () => {
               <div className={`w-full flex items-center justify-between`}>
                 <div className="flex items-center gap-2">
                   <i className="fa-solid fa-chevron-left text-base"></i>
-                  <h1 className="text-[0.9rem] font-normal">Nazad</h1>
+                  <p className="text-[0.9rem] font-normal">Nazad</p>
                 </div>
                 <Link
                   href={`/${activeCategory?.id}`}
@@ -361,7 +361,7 @@ const NavigationMobile = () => {
                         exActiveIds.push(category?.id);
                       }}
                     >
-                      <h1>{category?.name}</h1>
+                      <p>{category?.name}</p>
                       {category?.children?.length > 0 && (
                         <i className="fas fa-chevron-right"></i>
                       )}
@@ -467,7 +467,7 @@ const NavigationMobile = () => {
           </div>
           {searchData?.items?.length > 0 && searchTerm?.length > 0 && (
             <div className="w-[95%] mx-auto mt-5">
-              <h1 className="text-[1rem] font-normal">Rezultati pretrage</h1>
+              <p className="text-[1rem] font-normal">Rezultati pretrage</p>
               <div className="flex flex-col gap-5 mt-3">
                 {searchData?.items?.slice(0, 6)?.map((item) => {
                   return (
@@ -490,15 +490,15 @@ const NavigationMobile = () => {
                           />
                         </div>
                         <div className="flex flex-col gap-1">
-                          <h1 className="text-[0.9rem] font-normal">
+                          <p className="text-[0.9rem] font-normal">
                             {item?.basic_data?.name}
-                          </h1>
-                          <h1 className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
+                          </p>
+                          <p className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
                             {currencyFormat(
                               item?.price?.price?.discount ??
                                 item?.price?.price?.original
                             )}
-                          </h1>
+                          </p>
                         </div>
                       </div>
                     </Link>

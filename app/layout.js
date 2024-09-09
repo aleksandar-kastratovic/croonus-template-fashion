@@ -11,10 +11,17 @@ import Header from "@/components/Header/Header";
 import { get } from "@/api/api";
 import { QueryProvider } from "@/components/QueryProvider";
 import { ToastContainer } from "react-toastify";
+import { AnalyticsGA4 } from "@/_components/shared/analyticsGA4";
+import { AnalyticsGTM } from "@/_components/shared/analyticsGTM";
+import { Suspense } from "react";
 
-export default function RootLayout({ children }) {
+const getHTMLLang = async () => {
+  return process.env.HTML_LANG;
+};
+
+export default async function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang={`${await getHTMLLang()}`}>
       <head>
         <Script
           crossOrigin="anonymous"
@@ -37,6 +44,10 @@ export default function RootLayout({ children }) {
               <ToastContainer />
             </CartContextProvider>
           </UserProvider>
+          <Suspense>
+            <AnalyticsGA4 />
+            <AnalyticsGTM />
+          </Suspense>
         </QueryProvider>
         <CookieAlert />
       </body>
@@ -47,8 +58,13 @@ export default function RootLayout({ children }) {
 export const metadata = {
   title: "Početna | Fashion Template",
   description: "Dobrodošli na Fashion Template Online Shop",
-
-  robots: "index, follow",
+  alternates: {
+    canonical: "https://croonus.com",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "Fashion Template - Farmerke, Muške farmerke, Muška odeća",
     description: "Dobrodošli na Fashion Template Online Shop",

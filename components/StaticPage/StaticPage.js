@@ -1,25 +1,7 @@
-"use client";
-
-import { get, list } from "@/api/api";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 
-const StaticPage = ({ slug }) => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const getData = await list(`/static-pages/content/${slug}`).then(
-        (res) => {
-          setData(res?.payload);
-        }
-      );
-    };
-
-    getData();
-  }, []);
-
+const StaticPage = ({ data }) => {
   const staticData = data?.items?.map((item) => {
     return item;
   });
@@ -29,7 +11,7 @@ const StaticPage = ({ slug }) => {
   };
 
   return (
-    <div className={``}>
+    <div className={`mt-10`}>
       {staticData?.map((item) => {
         switch (item?.type) {
           case "multiple_images":

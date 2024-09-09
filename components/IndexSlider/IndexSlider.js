@@ -85,14 +85,13 @@ const IndexSlider = ({ banners, mobileBanners }) => {
       window.removeEventListener("keydown", handleInteraction);
     };
   }, [banners]);
-console.log(banners, "ban:")
+  console.log(banners, "ban:");
   const renderMedia = (banner) => {
     if (banner?.file_data?.type === "video") {
       return (
         <video
-        width={banner?.file_data?.banner_position?.width}
-        height={banner?.file_data?.banner_position?.height}
-          
+          width={banner?.file_data?.banner_position?.width}
+          height={banner?.file_data?.banner_position?.height}
           className="bg-fixed w-full h-full object-cover"
           autoPlay
           loop
@@ -198,9 +197,9 @@ console.log(banners, "ban:")
                     }
                   ></i>
                   <div>
-                    <h1 className="text-white">{`${currentSlide?.index + 1} / ${
+                    <p className="text-white">{`${currentSlide?.index + 1} / ${
                       banners?.length
-                    }`}</h1>
+                    }`}</p>
                   </div>
                   <i
                     className="fas cursor-pointer fa-chevron-right text-white text-sm"
@@ -297,9 +296,9 @@ console.log(banners, "ban:")
                     }
                   ></i>
                   <div>
-                    <h1 className="text-white">{`${currentSlide?.index + 1} / ${
+                    <p className="text-white">{`${currentSlide?.index + 1} / ${
                       banners?.length
-                    }`}</h1>
+                    }`}</p>
                   </div>
                   <i
                     className="fas cursor-pointer fa-chevron-right text-white text-sm"

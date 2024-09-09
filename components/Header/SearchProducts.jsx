@@ -78,7 +78,7 @@ const SearchProducts = () => {
         >
           {searchData?.items?.length > 0 && debouncedSearch?.length >= 3 ? (
             <div className="w-[95%] mx-auto mt-5">
-              <h1 className="text-[1rem] font-normal">Rezultati pretrage</h1>
+              <p className="text-[1rem] font-normal">Rezultati pretrage</p>
               <div className="flex flex-col gap-5 mt-3 pb-5">
                 {searchData?.items?.slice(0, 6)?.map((item) => {
                   return (
@@ -98,15 +98,15 @@ const SearchProducts = () => {
                           />
                         </div>
                         <div className="flex flex-col gap-1">
-                          <h1 className="text-[0.9rem] font-normal">
+                          <p className="text-[0.9rem] font-normal">
                             {item?.basic_data?.name}
-                          </h1>
-                          <h1 className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
+                          </p>
+                          <p className="text-[0.9rem] w-fit bg-[#f8ce5d] px-2 font-bold text-center">
                             {currencyFormat(
                               item?.price?.price?.discount ??
                                 item?.price?.price?.original
                             )}
-                          </h1>
+                          </p>
                         </div>
                       </div>
                     </Link>

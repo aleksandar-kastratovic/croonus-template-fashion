@@ -21,7 +21,7 @@ const NewsLetterInstagramSection = () => {
     if (!email?.includes("@")) {
       setError(true);
     } else {
-      setError(false)
+      setError(false);
       await post("/newsletter", { email: email }).then((response) => {
         if (!response?.code) {
           setEmail("");
@@ -70,9 +70,9 @@ const NewsLetterInstagramSection = () => {
     <div>
       <div className="grid lg:grid-cols-[1fr,2fr] mt-10 lg:mt-32 gap-14 2xl:gap-28 max-md:w-[95%] mx-auto md:w-full md:px-[3rem]">
         <div className="self-center">
-          <h2 className="font-bold text-[30px] md:text-[40px] text-black">
+          <p className="font-bold text-[30px] md:text-[40px] text-black">
             Ostvari 10% popusta
-          </h2>
+          </p>
           <p className="text-[16px] font-normal text-black my-8">
             Prijavi se na naš bilten i dobićeš 10% popusta na sledeću kupovinu,
             pristup ekskluzivnim promocijama i još mnogo toga!

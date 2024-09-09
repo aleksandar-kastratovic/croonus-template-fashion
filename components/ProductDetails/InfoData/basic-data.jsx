@@ -6,12 +6,14 @@ import { get } from "@/api/api";
 import Variants from "@/components/Variants/Variants";
 import { notFound, useRouter } from "next/navigation";
 import { Description } from "@/components/ProductDetails/InfoData/desc";
+import { generateProductSchema } from "@/_functions";
 
 export const BasicData = ({
   path,
   productVariant,
   setProductVariant,
   setProduct,
+  canonical,
 }) => {
   const { data: product } = useSuspenseQuery({
     queryKey: ["product", path],
@@ -24,6 +26,17 @@ export const BasicData = ({
     refetchOnWindowFocus: false,
   });
 
+  const { data: product_gallery } = useSuspenseQuery({
+    queryKey: ["productGallerySchema", path],
+    queryFn: async () => {
+      return await get(`/product-details/gallery/${path}`).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  let schema = generateProductSchema(product, product_gallery, canonical);
   const [setVariant, setVariantOnOff] = useState(true);
 
   const renderIsInStock = () => {
@@ -104,7 +117,8 @@ export const BasicData = ({
         if (product?.data?.item?.price?.discount?.active) {
           return (
             <span className="text-[#636363] text-[1rem]">
-              -{(
+              -
+              {(
                 ((product?.data?.item?.price?.price?.original -
                   product?.data?.item?.price?.price?.discount) /
                   product?.data?.item?.price?.price?.original) *
@@ -120,7 +134,8 @@ export const BasicData = ({
           if (productVariant?.price?.discount?.active) {
             return (
               <span className="text-[#636363] text-[1rem]">
-                -{(
+                -
+                {(
                   ((productVariant?.price?.price?.original -
                     productVariant?.price?.price?.discount) /
                     productVariant?.price?.price?.original) *
@@ -134,7 +149,8 @@ export const BasicData = ({
           if (product?.data?.item?.price?.discount?.active) {
             return (
               <span className="text-[#636363] text-[1rem]">
-               - {(
+                -{" "}
+                {(
                   ((product?.data?.item?.price?.price?.original -
                     product?.data?.item?.price?.price?.discount) /
                     product?.data?.item?.price?.price?.original) *
@@ -145,12 +161,17 @@ export const BasicData = ({
             );
           }
         }
-      default: break;
+      default:
+        break;
     }
   };
 
   return product ? (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <h1 className="text-[1.563rem] max-md:text-[1.1rem] font-bold">
         {product?.data?.item?.basic_data?.name}
       </h1>

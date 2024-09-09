@@ -5,9 +5,7 @@ import React from "react";
 const InstagramSection = ({ instagramImages }) => {
   return (
     <div>
-      <h2 className="text-[29px] font-bold text-black mb-8">
-        #instagram posts
-      </h2>
+      <p className="text-[29px] font-bold text-black mb-8">#instagram posts</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {instagramImages?.data?.slice(0, 6)?.map((image, index) => (
           <div

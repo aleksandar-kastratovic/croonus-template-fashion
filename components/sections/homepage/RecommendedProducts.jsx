@@ -29,7 +29,7 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
       <div className="max-sm:w-[95%] max-sm:mx-auto md:mx-5 lg:mx-[3rem] max-sm:mt-[3rem] md:mt-[5.625rem] overflow-visible">
         <div className="max-lg:col-span-1 lg:col-span-4 2xl:col-span-4 4xl:col-span-5">
           <div className="relative flex flex-col justify-between max-lg:gap-3 lg:flex-row lg:items-center">
-            <h1 className={`text-[25px] font-bold`}>{action4}</h1>
+            <h2 className={`text-[25px] font-bold`}>{action4}</h2>
             {!pathname.includes("korpa") && (
               <>
                 <div className="flex flex-row max-md:hidden items-center gap-6">
@@ -120,58 +120,55 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
             )}
           </div>
         </div>
-          {!loading && (
-              <div className="max-sm:mt-[1rem] mt-[2.5rem]">
-                  <Swiper
-                      slidesPerView={2}
-                      spaceBetween={10}
-                      navigation={true}
-                      modules={[Navigation]}
-                      fadeEffect={{crossFade: true}}
-                      loop={true}
-                      className="mySwiper3 w-full select-none"
-                      breakpoints={{
-                          640: {
-                              slidesPerView: 2,
-                              spaceBetween: 10,
-                          },
-                          768: {
-                              slidesPerView: 2.5,
-                              spaceBetween: 10,
-                          },
-                          1024: {
-                              slidesPerView: 4,
-                              spaceBetween: 10,
-                          },
-                          1680: {
-                              slidesPerView: 5,
-                              spaceBetween: 10,
-                          },
-                      }}
-                  >
-                      {products?.map(({id}) => {
-                          return (
-                              <SwiperSlide key={id} className="hoveredColor">
-                                  <Suspense
-                                      fallback={
-                                          <div
-                                              key={id}
-                                              className="aspect-2/3 h-full w-full animate-pulse bg-slate-300"
-                                          />
-                                      }
-                                  >
-                                      <Thumb id={id} slug={id}/>
-                                  </Suspense>
-                              </SwiperSlide>
-                          );
-                      })}
-                  </Swiper>
-              </div>
-          )}
-
-
+        {!loading && (
+          <div className="max-sm:mt-[1rem] mt-[2.5rem]">
+            <Swiper
+              slidesPerView={2}
+              spaceBetween={10}
+              navigation={true}
+              modules={[Navigation]}
+              fadeEffect={{ crossFade: true }}
+              loop={true}
+              className="mySwiper3 w-full select-none"
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+                768: {
+                  slidesPerView: 2.5,
+                  spaceBetween: 10,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 10,
+                },
+                1680: {
+                  slidesPerView: 5,
+                  spaceBetween: 10,
+                },
+              }}
+            >
+              {products?.map(({ id }) => {
+                return (
+                  <SwiperSlide key={id} className="hoveredColor">
+                    <Suspense
+                      fallback={
+                        <div
+                          key={id}
+                          className="aspect-2/3 h-full w-full animate-pulse bg-slate-300"
+                        />
+                      }
+                    >
+                      <Thumb id={id} slug={id} />
+                    </Suspense>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+        )}
       </div>
-
     </>
   );
 };

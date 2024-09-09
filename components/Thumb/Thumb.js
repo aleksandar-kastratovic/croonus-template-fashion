@@ -380,7 +380,7 @@ export const Thumb = ({
           href={`/${product?.slug_path}`}
           className="max-md:text-[0.85] text-[0.813rem] relative max-md:leading-4 max-sm:line-clamp-1"
         >
-          {product?.basic_data?.name}
+          <h3>{product?.basic_data?.name}</h3>
         </Link>
 
         <div
