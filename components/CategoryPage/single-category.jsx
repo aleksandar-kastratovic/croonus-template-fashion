@@ -1,12 +1,23 @@
-"use client"
+"use client";
 import { useCategory } from "@/hooks/ecommerce.hooks";
 import Link from "next/link";
+import { generateBreadcrumbSchema } from "@/_functions";
 
-export const SingleCategory = ({ slug }) => {
+export const SingleCategory = ({ slug, path, base_url, text = "" }) => {
   const { data: singleCategory } = useCategory({ slug });
 
+  const breadcrumbs_schema = generateBreadcrumbSchema(
+    singleCategory?.parents,
+    singleCategory?.basic_data?.name,
+    path,
+    base_url
+  );
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs_schema) }}
+      />
       <div className="px-5 lg:px-[3rem]">
         {singleCategory?.parents?.length > 0 && (
           <div className="flex items-center gap-2 flex-wrap mt-5">

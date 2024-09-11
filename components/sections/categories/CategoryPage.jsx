@@ -11,7 +11,10 @@ export const CategoryData = ({
   filters,
   strana,
   allFilters,
+  viewed,
   isSection = false,
+  base_url,
+  path,
 }) => {
   const renderText = (slug) => {
     switch (slug) {
@@ -38,26 +41,23 @@ export const CategoryData = ({
           </>
         }
       >
-        {isSection ? renderText(slug) : <SingleCategory slug={slug} />}
+        {isSection ? (
+          renderText(slug)
+        ) : (
+          <SingleCategory slug={slug} base_url={base_url} path={path} />
+        )}
       </Suspense>
-      <Suspense
-        fallback={
-          <>
-            <div className={`h-10 w-full animate-pulse bg-slate-300`} />
-            <div className={`mt-10 h-10 w-full animate-pulse bg-slate-300`} />
-          </>
-        }
-      >
-        <CategoryProducts
-          slug={slug}
-          sortDirection={sortDirection}
-          sortField={sortField}
-          filters={filters}
-          strana={strana}
-          isSection={isSection}
-          allFilters={allFilters}
-        />
-      </Suspense>
+
+      <CategoryProducts
+        slug={slug}
+        viewed={viewed}
+        sortDirection={sortDirection}
+        sortField={sortField}
+        filters={filters}
+        strana={strana}
+        isSection={isSection}
+        allFilters={allFilters}
+      />
     </>
   );
 };

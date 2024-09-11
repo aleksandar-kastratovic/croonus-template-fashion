@@ -4,7 +4,7 @@ import { ProductInfo } from "@/components/ProductDetails/ProductInfo";
 import { Breadcrumbs } from "@/components/ProductDetails/InfoData/breadcrumbs";
 import UpsellProducts from "@/components/UpsellProducts/UpsellProducts";
 
-export const ProductPage = ({ path, categoryId }) => {
+export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
   return (
     <>
       <div className="max-md:mt-[1rem]  max-md:w-[95%]  max-md:mx-auto md:mx-[3rem] mt-6 max-lg:hidden">
@@ -24,7 +24,7 @@ export const ProductPage = ({ path, categoryId }) => {
         >
           <ProductGallery slug={path} />
         </Suspense>
-        <ProductInfo path={path} />
+        <ProductInfo path={path} canonical={canonical} base_url={base_url} />
       </div>
       <Suspense
         fallback={

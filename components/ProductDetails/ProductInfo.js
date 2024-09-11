@@ -31,7 +31,12 @@ import { BasicData } from "@/components/ProductDetails/InfoData/basic-data";
 import { Wishlist } from "@/components/ProductDetails/InfoData/wishlist";
 import { Specifications } from "@/components/ProductDetails/InfoData/specifications";
 
-export const ProductInfo = ({ path, setColor = () => {} }) => {
+export const ProductInfo = ({
+  path,
+  canonical,
+  base_url,
+  setColor = () => {},
+}) => {
   const [product, setProduct] = useState();
   const [productVariant, setProductVariant] = useState(null);
 
@@ -124,7 +129,7 @@ export const ProductInfo = ({ path, setColor = () => {} }) => {
                 <div className={`h-2 bg-slate-300 animate-pulse w-full`} />
               }
             >
-              <Breadcrumbs path={path} />
+              <Breadcrumbs path={path} base_url={base_url} />
             </Suspense>
           </div>
           <div className="flex mt-3 flex-col ">
@@ -158,6 +163,7 @@ export const ProductInfo = ({ path, setColor = () => {} }) => {
               <BasicData
                 productVariant={productVariant}
                 path={path}
+                canonical={canonical}
                 setType={setType}
                 setProduct={setProduct}
                 setProductVariant={setProductVariant}

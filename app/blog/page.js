@@ -20,7 +20,7 @@ const Blog = async () => {
             Početna
           </Link>
           <span className={`text-[0.95rem]`}>/</span>
-          <Link className={`text-[0.95rem]`} href={`/blog`}>
+          <Link className={`text-[0.95rem]`} href={`/korpa`}>
             Blog
           </Link>
         </div>
@@ -43,4 +43,8 @@ export const revalidate = 30;
 export const metadata = {
   title: "Blog | Fashion Template",
   description: "Fashion Template Blog",
+  robots: {
+    index: true,
+    follow: true,
+  },
 };

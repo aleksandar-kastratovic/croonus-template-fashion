@@ -3,8 +3,9 @@ import Link from "next/link";
 import React from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { get } from "@/api/api";
+import { generateBreadcrumbSchema } from "@/_functions";
 
-export const Breadcrumbs = ({ path, categoryId }) => {
+export const Breadcrumbs = ({ path, base_url, categoryId }) => {
   const { data: breadcrumbs } = useSuspenseQuery({
     queryKey: ["breadcrumbs", path],
     queryFn: async () => {
@@ -14,6 +15,7 @@ export const Breadcrumbs = ({ path, categoryId }) => {
     },
     refetchOnWindowFocus: false,
   });
+
   return (
     <div className="flex items-center gap-2 flex-wrap">
       <Link href={`/`} className="text-[#191919] text-[0.95rem] font-normal">

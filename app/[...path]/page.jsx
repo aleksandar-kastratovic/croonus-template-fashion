@@ -4,6 +4,8 @@ import ProductPage from "@/app/proizvod/[...path]/page";
 import { Suspense } from "react";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import { notFound, redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { getRobots, handleCategoryRobots } from "@/_functions";
 
 const handleData = async (slug) => {
   return await get(`/slugs/product-categories?slug=${slug}`).then(
@@ -39,9 +41,14 @@ const defaultMetadata = {
   },
 };
 
-export async function generateMetadata({ params: { path } }) {
+export async function generateMetadata({
+  params: { path },
+  searchParams: { filteri, sort, viewed, strana },
+}) {
   const str = path?.join("/");
   const data = await handleData(str);
+  const headersList = headers();
+  let canonical = headersList?.get("x-pathname");
 
   switch (true) {
     case data?.status === false &&
@@ -59,14 +66,19 @@ export async function generateMetadata({ params: { path } }) {
         "https://croonus.com/images/logo.png";
 
       if (category) {
+        let robots = getRobots(category?.robots);
         return {
-          title: `${category?.title} | Fashion Template` ?? "",
+          title: `${category?.title} | ${process.env.NAME}` ?? "",
           description: category?.description ?? "",
           keywords: category?.keywords ?? "",
           type: category?.type ?? "",
           image: image_category ?? "",
+          alternates: {
+            canonical: `${category?.canonical_link ?? canonical}`,
+          },
           openGraph: {
-            title: `${category?.title} | Fashion Template` ?? "",
+            title: `${category?.title} | ${process.env.NAME}` ?? "",
+
             description: category?.description ?? "",
             type: category?.type ?? "",
             images: [
@@ -80,6 +92,7 @@ export async function generateMetadata({ params: { path } }) {
               },
             ],
           },
+          robots: handleCategoryRobots(strana, filteri, sort, viewed, robots),
         };
       } else {
         return defaultMetadata;
@@ -89,16 +102,22 @@ export async function generateMetadata({ params: { path } }) {
       data?.status &&
       data?.redirect_url === false:
       const productSEO = await getProductSEO(path[path?.length - 1]);
+
+      let robots = getRobots(productSEO?.meta_robots);
+
       const image =
         convertHttpToHttps(productSEO?.meta_image) ??
         "https://croonus.com/images/logo.png";
       if (productSEO) {
         return {
-          title: `${productSEO?.meta_title} | Fashion Template` ?? "",
-          description: productSEO?.meta_description ?? "",
+          alternates: {
+            canonical: `${productSEO?.meta_canonical_link ?? canonical}`,
+          },
+          description:
+            `${productSEO?.meta_title} - ${productSEO?.meta_description}` ?? "",
           keywords: productSEO?.meta_keywords ?? "",
           openGraph: {
-            title: productSEO?.meta_title ?? "",
+            title: `${productSEO?.meta_title} | ${process.env.NAME}` ?? "",
             description: productSEO?.meta_description ?? "",
             type: "website",
             images: [
@@ -110,6 +129,8 @@ export async function generateMetadata({ params: { path } }) {
               },
             ],
           },
+          robots: robots,
+          title: `${productSEO?.meta_title} | ${process.env.NAME}` ?? "",
         };
       } else {
         return defaultMetadata;

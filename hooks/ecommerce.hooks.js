@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {
   post as POST,
   deleteMethod as DELETE,
@@ -478,74 +483,222 @@ export const useCategoryProducts = ({
   setIsLoadingMore,
   isSection,
 }) => {
-  return useSuspenseQuery({
-    queryKey: [
-      "categoryProducts",
-      {
-        slug: slug,
-        page: page,
-        limit: limit,
-        sort: sort,
-        selectedFilters: filterKey,
-        render: render,
-      },
-    ],
-    queryFn: async () => {
-      try {
-        //vadimo filtere iz URL koji su prethodno selektovani i pushovani sa router.push()
-        const selectedFilters_tmp = (filterKey ?? "::")
-          ?.split("::")
-          ?.map((filter) => {
-            const [column, selected] = filter?.split("=");
-            const selectedValues = selected?.split("_");
-            return {
-              column,
-              value: {
-                selected: column?.includes("cena")
-                  ? [Number(selectedValues[0]), Number(selectedValues[1])]
-                  : selectedValues,
-              },
-            };
-          });
+  let pagination_type = process.env["PAGINATION_TYPE"];
 
-        //radimo isto za sort
-        const sort_tmp = (sort ?? "_")?.split("_");
-        const sortObj = {
-          field: sort_tmp[0],
-          direction: sort_tmp[1],
-        };
-
-        return await LIST(
-          isSection
-            ? `/products/section/list/${slug}`
-            : `/products/category/list/${slug}`,
+  switch (pagination_type) {
+    case "pagination":
+      return useSuspenseQuery({
+        queryKey: [
+          "categoryProducts",
           {
+            slug: slug,
             page: page,
             limit: limit,
-            sort: sortObj,
-            filters: selectedFilters_tmp?.every(
-              (column) => column?.column !== ""
-            )
-              ? selectedFilters_tmp
-              : [],
+            sort: sort,
+            selectedFilters: filterKey,
             render: render,
-          }
-        ).then((res) => {
-          //na kraju setujemo state za filtere i sort, da znamo koji su selektovani
-          if (selectedFilters_tmp?.every((column) => column?.column !== "")) {
-            setSelectedFilters(selectedFilters_tmp);
-          }
-          setSort(sortObj);
-          setIsLoadingMore(false);
+          },
+        ],
+        queryFn: async () => {
+          try {
+            //vadimo filtere iz URL koji su prethodno selektovani i pushovani sa router.push()
+            const selectedFilters_tmp = (filterKey ?? "::")
+              ?.split("::")
+              ?.map((filter) => {
+                const [column, selected] = filter?.split("=");
+                const selectedValues = selected?.split("_");
+                return {
+                  column,
+                  value: {
+                    selected: column?.includes("cena")
+                      ? [Number(selectedValues[0]), Number(selectedValues[1])]
+                      : selectedValues,
+                  },
+                };
+              });
 
-          return res?.payload;
-        });
-      } catch (error) {
-        return error;
-      }
-    },
-    refetchOnWindowFocus: false,
-  });
+            //radimo isto za sort
+            const sort_tmp = (sort ?? "_")?.split("_");
+            const sortObj = {
+              field: sort_tmp[0],
+              direction: sort_tmp[1],
+            };
+
+            return await LIST(
+              isSection
+                ? `/products/section/list/${slug}`
+                : `/products/category/list/${slug}`,
+              {
+                page: page,
+                limit: limit,
+                sort: sortObj,
+                filters: selectedFilters_tmp?.every(
+                  (column) => column?.column !== ""
+                )
+                  ? selectedFilters_tmp
+                  : [],
+                render: render,
+              }
+            ).then((res) => {
+              //na kraju setujemo state za filtere i sort, da znamo koji su selektovani
+              if (
+                selectedFilters_tmp?.every((column) => column?.column !== "")
+              ) {
+                setSelectedFilters(selectedFilters_tmp);
+              }
+              setSort(sortObj);
+              setIsLoadingMore(false);
+
+              return res?.payload;
+            });
+          } catch (error) {
+            return error;
+          }
+        },
+        refetchOnWindowFocus: false,
+      });
+    case "infinite_scroll":
+      return useInfiniteQuery({
+        queryKey: [
+          "categoryProductsInfinite",
+          { slug, limit, sort, selectedFilters: filterKey, render },
+        ],
+        queryFn: async ({ pageParam = 1 }) => {
+          try {
+            // Parse filters
+            const selectedFilters_tmp = (filterKey ?? "::")
+              ?.split("::")
+              ?.filter(Boolean)
+              ?.map((filter) => {
+                const [column, selected] = filter?.split("=");
+                if (!column || !selected) return null;
+                const selectedValues = selected?.split("_");
+                return {
+                  column,
+                  value: {
+                    selected: column?.includes("cena")
+                      ? [Number(selectedValues[0]), Number(selectedValues[1])]
+                      : selectedValues,
+                  },
+                };
+              })
+              .filter(Boolean);
+
+            // Parse sorting
+            const sort_tmp = (sort ?? "_")?.split("_");
+            const sortObj = {
+              field: sort_tmp[0] ?? "",
+              direction: sort_tmp[1] ?? "asc",
+            };
+
+            // Fetch the data
+            const res = await LIST(
+              isSection
+                ? `/products/section/list/${slug}`
+                : `/products/category/list/${slug}`,
+              {
+                page: pageParam,
+                limit,
+                sort: sortObj,
+                filters: selectedFilters_tmp?.every((col) => col?.column !== "")
+                  ? selectedFilters_tmp
+                  : [],
+                render,
+              }
+            );
+
+            // Update state if necessary
+            if (selectedFilters_tmp?.every((col) => col?.column !== "")) {
+              setSelectedFilters(selectedFilters_tmp);
+            }
+            setSort(sortObj);
+            setIsLoadingMore(false);
+
+            return res?.payload; // Ensure payload is valid
+          } catch (error) {
+            throw error; // Throw the error to trigger the query's error state
+          }
+        },
+        getNextPageParam: (lastPage, allPages) => {
+          if (lastPage?.length < limit) return undefined;
+          return allPages.length + 1;
+        },
+        getPreviousPageParam: (firstPage, allPages) => {
+          return allPages.length - 1;
+        },
+      });
+    case "load_more":
+      return useSuspenseQuery({
+        queryKey: [
+          "categoryProducts",
+          {
+            slug: slug,
+            page: page,
+            limit: limit,
+            sort: sort,
+            selectedFilters: filterKey,
+            render: render,
+          },
+        ],
+        queryFn: async () => {
+          try {
+            //vadimo filtere iz URL koji su prethodno selektovani i pushovani sa router.push()
+            const selectedFilters_tmp = (filterKey ?? "::")
+              ?.split("::")
+              ?.map((filter) => {
+                const [column, selected] = filter?.split("=");
+                const selectedValues = selected?.split("_");
+                return {
+                  column,
+                  value: {
+                    selected: column?.includes("cena")
+                      ? [Number(selectedValues[0]), Number(selectedValues[1])]
+                      : selectedValues,
+                  },
+                };
+              });
+
+            //radimo isto za sort
+            const sort_tmp = (sort ?? "_")?.split("_");
+            const sortObj = {
+              field: sort_tmp?.[0],
+              direction: sort_tmp?.[1],
+            };
+
+            return await LIST(
+              isSection
+                ? `/products/section/list/${slug}`
+                : `/products/category/list/${slug}`,
+              {
+                page: 1,
+                limit: limit,
+                sort: sortObj,
+                filters: selectedFilters_tmp?.every(
+                  (column) => column?.column !== ""
+                )
+                  ? selectedFilters_tmp
+                  : [],
+                render: render,
+              }
+            ).then((res) => {
+              //na kraju setujemo state za filtere i sort, da znamo koji su selektovani
+              if (
+                selectedFilters_tmp?.every((column) => column?.column !== "")
+              ) {
+                setSelectedFilters(selectedFilters_tmp);
+              }
+              setSort(sortObj);
+              setIsLoadingMore(false);
+
+              return res?.payload;
+            });
+          } catch (error) {
+            return error;
+          }
+        },
+        refetchOnWindowFocus: false,
+      });
+  }
 };
 
 //hook za dobijanje proizvoda na detaljnoj strani

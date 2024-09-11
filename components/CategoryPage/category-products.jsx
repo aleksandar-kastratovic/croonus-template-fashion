@@ -8,16 +8,20 @@ import {
 import Filters from "@/components/sections/categories/Filters";
 import { Thumb } from "@/components/Thumb/Thumb";
 import FiltersMobile from "@/components/sections/categories/FilterMobile";
+import { LoadMore, Pagination } from "@/_components/pagination";
 
 export const CategoryProducts = ({
   filters,
   strana,
+  viewed,
   sortDirection,
   sortField,
   allFilters = [],
   slug,
   isSection,
 }) => {
+  let pagination_type = process.env.PAGINATION_TYPE;
+
   const router = useRouter();
   const [productsPerView, setProductsPerView] = useState(4);
   const [productsPerViewMobile, setProductsPerViewMobile] = useState(2);
@@ -29,9 +33,9 @@ export const CategoryProducts = ({
   const filterKey = params?.get("filteri");
   const pageKey = Number(params?.get("strana"));
   const sortKey = params?.get("sort");
+  const viewedKey = Number(viewed ?? process.env["PAGINATION_LIMIT"]);
 
-  const [page, setPage] = useState(pageKey ?? 1);
-
+  const [page, setPage] = useState(pageKey > 0 ? pageKey : 1);
   const [sort, setSort] = useState({
     field: sortField ?? "",
     direction: sortDirection ?? "",
@@ -47,6 +51,8 @@ export const CategoryProducts = ({
     let sort_tmp;
     let filters_tmp;
     let page_tmp;
+    let limit_tmp;
+
     if (sort?.field !== "" && sort?.direction !== "") {
       sort_tmp = `${sort?.field}_${sort?.direction}`;
     }
@@ -62,15 +68,24 @@ export const CategoryProducts = ({
       filters_tmp = "";
     }
 
-    if (page > 1) {
+    if (page > 1 && pagination_type === "pagination") {
       page_tmp = page;
+    } else {
+      page_tmp = 1;
     }
 
-    return { sort_tmp, filters_tmp, page_tmp };
+    if (pagination_type === "load_more") {
+      limit_tmp = viewedKey ?? process.env.PAGINATION_LIMIT;
+      if (page > 1) {
+        limit_tmp = page * process.env.PAGINATION_LIMIT;
+      }
+    }
+
+    return { sort_tmp, filters_tmp, page_tmp, limit_tmp };
   };
 
   useEffect(() => {
-    const { sort_tmp, filters_tmp, page_tmp } = updateURLQuery(
+    const { sort_tmp, filters_tmp, page_tmp, limit_tmp } = updateURLQuery(
       sort,
       selectedFilters,
       page
@@ -78,24 +93,61 @@ export const CategoryProducts = ({
 
     let queryString = "";
 
-    const generateQueryString = (sort_tmp, filters_tmp, page_tmp) => {
-      let queryString = `?${filters_tmp ? `filteri=${filters_tmp}` : ""}${
-        filters_tmp && (sort_tmp || page_tmp) ? "&" : ""
-      }${sort_tmp ? `sort=${sort_tmp}` : ""}${sort_tmp && page_tmp ? "&" : ""}${
-        page_tmp ? `strana=${page_tmp}` : ""
-      }`;
-
-      router.push(queryString, { scroll: false });
+    const generateQueryString = (
+      sort_tmp,
+      filters_tmp,
+      page_tmp,
+      limit_tmp
+    ) => {
+      let query_string = "";
+      switch (pagination_type) {
+        case "load_more":
+        case "infinite_scroll":
+          query_string = `?${filters_tmp ? `filteri=${filters_tmp}` : ""}${
+            filters_tmp && (sort_tmp || limit_tmp) ? "&" : ""
+          }${sort_tmp ? `sort=${sort_tmp}` : ""}${
+            sort_tmp && limit_tmp ? "&" : ""
+          }${limit_tmp ? `viewed=${limit_tmp}` : ""}`;
+          break;
+        default:
+          query_string = `?${filters_tmp ? `filteri=${filters_tmp}` : ""}${
+            filters_tmp && (sort_tmp || page_tmp) ? "&" : ""
+          }${sort_tmp ? `sort=${sort_tmp}` : ""}${
+            sort_tmp && page_tmp ? "&" : ""
+          }${page_tmp ? `strana=${page_tmp}` : ""}`;
+      }
+      router.push(query_string, { scroll: false });
     };
 
-    generateQueryString(sort_tmp, filters_tmp, page_tmp);
+    generateQueryString(sort_tmp, filters_tmp, page_tmp, limit_tmp);
   }, [sort, selectedFilters, page]);
 
+  const getPage = (page) => {
+    switch (pagination_type) {
+      case "pagination":
+        return pageKey ?? 1;
+      case "load_more":
+        return page;
+      case "infinite_scroll":
+        return page;
+    }
+  };
   //dobijamo proizvode za kategoriju sa api-ja
-  const { data, error, isError, isFetching, isFetched } = useCategoryProducts({
+  const {
+    data,
+    error,
+    isError,
+    isFetching,
+    isFetched,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+    isFetchingNextPage,
+  } = useCategoryProducts({
     slug,
-    page: pageKey ?? 1,
-    limit: 8,
+    page: getPage(page),
+    limit: viewedKey ?? process.env.PAGINATION_LIMIT,
     sort: sortKey ?? "_",
     setSelectedFilters: setSelectedFilters,
     filterKey: filterKey,
@@ -143,6 +195,39 @@ export const CategoryProducts = ({
     const end = Math.min(totalPages, start + 4);
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
+
+  const getItems = (pagination_type) => {
+    switch (pagination_type) {
+      case "infinite_scroll":
+        return (data?.pages ?? [])?.flatMap((page) => page?.items);
+      default:
+        return data?.items;
+    }
+  };
+
+  useEffect(() => {
+    if (pagination_type === "infinite_scroll") {
+      const handleScroll = () => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = window.innerHeight;
+
+        // Calculate the percentage scrolled
+        const scrollPosition = (scrollTop + clientHeight) / scrollHeight;
+
+        // Check if the scroll position is greater than or equal to 70%
+        if (scrollPosition >= 0.7 && hasNextPage && !isFetching) {
+          fetchNextPage();
+        }
+      };
+
+      // Add event listener for scroll
+      window.addEventListener("scroll", handleScroll);
+
+      // Cleanup the event listener when component unmounts
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [pagination_type, hasNextPage, isFetching, fetchNextPage]);
 
   return (
     <>
@@ -200,7 +285,7 @@ export const CategoryProducts = ({
           </div>
         </div>
       </div>
-      {data?.items?.length > 0 ? (
+      {data?.items?.length > 0 || data?.pages?.length > 0 ? (
         <>
           <div className={`max-lg:hidden px-[3rem]`}>
             <div
@@ -208,7 +293,7 @@ export const CategoryProducts = ({
                 productsPerView === 2 && "w-[50%] mx-auto"
               } grid grid-cols-${productsPerView} gap-x-5 gap-y-10`}
             >
-              {data?.items?.map(({ id }) => {
+              {getItems(pagination_type)?.map(({ id }) => {
                 return (
                   <Suspense
                     fallback={
@@ -227,7 +312,7 @@ export const CategoryProducts = ({
             <div
               className={`mt-[50px] grid grid-cols-${productsPerViewMobile} md:grid-cols-3 gap-x-[20px] gap-y-[36px]`}
             >
-              {data?.items?.map(({ id }) => {
+              {getItems(pagination_type)?.map(({ id }) => {
                 return (
                   <Suspense
                     fallback={
@@ -251,72 +336,23 @@ export const CategoryProducts = ({
           </h1>
         </div>
       )}
-      {data?.pagination?.total_pages > 1 && (
-        <div
-          className={`flex mt-10 py-2 px-[3rem] bg-[#f2f2f2] items-center justify-end gap-1`}
-        >
-          {getPaginationArray(
-            data.pagination.selected_page,
-            data.pagination.total_pages
-          ).map((num, index, array) => (
-            <>
-              {index === 0 && num !== 1 && (
-                <>
-                  <span
-                    className={`cursor-pointer select-none py-1 px-3 border border-white hover:border-[#04b400] hover:text-[#04b400] rounded-lg`}
-                    onClick={() => {
-                      setPage(1);
-                      window.scrollTo(0, 0);
-                    }}
-                  >
-                    1
-                  </span>
-                  {num - 1 !== 1 && (
-                    <span className={`select-none py-1 px-3 rounded-lg`}>
-                      ...
-                    </span>
-                  )}
-                </>
-              )}
-              {index > 0 && num - array[index - 1] > 1 && (
-                <span className={`select-none py-1 px-3 rounded-lg`}>...</span>
-              )}
-              <span
-                className={`${
-                  num === data.pagination.selected_page
-                    ? "cursor-pointer select-none bg-[#04b400] py-1 px-3 rounded-lg text-white"
-                    : "cursor-pointer select-none py-1 px-3 border border-white hover:border-[#04b400] hover:text-[#04b400] rounded-lg"
-                }`}
-                onClick={() => {
-                  setPage(num);
-                  window.scrollTo(0, 0);
-                }}
-              >
-                {num}
-              </span>
-              {index === array.length - 1 &&
-                num !== data.pagination.total_pages && (
-                  <>
-                    {data.pagination.total_pages - num !== 1 && (
-                      <span className={`select-none py-1 px-3  rounded-lg`}>
-                        ...
-                      </span>
-                    )}
-                    <span
-                      className={`cursor-pointer select-none py-1 px-3 border border-white hover:border-[#04b400] hover:text-[#04b400] rounded-lg`}
-                      onClick={() => {
-                        setPage(data.pagination.total_pages);
-                        window.scrollTo(0, 0);
-                      }}
-                    >
-                      {data.pagination.total_pages}
-                    </span>
-                  </>
-                )}
-            </>
-          ))}
-        </div>
-      )}
+      {data?.pagination?.total_pages > 1 &&
+        process.env.PAGINATION_TYPE === "pagination" && (
+          <Pagination
+            getPaginationArray={getPaginationArray}
+            data={data}
+            setPage={setPage}
+          />
+        )}
+      {data?.pagination?.total_pages > 1 &&
+        process.env.PAGINATION_TYPE === "load_more" && (
+          <LoadMore
+            data={data}
+            setPage={setPage}
+            page={page}
+            isFetching={isFetching}
+          />
+        )}
       <div
         className={
           filterOpen
