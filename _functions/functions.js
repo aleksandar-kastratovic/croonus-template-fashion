@@ -89,7 +89,10 @@ export const generateBreadcrumbSchema = (
       {
         "@type": "ListItem",
         position: 1,
-        item: "Početna",
+        item: {
+          name: "Početna",
+          "@id": `${base_url}`,
+        },
       },
     ],
   };
@@ -98,15 +101,20 @@ export const generateBreadcrumbSchema = (
     breadcrumb.itemListElement.push({
       "@type": "ListItem",
       position: index + 2,
-      item: `${base_url}/${parent?.slug_path}`,
+      item: {
+        name: `${base_url}/${parent?.slug_path}`,
+        "@id": `${base_url}/${parent?.slug_path}`,
+      },
     });
   });
   breadcrumb.itemListElement.push({
     "@type": "ListItem",
     position: parents?.length + 2,
-    item: `${base_url}/${slug_path}`,
+    item: {
+      name: `${base_url}/${slug_path}`,
+      "@id": `${base_url}/${slug_path}`,
+    },
   });
-
   return breadcrumb;
 };
 
