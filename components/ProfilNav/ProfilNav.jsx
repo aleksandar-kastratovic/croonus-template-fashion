@@ -34,7 +34,7 @@ const ProfilNav = ({ selectedButton, handleButtonClick }) => {
           localStorage.removeItem("loggedIn");
           const deviceToken = Cookies.get("device_token");
           Cookies.set("customer_token", deviceToken, { expires: 365 });
-          router.push("/nalog");
+          router.push("/login");
         } else {
           setErrors("Greška.");
         }

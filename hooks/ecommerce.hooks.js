@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   useInfiniteQuery,
   useMutation,
@@ -13,9 +13,13 @@ import {
   list as LIST,
   get as GET,
   fetch as FETCH,
+  get,
 } from "@/api/api";
 import { toast } from "react-toastify";
 import { useCartContext } from "@/api/cartContext";
+import { useRouter } from "next/navigation";
+import { userContext } from "@/context/userContext";
+import { useInvalidateBadges } from "@/context/functions";
 
 //hook za prepoznavanje mobilnih uredjaja, vraca true ili false
 export const useIsMobile = () => {
@@ -29,6 +33,19 @@ export const useIsMobile = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return isMobile;
+};
+
+//hook za formu, proslediti inicijalne vrednosti - ovo sluzi za izbegavanje duplikacije koda
+export const useForm = (initialValues) => {
+  const [data, setData] = useState(initialValues);
+  const [errors, setErrors] = useState([]);
+
+  return {
+    data,
+    setData,
+    errors,
+    setErrors,
+  };
 };
 
 //hook za debouncing (za search), na svaki input se resetuje timer i tek kad se neko vreme ne unosi nista se poziva funkcija
@@ -1045,6 +1062,269 @@ export const usePromoCodeOptions = () => {
       return await GET(`/checkout/promo-code-options`).then((res) => {
         return res?.payload;
       });
+    },
+  });
+};
+
+export const useLogin = () => {
+  const router = useRouter();
+  const { login } = useContext(userContext);
+  return useMutation({
+    mutationKey: ["login"],
+    mutationFn: async ({ email, password }) => {
+      return await POST(`/customers/sign-in/login`, {
+        email: email,
+        password: password,
+      }).then((res) => {
+        switch (res?.code) {
+          case 200:
+            toast.success("Uspešno ste se prijavili.", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            login(res?.payload?.customer_token);
+            break;
+          default:
+            toast.error(res?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+        }
+        return res;
+      });
+    },
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationKey: ["resetPassword"],
+    mutationFn: async ({ email }) => {
+      return await POST(`/customers/sign-in/forgot-password`, {
+        email: email,
+      }).then((res) => {
+        switch (res?.code) {
+          case 200:
+            toast.success("Uspešno! Proverite svoj email.", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+          default:
+            toast.error(res?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+        }
+        return res;
+      });
+    },
+  });
+};
+
+export const useCreateAccount = () => {
+  return useMutation({
+    mutationKey: ["createAccount"],
+    mutationFn: async (data) => {
+      return await POST(`/customers/sign-in/registration`, { ...data }).then(
+        (res) => {
+          switch (res?.code) {
+            case 200:
+              toast.success("Uspešno ste se registrovali.", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+              break;
+            default:
+              toast.error(res?.message, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+              break;
+          }
+          return res;
+        }
+      );
+    },
+  });
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationKey: ["logout"],
+    mutationFn: async () => {
+      return await POST(`/customers/profile/logout`).then((res) => {
+        switch (res?.code) {
+          case 200:
+            toast.success("Uspešno ste se odjavili.", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+          default:
+            toast.error(res?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+        }
+        return res;
+      });
+    },
+  });
+};
+
+export const useGetAccountData = (api, method = "get") => {
+  return useSuspenseQuery({
+    queryKey: ["accountData", api, method],
+    queryFn: async () => {
+      switch (method) {
+        case "get":
+          return await GET(`${api}`)?.then((res) => {
+            if (res) {
+              return res?.payload;
+            } else {
+              return null;
+            }
+          });
+        case "list":
+          return await LIST(`${api}`)?.then((res) => {
+            if (res) {
+              return res?.payload?.items;
+            } else {
+              return null;
+            }
+          });
+      }
+    },
+  });
+};
+
+export const useUpdateAccountData = (api, message) => {
+  return useMutation({
+    mutationKey: ["accountData", api],
+    mutationFn: async (data) => {
+      return await POST(`${api}`, {
+        ...data,
+      })?.then((res) => {
+        switch (res?.code) {
+          case 200:
+            toast.success(message ?? "Uspešno ste ažurirali podatke.", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+          default:
+            toast.error(res?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+        }
+      });
+    },
+  });
+};
+
+export const useDeleteAccountData = (api, keys, message) => {
+  const { invalidateBadges } = useInvalidateBadges();
+  return useMutation({
+    mutationKey: ["accountData", api],
+    mutationFn: async (data) => {
+      return await DELETE(`${api}/${data?.id}`, { ...data })?.then((res) => {
+        switch (res?.code) {
+          case 200:
+            toast.success(message ?? "Uspešno ste obrisali podatke.", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            invalidateBadges([...keys]);
+            break;
+          default:
+            toast.error(res?.message, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            break;
+        }
+      });
+    },
+  });
+};
+
+export const useBillingAddresses = () => {
+  return useSuspenseQuery({
+    queryKey: ["billing_addresses"],
+    queryFn: async () => {
+      return await get(`/checkout/ddl/billing_addresses`)
+        ?.then((res) => res?.payload)
+        ?.catch((err) => {
+          return err;
+        });
+    },
+  });
+};
+
+export const useShippingAddresses = () => {
+  return useSuspenseQuery({
+    queryKey: ["shipping_addresses"],
+    queryFn: async () => {
+      return await get(`/checkout/ddl/shipping_addresses`)
+        ?.then((res) => res?.payload)
+        ?.catch((err) => {
+          return err;
+        });
+    },
+  });
+};
+
+export const useGetAddress = (id, type) => {
+  return useSuspenseQuery({
+    queryKey: ["address", id, type],
+    queryFn: async () => {
+      return await get(`/checkout/${type}/${id}`)
+        ?.then((res) => res?.payload)
+        ?.catch((err) => {
+          return err;
+        });
     },
   });
 };

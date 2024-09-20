@@ -1,4 +1,11 @@
 import { company_data } from "@/_lib/company_data";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { get } from "@/api/api";
+import {
+  useBillingAddresses,
+  useGetAddress,
+  useShippingAddresses,
+} from "@/hooks/ecommerce.hooks";
 
 export const getRobots = (robots) => {
   let arr = (robots ?? ",")?.split(",")?.map((i) => i?.trim());
@@ -178,4 +185,77 @@ export const generateOrganizationSchema = (base_url) => {
       };
     }),
   };
+};
+
+export const getBillingCartForm = (address_id, loggedIn) => {
+  let tmp_form_data = {};
+
+  if (!loggedIn) {
+    tmp_form_data.form = {};
+    tmp_form_data.all_forms = [];
+    return { tmp_form_data };
+  } else {
+    console.log("ee");
+    const { data: billing_addresses } = useBillingAddresses();
+
+    switch (true) {
+      case billing_addresses?.length === 1:
+        tmp_form_data.form = handleSingleBillingAddress(
+          billing_addresses,
+          "single",
+          null
+        );
+        break;
+      case billing_addresses?.length > 1:
+        tmp_form_data.all_forms = billing_addresses;
+        tmp_form_data.form = handleSingleBillingAddress(
+          billing_addresses,
+          "multiple",
+          address_id
+        );
+        break;
+    }
+    return { tmp_form_data };
+  }
+};
+
+export const handleSingleBillingAddress = (
+  billing_addresses,
+  type,
+  address_id
+) => {
+  switch (type) {
+    case "single":
+      const { id } = billing_addresses?.[0];
+      const { data: billing_address_single, isLoading: isLoadingSingle } =
+        useGetAddress(id, "billing");
+      if (!isLoadingSingle) {
+        const formattedDataSingle = (billing_address_single ?? []).map(
+          (item) => {
+            return Object.keys(item).reduce((acc, key) => {
+              acc[`${key}_billing`] = item[key];
+              return acc;
+            }, {});
+          }
+        );
+
+        return formattedDataSingle?.[0];
+      }
+    case "multiple":
+      const { data: billing_address_multiple, isLoading: isLoadingMultiple } =
+        useGetAddress(address_id, "billing");
+
+      if (!isLoadingMultiple) {
+        const formattedDataMultiple = (billing_address_multiple ?? []).map(
+          (item) => {
+            return Object.keys(item).reduce((acc, key) => {
+              acc[`${key}_billing`] = item[key];
+              return acc;
+            }, {});
+          }
+        );
+
+        return formattedDataMultiple?.[0];
+      }
+  }
 };

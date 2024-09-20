@@ -13,7 +13,7 @@ const HeaderIcons = () => {
 
   return (
     <div className="flex items-center">
-      <Link href="/nalog">
+      <Link href="/login">
         <Image
           src="/user.png"
           width={21}

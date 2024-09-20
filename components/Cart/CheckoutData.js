@@ -7,10 +7,22 @@ import CheckoutTotals from "@/components/Cart/CheckoutTotals";
 import { Suspense, useEffect, useState } from "react";
 import CheckoutItems from "@/components/Cart/CheckoutItems";
 import Spinner from "@/components/UI/Spinner";
-import { useCheckout, useRemoveFromCart } from "@/hooks/ecommerce.hooks";
+import {
+  useCheckout,
+  useGetAddress,
+  useRemoveFromCart,
+} from "@/hooks/ecommerce.hooks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { PromoCode } from "@/components/Cart/PromoCode";
+import {
+  CheckboxInput,
+  Form,
+  handleResetErrors,
+  SelectInput,
+  handleInputChange,
+} from "@/_components/shared/form";
+import fields from "./shipping.json";
 
 const CheckoutData = ({
   className,
@@ -26,6 +38,10 @@ const CheckoutData = ({
   errors,
   setErrors,
   refreshSummary,
+  all_forms,
+  selected,
+  setSelected,
+  loggedIn,
 }) => {
   const [postErrors, setPostErrors] = useState({
     fields: [],
@@ -57,6 +73,14 @@ const CheckoutData = ({
     "zip_code_shipping",
     "object_number_shipping",
     "accept_rules",
+    "first_name_billing",
+    "last_name_billing",
+    "phone_billing",
+    "email_billing",
+    "address_billing",
+    "town_name_billing",
+    "zip_code_billing",
+    "object_number_billing",
   ]);
 
   useEffect(() => {
@@ -68,6 +92,19 @@ const CheckoutData = ({
       );
     }
   }, [formData?.delivery_method]);
+
+  useEffect(() => {
+    if (!selected?.use_same_data) {
+      setRequired([...required, "floor_shipping", "apartment_number_shipping"]);
+    } else {
+      setRequired(
+        (required ?? [])?.filter(
+          (item) =>
+            item !== "floor_shipping" && item !== "apartment_number_shipping"
+        )
+      );
+    }
+  }, [selected?.use_same_data]);
 
   const router = useRouter();
 
@@ -133,9 +170,28 @@ const CheckoutData = ({
 
   return (
     <>
-      <div className={`col-span-5 flex flex-col gap-5 lg:col-span-3`}>
+      <div className={`col-span-5 flex flex-col lg:col-span-3`}>
+        {all_forms?.length > 0 && loggedIn && (
+          <SelectInput
+            className={`!w-fit`}
+            errors={errors}
+            placeholder={`Izaberite adresu plaćanja`}
+            options={all_forms}
+            onChange={(e) => {
+              if (e.target.value !== "none") {
+                setSelected({
+                  ...selected,
+                  id: e.target.value,
+                });
+                handleResetErrors(setErrors);
+              }
+            }}
+            value={selected?.id}
+          />
+        )}
         <CheckoutUserInfo
           errors={errors}
+          selected={selected}
           setErrors={setErrors}
           setFormData={setFormData}
           formData={formData}
@@ -144,6 +200,46 @@ const CheckoutData = ({
           refreshCart={refreshCart}
           refreshSummary={refreshSummary}
         />
+
+        {loggedIn && (
+          <CheckboxInput
+            className={`mb-5`}
+            placeholder={`Koristi iste podatke za dostavu i naplatu`}
+            onChange={(e) => {
+              setSelected({
+                ...selected,
+                use_same_data: e.target.checked,
+              });
+            }}
+            value={selected?.use_same_data}
+            required={false}
+          />
+        )}
+
+        {loggedIn && !selected?.use_same_data && (
+          <Form
+            className={`grid grid-cols-2 gap-x-5`}
+            data={formData}
+            errors={errors}
+            fields={fields}
+            isPending={isPending}
+            handleSubmit={() => {}}
+            showOptions={false}
+            handleInputChange={(e) => {
+              if (e?.target?.name === "id_country_shipping") {
+                handleInputChange(e, setFormData, setErrors);
+                setFormData({
+                  ...formData,
+                  country_name_shipping: e?.target?.selectedOptions[0]?.text,
+                });
+              } else {
+                handleInputChange(e, setFormData, setErrors);
+              }
+            }}
+            buttonClassName={"!hidden"}
+          />
+        )}
+
         <CheckoutOptions
           errors={errors}
           setErrors={setErrors}
@@ -215,11 +311,11 @@ const CheckoutData = ({
             onChange={(e) => {
               setFormData({
                 ...formData,
-                accept_rules: e.target.checked,
+                accept_rules: e?.target?.checked,
               });
               setErrors(errors?.filter((error) => error !== "accept_rules"));
             }}
-            checked={formData.accept_rules}
+            checked={formData?.accept_rules}
             className="focus:ring-0 focus:border-none rounded-full focus:outline-none text-[#191919] bg-white"
           />
           <label

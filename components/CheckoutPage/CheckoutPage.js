@@ -1,29 +1,22 @@
 "use client";
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import CheckoutData from "../Cart/CheckoutData";
-
-const CartProductBox = dynamic(
-  () => import("../../components/CartProductBox"),
-  { loading: () => <p>Loading...</p> }
-);
 import { useCartContext } from "@/api/cartContext";
-import { useRouter } from "next/navigation";
 import { get, list, post } from "@/api/api";
-import classes from "./Cart.module.css";
 import {
   GoogleReCaptchaProvider,
   GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
-import Breadcrumbs from "../../helpers/generateBreadCrumbsServer";
 import { currencyFormat } from "@/helpers/functions";
 import { Breadcrumb } from "rsuite";
-import GenerateBreadCrumbsServer from "../../helpers/generateBreadCrumbsServer";
 import { ToastContainer, toast } from "react-toastify";
 import RecommendedCategories from "@/components/RecommendedCategories/RecommendedCategories";
 import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
-import { useCart, useSummary } from "@/hooks/ecommerce.hooks";
+import { useCart, useForm, useSummary } from "@/hooks/ecommerce.hooks";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { userContext } from "@/context/userContext";
+import { getBillingCartForm } from "@/_functions";
 
 const CheckoutPage = ({
   paymentoptions,
@@ -32,18 +25,19 @@ const CheckoutPage = ({
   countries,
   className,
 }) => {
-  const router = useRouter();
-  const { asPath } = router;
-  function handleClick() {
-    router.back();
-  }
-  const [cart, mutateCart] = useCartContext();
-  const [cartData, setCartData] = useState([]);
-  const [secondAddress, setSecondAddress] = useState(false);
+  const { loggedIn } = useContext(userContext);
+
+  const [selected, setSelected] = useState({
+    id: null,
+    use_same_data: true,
+  });
+
+  const {
+    tmp_form_data: { all_forms, form },
+  } = getBillingCartForm(selected?.id, loggedIn);
+
   const [token, setToken] = useState();
   const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [cartLoading, setCartLoading] = useState(true);
 
   const verifyCaptcha = useCallback((token) => {
     setToken(token);
@@ -102,17 +96,50 @@ const CheckoutPage = ({
     accept_rules: false,
   });
 
-  const companyrequired = [
-    "company_name",
-    "pib",
-    "maticni_broj",
-    "shipping_company_name",
-  ];
+  const {
+    data: dataTmp,
+    setData: setDataTmp,
+    errors: errorsTmp,
+    setErrors: setErrorsTmp,
+  } = useForm(formData);
 
-  const errorMsg = "Polje je obavezno";
-  const errorSelect = "Morate izabrati jednu opciju";
-  const errorCheck = "Morate prihvatiti uslove";
+  useEffect(() => {
+    if (form) {
+      Object.entries(form).forEach(([key, value]) => {
+        if (key?.includes("billing")) {
+          setDataTmp((prev) => ({
+            ...prev,
+            [key]: value ?? "",
+          }));
+        }
+      });
+    }
+  }, [selected?.id]);
 
+  useEffect(() => {
+    if (selected?.use_same_data) {
+      if (form) {
+        Object?.entries(form).forEach(([key, value]) => {
+          if (key?.includes("billing")) {
+            const new_key = key.replace("billing", "shipping");
+            setDataTmp((prev) => ({
+              ...prev,
+              [new_key]: value ?? null,
+            }));
+          }
+        });
+      }
+    } else {
+      Object?.entries(dataTmp).forEach(([key, value]) => {
+        if (key?.includes("shipping")) {
+          setDataTmp((prev) => ({
+            ...prev,
+            [key]: null,
+          }));
+        }
+      });
+    }
+  }, [selected?.id, selected?.use_same_data]);
   //fetchujemo sve artikle iz korpe
   const { data: items, refetch: refreshCart, isFetching } = useCart();
 
@@ -211,16 +238,17 @@ const CheckoutPage = ({
                       )}
                     </div>
 
-                    <h1 className="text-xl   font-bold ">Informacije</h1>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                      }}
-                      className={`mt-20 grid grid-cols-5 gap-[3.75rem]`}
-                    >
+                    <div className={`flex items-center justify-between`}>
+                      <h2 className="text-xl font-bold ">Informacije</h2>
+                    </div>
+                    <div className={`mt-5 grid grid-cols-5 gap-[3.75rem]`}>
                       <CheckoutData
-                        setFormData={setFormData}
-                        formData={formData}
+                        loggedIn={loggedIn}
+                        selected={selected}
+                        setSelected={setSelected}
+                        all_forms={all_forms}
+                        setFormData={setDataTmp}
+                        formData={dataTmp}
                         className={className}
                         deliveryoptions={deliveryoptions}
                         paymentoptions={paymentoptions}
@@ -230,10 +258,10 @@ const CheckoutPage = ({
                         options={data?.summary?.options}
                         totals={data?.summary?.totals}
                         refreshCart={refreshCart}
-                        errors={errors}
-                        setErrors={setErrors}
+                        errors={errorsTmp}
+                        setErrors={setErrorsTmp}
                       />
-                    </form>
+                    </div>
                   </div>
                 </div>
 
@@ -301,14 +329,14 @@ const CheckoutPage = ({
   return (
     <>
       {renderCart()}
-      {loading && (
-        <div className="fixed top-0 left-0 bg-black bg-opacity-40 h-screen w-screen flex items-center justify-center">
-          <div className="flex flex-col items-center justify-center gap-3">
-            <h1 className="text-xl text-white ">Vaš zahtev se obrađuje...</h1>
-            <i className="fa-solid fa-spinner animate-spin text-6xl text-white"></i>
-          </div>
-        </div>
-      )}
+      {/*{loading && (*/}
+      {/*  <div className="fixed top-0 left-0 bg-black bg-opacity-40 h-screen w-screen flex items-center justify-center">*/}
+      {/*    <div className="flex flex-col items-center justify-center gap-3">*/}
+      {/*      <h1 className="text-xl text-white ">Vaš zahtev se obrađuje...</h1>*/}
+      {/*      <i className="fa-solid fa-spinner animate-spin text-6xl text-white"></i>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </>
   );
 };

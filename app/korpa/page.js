@@ -4,24 +4,20 @@ import { Suspense } from "react";
 import { headers } from "next/headers";
 
 const paymentOptions = async () => {
-  const paymentOptions = await get("/checkout/payment-options").then(
+  return await get("/checkout/payment-options").then(
     (response) => response?.payload
   );
-  return paymentOptions;
 };
 const deliveryOptions = async () => {
-  const deliveryOptions = await get("/checkout/delivery-options").then(
+  return await get("/checkout/delivery-options").then(
     (response) => response?.payload
   );
-  return deliveryOptions;
 };
-
 const getRecommendedProducts = async () => {
   return await list("/products/section/list/recommendation").then(
     (res) => res?.payload?.items
   );
 };
-
 const getCountries = async () => {
   return await get(`/checkout/ddl/id_country`).then((res) => res?.payload);
 };
@@ -47,7 +43,7 @@ export default Cart;
 
 export const revalidate = 30;
 
-export const generateMetadata = async ({ searchParams: { search } }) => {
+export const generateMetadata = async () => {
   const header_list = headers();
   let canonical = header_list.get("x-pathname");
   return {

@@ -26,13 +26,13 @@ const Input = ({
                 onChange={(e) => {
                   setFormData({
                     ...formData,
-                    [name + `shipping`]: e.target.value,
-                    [name + `billing`]: e.target.value,
+                    [name + `_shipping`]: e.target.value,
+                    [name + `_billing`]: e.target.value,
                   });
                   //ako polje nije prazno, brisemo ga iz niza gresaka
                   if (e?.target?.value?.length > 0) {
                     setErrors(
-                      errors?.filter((error) => error !== `${name}shipping`),
+                      errors?.filter((error) => error !== `${name}shipping`)
                     );
                   }
                 }}
@@ -57,17 +57,17 @@ const Input = ({
                 onChange={(e) => {
                   setFormData({
                     ...formData,
-                    [name + `shipping`]: e.target.value,
-                    [name + `billing`]: e.target.value,
+                    [name + `_shipping`]: e.target.value,
+                    [name + `_billing`]: e.target.value,
                   });
                 }}
                 className={`w-full border border-slate-200 py-3 text-[0.965rem] font-light uppercase placeholder:text-[0.965rem] placeholder:uppercase focus:border-slate-200 focus:border-b-black focus:outline-none focus:ring-0 max-sm:!text-[16px] ${className} ${errClassName} pl-2 transition-all duration-500 focus:pl-10 ${
-                  formData?.[name + `shipping`]?.length > 0 && "!pl-10"
+                  formData?.[name + `_shipping`]?.length > 0 && "!pl-10"
                 }`}
               />
               <label
                 className={`z-0 text-[#919191] ${className} absolute left-2 top-3.5 font-light uppercase transition-all duration-500 ${
-                  formData?.[name + `shipping`]?.length > 0 &&
+                  formData?.[name + `_shipping`]?.length > 0 &&
                   "!top-[2px] !text-[0.7rem] !text-black"
                 }`}
               >

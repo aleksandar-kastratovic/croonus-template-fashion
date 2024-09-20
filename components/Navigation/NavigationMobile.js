@@ -169,7 +169,7 @@ const NavigationMobile = () => {
                 />
               </div>
             )}
-            <Link href={`/nalog`}>
+            <Link href={`/login`}>
               <Image src={User} width={33} height={33} />
             </Link>
             <Link href="/korpa">
