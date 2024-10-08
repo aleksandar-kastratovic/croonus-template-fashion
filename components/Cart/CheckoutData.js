@@ -339,39 +339,46 @@ export const CheckoutData = ({
             formData={dataTmp}
           />
         </div>
-        <div className="mt-2 flex gap-3 py-3 relative">
-          <input
-            type="checkbox"
-            id="accept_rules"
-            name="accept_rules"
-            onChange={(e) => {
-              setDataTmp({
-                ...dataTmp,
-                accept_rules: e?.target?.checked,
-              });
-              setErrorsTmp(
-                errorsTmp?.filter((error) => error !== "accept_rules")
-              );
-            }}
-            checked={dataTmp?.accept_rules}
-            className="focus:ring-0 focus:border-none rounded-full focus:outline-none text-[#191919] bg-white"
-          />
-          <label
-            htmlFor="agreed"
-            className={`pb-4 text-[0.965rem] font-light ${className}  underline ${
-              errorsTmp?.includes("accept_rules") ? `text-red-500` : ``
-            }`}
-          >
-            Saglasan sam sa
-            <a
-              className={`text-[#e10000] underline max-md:text-[1.15rem]`}
-              href={`/stranica-u-izradi`}
-              target={`_blank`}
+        <div className={`flex flex-col`}>
+          <div className="flex gap-3 py-2 relative">
+            <input
+              type="checkbox"
+              id="accept_rules"
+              name="accept_rules"
+              onChange={(e) => {
+                setDataTmp({
+                  ...dataTmp,
+                  accept_rules: e?.target?.checked,
+                });
+                setErrorsTmp(
+                  errorsTmp?.filter((error) => error !== "accept_rules")
+                );
+              }}
+              checked={dataTmp?.accept_rules}
+              className="focus:ring-0 focus:border-none rounded-full focus:outline-none text-[#191919] bg-white"
+            />
+            <label
+              htmlFor="agreed"
+              className={`text-[0.965rem] font-light ${className}  underline ${
+                errorsTmp?.includes("accept_rules") ? `text-red-500` : ``
+              }`}
             >
-              <span> Opštim uslovima korišćenja</span>
-            </a>{" "}
-            ECOMMERCE ONLINE SHOP-a.
-          </label>
+              Saglasan sam sa
+              <a
+                className={`text-[#e10000] underline max-md:text-[1.15rem]`}
+                href={`/stranica-u-izradi`}
+                target={`_blank`}
+              >
+                <span> Opštim uslovima korišćenja</span>
+              </a>{" "}
+              ECOMMERCE ONLINE SHOP-a.
+            </label>
+          </div>
+          {errorsTmp?.includes("accept_rules") && (
+            <p className={`text-red-500 text-[0.75rem]`}>
+              Molimo Vas da prihvatite uslove korišćenja.
+            </p>
+          )}
         </div>
         <button
           disabled={isPending}
