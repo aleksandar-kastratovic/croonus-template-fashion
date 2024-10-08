@@ -1,14 +1,14 @@
-import CheckoutPage from "@/components/CheckoutPage/CheckoutPage";
+import { headers } from "next/headers";
 import { get, list } from "@/api/api";
 import { Suspense } from "react";
-import { headers } from "next/headers";
+import { CheckoutPage } from "@/components/CheckoutPage/CheckoutPage";
 
-const paymentOptions = async () => {
+const getPaymentOptions = async () => {
   return await get("/checkout/payment-options").then(
     (response) => response?.payload
   );
 };
-const deliveryOptions = async () => {
+const getDeliveryOptions = async () => {
   return await get("/checkout/delivery-options").then(
     (response) => response?.payload
   );
@@ -23,19 +23,21 @@ const getCountries = async () => {
 };
 
 const Cart = async () => {
-  const paymentoptions = await paymentOptions();
-  const deliveryoptions = await deliveryOptions();
-  const recommendedProducts = await getRecommendedProducts();
-  const countries = await getCountries();
+  const [payment_options, delivery_options, recommended_products, countries] =
+    await Promise.all([
+      getPaymentOptions(),
+      getDeliveryOptions(),
+      getRecommendedProducts(),
+      getCountries(),
+    ]);
+
   return (
-    <div className="">
-      <CheckoutPage
-        paymentoptions={paymentoptions}
-        deliveryoptions={deliveryoptions}
-        recommendedProducts={recommendedProducts}
-        countries={countries}
-      />
-    </div>
+    <CheckoutPage
+      payment_options={payment_options}
+      delivery_options={delivery_options}
+      recommendedProducts={recommended_products}
+      countries={countries}
+    />
   );
 };
 
@@ -45,7 +47,7 @@ export const revalidate = 30;
 
 export const generateMetadata = async () => {
   const header_list = headers();
-  let canonical = header_list.get("x-pathname");
+  let canonical = header_list?.get("x-pathname");
   return {
     title: `Korpa | Fashion Template`,
     description: "Dobrodošli na Fashion Template Online Shop",

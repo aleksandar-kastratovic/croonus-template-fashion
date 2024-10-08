@@ -7,7 +7,6 @@ const getBasicData = async (slug) => {
     (res) => res?.payload
   );
 };
-
 const getData = (slug) => {
   return list(`/static-pages/content/${slug}`).then((res) => {
     return res?.payload;
@@ -16,47 +15,46 @@ const getData = (slug) => {
 
 const DynamicStaticPage = async ({ params: { slug } }) => {
   const data = await getData(slug);
-  console.log(data);
   return <StaticPage slug={slug} data={data} />;
 };
 
 export default DynamicStaticPage;
 
+const getSEO = (slug) => {
+  return get(`/static-pages/seo/${slug}`).then((response) => response?.payload);
+};
+
 export const generateMetadata = async ({ params: { slug } }) => {
+  const data = await getSEO(slug);
+
   const header_list = headers();
   let canonical = header_list.get("x-pathname");
-  let static_page = await getBasicData(slug);
-
-  if (static_page) {
-    const {
-      basic_data: { name },
-      seo: { meta_title, meta_keywords, meta_description, meta_url },
-    } = static_page;
-
-    return {
-      title: `${meta_title ?? name} | Fashion Template`,
-      description: "Dobrodošli na Fashion Template Online Shop",
-      alternates: {
-        canonical: meta_url ?? canonical,
-      },
-      robots: {
-        index: true,
-        follow: true,
-      },
-      openGraph: {
-        title: `${meta_title ?? name} | Fashion Template`,
-        description: "Dobrodošli na Fashion Template Online Shop",
-        type: "website",
-        images: [
-          {
-            url: "https://api.fashiondemo.croonus.com/croonus-uploads/config/b2c/logo-c36f3b94e6c04cc702b9168481684f19.webp",
-            width: 800,
-            height: 600,
-            alt: `Fashion Template`,
-          },
-        ],
-        locale: "sr_RS",
-      },
-    };
-  }
+  return {
+    title: data?.meta_title ?? "Početna | Fashion Demo",
+    description:
+      data?.meta_description ?? "Dobrodošli na Fashion Demo Online Shop",
+    alternates: {
+      canonical: data?.meta_canonical_link ?? canonical,
+    },
+    robots: {
+      index: data?.meta_robots?.index ?? true,
+      follow: data?.meta_robots?.follow ?? true,
+    },
+    openGraph: {
+      title: data?.social?.share_title ?? "Početna | Fashion Demo",
+      description:
+        data?.social?.share_description ??
+        "Dobrodošli na Fashion Demo Online Shop",
+      type: "website",
+      images: [
+        {
+          url: data?.social?.share_image ?? "",
+          width: 800,
+          height: 600,
+          alt: "Fashion Demo",
+        },
+      ],
+      locale: "sr_RS",
+    },
+  };
 };

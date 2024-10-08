@@ -4,7 +4,7 @@ import { icons } from "@/_lib/icons";
 
 export const getActiveTab = () => {
   const params = useSearchParams();
-  let active_tab = params?.get("tab") || "basic";
+  let active_tab = params?.get("tab") || "dashboard";
 
   return active_tab;
 };
@@ -16,21 +16,15 @@ export const useTabChange = () => {
     router.push(`?tab=${tab}`);
   };
 
-  return handleTabChange;
+  return (tab) => {
+    handleTabChange(tab);
+  };
 };
 
 export const handleClick = (tab, mutate, logout, handleTabChange) => {
   switch (tab) {
     case "logout":
-      return mutate().then((r) => {
-        switch (r?.code) {
-          case 200:
-            logout();
-            break;
-          default:
-            console.error(r);
-        }
-      });
+      logout(mutate);
     default:
       return handleTabChange(tab);
   }
@@ -48,4 +42,12 @@ export const handleButtonText = (isPending, tab, title) => {
   }
 
   return title;
+};
+
+export const getName = (data) => {
+  if (data?.first_name && data?.last_name) {
+    return `${data?.first_name} ${data?.last_name}`;
+  } else {
+    return "";
+  }
 };

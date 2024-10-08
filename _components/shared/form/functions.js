@@ -1,21 +1,14 @@
-export const handleCheckErrors = (data, fields) => {
+export const handleFieldsValidation = (data, fields) => {
   let err = [];
+  let required_fields_err = handleRequiredFields(fields, data);
 
-  let required_fields = (fields ?? [])?.filter((field) => field?.required);
-
-  (required_fields ?? [])?.forEach(({ name }) => {
-    if (!data?.[name]) {
-      err.push(name);
-    }
-  });
-
-  return err;
+  return [...err, ...required_fields_err];
 };
 
 export const handleInputChange = (e, setData, setErrors) => {
   const { name, value, type, checked } = e.target;
-  setErrors((prev) => prev.filter((error) => error !== name));
 
+  setErrors((prev) => prev.filter((error) => error !== name));
   switch (type) {
     case "checkbox":
       return setData((prev) => ({
@@ -38,10 +31,7 @@ export const handleSubmit = (
   fields,
   setErrors
 ) => {
-  e.preventDefault();
-
-  let err = handleCheckErrors(data, fields);
-  console.log(err);
+  let err = handleFieldsValidation(data, fields);
   if (err?.length > 0) {
     return setErrors(err);
   }
@@ -51,4 +41,15 @@ export const handleSubmit = (
 
 export const handleResetErrors = (setErrors) => {
   return setErrors([]);
+};
+
+export const handleRequiredFields = (fields, data) => {
+  let err = [];
+  let required_fields = (fields ?? [])?.filter((field) => field?.required);
+  (required_fields ?? [])?.forEach(({ name }) => {
+    if (!data?.[name]) {
+      err.push(name);
+    }
+  });
+  return err;
 };

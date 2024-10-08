@@ -15,7 +15,6 @@ export const Button = ({
   tab,
   title,
   id,
-  key,
   type,
   button_text,
   icon,
@@ -37,7 +36,7 @@ export const Button = ({
             active_tab === tab
               ? "bg-gray-200 text-black border border-gray-300"
               : "bg-gray-100 text-gray-700 border border-transparent hover:bg-gray-200 hover:border-gray-300"
-          } rounded-lg p-2 text-sm disabled:cursor-not-allowed`}
+          } rounded-lg p-2 text-sm disabled:cursor-not-allowed `}
           onClick={() => {
             handleClick(tab, mutateAsync, logout, handleTabChange);
           }}

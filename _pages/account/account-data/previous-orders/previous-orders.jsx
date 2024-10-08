@@ -9,6 +9,7 @@ import { currencyFormat } from "@/helpers/functions";
 import Image from "next/image";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import tableFields from "./tableFields.json";
+import { SectionBody } from "@/_pages/account/account-data/shared/section-body";
 
 export const PreviousOrders = () => {
   const { data: previous_orders, refetch } = useGetAccountData(
@@ -27,16 +28,18 @@ export const PreviousOrders = () => {
         title={"Prethodne kupovine"}
         description={"Ovde možete videti sve vaše prethodne kupovine."}
       />
-      <Table
-        data={previous_orders}
-        fields={tableFields}
-        onClick={(_, row) => {
-          setShow({
-            show: true,
-            order_token: row?.order_token,
-          });
-        }}
-      />
+      <SectionBody>
+        <Table
+          data={previous_orders}
+          fields={tableFields}
+          onClick={(_, row) => {
+            setShow({
+              show: true,
+              order_token: row?.order_token,
+            });
+          }}
+        />
+      </SectionBody>
       <Modal
         type={`modal`}
         show={show?.show}
@@ -60,6 +63,10 @@ const ModalChildren = ({ order_token }) => {
     "get"
   );
 
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("sr-RS");
+  };
+
   if (data) {
     const { order, items } = data;
     return (
@@ -67,7 +74,9 @@ const ModalChildren = ({ order_token }) => {
         <h1 className="text-xl font-medium mb-4">
           Porudžbenica: {order?.slug}
         </h1>
-        <p className="text-gray-700 mb-2">Kreirana: {order?.created_at}</p>
+        <p className="text-gray-700 mb-2">
+          Kreirana: {formatDate(order?.created_at)}
+        </p>
         <p className="text-gray-700 mb-2">
           Način dostave: {order?.delivery_method_name}
         </p>
@@ -80,26 +89,30 @@ const ModalChildren = ({ order_token }) => {
             ({
               basic_data: { id, name, quantity, image },
               price: { total },
-            }) => (
-              <li
-                key={id}
-                className="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200 flex items-center space-x-4"
-              >
-                <div className="w-24 h-24 overflow-hidden rounded-lg flex-shrink-0">
-                  <Image
-                    src={convertHttpToHttps(image)}
-                    alt={name ?? "product"}
-                    width={100}
-                    height={100}
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-lg">Naziv: {name}</p>
-                  <p className="text-gray-600">Cena: {currencyFormat(total)}</p>
-                  <p className="text-gray-600">Količina: {quantity}</p>
-                </div>
-              </li>
-            )
+            }) => {
+              return (
+                <li
+                  key={id}
+                  className="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200 flex items-center space-x-4"
+                >
+                  <div className="w-24 h-24 overflow-hidden rounded-lg flex-shrink-0">
+                    <Image
+                      src={convertHttpToHttps(image ?? "")}
+                      alt={name ?? "product"}
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">Naziv: {name}</p>
+                    <p className="text-gray-600">
+                      Cena: {currencyFormat(total)}
+                    </p>
+                    <p className="text-gray-600">Količina: {quantity}</p>
+                  </div>
+                </li>
+              );
+            }
           )}
         </ul>
       </div>

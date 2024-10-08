@@ -14,6 +14,7 @@ import { Table } from "@/_pages/account/account-data/shared";
 import { useRouter } from "next/navigation";
 import fields from "./fields.json";
 import tableFields from "./tableFields.json";
+import { SectionBody } from "@/_pages/account/account-data/shared/section-body";
 
 export const Payments = () => {
   const { data: billing_addresses, refetch } = useGetAccountData(
@@ -72,8 +73,15 @@ export const Payments = () => {
 
   useEffect(() => {
     if (isAdded || isDeleted) {
-      setShow(false);
+      setShow({
+        ...show,
+        show: false,
+      });
       refetch();
+      setData({
+        ...new_address,
+        set_default: false,
+      });
     }
   }, [isAdded, isDeleted]);
 
@@ -91,23 +99,25 @@ export const Payments = () => {
           });
         }}
       />
-      <Table
-        data={billing_addresses}
-        fields={tableFields}
-        onClick={(action, row) => {
-          if (action === "edit") {
-            setData(row);
-            setShow({
-              title: "Izmenite adresu",
-              button: "Izmenite adresu",
-              description: `Popunjavajem forme ispod možete izmeniti adresu plaćanja.`,
-              show: true,
-            });
-          } else {
-            deleteAddress(row);
-          }
-        }}
-      />
+      <SectionBody>
+        <Table
+          data={billing_addresses}
+          fields={tableFields}
+          onClick={(action, row) => {
+            if (action === "edit") {
+              setData(row);
+              setShow({
+                title: "Izmenite adresu",
+                button: "Izmenite adresu",
+                description: `Popunjavajem forme ispod možete izmeniti adresu plaćanja.`,
+                show: true,
+              });
+            } else {
+              deleteAddress(row);
+            }
+          }}
+        />
+      </SectionBody>
       <Modal
         data={data}
         errors={errors}

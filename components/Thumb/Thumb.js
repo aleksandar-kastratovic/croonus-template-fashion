@@ -215,7 +215,7 @@ export const Thumb = ({
           {product?.image?.map((item, index) => {
             return (
               <SwiperSlide>
-                <Link href={`/${product?.slug_path}`} className="z-50">
+                <Link href={`/${product?.link?.link_path}`} className="z-50">
                   <Image
                     src={convertHttpToHttps(
                       image?.id === product?.basic_data?.id_product
@@ -377,7 +377,7 @@ export const Thumb = ({
       </div>
       <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
         <Link
-          href={`/${product?.slug_path}`}
+          href={`/${product?.link?.link_path}`}
           className="max-md:text-[0.85] text-[0.813rem] relative max-md:leading-4 max-sm:line-clamp-1"
         >
           <h3>{product?.basic_data?.name}</h3>

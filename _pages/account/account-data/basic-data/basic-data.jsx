@@ -12,6 +12,7 @@ import {
 } from "@/_components/shared/form";
 import fields from "./fields.json";
 import { SectionHeader } from "@/_pages/account/account-data/shared/section-header";
+import { SectionBody } from "@/_pages/account/account-data/shared/section-body";
 
 export const AccountBasicData = () => {
   const { data: basic_data } = useGetAccountData(`/customers/profile`);
@@ -27,21 +28,23 @@ export const AccountBasicData = () => {
           "Ovde možete promeniti osnovne informacije o vašem nalogu."
         }
       />
-      <Form
-        className={`grid grid-cols-2 gap-x-5`}
-        data={data}
-        fields={fields}
-        showOptions={false}
-        errors={errors}
-        isPending={isPending}
-        button_text={"Sačuvaj izmene"}
-        handleInputChange={(e) => {
-          handleInputChange(e, setData, setErrors);
-        }}
-        handleSubmit={(e) => {
-          handleSubmit(e, data, setData, updateBasicData, fields, setErrors);
-        }}
-      />
+      <SectionBody>
+        <Form
+          className={`grid grid-cols-2 gap-x-5`}
+          data={data}
+          fields={fields}
+          showOptions={false}
+          errors={errors}
+          isPending={isPending}
+          button_text={"Sačuvaj izmene"}
+          handleInputChange={(e) => {
+            handleInputChange(e, setData, setErrors);
+          }}
+          handleSubmit={(e) => {
+            handleSubmit(e, data, setData, updateBasicData, fields, setErrors);
+          }}
+        />
+      </SectionBody>
     </>
   );
 };

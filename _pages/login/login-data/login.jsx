@@ -6,7 +6,7 @@ import {
   handleResetErrors,
   handleInputChange,
   handleSubmit,
-  handleCheckErrors,
+  handleFieldsValidation,
   FormHeader,
 } from "@/_components/shared/form";
 import { handleOpen } from "@/_pages/login/login-data";
@@ -40,12 +40,12 @@ export const Login = () => {
             }}
           />
         );
-      case "create-login-data":
+      case "create-account":
         return (
           <CreateAccount
             show={show?.show}
             handleOpen={() => {
-              handleOpen(setShow, "create-login-data");
+              handleOpen(setShow, "create-account");
             }}
           />
         );
@@ -78,7 +78,7 @@ export const Login = () => {
           <Buttons
             buttons={{
               first: {
-                name: "create-login-data",
+                name: "create-account",
                 text: "Napravite nalog",
               },
               second: {

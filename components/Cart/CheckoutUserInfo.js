@@ -33,6 +33,8 @@ const CheckoutUserInfo = ({
             }));
           }
         });
+        setErrors((prev) => prev.filter((error) => error !== name));
+
         break;
       case !use_same_data:
         return handleInputChange(e, setFormData, setErrors);

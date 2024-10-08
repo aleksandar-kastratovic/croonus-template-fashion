@@ -11,12 +11,11 @@ const MobileLanguageSelector = ({ options }) => {
 
   const onOptionClicked = (value) => () => {
     setSelectedOption(value);
-    // console.log("JEZIK JE "+value)
     switch (value) {
       case "English":
         setLanguage("en_us");
         break;
-        case "Српски":
+      case "Српски":
         setLanguage("sr_sr");
         break;
       default:
@@ -28,11 +27,16 @@ const MobileLanguageSelector = ({ options }) => {
 
   return (
     <div className={classes.main}>
-     <div className={classes.dropdownContainer}>
+      <div className={classes.dropdownContainer}>
         <div className={classes.dropdownHeader} onClick={toggling}>
           <button className={classes["language-button"] + " button-primary"}>
             <span className={"button-span-1"}>
-              {selectedOption || (language === "en_us" ? "English" : language === "sr_rs" ? "Српски" : "Srpski")}
+              {selectedOption ||
+                (language === "en_us"
+                  ? "English"
+                  : language === "sr_rs"
+                  ? "Српски"
+                  : "Srpski")}
             </span>
             <span className={classes["globe-span"] + " button-span-2 bs2-40"}>
               <img src={"/icons/globe.png"} alt="earth" />
@@ -40,10 +44,14 @@ const MobileLanguageSelector = ({ options }) => {
           </button>
         </div>
         {isOpen && (
-         <div className={classes.dropdownListContainer}>
-         <ul className={classes.dropdownList}>
+          <div className={classes.dropdownListContainer}>
+            <ul className={classes.dropdownList}>
               {options.map((option) => (
-                <li className={classes.listItem} onClick={onOptionClicked(option)} key={Math.random()}>
+                <li
+                  className={classes.listItem}
+                  onClick={onOptionClicked(option)}
+                  key={Math.random()}
+                >
                   {option}
                 </li>
               ))}

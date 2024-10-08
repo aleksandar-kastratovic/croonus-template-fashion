@@ -1,19 +1,20 @@
-import { Login } from "@/_pages/login/login-data";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { Sidebar } from "@/_pages/account/sidebar";
-import { AccountData } from "@/_pages/account/account-data";
+import { permanentRedirect as redirect } from "next/navigation";
 import { Account } from "@/_pages/account/account";
+import { getLoginURL } from "@/_redirect-handlers";
+import { getLoggedInStatus } from "@/_functions";
+import { cookies } from "next/headers";
 
 const Nalog = async () => {
+  let url = getLoginURL(null, "login");
   let all_cookies = cookies();
-  let customer_token = await all_cookies.get("customer_token")?.value;
+  let customer_token = cookies().get("customer_token")?.value;
+  let is_logged_in = await getLoggedInStatus(customer_token);
 
   switch (true) {
-    case customer_token?.includes("web"):
+    case is_logged_in:
       return <Account />;
     default:
-      redirect("/login");
+      redirect(`${url}`);
   }
 };
 

@@ -143,7 +143,11 @@ const Header = () => {
                     {category?.name}
                   </button>
                 ) : (
-                  <Link href={`/${category?.slug_path}`} key={index} onClick={() => resetActiveCategory()}>
+                  <Link
+                    href={`/${category?.link?.link_path}`}
+                    key={index}
+                    onClick={() => resetActiveCategory()}
+                  >
                     <span
                       className={`text-[13px] uppercase block text-black w-fit relative activeCategoryHover ${
                         pathname?.includes(category?.slug) && category?.id !== 0
@@ -233,10 +237,10 @@ const Header = () => {
                                   ? null
                                   : category?.name,
                               slug_path:
-                                category?.slug_path ===
-                                activeSubCategory?.slug_path
+                                category?.link?.link_path ===
+                                activeSubCategory?.link?.link_path
                                   ? null
-                                  : category?.slug_path,
+                                  : category?.link?.link_path,
                               data:
                                 category?.children === activeSubCategory?.data
                                   ? []
@@ -250,7 +254,7 @@ const Header = () => {
                         </button>
                       ) : (
                         <Link
-                          href={`/${category?.slug_path}`}
+                          href={`/${category?.link?.link_path}`}
                           key={index}
                           className={`${
                             category?.id === activeCategory?.id
@@ -293,11 +297,11 @@ const Header = () => {
                       {activeSubCategory &&
                         activeSubCategory?.data?.map((childCategory) => (
                           <Link
-                            href={`/${childCategory?.slug_path}`}
+                            href={`/${childCategory?.link?.link_path}`}
                             onClick={resetActiveCategory}
                             key={childCategory?.id}
                             className={`text-[15px] lowercase text-black first-letter:uppercase block hover:underline ${
-                              pathname?.includes(childCategory?.slug_path)
+                              pathname?.includes(childCategory?.link?.link_path)
                                 ? "font-bold"
                                 : "font-normal"
                             }`}

@@ -97,7 +97,6 @@ const Registration = ({ setIsReg }) => {
 
     if (err.length > 0) {
       setErrors(err);
-      console.log(err);
     } else {
       const ret = {
         customer_type: formData.customer_type,

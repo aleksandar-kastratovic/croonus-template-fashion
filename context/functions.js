@@ -18,15 +18,16 @@ export const handleLogin = (
   customer_token,
   invalidateBadges
 ) => {
-  setIsLoggedIn(true);
   Cookies.set("customer_token", customer_token, { expires: 365 });
+  setIsLoggedIn(true);
   invalidateBadges(["cartBadge", "wishlistBadge"]).then((r) => r);
   window.location.href = "/nalog";
 };
 
-export const handleLogout = (setIsLoggedIn, invalidateBadges) => {
+export const handleLogout = (setIsLoggedIn, invalidateBadges, logOut) => {
   setIsLoggedIn(false);
   const device_token = Cookies.get("device_token");
+  logOut();
   Cookies.set("customer_token", device_token, { expires: 365 });
   invalidateBadges(["cartBadge", "wishlistBadge"]).then((r) => r);
   window.location.href = "/login";

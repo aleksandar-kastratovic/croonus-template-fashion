@@ -65,6 +65,11 @@ const PlusMinusInput = ({
         value={quantity}
         onChange={(e) => {
           setQuantity(+e.target.value);
+          updateCart({
+            id: id,
+            quantity: +e.target.value,
+            message: `Uspešno izmenjena količina.`,
+          });
         }}
         min={1}
         max={maxAmount}

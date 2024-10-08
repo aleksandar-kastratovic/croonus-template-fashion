@@ -4,11 +4,9 @@ import { icons } from "@/_lib/icons";
 
 export const Table = ({ fields, data, onClick }) => {
   const handleTableCellText = (field, row) => {
-    switch (true) {
-      case Number(row?.[field?.name]) === 1:
-        return "Da";
-      case Number(row?.[field?.name]) === 0:
-        return "Ne";
+    switch (field?.name) {
+      case "set_default":
+        return Number(row?.[field?.name]) === 1 ? "Da" : "Ne";
       default:
         return row?.[field?.name];
     }
@@ -19,7 +17,7 @@ export const Table = ({ fields, data, onClick }) => {
       <table className="table-auto w-full border-collapse">
         <thead>
           <tr className="bg-gray-300 text-black">
-            {(fields ?? []).map((field) => (
+            {(fields ?? [])?.map((field) => (
               <th
                 key={`head-${field?.id}`}
                 className="px-4 text-sm font-normal py-2 border-b"
@@ -34,7 +32,7 @@ export const Table = ({ fields, data, onClick }) => {
             return (
               <tr
                 key={index}
-                className={`bg-white ${index % 2 === 0 ? "bg-gray-50" : ""}`}
+                className={`${index % 2 === 0 ? "!bg-gray-50" : "bg-white"}`}
               >
                 {(fields ?? [])?.map((field) => (
                   <td

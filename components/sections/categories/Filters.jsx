@@ -94,7 +94,6 @@ const Filters = ({
       });
     }
   }, [sortParam]);
-  console.log(sort);
   return (
     <>
       <div className=" px-[50px] flex items-center justify-between bg-[#f2f2f2]">

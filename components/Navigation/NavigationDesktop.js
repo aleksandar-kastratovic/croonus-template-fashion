@@ -361,7 +361,7 @@ const NavigationDesktop = () => {
                         {searchData?.items?.slice(0, 6)?.map((item) => {
                           return (
                             <Link
-                              href={`/${item?.slug_path}`}
+                              href={`/${item?.link?.link_path}`}
                               onClick={(e) => {
                                 setSearchData([]);
                                 setSearchOpen(false);
@@ -534,7 +534,7 @@ const NavigationDesktop = () => {
                   }}
                 >
                   <Link
-                    href={`/${item?.slug_path}`}
+                    href={`/${item?.link?.link_path}`}
                     className="uppercase px-5 py-1 text-[0.8rem] hover:bg-black hover:text-white px-5 rounded cursor-pointer hover:translate-x-5 hover:text-slate-500 transition-all duration-300 font-medium"
                   >
                     {item?.name}
@@ -610,7 +610,7 @@ const NavigationDesktop = () => {
                         </h1>
                       ) : (
                         <Link
-                          href={`/${category?.slug_path}`}
+                          href={`/${category?.link?.link_path}`}
                           onClick={() => {
                             setOpen(false);
                             setVisible(false);
@@ -658,7 +658,7 @@ const NavigationDesktop = () => {
                     } text-xs hover:text-slate-500 hover:translate-x-2 transition-all duration-300 font-medium`}
                   >
                     <Link
-                      href={`/${category?.slug_path}`}
+                      href={`/${category?.link?.link_path}`}
                       onClick={() => {
                         setOpen(false);
                         setVisible(false);

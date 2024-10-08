@@ -1,32 +1,23 @@
 import { Suspense } from "react";
-
 import { get } from "@/api/api";
-
 import Loading from "@/components/sections/categories/Loader";
 import Category from "@/components/sections/categories/Category";
 import { CategoryData } from "@/components/sections/categories/CategoryPage";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import { headers } from "next/headers";
 
-const CategoryPage = ({
+export const CategoryPage = ({
   params: { path },
   searchParams: { sort: sortURL, strana, filteri, viewed },
+  category_id,
 }) => {
-  //slug kategorije
   const slug = path[path?.length - 1];
-
-  //vadimo sort iz URL
   const sort = (sortURL ?? "_")?.split("_");
   const sortField = sort[0];
   const sortDirection = sort[1];
 
-  //vadimo stranu iz URL i konvertujemo u type Number
   const page = Number(strana) > 0 ? Number(strana) : 1;
 
-  //uzimamo sve filtere sa api-ja
-  // const allFilters = await getAllFilters(slug);
-
-  //vadimo filtere iz URL
   const filters = filteri?.split("::")?.map((filter) => {
     const [column, selected] = filter?.split("=");
     const selectedValues = selected?.split("_");
@@ -43,6 +34,7 @@ const CategoryPage = ({
 
   return (
     <CategoryData
+      category_id={category_id}
       base_url={base_url}
       path={path}
       slug={slug}
@@ -55,5 +47,3 @@ const CategoryPage = ({
     />
   );
 };
-
-export default CategoryPage;

@@ -5,6 +5,7 @@ import {
   useInfiniteQuery,
   useMutation,
   useQuery,
+  useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import {
@@ -13,7 +14,7 @@ import {
   list as LIST,
   get as GET,
   fetch as FETCH,
-  get,
+  put as PUT,
 } from "@/api/api";
 import { toast } from "react-toastify";
 import { useCartContext } from "@/api/cartContext";
@@ -33,29 +34,6 @@ export const useIsMobile = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return isMobile;
-};
-
-//hook za formu, proslediti inicijalne vrednosti - ovo sluzi za izbegavanje duplikacije koda
-export const useForm = (initialValues) => {
-  const [data, setData] = useState(initialValues);
-  const [errors, setErrors] = useState([]);
-
-  return {
-    data,
-    setData,
-    errors,
-    setErrors,
-  };
-};
-
-//hook za debouncing (za search), na svaki input se resetuje timer i tek kad se neko vreme ne unosi nista se poziva funkcija
-export const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-  useEffect(() => {
-    const handler = setTimeout(() => setDebouncedValue(value), delay);
-    return () => clearTimeout(handler);
-  }, [value, delay]);
-  return debouncedValue;
 };
 
 //hook za prepoznavanje scrolla, vraca true ili false za headerShowing i sideBarShowing
@@ -1069,6 +1047,7 @@ export const usePromoCodeOptions = () => {
 export const useLogin = () => {
   const router = useRouter();
   const { login } = useContext(userContext);
+
   return useMutation({
     mutationKey: ["login"],
     mutationFn: async ({ email, password }) => {
@@ -1227,6 +1206,7 @@ export const useGetAccountData = (api, method = "get") => {
 };
 
 export const useUpdateAccountData = (api, message) => {
+  const query_client = useQueryClient();
   return useMutation({
     mutationKey: ["accountData", api],
     mutationFn: async (data) => {
@@ -1242,6 +1222,7 @@ export const useUpdateAccountData = (api, message) => {
               closeOnClick: true,
               pauseOnHover: true,
             });
+            query_client?.invalidateQueries({ queryKey: ["accountData"] });
             break;
           default:
             toast.error(res?.message, {
@@ -1290,16 +1271,23 @@ export const useDeleteAccountData = (api, keys, message) => {
   });
 };
 
-export const useBillingAddresses = () => {
+export const useBillingAddresses = (enabled) => {
   return useSuspenseQuery({
     queryKey: ["billing_addresses"],
     queryFn: async () => {
-      return await get(`/checkout/ddl/billing_addresses`)
-        ?.then((res) => res?.payload)
+      return await GET(`/checkout/ddl/billing_addresses`)
+        ?.then((res) => {
+          if (res) {
+            return res?.payload;
+          } else {
+            return [];
+          }
+        })
         ?.catch((err) => {
           return err;
         });
     },
+    enabled: enabled,
   });
 };
 
@@ -1307,8 +1295,14 @@ export const useShippingAddresses = () => {
   return useSuspenseQuery({
     queryKey: ["shipping_addresses"],
     queryFn: async () => {
-      return await get(`/checkout/ddl/shipping_addresses`)
-        ?.then((res) => res?.payload)
+      return await GET(`/checkout/ddl/shipping_addresses`)
+        ?.then((res) => {
+          if (res) {
+            return res?.payload;
+          } else {
+            return [];
+          }
+        })
         ?.catch((err) => {
           return err;
         });
@@ -1316,15 +1310,100 @@ export const useShippingAddresses = () => {
   });
 };
 
-export const useGetAddress = (id, type) => {
-  return useSuspenseQuery({
+export const useGetAddress = (id, type, enabled) => {
+  return useQuery({
     queryKey: ["address", id, type],
     queryFn: async () => {
-      return await get(`/checkout/${type}/${id}`)
-        ?.then((res) => res?.payload)
-        ?.catch((err) => {
-          return err;
-        });
+      return await GET(`/checkout/${type}/${id}`)?.then((res) => {
+        if (res && res?.code === 200) {
+          return (res?.payload ?? [])?.map((item) => {
+            return Object.keys(item).reduce((acc, key) => {
+              acc[`${key}_${type}`] = item[key];
+              return acc;
+            }, {});
+          });
+        } else {
+          return [];
+        }
+      });
+    },
+    enabled: enabled,
+  });
+};
+
+//hook za azuriranje kolicine artikla u korpi
+export const useUpdateCartQuantity = () => {
+  const [, mutateCart] = useCartContext();
+
+  return useMutation({
+    mutationKey: ["updateCartQuantity"],
+    mutationFn: async ({ id, quantity }) => {
+      return await PUT(`/checkout`, {
+        countable: true,
+        cart_items_id: id,
+        quantity: quantity,
+      }).then((res) => {
+        switch (res?.code) {
+          case 200:
+            mutateCart();
+            toast.success("Količina ažurirana", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+            break;
+          default:
+            toast.error("Došlo je do greške!", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+            break;
+        }
+      });
     },
   });
+};
+
+export const useIsLoggedIn = () => {
+  return useSuspenseQuery({
+    queryKey: ["isLoggedIn"],
+    queryFn: async () => {
+      return await GET(`/customers/sign-in/login-status`)?.then((res) => {
+        if (res?.payload) {
+          return res?.payload?.status;
+        } else {
+          return false;
+        }
+      });
+    },
+  });
+};
+//hook za formu, proslediti inicijalne vrednosti - ovo sluzi za izbegavanje duplikacije koda
+export const useForm = (initialValues) => {
+  const [data, setData] = useState(initialValues);
+  const [errors, setErrors] = useState([]);
+
+  return {
+    data,
+    setData,
+    errors,
+    setErrors,
+  };
+};
+
+//hook za debouncing (za search), na svaki input se resetuje timer i tek kad se neko vreme ne unosi nista se poziva funkcija
+export const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
 };

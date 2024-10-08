@@ -48,7 +48,6 @@ const ResetPasswordComponent = ({ token }) => {
 
     if (err.length > 0) {
       setErrors(err);
-      console.log(err);
     } else {
       const ret = {
         pin: formData.pin,

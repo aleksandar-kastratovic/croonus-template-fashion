@@ -119,6 +119,7 @@ export const ProductInfo = ({
   }, [productVariant]);
 
   const [type, setType] = useState();
+
   return (
     <>
       <>

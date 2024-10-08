@@ -14,6 +14,7 @@ import fields from "./fields.json";
 import tableFields from "./tableFields.json";
 import { Table } from "@/_pages/account/account-data/shared";
 import { useRouter } from "next/navigation";
+import { SectionBody } from "@/_pages/account/account-data/shared/section-body";
 
 export const Shippings = () => {
   const { data: shipping_addresses, refetch } = useGetAccountData(
@@ -72,7 +73,14 @@ export const Shippings = () => {
 
   useEffect(() => {
     if (isAdded || isDeleted) {
-      setShow(false);
+      setShow({
+        ...show,
+        show: false,
+      });
+      setData({
+        ...new_address,
+        set_default: false,
+      });
       refetch();
     }
   }, [isAdded, isDeleted]);
@@ -91,23 +99,25 @@ export const Shippings = () => {
           });
         }}
       />
-      <Table
-        data={shipping_addresses}
-        fields={tableFields}
-        onClick={(action, row) => {
-          if (action === "edit") {
-            setData(row);
-            setShow({
-              title: "Izmenite adresu",
-              button: "Izmenite adresu",
-              description: `Popunjavajem forme ispod možete izmeniti adresu dostave.`,
-              show: true,
-            });
-          } else {
-            deleteAddress(row);
-          }
-        }}
-      />
+      <SectionBody>
+        <Table
+          data={shipping_addresses}
+          fields={tableFields}
+          onClick={(action, row) => {
+            if (action === "edit") {
+              setData(row);
+              setShow({
+                title: "Izmenite adresu",
+                button: "Izmenite adresu",
+                description: `Popunjavajem forme ispod možete izmeniti adresu dostave.`,
+                show: true,
+              });
+            } else {
+              deleteAddress(row);
+            }
+          }}
+        />
+      </SectionBody>
       <Modal
         data={data}
         errors={errors}

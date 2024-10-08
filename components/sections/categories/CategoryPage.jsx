@@ -15,6 +15,7 @@ export const CategoryData = ({
   isSection = false,
   base_url,
   path,
+  category_id,
 }) => {
   const renderText = (slug) => {
     switch (slug) {
@@ -44,12 +45,12 @@ export const CategoryData = ({
         {isSection ? (
           renderText(slug)
         ) : (
-          <SingleCategory slug={slug} base_url={base_url} path={path} />
+          <SingleCategory slug={category_id} base_url={base_url} path={path} />
         )}
       </Suspense>
 
       <CategoryProducts
-        slug={slug}
+        slug={category_id}
         viewed={viewed}
         sortDirection={sortDirection}
         sortField={sortField}

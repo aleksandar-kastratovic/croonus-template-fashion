@@ -18,7 +18,12 @@ import Link from "next/link";
 import CampaignsDetails from "../ProductDetails/CampaignsDetails";
 import { get } from "@/api/api";
 import WishlistActive from "@/assets/Icons/heart-active.png";
-import {useAddToCart, useAddToWishlist, useIsInWishlist, useRemoveFromWishlist} from "@/hooks/ecommerce.hooks";
+import {
+  useAddToCart,
+  useAddToWishlist,
+  useIsInWishlist,
+  useRemoveFromWishlist,
+} from "@/hooks/ecommerce.hooks";
 
 const ProductInfo = ({
   product,
@@ -73,7 +78,7 @@ const ProductInfo = ({
   const { mutate: addToWishlist, isSuccess: isAdded } = useAddToWishlist();
   const { mutate: addItemToCart } = useAddToCart();
   const { mutate: removeFromWishlist, isSuccess: isRemoved } =
-      useRemoveFromWishlist();
+    useRemoveFromWishlist();
   const { data: isInWishlist, refetch } = useIsInWishlist({
     id: product?.data?.item?.basic_data?.id_product,
   });
@@ -97,7 +102,7 @@ const ProductInfo = ({
             });
             break;
           case productVariant?.id &&
-          productVariant?.inventory?.inventory_defined:
+            productVariant?.inventory?.inventory_defined:
             addItemToCart({
               id: productVariant?.basic_data?.id_product,
               quantity: 1,
@@ -145,7 +150,6 @@ const ProductInfo = ({
   }, [productVariant]);
   const [activeTab, setActiveTab] = useState(1);
 
-
   return (
     <>
       {product ? (
@@ -165,8 +169,8 @@ const ProductInfo = ({
                     <Link
                       href={
                         index === arr.length - 1
-                          ? `/${breadcrumb?.slug_path}`
-                          : `/${breadcrumb?.slug_path}`
+                          ? `/${breadcrumb?.link?.link_path}`
+                          : `/${breadcrumb?.link?.link_path}`
                       }
                       className="text-[#191919] text-[0.75rem] font-normal hover:text-[#e10000]"
                     >

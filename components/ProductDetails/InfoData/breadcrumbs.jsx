@@ -18,19 +18,15 @@ export const Breadcrumbs = ({ path, base_url, categoryId }) => {
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <Link href={`/`} className="text-[#191919] text-[0.95rem] font-normal">
+      <Link href={`/`} className={`text-[#191919] text-[0.95rem] font-normal`}>
         Početna
       </Link>{" "}
       <>/</>
-      {breadcrumbs?.steps?.map((breadcrumb, index, arr) => {
+      {(breadcrumbs?.steps ?? [])?.map((breadcrumb, index, arr) => {
         return (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" key={breadcrumb?.id}>
             <Link
-              href={
-                index === arr.length - 1
-                  ? `/${breadcrumb?.slug_path}`
-                  : `/${breadcrumb?.slug_path}`
-              }
+              href={`/${breadcrumb?.link?.link_path}`}
               className="text-[#000] text-[0.95rem] font-normal"
             >
               {breadcrumb?.name}

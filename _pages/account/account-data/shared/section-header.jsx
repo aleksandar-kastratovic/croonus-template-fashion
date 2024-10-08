@@ -3,11 +3,11 @@
 import { Button } from "./button";
 
 export const SectionHeader = ({
-  title,
-  description,
-  icon,
-  button,
-  onClick,
+  title = "",
+  description = "",
+  icon = "",
+  button = "",
+  onClick = () => {},
 }) => {
   return (
     <div
