@@ -12,6 +12,7 @@ export const SingleCategory = ({ slug, path, base_url, text = "" }) => {
     path,
     base_url
   );
+
   return (
     <>
       <script
@@ -32,7 +33,7 @@ export const SingleCategory = ({ slug, path, base_url, text = "" }) => {
               return (
                 <div className="flex items-center gap-2">
                   <Link
-                    href={`/${breadcrumb?.slug_path}`}
+                    href={`/${breadcrumb?.link?.link_path}`}
                     className="text-[#191919] text-[0.95rem] font-normal"
                   >
                     {breadcrumb?.name}
@@ -42,9 +43,9 @@ export const SingleCategory = ({ slug, path, base_url, text = "" }) => {
               );
             })}
             <>/</>
-            <h1 className="text-[#191919] text-[0.95rem] font-semibold">
+            <p className="text-[#191919] text-[0.95rem] font-semibold">
               {singleCategory?.basic_data?.name}
-            </h1>
+            </p>
           </div>
         )}
       </div>

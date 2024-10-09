@@ -19,7 +19,7 @@ const SliderHeader = () => {
         <LeftIcon />
       </button>
       <Swiper
-        className="overflow-hidden max-w-[80%]"
+        className={`!overflow-hidden !max-w-[80%]`}
         spaceBetween={50}
         slidesPerView={1}
         onSwiper={(swiper) => setSwiper(swiper)}
@@ -29,10 +29,9 @@ const SliderHeader = () => {
         }}
         loop={true}
         modules={[Autoplay]}
-        getswiper={setSwiper}
         centeredSlides={true}
       >
-        {banners?.map((banner, index) => (
+        {(banners ?? [])?.map((banner, index) => (
           <SwiperSlide key={index}>
             <p className="text-sm font-normal text-black bg-topHeader">
               {banner}

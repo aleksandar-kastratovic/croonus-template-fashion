@@ -7,8 +7,8 @@ const CheckoutOptions = ({
   formData,
   setFormData,
   className,
-  paymentoptions,
-  deliveryoptions,
+  payment_options,
+  delivery_options,
   options,
   summary,
   totals,
@@ -37,7 +37,7 @@ const CheckoutOptions = ({
     let data = {};
     if (value) {
       let method_id = formData?.delivery_method;
-      let method_name = (deliveryoptions ?? [])?.find(
+      let method_name = (delivery_options ?? [])?.find(
         (o) => o?.id === formData?.delivery_method
       )?.name;
 
@@ -78,7 +78,7 @@ const CheckoutOptions = ({
             >
               ODABERITE NAČIN DOSTAVE
             </h3>
-            {deliveryoptions?.map(({ id, name }) => {
+            {(delivery_options ?? [])?.map(({ id, name }) => {
               return (
                 <div className={`flex flex-col gap-2 pl-2.5`} key={id}>
                   <div className={`flex items-center gap-3`} key={id}>
@@ -126,7 +126,7 @@ const CheckoutOptions = ({
             >
               ODABERITE NAČIN PLAĆANJA
             </h3>
-            {paymentoptions?.map(({ id, name, type }) => {
+            {(payment_options ?? [])?.map(({ id, name, type }) => {
               return (
                 <div className={`flex items-center gap-3 pl-2.5`} key={id}>
                   <input

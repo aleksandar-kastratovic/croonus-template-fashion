@@ -97,7 +97,6 @@ const Registration = ({ setIsReg }) => {
 
     if (err.length > 0) {
       setErrors(err);
-      console.log(err);
     } else {
       const ret = {
         customer_type: formData.customer_type,
@@ -132,7 +131,7 @@ const Registration = ({ setIsReg }) => {
               draggable: true,
               progress: undefined,
             });
-            router.push("/nalog");
+            router.push("/login");
             handleRegClose();
           } else {
             setErrors("Greška pri logovanju.");
@@ -421,8 +420,8 @@ const Registration = ({ setIsReg }) => {
                         htmlFor="accept_terms"
                         className="max-md:text-xs text-[#4b4b4b] w-full "
                       >
-                        Slažem se sa Croonus politikom privatnosti i
-                        čuvanjem podataka.
+                        Slažem se sa Croonus politikom privatnosti i čuvanjem
+                        podataka.
                       </label>
                     </div>
                     <div className="nlAgree flex items-center max-sm:mt-[1rem]">

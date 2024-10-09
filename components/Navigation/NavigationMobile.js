@@ -169,7 +169,7 @@ const NavigationMobile = () => {
                 />
               </div>
             )}
-            <Link href={`/nalog`}>
+            <Link href={`/login`}>
               <Image src={User} width={33} height={33} />
             </Link>
             <Link href="/korpa">
@@ -226,7 +226,7 @@ const NavigationMobile = () => {
           ></i>
         </div>
         <div className="w-[95%] flex flex-row gap-7 mx-auto mt-5 border-b border-b-[#e5e7eb]">
-          {categories?.map((category) => {
+          {(categories ?? [])?.map((category) => {
             const isActive = activeCategory?.parentCategory === category?.id;
             return (
               <div
@@ -368,7 +368,7 @@ const NavigationMobile = () => {
                     </div>
                   ) : (
                     <Link
-                      href={`/${category?.slug_path}`}
+                      href={`/${category?.link?.link_path}`}
                       className={`${
                         activeCategory.firstCategory
                           ? `uppercase w-full`
@@ -401,9 +401,10 @@ const NavigationMobile = () => {
             })}
         </div>
         <div className="flex flex-col mt-10 w-[95%] mx-auto gap-3">
-          {landingPagesList?.items?.map((item, index) => {
+          {(landingPagesList?.items ?? [])?.map((item, index) => {
             return (
               <Link
+                key={item?.id}
                 onClick={() => {
                   setMenuOpen(false);
                 }}
@@ -414,8 +415,9 @@ const NavigationMobile = () => {
               </Link>
             );
           })}
-          {categoriesMain?.map((category) => (
+          {(categoriesMain ?? [])?.map((category) => (
             <Link
+              key={category?.name}
               onClick={() => {
                 setMenuOpen(false);
               }}
@@ -472,7 +474,8 @@ const NavigationMobile = () => {
                 {searchData?.items?.slice(0, 6)?.map((item) => {
                   return (
                     <Link
-                      href={`/${item?.slug_path}`}
+                      key={item?.id}
+                      href={`/${item?.link?.link_path}`}
                       onClick={(e) => {
                         setSearchData([]);
                         setSearchOpen(false);

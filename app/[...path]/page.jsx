@@ -1,35 +1,40 @@
 import { get } from "@/api/api";
-import CategoryPage from "@/app/kategorije/[...path]/page";
-import ProductPage from "@/app/proizvod/[...path]/page";
+import { CategoryPage } from "@/_pages/category";
+import { ProductDetailsPage as ProductPage } from "@/_pages/product";
 import { Suspense } from "react";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { headers } from "next/headers";
 import { getRobots, handleCategoryRobots } from "@/_functions";
 
 const handleData = async (slug) => {
-  return await get(`/slugs/product-categories?slug=${slug}`).then(
-    (res) => res?.payload
-  );
+  return await get(`/slugs/product-categories?slug=${slug}`).then((res) => {
+    return res?.payload;
+  });
 };
 
 const fetchCategorySEO = async (slug) => {
   return await get(`/categories/product/single/seo/${slug}`).then(
-    (response) => response?.payload
+    (response) => {
+      return response?.payload;
+    }
   );
 };
 
 const getProductSEO = async (id) => {
-  return await get(`/product-details/seo/${id}`).then(
-    (response) => response?.payload
-  );
+  return await get(`/product-details/seo/${id}`).then((response) => {
+    return response?.payload;
+  });
 };
 
 const defaultMetadata = {
   title: "Početna | Fashion Template",
   description: "Dobrodošli na Fashion Template Online Shop",
 
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "Početna | Fashion Template",
     description: "Dobrodošli na Fashion Template Online Shop",
@@ -49,7 +54,6 @@ export async function generateMetadata({
   const data = await handleData(str);
   const headersList = headers();
   let canonical = headersList?.get("x-pathname");
-
   switch (true) {
     case data?.status === false &&
       data?.type === null &&
@@ -60,35 +64,43 @@ export async function generateMetadata({
     case data?.type === "category" &&
       data?.status &&
       data?.redirect_url === false:
-      const category = await fetchCategorySEO(path[path?.length - 1]);
+      const category = await fetchCategorySEO(data?.id);
+
       const image_category =
         convertHttpToHttps(category?.image) ??
         "https://croonus.com/images/logo.png";
 
       if (category) {
-        let robots = getRobots(category?.robots);
+        let {
+          meta_title: title,
+          meta_keywords: keywords,
+          meta_description: description,
+          meta_image: image,
+          meta_canonical_link: canonical_link,
+          meta_robots: robots,
+          social: { share_title, share_description, share_image },
+        } = category;
+
         return {
-          title: `${category?.title} | ${process.env.NAME}` ?? "",
-          description: category?.description ?? "",
-          keywords: category?.keywords ?? "",
-          type: category?.type ?? "",
-          image: image_category ?? "",
+          title: title ?? "",
+          description: description ?? "",
+          keywords: keywords ?? "",
+          image: image ?? "",
           alternates: {
-            canonical: `${category?.canonical_link ?? canonical}`,
+            canonical: `${canonical_link ?? canonical}`,
           },
           openGraph: {
-            title: `${category?.title} | ${process.env.NAME}` ?? "",
+            title: `${share_title}` ?? "",
 
-            description: category?.description ?? "",
-            type: category?.type ?? "",
+            description: share_description ?? "",
             images: [
               {
-                url: image_category ?? "",
+                url: share_image ?? "",
                 width: 800,
                 height: 600,
-                alt: category?.description ?? "",
-                title: category?.title ?? "",
-                description: category?.description ?? "",
+                alt: share_description ?? "",
+                title: share_title ?? "",
+                description: share_description ?? "",
               },
             ],
           },
@@ -101,7 +113,7 @@ export async function generateMetadata({
     case data?.type === "product" &&
       data?.status &&
       data?.redirect_url === false:
-      const productSEO = await getProductSEO(path[path?.length - 1]);
+      const productSEO = await getProductSEO(data?.id);
 
       let robots = getRobots(productSEO?.meta_robots);
 
@@ -117,7 +129,7 @@ export async function generateMetadata({
             `${productSEO?.meta_title} - ${productSEO?.meta_description}` ?? "",
           keywords: productSEO?.meta_keywords ?? "",
           openGraph: {
-            title: `${productSEO?.meta_title} | ${process.env.NAME}` ?? "",
+            title: `${productSEO?.meta_title}` ?? "",
             description: productSEO?.meta_description ?? "",
             type: "website",
             images: [
@@ -130,7 +142,7 @@ export async function generateMetadata({
             ],
           },
           robots: robots,
-          title: `${productSEO?.meta_title} | ${process.env.NAME}` ?? "",
+          title: `${productSEO?.meta_title}` ?? "",
         };
       } else {
         return defaultMetadata;
@@ -141,20 +153,30 @@ export async function generateMetadata({
 const CategoryProduct = async ({ params: { path }, params, searchParams }) => {
   const str = path?.join("/");
   const data = await handleData(str);
-
   switch (true) {
     case data?.type === "category" &&
       data?.status === true &&
       data?.redirect_url === false:
-      return <CategoryPage params={params} searchParams={searchParams} />;
+      return (
+        <CategoryPage
+          params={params}
+          searchParams={searchParams}
+          category_id={data?.id}
+        />
+      );
     case data?.type === "product" &&
       data?.status === true &&
       data?.redirect_url === false:
-      return <ProductPage params={params} />;
+      return (
+        <ProductPage
+          path={data?.id}
+          category_id={path?.[path?.length - 2] ?? "*"}
+        />
+      );
     case data?.status === false:
       return notFound();
     default:
-      redirect(`/${data?.redirect_url}`);
+      permanentRedirect(`/${data?.redirect_url}`);
   }
 };
 

@@ -5,6 +5,7 @@ import {
   useAddToCart,
   useDebounce,
   useRemoveFromCart,
+  useUpdateCartQuantity,
 } from "@/hooks/ecommerce.hooks";
 import { useEffect, useState } from "react";
 import { currencyFormat } from "@/helpers/functions";
@@ -25,16 +26,11 @@ const CheckoutItems = ({
   quantity,
   refreshSummary,
   isClosed,
+  cart_item_id,
 }) => {
-  const { mutate: removeFromCart, isSuccess } = useRemoveFromCart();
+  const { mutate: removeFromCart, isSuccess: isRemoved } = useRemoveFromCart();
+  const { mutate: updateCart, isSuccess: isUpdated } = useUpdateCartQuantity();
 
-  useEffect(() => {
-    if (isSuccess) {
-      refreshCart();
-    }
-  }, [isSuccess]);
-
-  const { mutate: updateCart, isSuccess: isUpdated } = useAddToCart();
   const [productQuantity, setProductQuantity] = useState(Number(quantity));
 
   useEffect(() => {
@@ -44,11 +40,11 @@ const CheckoutItems = ({
   const debounceQuantity = useDebounce(productQuantity, 500);
 
   useEffect(() => {
-    if (isUpdated) {
+    if (isUpdated || isRemoved) {
       refreshCart();
       refreshSummary();
     }
-  }, [isUpdated]);
+  }, [isUpdated, isRemoved]);
 
   return (
     <>
@@ -63,7 +59,7 @@ const CheckoutItems = ({
         ></i>
         <Link href={`/${slug_path}`} className={`col-span-1`}>
           <Image
-            src={image[0] ?? "/comr.png"}
+            src={image?.[0] ?? "/comr.png"}
             alt={`Comr`}
             width={0}
             height={0}
@@ -88,7 +84,7 @@ const CheckoutItems = ({
               quantity={productQuantity}
               setQuantity={setProductQuantity}
               updateCart={updateCart}
-              id={id}
+              id={cart_item_id}
               refreshSummary={refreshSummary}
               refreshCart={refreshCart}
             />

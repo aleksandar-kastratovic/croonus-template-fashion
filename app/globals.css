@@ -12,6 +12,17 @@
   }
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
 .notranslate .rs-picker-default .rs-btn,
 .rs-picker-default .rs-picker-toggle,
 .rs-picker-input .rs-btn,

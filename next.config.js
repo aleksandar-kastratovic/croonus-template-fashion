@@ -16,10 +16,12 @@ const nextConfig = {
     CITY: process.env.CITY,
     POSTAL_CODE: process.env.POSTAL_CODE,
     ADDRESS_COUNTRY: process.env.ADDRESS_COUNTRY,
+    SHOW_CHECKOUT_SHIPPING_FORM: process.env.SHOW_CHECKOUT_SHIPPING_FORM,
   },
   images: {
     domains: [
       "scontent.cdninstagram.com",
+      "192.168.1.223",
       "api.fashiondemo.croonus.com",
       "video.cdninstagram.com",
     ],

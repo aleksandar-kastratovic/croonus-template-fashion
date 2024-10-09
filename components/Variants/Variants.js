@@ -19,7 +19,7 @@ export default function Variants({
   let variant_options = product?.data?.variant_options; // niz svih variant_options
   let variant_items = product?.data?.variant_items; // niz svih varijanti proizvoda
   let product_slug = productSlug; // slug proizvoda koji se prikazuje
-  let variant_product = null; // krajnji proizvod koji se prikazuje
+  let variant_product = null; // krajnji proizvodd koji se prikazuje
   const [selected, setSelected] = useState([]); // niz selektovanih variant_options
   useEffect(() => {
     if (setVariant) {
@@ -158,7 +158,7 @@ export default function Variants({
     return options;
   };
 
-  // funkcija koja vraca proizvod na osnovu selektovanih variant_options
+  // funkcija koja vraca proizvodd na osnovu selektovanih variant_options
   const getProductVariant = () => {
     let options = getSelectedVariants(selected, variant_items);
     let product = [];

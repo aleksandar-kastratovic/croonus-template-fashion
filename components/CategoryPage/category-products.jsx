@@ -33,6 +33,7 @@ export const CategoryProducts = ({
   const filterKey = params?.get("filteri");
   const pageKey = Number(params?.get("strana"));
   const sortKey = params?.get("sort");
+
   const viewedKey = Number(viewed ?? process.env["PAGINATION_LIMIT"]);
 
   const [page, setPage] = useState(pageKey > 0 ? pageKey : 1);
@@ -84,40 +85,35 @@ export const CategoryProducts = ({
     return { sort_tmp, filters_tmp, page_tmp, limit_tmp };
   };
 
+  const generateQueryString = (sort_tmp, filters_tmp, page_tmp, limit_tmp) => {
+    let query_string = "";
+    switch (pagination_type) {
+      case "load_more":
+      case "infinite_scroll":
+        query_string = `?${filters_tmp ? `filteri=${filters_tmp}` : ""}${
+          filters_tmp && (sort_tmp || limit_tmp) ? "&" : ""
+        }${sort_tmp ? `sort=${sort_tmp}` : ""}${
+          sort_tmp && limit_tmp ? "&" : ""
+        }${limit_tmp ? `viewed=${limit_tmp}` : ""}`;
+        break;
+      default:
+        query_string = `?${filters_tmp ? `filteri=${filters_tmp}` : ""}${
+          filters_tmp && (sort_tmp || page_tmp) ? "&" : ""
+        }${sort_tmp ? `sort=${sort_tmp}` : ""}${
+          sort_tmp && page_tmp ? "&" : ""
+        }${page_tmp > 1 ? `strana=${page_tmp}` : ""}`;
+    }
+    router.push(query_string, { scroll: false });
+
+    return query_string;
+  };
+
   useEffect(() => {
     const { sort_tmp, filters_tmp, page_tmp, limit_tmp } = updateURLQuery(
       sort,
       selectedFilters,
       page
     );
-
-    let queryString = "";
-
-    const generateQueryString = (
-      sort_tmp,
-      filters_tmp,
-      page_tmp,
-      limit_tmp
-    ) => {
-      let query_string = "";
-      switch (pagination_type) {
-        case "load_more":
-        case "infinite_scroll":
-          query_string = `?${filters_tmp ? `filteri=${filters_tmp}` : ""}${
-            filters_tmp && (sort_tmp || limit_tmp) ? "&" : ""
-          }${sort_tmp ? `sort=${sort_tmp}` : ""}${
-            sort_tmp && limit_tmp ? "&" : ""
-          }${limit_tmp ? `viewed=${limit_tmp}` : ""}`;
-          break;
-        default:
-          query_string = `?${filters_tmp ? `filteri=${filters_tmp}` : ""}${
-            filters_tmp && (sort_tmp || page_tmp) ? "&" : ""
-          }${sort_tmp ? `sort=${sort_tmp}` : ""}${
-            sort_tmp && page_tmp ? "&" : ""
-          }${page_tmp ? `strana=${page_tmp}` : ""}`;
-      }
-      router.push(query_string, { scroll: false });
-    };
 
     generateQueryString(sort_tmp, filters_tmp, page_tmp, limit_tmp);
   }, [sort, selectedFilters, page]);
@@ -296,13 +292,18 @@ export const CategoryProducts = ({
               {getItems(pagination_type)?.map(({ id }) => {
                 return (
                   <Suspense
+                    key={`suspense-${id}`}
                     fallback={
                       <div
                         className={`aspect-2/3 bg-slate-300 animate-pulse w-full h-full`}
                       />
                     }
                   >
-                    <Thumb slug={id} key={id} categoryId={slug ?? "*"} />
+                    <Thumb
+                      slug={id}
+                      key={`thumb-${id}`}
+                      categoryId={slug ?? "*"}
+                    />
                   </Suspense>
                 );
               })}
@@ -315,13 +316,14 @@ export const CategoryProducts = ({
               {getItems(pagination_type)?.map(({ id }) => {
                 return (
                   <Suspense
+                    key={`suspense-${id}`}
                     fallback={
                       <div
                         className={`aspect-2/3 bg-slate-300 animate-pulse w-full h-full`}
                       />
                     }
                   >
-                    <Thumb slug={id} key={id} />
+                    <Thumb slug={id} key={`$thumb-${id}`} />
                   </Suspense>
                 );
               })}
@@ -339,9 +341,19 @@ export const CategoryProducts = ({
       {data?.pagination?.total_pages > 1 &&
         process.env.PAGINATION_TYPE === "pagination" && (
           <Pagination
-            getPaginationArray={getPaginationArray}
+            generateQueryString={() => {
+              const { sort_tmp, filters_tmp, page_tmp } = updateURLQuery(
+                sort,
+                selectedFilters,
+                page
+              );
+              return generateQueryString(sort_tmp, filters_tmp, page_tmp);
+            }}
             data={data}
+            page={page}
+            slug={slug}
             setPage={setPage}
+            getPaginationArray={getPaginationArray}
           />
         )}
       {data?.pagination?.total_pages > 1 &&

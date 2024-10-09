@@ -1,9 +1,16 @@
 import Input from "@/components/Input";
 import CheckoutItems from "@/components/Cart/CheckoutItems";
 import { Suspense } from "react";
+import {
+  Form,
+  handleInputChange,
+  handleSubmit,
+} from "@/_components/shared/form";
+import billing from "./billing.json";
 
 const CheckoutUserInfo = ({
   className,
+  selected,
   formData,
   setFormData,
   items,
@@ -12,145 +19,46 @@ const CheckoutUserInfo = ({
   setErrors,
   refreshSummary,
 }) => {
+  const onChange = (e, use_same_data, setFormData, setErrors) => {
+    switch (true) {
+      case use_same_data:
+        const { value: typed_value, name } = e?.target;
+        Object?.entries(formData)?.forEach(([key, value]) => {
+          if (name?.includes("billing")) {
+            let shipping_key = name?.replace("billing", "shipping");
+            setFormData((prev) => ({
+              ...prev,
+              [name]: typed_value,
+              [shipping_key]: typed_value,
+            }));
+          }
+        });
+        setErrors((prev) => prev.filter((error) => error !== name));
+
+        break;
+      case !use_same_data:
+        return handleInputChange(e, setFormData, setErrors);
+    }
+  };
+
   return (
     <div className={`col-span-2 flex w-full flex-col gap-5 lg:col-span-1`}>
-      <div className={`flex w-full flex-col items-center gap-3 sm:flex-row`}>
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={`${className}`}
-          errClassName={` ${
-            errors?.includes("first_name_shipping")
-              ? "!border !border-red-500"
-              : ""
-          }`}
-          name={`first_name_`}
-          title={`Ime`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`last_name_`}
-          title={`Prezime`}
-          errClassName={` ${
-            errors?.includes("last_name_shipping")
-              ? "!border !border-red-500"
-              : ""
-          }`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-      </div>
-      <div className={`flex w-full flex-col items-center gap-3 sm:flex-row`}>
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`phone_`}
-          title={`Telefon`}
-          errClassName={` ${
-            errors?.includes("phone_shipping") ? "!border !border-red-500" : ""
-          }`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`email_`}
-          title={`Email`}
-          errClassName={` ${
-            errors?.includes("email_shipping") ? "!border !border-red-500" : ""
-          }`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-      </div>
-      <div className={`flex w-full flex-col items-center gap-3 sm:flex-row`}>
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`address_`}
-          title={`Adresa`}
-          errClassName={` ${
-            errors?.includes("address_shipping")
-              ? "!border !border-red-500"
-              : ""
-          }`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`object_number_`}
-          title={`Broj`}
-          errClassName={` ${
-            errors?.includes("object_number_shipping")
-              ? "!border !border-red-500"
-              : ""
-          }`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-      </div>
-      <div className={`flex w-full flex-col items-center gap-3 sm:flex-row`}>
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`zip_code_`}
-          title={`Poštanski broj`}
-          errClassName={` ${
-            errors?.includes("zip_code_shipping")
-              ? "!border !border-red-500"
-              : ""
-          }`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`town_name_`}
-          errClassName={` ${
-            errors?.includes("town_name_shipping")
-              ? "!border !border-red-500"
-              : ""
-          }`}
-          title={`Grad`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-      </div>
-      <div className={`flex w-full flex-col items-center gap-3 sm:flex-row`}>
-        <Input
-          setFormData={setFormData}
-          formData={formData}
-          className={className}
-          name={`note_`}
-          title={`Napomena`}
-          type={`textarea`}
-          errors={errors}
-          setErrors={setErrors}
-          isCheckout
-        />
-      </div>
+      <Form
+        className={`grid grid-cols-2 gap-x-5`}
+        errors={errors}
+        data={formData}
+        handleInputChange={(e) => {
+          onChange(e, selected?.use_same_data, setFormData, setErrors);
+        }}
+        buttonClassName={`!hidden`}
+        handleSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(e, formData, setFormData, () => {}, billing, setErrors);
+        }}
+        fields={billing}
+        showOptions={false}
+        isPending={false}
+      />
     </div>
   );
 };

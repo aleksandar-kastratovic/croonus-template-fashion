@@ -85,7 +85,6 @@ const IndexSlider = ({ banners, mobileBanners }) => {
       window.removeEventListener("keydown", handleInteraction);
     };
   }, [banners]);
-  console.log(banners, "ban:");
   const renderMedia = (banner) => {
     if (banner?.file_data?.type === "video") {
       return (

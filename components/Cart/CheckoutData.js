@@ -1,35 +1,73 @@
 "use client";
 
+import { Suspense, useEffect, useState } from "react";
+import {
+  useBillingAddresses,
+  useCheckout,
+  useForm,
+  useGetAddress,
+  useIsLoggedIn,
+  useRemoveFromCart,
+} from "@/hooks/ecommerce.hooks";
+import { handleCreditCard, handleSetData } from "@/components/Cart/functions";
+import { useRouter } from "next/navigation";
+import { PromoCode } from "@/components/Cart/PromoCode";
+import {
+  CheckboxInput,
+  Form,
+  handleResetErrors,
+  SelectInput,
+  handleInputChange,
+} from "@/_components/shared/form";
 import Image from "next/image";
 import CheckoutUserInfo from "@/components/Cart/CheckoutUserInfo";
 import CheckoutOptions from "@/components/Cart/CheckoutOptions";
 import CheckoutTotals from "@/components/Cart/CheckoutTotals";
-import { Suspense, useEffect, useState } from "react";
 import CheckoutItems from "@/components/Cart/CheckoutItems";
-import Spinner from "@/components/UI/Spinner";
-import { useCheckout, useRemoveFromCart } from "@/hooks/ecommerce.hooks";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { PromoCode } from "@/components/Cart/PromoCode";
+import fields from "./shipping.json";
+import Cookies from "js-cookie";
+import Spinner from "@/components/UI/Spinner";
 
-const CheckoutData = ({
+export const CheckoutData = ({
   className,
   formData,
   setFormData,
-  paymentoptions,
-  deliveryoptions,
+  payment_options,
+  delivery_options,
   summary,
   items,
   options,
   totals,
   refreshCart,
-  errors,
-  setErrors,
   refreshSummary,
 }) => {
+  const {
+    data: dataTmp,
+    setData: setDataTmp,
+    errors: errorsTmp,
+    setErrors: setErrorsTmp,
+  } = useForm(formData);
+
+  const [selected, setSelected] = useState({
+    id: null,
+    use_same_data: true,
+  });
+
+  const { data: loggedIn } = useIsLoggedIn();
+
+  const { data: billing_addresses } = useBillingAddresses(loggedIn);
+
+  const { data: form, isLoading } = useGetAddress(
+    billing_addresses?.length > 1 ? selected?.id : billing_addresses?.[0]?.id,
+    "billing",
+    loggedIn && Boolean(billing_addresses?.length)
+  );
+
   const [postErrors, setPostErrors] = useState({
     fields: [],
   });
+
   const [isClosed, setIsClosed] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -40,7 +78,7 @@ const CheckoutData = ({
     isSuccess: isCheckoutSuccess,
     status,
   } = useCheckout({
-    formData: formData,
+    formData: dataTmp,
     setPostErrors: setPostErrors,
     setLoading: setLoading,
   });
@@ -57,14 +95,25 @@ const CheckoutData = ({
     "zip_code_shipping",
     "object_number_shipping",
     "accept_rules",
+    "first_name_billing",
+    "last_name_billing",
+    "phone_billing",
+    "email_billing",
+    "address_billing",
+    "town_name_billing",
+    "zip_code_billing",
+    "object_number_billing",
   ]);
 
   useEffect(() => {
     if (formData?.delivery_method === "in_store_pickup") {
-      setRequired([...required, "delivery_method_options"]);
+      setRequired((prevRequired) => [
+        ...prevRequired,
+        "delivery_method_options",
+      ]);
     } else {
-      setRequired(
-        required?.filter((item) => item !== "delivery_method_options")
+      setRequired((prevRequired) =>
+        prevRequired.filter((item) => item !== "delivery_method_options")
       );
     }
   }, [formData?.delivery_method]);
@@ -90,10 +139,10 @@ const CheckoutData = ({
         });
       }
     });
-    setPostErrors({
-      ...postErrors,
+    setPostErrors((prevErrors) => ({
+      ...prevErrors,
       fields: productsOutOfStock,
-    });
+    }));
   };
 
   useEffect(() => {
@@ -109,87 +158,170 @@ const CheckoutData = ({
       refreshCart();
       refreshSummary();
     }
-  }, [isSuccess]);
+  }, [isSuccess, refreshCart, refreshSummary]);
 
   useEffect(() => {
     if (isCheckoutSuccess && data) {
+      const { credit_card } = data;
       switch (true) {
-        case data?.credit_card === null:
-          router.push(`/korpa/kupovina/${data?.order?.order_token}`);
-          break;
-        case data?.credit_card !== null:
-          const credit_card_form = data?.payment_provider_data?.form;
-          const form = document.createElement("div");
-          form.innerHTML = credit_card_form;
-          document.body.appendChild(form);
-          const formData = document.getElementById("bank_send_form");
-          formData?.submit();
-          break;
+        case credit_card === null:
+          return router.push(`/korpa/kupovina/${data?.order?.order_token}`);
+        case credit_card !== null:
+          return handleCreditCard(data);
         default:
           break;
       }
     }
-  }, [isCheckoutSuccess]);
+  }, [isCheckoutSuccess, data, router]);
+
+  useEffect(
+    () => {
+      if (!isLoading) {
+        handleSetData("default_data", form, dataTmp, setDataTmp);
+      }
+    },
+    [selected?.id, form?.[0]],
+    isLoading
+  );
+
+  useEffect(() => {
+    if (selected?.use_same_data) {
+      return handleSetData("same_data", form, dataTmp, setDataTmp);
+    } else {
+      return handleSetData("different_data", form, dataTmp, setDataTmp);
+    }
+  }, [selected?.id, selected?.use_same_data]);
+
+  useEffect(() => {
+    setRequired((prevRequired) =>
+      selected?.use_same_data
+        ? prevRequired.filter(
+            (item) =>
+              item !== "floor_shipping" && item !== "apartment_number_shipping"
+          )
+        : [...prevRequired, "floor_shipping", "apartment_number_shipping"]
+    );
+  }, [selected?.use_same_data]);
+
+  const show_options = process.env.SHOW_CHECKOUT_SHIPPING_FORM;
 
   return (
-    <>
-      <div className={`col-span-5 flex flex-col gap-5 lg:col-span-3`}>
+    <div className={`mt-5 grid grid-cols-5 gap-[3.75rem]`}>
+      <div className={`col-span-5 flex flex-col lg:col-span-3`}>
+        {show_options === "true" && billing_addresses?.length > 1 && (
+          <SelectInput
+            className={`!w-fit`}
+            errors={errorsTmp}
+            placeholder={`Izaberite adresu plaćanja`}
+            options={billing_addresses}
+            onChange={(e) => {
+              if (e.target.value !== "none") {
+                setSelected((prev) => ({
+                  ...prev,
+                  id: e.target.value,
+                }));
+                handleResetErrors(setErrorsTmp);
+              }
+            }}
+            value={selected?.id}
+          />
+        )}
         <CheckoutUserInfo
-          errors={errors}
-          setErrors={setErrors}
-          setFormData={setFormData}
-          formData={formData}
+          errors={errorsTmp}
+          selected={selected}
+          setErrors={setErrorsTmp}
+          setFormData={setDataTmp}
+          formData={dataTmp}
           className={className}
           items={items}
           refreshCart={refreshCart}
           refreshSummary={refreshSummary}
         />
+
+        {show_options === "true" && (
+          <CheckboxInput
+            className={`mb-5`}
+            placeholder={`Koristi iste podatke za dostavu i naplatu`}
+            onChange={(e) => {
+              setSelected((prev) => ({
+                ...prev,
+                use_same_data: e.target.checked,
+              }));
+            }}
+            value={selected?.use_same_data}
+            required={false}
+          />
+        )}
+
+        {show_options === "true" && !selected?.use_same_data && (
+          <Form
+            className={`grid grid-cols-2 gap-x-5`}
+            data={dataTmp}
+            errors={errorsTmp}
+            fields={fields}
+            isPending={isPending}
+            handleSubmit={() => {}}
+            showOptions={false}
+            handleInputChange={(e) => {
+              if (e?.target?.name === "id_country_shipping") {
+                handleInputChange(e, setDataTmp, setErrorsTmp);
+                setDataTmp((prev) => ({
+                  ...prev,
+                  country_name_shipping: e?.target?.selectedOptions[0]?.text,
+                }));
+              } else {
+                handleInputChange(e, setDataTmp, setErrorsTmp);
+              }
+            }}
+            buttonClassName={"!hidden"}
+          />
+        )}
+
         <CheckoutOptions
-          errors={errors}
-          setErrors={setErrors}
-          deliveryoptions={deliveryoptions}
-          paymentoptions={paymentoptions}
-          setFormData={setFormData}
-          formData={formData}
+          errors={errorsTmp}
+          setErrors={setErrorsTmp}
+          delivery_options={delivery_options}
+          payment_options={payment_options}
+          setFormData={setDataTmp}
+          formData={dataTmp}
           className={className}
           summary={summary}
           options={options}
           totals={totals}
         />
       </div>
+
       <div className={`col-span-5 flex flex-col gap-3 lg:col-span-2`}>
         <div
           className={`customScroll mb-16 flex max-h-[400px] flex-col gap-5 overflow-y-auto sm:mb-10`}
         >
-          {items?.map(
+          {(items ?? [])?.map(
             ({
               product: {
                 basic_data: { id_product, name, sku },
                 price,
                 inventory,
                 image,
-                slug_path,
+                link: { link_path: slug_path },
               },
-              cart: { quantity },
-            }) => {
-              return (
-                <CheckoutItems
-                  key={id_product}
-                  id={id_product}
-                  name={name}
-                  price={price}
-                  isClosed={isClosed}
-                  refreshSummary={refreshSummary}
-                  quantity={+quantity}
-                  inventory={inventory}
-                  image={image}
-                  sku={sku}
-                  className={className}
-                  refreshCart={refreshCart}
-                  slug_path={slug_path}
-                />
-              );
-            }
+              cart: { quantity, cart_item_id },
+            }) => (
+              <CheckoutItems
+                key={id_product}
+                id={id_product}
+                image={image}
+                sku={sku}
+                inventory={inventory}
+                slug_path={slug_path}
+                refreshCart={refreshCart}
+                name={name}
+                price={price}
+                isClosed={isClosed}
+                refreshSummary={refreshSummary}
+                quantity={quantity}
+                cart_item_id={cart_item_id}
+              />
+            )
           )}
         </div>
         <PromoCode />
@@ -204,40 +336,49 @@ const CheckoutData = ({
             options={options}
             summary={summary}
             className={className}
-            formData={formData}
+            formData={dataTmp}
           />
         </div>
-        <div className="mt-2 flex gap-3 py-3 relative">
-          <input
-            type="checkbox"
-            id="accept_rules"
-            name="accept_rules"
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                accept_rules: e.target.checked,
-              });
-              setErrors(errors?.filter((error) => error !== "accept_rules"));
-            }}
-            checked={formData.accept_rules}
-            className="focus:ring-0 focus:border-none rounded-full focus:outline-none text-[#191919] bg-white"
-          />
-          <label
-            htmlFor="agreed"
-            className={`pb-4 text-[0.965rem] font-light ${className}  underline ${
-              errors?.includes("accept_rules") ? `text-red-500` : ``
-            }`}
-          >
-            Saglasan sam sa
-            <a
-              className={`text-[#e10000] underline max-md:text-[1.15rem]`}
-              href={`/stranica-u-izradi`}
-              target={`_blank`}
+        <div className={`flex flex-col`}>
+          <div className="flex gap-3 py-2 relative">
+            <input
+              type="checkbox"
+              id="accept_rules"
+              name="accept_rules"
+              onChange={(e) => {
+                setDataTmp({
+                  ...dataTmp,
+                  accept_rules: e?.target?.checked,
+                });
+                setErrorsTmp(
+                  errorsTmp?.filter((error) => error !== "accept_rules")
+                );
+              }}
+              checked={dataTmp?.accept_rules}
+              className="focus:ring-0 focus:border-none rounded-full focus:outline-none text-[#191919] bg-white"
+            />
+            <label
+              htmlFor="agreed"
+              className={`text-[0.965rem] font-light ${className}  underline ${
+                errorsTmp?.includes("accept_rules") ? `text-red-500` : ``
+              }`}
             >
-              <span> Opštim uslovima korišćenja</span>
-            </a>{" "}
-            ECOMMERCE ONLINE SHOP-a.
-          </label>
+              Saglasan sam sa
+              <a
+                className={`text-[#e10000] underline max-md:text-[1.15rem]`}
+                href={`/stranica-u-izradi`}
+                target={`_blank`}
+              >
+                <span> Opštim uslovima korišćenja</span>
+              </a>{" "}
+              ECOMMERCE ONLINE SHOP-a.
+            </label>
+          </div>
+          {errorsTmp?.includes("accept_rules") && (
+            <p className={`text-red-500 text-[0.75rem]`}>
+              Molimo Vas da prihvatite uslove korišćenja.
+            </p>
+          )}
         </div>
         <button
           disabled={isPending}
@@ -247,11 +388,11 @@ const CheckoutData = ({
           onClick={() => {
             let err = [];
             (required ?? [])?.forEach((key) => {
-              if (!formData[key] || formData[key]?.length === 0) {
+              if (!dataTmp[key] || dataTmp[key]?.length === 0) {
                 err.push(key);
               }
             });
-            setErrors(err);
+            setErrorsTmp(err);
             if (err?.length === 0) {
               checkOut();
             } else {
@@ -259,11 +400,7 @@ const CheckoutData = ({
             }
           }}
         >
-          {isPending ? (
-            <Spinner className={`-top-1 !mr-[3rem]`} />
-          ) : (
-            "ZAVRŠI KUPOVINU"
-          )}
+          {isPending ? "OBRADA..." : "ZAVRŠI KUPOVINU"}
         </button>
       </div>
       <NoStockModal
@@ -280,11 +417,9 @@ const CheckoutData = ({
           <Spinner className={`!scale-125`} />
         </div>
       )}
-    </>
+    </div>
   );
 };
-
-export default CheckoutData;
 
 const NoStockModal = ({
   postErrors,
@@ -323,7 +458,7 @@ const NoStockModal = ({
           <div
             className={`divide-y-black mt-[0.85rem] flex flex-col divide-y px-5`}
           >
-            {postErrors?.fields?.map(
+            {(postErrors?.fields ?? [])?.map(
               ({
                 cart: { id, item_id },
                 product: { id: id_product, name, sku, slug, image },
@@ -342,7 +477,7 @@ const NoStockModal = ({
                   >
                     <Link href={`/${slug}`}>
                       <Image
-                        src={image[0]}
+                        src={image?.[0]}
                         alt={name ?? sku ?? slug ?? "Ecommerce"}
                         width={60}
                         height={100}
@@ -371,10 +506,9 @@ const NoStockModal = ({
                       <button
                         onClick={async () => {
                           await removeFromCart({ id: id_product });
-
                           //nakon brisanja, iz postErrors.fields filtriramo taj item i izbacujemo ga
                           let arr = [];
-                          arr = postErrors?.fields?.filter(
+                          arr = (postErrors?.fields ?? [])?.filter(
                             (item) => item.product.id !== id_product
                           );
                           setPostErrors({

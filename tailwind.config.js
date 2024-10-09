@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/****/***/**/*.{js,ts,jsx,tsx}",
-    "./pages/***/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./pages/*.{js,ts,jsx,tsx}",
+    "./_pages/****/***/**/*.{js,ts,jsx,tsx}",
+    "./_pages/***/**/*.{js,ts,jsx,tsx}",
+    "./_pages/**/*.{js,ts,jsx,tsx}",
+    "./_pages/*.{js,ts,jsx,tsx}",
     "./components/****/***/**/*.{js,ts,jsx,tsx}",
     "./components/***/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -32,6 +32,7 @@ module.exports = {
         "croonus-3": "#eec0ad",
         "croonus-4": "#faf9f8",
         topHeader: "#f7f7f7",
+        primary: "--color-primary",
       },
       aspectRatio: {
         "2/3": "2/3",

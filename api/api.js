@@ -16,24 +16,25 @@ const getDeviceToken = () => {
 
 const getCustomerToken = () => {
   let customer_token = Cookies.get("customer_token");
-
   if (!customer_token) {
     customer_token = getDeviceToken();
     Cookies.set("customer_token", customer_token, { expires: 365 });
   }
+
   return customer_token;
 };
 
-const makeRequest = async (method, path, payload) => {
-  const device_token = getDeviceToken();
-  const customer_token = getCustomerToken();
+const makeRequest = async (method, path, payload, token) => {
+  let device_token = getDeviceToken();
+  let customer_token = getCustomerToken();
+
   try {
     const response = await axios({
       method: method,
       url: process.env.API_URL + path.replace(/^\//, ""),
       headers: {
         "device-token": device_token,
-        "customer-token": customer_token,
+        "customer-token": token ?? customer_token,
       },
       data: payload,
       cache: "no-store",
@@ -44,8 +45,8 @@ const makeRequest = async (method, path, payload) => {
   }
 };
 
-export const get = async (path) => {
-  return makeRequest("GET", path);
+export const get = async (path, customer_token = null) => {
+  return makeRequest("GET", path, null, customer_token);
 };
 
 export const put = async (path, payload) => {

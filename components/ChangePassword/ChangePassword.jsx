@@ -27,7 +27,6 @@ const ChangePassword = () => {
     const err = [];
     if (err.length > 0) {
       setErrors(err);
-      console.log(err);
     } else {
       const ret = {
         password: formData?.password,

@@ -1,26 +1,15 @@
 import { company_data } from "@/_lib/company_data";
+import { get } from "@/api/api";
 
 export const getRobots = (robots) => {
-  let arr = (robots ?? ",")?.split(",")?.map((i) => i?.trim());
-  let follow = true;
-  let index = true;
-
-  if (arr?.includes("noindex")) {
-    index = false;
+  if (robots?.follow === null && robots?.index === null) {
+    robots = { index: true, follow: true };
   }
-
-  if (arr?.includes("nofollow")) {
-    follow = false;
-  }
-
-  return {
-    index: index,
-    follow: follow,
-  };
+  return robots;
 };
 
 export const handleCategoryRobots = (strana, filteri, sort, viewed, robots) => {
-  if (!robots) {
+  if (robots?.follow === null && robots?.index === null) {
     robots = { index: true, follow: true };
   }
   switch (true) {
@@ -43,6 +32,7 @@ export const generateProductSchema = (product, product_gallery, canonical) => {
       data: {
         item: {
           basic_data: { name, sku },
+          price,
           price: {
             price: { original, discount },
             discount: { active },
@@ -54,6 +44,41 @@ export const generateProductSchema = (product, product_gallery, canonical) => {
     } = product;
     const { gallery } = product_gallery;
 
+    const min_defined = price?.min?.price_defined;
+    const max_defined = price?.max?.price_defined;
+    const min_original = price?.min?.price?.original;
+    const max_original = price?.max?.price?.original;
+    const min_discount = price?.min?.price?.discount;
+    const max_discount = price?.max?.price?.discount;
+
+    const isRange = () => {
+      return min_original !== max_original;
+    };
+
+    const isDiscount = () => {
+      return active;
+    };
+
+    const handlePrice = () => {
+      let is_range = isRange();
+      let is_discount = isDiscount();
+
+      if (min_defined && max_defined) {
+        switch (true) {
+          case is_range && is_discount:
+            return `${min_discount} - ${max_discount}`;
+          case is_range && !is_discount:
+            return `${min_original} - ${max_original}`;
+          case !is_range && is_discount:
+            return `${min_discount}`;
+          case !is_range && !is_discount:
+            return `${min_original}`;
+        }
+      } else {
+        return `${original}`;
+      }
+    };
+
     return {
       "@context": "https://schema.org/",
       "@type": "Product",
@@ -64,7 +89,7 @@ export const generateProductSchema = (product, product_gallery, canonical) => {
         "@type": "Offer",
         url: canonical,
         priceCurrency: currency?.toUpperCase(),
-        price: original,
+        price: handlePrice(),
         availability: inventory_defined
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
@@ -72,50 +97,6 @@ export const generateProductSchema = (product, product_gallery, canonical) => {
       },
     };
   }
-};
-
-export const generateBreadcrumbSchema = (
-  parents = [],
-  name = "",
-  path,
-  base_url
-) => {
-  let slug_path = path?.join("/");
-
-  let breadcrumb = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        item: {
-          name: "Početna",
-          "@id": `${base_url}`,
-        },
-      },
-    ],
-  };
-
-  parents?.map((parent, index) => {
-    breadcrumb.itemListElement.push({
-      "@type": "ListItem",
-      position: index + 2,
-      item: {
-        name: `${base_url}/${parent?.slug_path}`,
-        "@id": `${base_url}/${parent?.slug_path}`,
-      },
-    });
-  });
-  breadcrumb.itemListElement.push({
-    "@type": "ListItem",
-    position: parents?.length + 2,
-    item: {
-      name: `${base_url}/${slug_path}`,
-      "@id": `${base_url}/${slug_path}`,
-    },
-  });
-  return breadcrumb;
 };
 
 export const getCompanyData = (base_url) => {
@@ -147,10 +128,7 @@ export const generateOrganizationSchema = (base_url) => {
     name: default_data?.name,
     url: `${base_url}`,
     logo: `${base_url}/logo.png`,
-    sameAs: [
-      "https://www.instagram.com/stefantekstil.rs/",
-      "https://www.facebook.com/STEFAN.DOO.ARILJE",
-    ],
+    sameAs: ["https://www.instagram.com/lifeatcroonus/"],
     telephone: default_data?.telephone,
     email: default_data?.email,
     address: {
@@ -178,4 +156,60 @@ export const generateOrganizationSchema = (base_url) => {
       };
     }),
   };
+};
+
+export const generateBreadcrumbSchema = (
+  parents = [],
+  name = "",
+  path,
+  base_url
+) => {
+  let slug_path = path?.join("/");
+
+  let breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: {
+          name: "Početna",
+          "@id": `${base_url}`,
+        },
+      },
+    ],
+  };
+
+  parents?.map((parent, index) => {
+    breadcrumb.itemListElement.push({
+      "@type": "ListItem",
+      position: index + 2,
+      item: {
+        name: `${base_url}/${parent?.link?.link_path}`,
+        "@id": `${base_url}/${parent?.link?.link_path}`,
+      },
+    });
+  });
+  breadcrumb.itemListElement.push({
+    "@type": "ListItem",
+    position: parents?.length + 2,
+    item: {
+      name: `${base_url}/${slug_path}`,
+      "@id": `${base_url}/${slug_path}`,
+    },
+  });
+  return breadcrumb;
+};
+
+export const getLoggedInStatus = async (customer_token) => {
+  return await get(`/customers/sign-in/login-status`, customer_token)?.then(
+    (res) => {
+      if (res?.payload) {
+        return res?.payload?.status;
+      } else {
+        return false;
+      }
+    }
+  );
 };
