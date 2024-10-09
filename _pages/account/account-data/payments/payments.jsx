@@ -6,12 +6,11 @@ import {
   useForm,
   useGetAccountData,
   useUpdateAccountData,
-} from "@/hooks/ecommerce.hooks";
+} from "@/_hooks";
 import { Modal } from "@/_components/shared/modal";
 import { useEffect, useState } from "react";
 import { handleInputChange, handleSubmit } from "@/_components/shared/form";
 import { Table } from "@/_pages/account/account-data/shared";
-import { useRouter } from "next/navigation";
 import fields from "./fields.json";
 import tableFields from "./tableFields.json";
 import { SectionBody } from "@/_pages/account/account-data/shared/section-body";
@@ -56,17 +55,24 @@ export const Payments = () => {
 
   const formatFields = (fields, data) => {
     if (data && Number(data?.id_country) === 193) {
-      return fields?.map((field) => {
-        if (field?.name === "town_name") {
-          return {
-            ...field,
-            name: "id_town",
-            type: "select",
-            fill: `/customers/billing-address/ddl/id_town?id_country=${data?.id_country}`,
-          };
-        }
-        return field;
-      });
+      return fields
+        ?.map((field) => {
+          if (field?.name === "town_name") {
+            return {
+              ...field,
+              name: "id_town",
+              type: "select",
+              fill: `/customers/billing-address/ddl/id_town?id_country=${data?.id_country}`,
+            };
+          }
+
+          if (field?.name === "zip_code") {
+            return null; // Filter out zip_code by returning null
+          }
+
+          return field;
+        })
+        .filter(Boolean); // Remove null fields from the array
     }
     return fields;
   };
@@ -93,8 +99,16 @@ export const Payments = () => {
         icon={`plus`}
         button={`Dodajte novu adresu`}
         onClick={() => {
+          setData({
+            ...new_address,
+            set_default: false,
+          });
+
           setShow({
-            ...show,
+            title: "Dodajte novu adresu",
+            button: "Dodajte novu adresu",
+            description:
+              "Popunjavajem forme ispod možete dodati novu adresu plaćanja.",
             show: true,
           });
         }}
