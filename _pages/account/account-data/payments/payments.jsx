@@ -6,7 +6,7 @@ import {
   useForm,
   useGetAccountData,
   useUpdateAccountData,
-} from "@/_hooks";
+} from "@/hooks/ecommerce.hooks";
 import { Modal } from "@/_components/shared/modal";
 import { useEffect, useState } from "react";
 import { handleInputChange, handleSubmit } from "@/_components/shared/form";
