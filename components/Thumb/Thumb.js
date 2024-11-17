@@ -1,26 +1,26 @@
-"use client";
-import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
-import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
-import Wishlist from "../../assets/Icons/heart.png";
-import WishlistActive from "../../assets/Icons/heart-active.png";
-import { ToastContainer, toast } from "react-toastify";
-import { currencyFormat } from "@/helpers/functions";
-import { get, list, post } from "@/api/api";
-import ProductPrice from "@/components/ProductPrice/ProductPrice";
+'use client';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
+import { convertHttpToHttps } from '@/helpers/convertHttpToHttps';
+import Wishlist from '../../assets/Icons/heart.png';
+import WishlistActive from '../../assets/Icons/heart-active.png';
+import { ToastContainer, toast } from 'react-toastify';
+import { currencyFormat } from '@/helpers/functions';
+import { get, list, post } from '@/api/api';
+import ProductPrice from '@/components/ProductPrice/ProductPrice';
 import {
   useAddToCart,
   useAddToWishlist,
   useIsInWishlist,
   useProductThumb,
   useRemoveFromWishlist,
-} from "@/hooks/ecommerce.hooks";
+} from '@/hooks/ecommerce.hooks';
 
 export const Thumb = ({
   slug,
@@ -32,11 +32,10 @@ export const Thumb = ({
   const { data: product } = useProductThumb({
     slug: slug,
     id: slug,
-    categoryId: categoryId ?? "*",
+    categoryId: categoryId ?? '*',
   });
   const { mutate: addToWishlist, isSuccess: isAdded } = useAddToWishlist();
-  const { mutate: removeFromWishlist, isSuccess: isRemoved } =
-    useRemoveFromWishlist();
+  const { mutate: removeFromWishlist, isSuccess: isRemoved } = useRemoveFromWishlist();
   const { mutate: addToCart } = useAddToCart();
 
   const { data: wishlist_data, refetch } = useIsInWishlist({ id: slug });
@@ -72,11 +71,7 @@ export const Thumb = ({
       });
       const getVariant = async (selected) => {
         const res = await get(`/product-details/basic-data/${idProduct}`);
-        if (
-          res?.payload?.data?.variant_items &&
-          res?.code === 200 &&
-          selected?.length === 2
-        ) {
+        if (res?.payload?.data?.variant_items && res?.code === 200 && selected?.length === 2) {
           const variantItems = res?.payload?.data?.variant_items;
           const variant = variantItems?.find((item) =>
             item?.variant_key_array?.every((variantKey) =>
@@ -107,11 +102,7 @@ export const Thumb = ({
       });
       const getVariant = async (selected) => {
         const res = await get(`/product-details/basic-data/${idProduct}`);
-        if (
-          res?.payload?.data?.variant_items &&
-          res?.code === 200 &&
-          selected?.length === 1
-        ) {
+        if (res?.payload?.data?.variant_items && res?.code === 200 && selected?.length === 1) {
           const variantItems = res?.payload?.data?.variant_items;
           const variant = variantItems?.find((item) =>
             item?.variant_key_array?.every((variantKey) =>
@@ -151,10 +142,10 @@ export const Thumb = ({
   // }, [image]);
 
   const variantOptionSize = product?.variant_options?.find((variant) => {
-    return variant?.attribute?.slug === "velicina";
+    return variant?.attribute?.slug === 'velicina';
   });
   const variantOptionColor = product?.variant_options?.find((variant) => {
-    return variant?.attribute?.slug === "boja";
+    return variant?.attribute?.slug === 'boja';
   });
 
   const isInWishlist = {
@@ -165,7 +156,7 @@ export const Thumb = ({
   return (
     <div
       key={slug}
-      className="col-span-1 aspect-2/3 relative item hoveredColor"
+      className='col-span-1 aspect-2/3 relative item hoveredColor'
       onMouseEnter={() => {
         setNavigationEnabled({
           enabled: true,
@@ -184,11 +175,9 @@ export const Thumb = ({
           modules={[Navigation, Pagination]}
           // onSwiper={(swiper) => setSwiper(swiper)}
           pagination={true}
-          direction={"horizontal"}
+          direction={'horizontal'}
           rewind
-          initialSlide={product?.image?.findIndex(
-            (item) => item === product?.image[0]
-          )}
+          initialSlide={product?.image?.findIndex((item) => item === product?.image[0])}
           navigation={
             navigationEnabled.enabled === true &&
             navigationEnabled.id === product?.basic_data?.id_product
@@ -206,7 +195,7 @@ export const Thumb = ({
               pagination: {
                 enabled: false,
               },
-              direction: "horizontal",
+              direction: 'horizontal',
             },
           }}
           className={`categoryImageSwiper relative`}
@@ -214,17 +203,15 @@ export const Thumb = ({
         >
           {product?.image?.map((item, index) => {
             return (
-              <SwiperSlide>
-                <Link href={`/${product?.link?.link_path}`} className="z-50">
+              <SwiperSlide key={index}>
+                <Link href={`/${product?.link?.link_path}`} className='z-50'>
                   <Image
                     src={convertHttpToHttps(
-                      image?.id === product?.basic_data?.id_product
-                        ? image?.image
-                        : item
+                      image?.id === product?.basic_data?.id_product ? image?.image : item
                     )}
                     alt={product?.basic_data?.name}
                     sizes={
-                      "(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, (min-width: 1600px) 50vw"
+                      '(max-width: 639px) 100vw, (max-width: 767px) 100vw, (max-width: 1023px) 100vw, (max-width: 1279px) 100vw, (min-width: 1600px) 50vw'
                     }
                     width={0}
                     height={0}
@@ -238,13 +225,10 @@ export const Thumb = ({
         </Swiper>
         {product?.price?.discount?.active && (
           <div className={`absolute left-2 top-2 z-[1] text-white text-[13px]`}>
-            <div
-              className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}
-            >
+            <div className={`bg-[#c23d27] px-[0.85rem] py-1 rounded-lg font-bold`}>
               -
               {(
-                ((product?.price?.price?.original -
-                  product?.price?.price?.discount) /
+                ((product?.price?.price?.original - product?.price?.price?.discount) /
                   product?.price?.price?.original) *
                 100
               ).toFixed(0)}
@@ -256,10 +240,11 @@ export const Thumb = ({
           <div
             className={`absolute right-2 top-2 z-[1] text-center text-white text-[13px] flex flex-col gap-2`}
           >
-            {product?.stickers?.map((sticker) => {
+            {product?.stickers?.map((sticker, index) => {
               return (
                 <div
                   className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
+                  key={index}
                 >
                   {sticker?.name}
                 </div>
@@ -268,9 +253,9 @@ export const Thumb = ({
           </div>
         )}
         {variantOptionSize?.values?.length > 0 ? (
-          <div className="absolute z-[100] py-2 left-0 bottom-0 w-full mx-auto bg-white chevrons opacity-90">
-            <div className="flex flex-col items-center justify-center w-[80%] mx-auto">
-              <div className="flex flex-row items-center justify-center gap-3  mt-2 w-full">
+          <div className='absolute z-[100] py-2 left-0 bottom-0 w-full mx-auto bg-white chevrons opacity-90'>
+            <div className='flex flex-col items-center justify-center w-[80%] mx-auto'>
+              <div className='flex flex-row items-center justify-center gap-3  mt-2 w-full'>
                 <Swiper
                   slidesPerView={3}
                   breakpoints={{
@@ -287,23 +272,19 @@ export const Thumb = ({
                       slidesPerView: 5,
                     },
                   }}
-                  className="variantsSwiper"
+                  className='variantsSwiper'
                   loop={true}
                   rewind={true}
-                  dir={"ltr"}
+                  dir={'ltr'}
                   modules={[Navigation]}
-                  navigation={
-                    variantOptionSize?.values?.length >
-                    swiper?.params?.slidesPerView
-                  }
-                  style={{ width: "100%", display: "block" }}
+                  navigation={variantOptionSize?.values?.length > swiper?.params?.slidesPerView}
+                  style={{ width: '100%', display: 'block' }}
                   onSwiper={(swiper) => {
                     setSwiper(swiper);
                   }}
                 >
                   {variantOptionSize?.values?.map((item3) => {
-                    const variantAttributeKey =
-                      variantOptionSize?.attribute?.key;
+                    const variantAttributeKey = variantOptionSize?.attribute?.key;
                     const isSelected = selected?.find(
                       (selection) =>
                         selection?.attribute_key === variantAttributeKey &&
@@ -313,8 +294,7 @@ export const Thumb = ({
                       <SwiperSlide key={item3?.name}>
                         <div
                           className={`max-sm:scale-[0.8] rounded-full mx-auto cursor-pointer flex items-center justify-center text-center text-xs w-[35px] h-[35px] border-[#7d7d7d] hover:border-[#242424] transition-all duration-500 border ${
-                            isSelected &&
-                            variantAttributeKey === variantAttributeKey
+                            isSelected && variantAttributeKey === variantAttributeKey
                               ? `border-[#242424] bg-[#242424] text-white`
                               : ``
                           }`}
@@ -322,9 +302,7 @@ export const Thumb = ({
                             if (product?.variant_options?.length > 1) {
                               setSelected((prevSelected) => {
                                 const filteredSelections = prevSelected?.filter(
-                                  (selection) =>
-                                    selection?.attribute_key !==
-                                    variantAttributeKey
+                                  (selection) => selection?.attribute_key !== variantAttributeKey
                                 );
 
                                 return [
@@ -343,19 +321,14 @@ export const Thumb = ({
                                 );
                                 const data = res?.payload?.data;
                                 if (data?.variant_items) {
-                                  const clickedVariant =
-                                    data?.variant_items?.find((variantItem) => {
-                                      return variantItem?.variant_key_array?.some(
-                                        (variantKey) => {
-                                          return (
-                                            variantKey?.value_key === item3.key
-                                          );
-                                        }
-                                      );
-                                    });
-                                  setProductVariant(
-                                    clickedVariant?.basic_data?.id_product
+                                  const clickedVariant = data?.variant_items?.find(
+                                    (variantItem) => {
+                                      return variantItem?.variant_key_array?.some((variantKey) => {
+                                        return variantKey?.value_key === item3.key;
+                                      });
+                                    }
                                   );
+                                  setProductVariant(clickedVariant?.basic_data?.id_product);
                                 }
                               };
                               productVariantGet();
@@ -375,10 +348,10 @@ export const Thumb = ({
           </div>
         ) : null}
       </div>
-      <div className="mt-[0.813rem] flex items-center justify-between relative z-[50]">
+      <div className='mt-[0.813rem] flex items-center justify-between relative z-[50]'>
         <Link
           href={`/${product?.link?.link_path}`}
-          className="max-md:text-[0.85] text-[0.813rem] relative max-md:leading-4 max-sm:line-clamp-1"
+          className='max-md:text-[0.85] text-[0.813rem] relative max-md:leading-4 max-sm:line-clamp-1'
         >
           <h3>{product?.basic_data?.name}</h3>
         </Link>
@@ -392,37 +365,37 @@ export const Thumb = ({
             }
           }}
           className={`max-md:hidden rounded-full p-1 group cursor-pointer ${
-            isInWishlist?.exist ? "" : "hover:bg-red-500"
+            isInWishlist?.exist ? '' : 'hover:bg-red-500'
           }`}
         >
           {isInWishlist?.exist && <p> </p>}
           {!isInWishlist?.exist ? (
             <Image
               src={Wishlist}
-              alt="wishlist"
+              alt='wishlist'
               width={15}
               height={15}
               className={`${
-                isInWishlist?.exist && "!hidden "
+                isInWishlist?.exist && '!hidden '
               } group-hover:invert block w-full h-full`}
             />
           ) : (
             <Image
               src={WishlistActive}
-              alt="wishlist"
+              alt='wishlist'
               width={15}
               height={15}
               className={`${
-                isInWishlist?.exist && "!block"
+                isInWishlist?.exist && '!block'
               } hidden group-hover:block w-full h-full`}
             />
           )}
         </div>
       </div>
-      <div className="flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem] min-w-[5.938rem] max-w-max">
+      <div className='flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem] min-w-[5.938rem] max-w-max'>
         <div
           className={`${
-            product?.price?.discount?.active && "bg-[#f8ce5d] px-2"
+            product?.price?.discount?.active && 'bg-[#f8ce5d] px-2'
           }  md:mt-3 font-bold text-center`}
         >
           <ProductPrice price={product?.price} inventory={product?.inventory} />
@@ -432,13 +405,10 @@ export const Thumb = ({
             {currencyFormat(product?.price?.price?.original)}
           </span>
         )}
-      </div>{" "}
+      </div>{' '}
       <div className={`absolute bottom-[-20px] w-full`}>
-        <div
-          className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
-        >
-          {loading?.status &&
-          loading?.id === product?.basic_data?.id_product ? (
+        <div className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}>
+          {loading?.status && loading?.id === product?.basic_data?.id_product ? (
             <i className={`fa fa-solid fa-spinner animate-spin text-xl`}></i>
           ) : (
             <>
@@ -446,8 +416,7 @@ export const Thumb = ({
                 const variantAttributeKey = variantOptionColor?.attribute?.key;
                 const isSelected = selected.find(
                   (item) =>
-                    item?.attribute_key === variantAttributeKey &&
-                    item?.value_key === item3?.key
+                    item?.attribute_key === variantAttributeKey && item?.value_key === item3?.key
                 );
 
                 return (
@@ -460,8 +429,7 @@ export const Thumb = ({
                       setSelected((prevSelected) => {
                         // Remove previous selections with the same variantAttributeKey
                         const filteredSelections = prevSelected.filter(
-                          (selection) =>
-                            selection.attribute_key !== variantAttributeKey
+                          (selection) => selection.attribute_key !== variantAttributeKey
                         );
                         return [
                           ...filteredSelections,
@@ -477,13 +445,13 @@ export const Thumb = ({
                     {item3?.image && (
                       <Image
                         src={item3?.image}
-                        alt=""
-                        className="rounded-full"
+                        alt=''
+                        className='rounded-full'
                         fill
                         sizes={
-                          "(max-width: 639px) 15px, (max-width: 767px) 15px, (max-width: 1023px) 15px, (max-width: 1279px) 15px, 15px"
+                          '(max-width: 639px) 15px, (max-width: 767px) 15px, (max-width: 1023px) 15px, (max-width: 1279px) 15px, 15px'
                         }
-                        style={{ objectFit: "cover" }}
+                        style={{ objectFit: 'cover' }}
                       />
                     )}
                   </div>
@@ -494,13 +462,13 @@ export const Thumb = ({
         </div>
         {variantOptionColor?.values?.length > 1 && (
           <div className={`text-[0.75rem] text-left mt-1 hoveredColor1`}>
-            + {variantOptionColor?.values?.length - 1}{" "}
+            + {variantOptionColor?.values?.length - 1}{' '}
             {variantOptionColor?.values?.length - 1 === 1
-              ? "boja"
+              ? 'boja'
               : variantOptionColor?.values?.length - 1 >= 2 &&
                 variantOptionColor?.values?.length - 1 <= 4
-              ? "boje"
-              : "boja"}
+              ? 'boje'
+              : 'boja'}
           </div>
         )}
       </div>
