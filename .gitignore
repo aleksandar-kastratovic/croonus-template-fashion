@@ -85,3 +85,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+#prettier configuration
+.prettierrc
