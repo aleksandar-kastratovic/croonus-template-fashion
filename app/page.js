@@ -51,7 +51,7 @@ const Home = async () => {
   let base_url = all_headers.get("x-base_url");
 
   let schema = generateOrganizationSchema(base_url);
-console.log('TEST')
+
   return (
     <>
       <script
