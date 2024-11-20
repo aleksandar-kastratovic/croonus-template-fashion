@@ -3,7 +3,7 @@ import { SingleCategory } from "@/components/CategoryPage/single-category";
 import { CategoryProducts } from "@/components/CategoryPage/category-products";
 import { ToastContainer } from "react-toastify";
 
-export const CategoryData = ({
+const CategoryData = ({
   slug,
   className,
   sortDirection,
@@ -62,3 +62,6 @@ export const CategoryData = ({
     </>
   );
 };
+
+
+export default CategoryData;
