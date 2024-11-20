@@ -1,4 +1,4 @@
-import { CategoryData } from "@/components/sections/categories/CategoryPage";
+import CategoryData from "@/components/sections/categories/CategoryPage";
 
 const Section = async ({
   params: { path },
