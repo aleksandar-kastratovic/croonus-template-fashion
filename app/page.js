@@ -52,6 +52,7 @@ const Home = async () => {
 
   let schema = generateOrganizationSchema(base_url);
 
+  
   return (
     <>
       <script
