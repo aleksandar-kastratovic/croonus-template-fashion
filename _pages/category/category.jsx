@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { get } from "@/api/api";
 import Loading from "@/components/sections/categories/Loader";
 import Category from "@/components/sections/categories/Category";
-import { CategoryData } from "@/components/sections/categories/CategoryPage";
+import CategoryData from "@/components/sections/categories/CategoryPage";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import { headers } from "next/headers";
 
