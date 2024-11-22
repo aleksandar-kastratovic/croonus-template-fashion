@@ -3,12 +3,30 @@ const fs = require("fs");
 const path = require("path");
 
 /**
+ * Kreira sitemap fajlove sa odgovarajućom strukturom direktorijuma
+ *
+ * @param {Array} sitemapData - Podaci o sitemap fajlovima (putanja i sadržaj)
+ */
+const createSitemapFiles = (sitemapData) => {
+  sitemapData.forEach(({ path: filePath, content }) => {
+    // Formiranje apsolutne putanje na osnovu public/sitemap i file path
+    const outputPath = path.join(process.cwd(), "public", filePath);
+
+    // Kreiranje potrebnih direktorijuma ukoliko ne postoje
+    const outputDir = path.dirname(outputPath);
+    fs.mkdirSync(outputDir, { recursive: true });
+
+    // Zapisivanje XML sadržaja u fajl
+    fs.writeFileSync(outputPath, content, "utf-8");
+    console.log(`Sitemap file created: ${filePath}`);
+  });
+};
+
+/**
  * buildSitemapFile - Generiše sitemap fajlove za aplikaciju
  * Funkcija se poziva prilikom build procesa.
- * Dohvata podatke preko API-ja, kreira pojedinačne XML fajlove i glavni sitemap.
  *
  * @returns {Promise<{ success: boolean }>} - Indikacija uspešnosti generisanja sitemap-a
- * @throws {Error} - Ako dođe do greške tokom procesa generisanja
  */
 const buildSitemapFile = async () => {
   try {
@@ -45,10 +63,7 @@ const buildSitemapFile = async () => {
 
         sitemapData.push({ path: file.path, content: xmlContent });
       } catch (fetchError) {
-        console.error(
-          `Error fetching content for file: ${file.path}`,
-          fetchError
-        );
+        console.error(`Error fetching content for file: ${file.path}`, fetchError);
         continue;
       }
     }
@@ -59,29 +74,10 @@ const buildSitemapFile = async () => {
       throw new Error("No valid sitemap data fetched");
     }
 
-    // Kreiranje pojedinačnih sitemap fajlova
-    sitemapData.forEach(({ path: filePath, content }) => {
-      const fileName = filePath.split("/").pop();
-      const outputPath = path.join(process.cwd(), "public", fileName);
-      fs.writeFileSync(outputPath, content, "utf-8");
-      console.log(`Sitemap file created: ${fileName}`);
-    });
+    // Kreiranje sitemap fajlova sa odgovarajućom strukturom direktorijuma
+    createSitemapFiles(sitemapData);
 
-    // Kreiranje glavnog sitemap.xml fajla
-    const urls = sitemapData.map(({ path: filePath }) => {
-      const fileName = filePath.split("/").pop();
-      return `<sitemap><loc>http://localhost:3000/${fileName}</loc></sitemap>`;
-    });
-
-    const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
-      <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-        ${urls.join("\n")}
-      </sitemapindex>`;
-
-    const globalSitemapPath = path.join(process.cwd(), "public", "sitemap.xml");
-    fs.writeFileSync(globalSitemapPath, indexXml, "utf-8");
-    console.log("Global sitemap created: sitemap.xml");
-
+    console.log("Sitemap generation completed successfully.");
     return { success: true };
   } catch (error) {
     console.error("Error during sitemap generation:", error.message);
