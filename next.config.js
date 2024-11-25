@@ -27,6 +27,14 @@ const nextConfig = {
     ],
     minimumCacheTTL: 60 * 60 * 24 * 90,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/robots.txt",
+        destination: "/api/robots",
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

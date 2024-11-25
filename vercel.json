@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/cron/route.js": {
+      "runtime": "edge",
+      "schedule": "0 9 */7 * *"
+    }
+  }
+}
