@@ -24,8 +24,16 @@ import { get } from "@/api/api_staging";
  */
 
 export async function GET(req) {
+
+  console.log("CRON_SECRET from environment:", process.env.CRON_SECRET);
+  console.log("Authorization header received:", req.headers.get("Authorization"));
+
   // Provera autorizacije
   if (req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
+
+    console.log("CRON_SECRET from environment:", process.env.CRON_SECRET);
+    console.log("Authorization header received:", req.headers.get("Authorization"));
+
     return new Response("Unauthorized", { status: 401 });
   }
   try {
