@@ -23,12 +23,13 @@ import { get } from "@/api/api_staging";
  */
 
 export async function GET(req) {
+
   // Provera autorizacije
   if (req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 });
   }
   try {
-    console.log("Cron job triggered.");
+    console.log("Cron job triggered at:", new Date().toISOString());
 
     // Provera statusa sitemap-a sa API-ja
     const statusResponse = await get(`/sitemap/status`);
