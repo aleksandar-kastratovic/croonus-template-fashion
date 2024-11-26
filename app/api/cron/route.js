@@ -22,7 +22,11 @@ import { get } from "@/api/api_staging";
  * @returns {Promise<Response>} - JSON odgovor o statusu sitemap regeneracije.
  */
 
-export async function GET() {
+export async function GET(req) {
+  // Provera autorizacije
+  if (req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new Response("Unauthorized", { status: 401 });
+  }
   try {
     console.log("Cron job triggered.");
 
