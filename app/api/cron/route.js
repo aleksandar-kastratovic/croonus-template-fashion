@@ -29,7 +29,7 @@ export async function GET(req) {
     return new Response("Unauthorized", { status: 401 });
   }
   try {
-    console.log("Cron job triggered at:", new Date().toISOString());
+    console.log("Cron job triggered at:", new Date().toISOString(),' |TIME');
 
     // Provera statusa sitemap-a sa API-ja
     const statusResponse = await get(`/sitemap/status`);
