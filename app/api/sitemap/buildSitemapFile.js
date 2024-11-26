@@ -38,7 +38,7 @@ const createSitemapFiles = (sitemapData) => {
 const deleteOldSitemaps = () => {
   const sitemapDir = "/tmp";
   if (fs.existsSync(sitemapDir)) {
-    fs.rmdirSync(sitemapDir, { recursive: true });
+    fs.rmSync(sitemapDir, { recursive: true, force: true });
     console.log("Old sitemap files deleted.");
   } else {
     console.log("No old sitemap files found.");
@@ -59,6 +59,9 @@ const deleteOldSitemaps = () => {
 const buildSitemapFile = async () => {
   try {
     // Brise vec kreirane fajlove ako postoje
+    console.log(`Checking /tmp directory: ${fs.existsSync("/tmp")}`);
+    console.log(`Attempting to delete /tmp directory...`);
+
     deleteOldSitemaps();
 
     // Dohvatanje liste fajlova za sitemap
