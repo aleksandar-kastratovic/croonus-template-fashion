@@ -19,6 +19,7 @@ import { get } from "@/api/api_staging";
 /**
  * GET handler za cron rutu
  *
+ * @param {Request} req - HTTP zahtev koji sadrži informacije o autorizaciji cron secret.
  * @returns {Promise<Response>} - JSON odgovor o statusu sitemap regeneracije.
  */
 
