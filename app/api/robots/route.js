@@ -32,6 +32,7 @@ export async function GET(req) {
     status: 200,
     headers: {
       "Content-Type": "text/plain",
+      "Cache-Control": "s-maxage=86400, stale-while-revalidate",
     },
   });
 }

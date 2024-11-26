@@ -36,7 +36,13 @@ export async function GET(req) {
     // Ako fajl postoji u `/tmp`, koristi ga
     if (fs.existsSync(filePath)) {
       const sitemap = fs.readFileSync(filePath, "utf-8");
-      return new Response(sitemap, { status: 200, headers: { "Content-Type": "application/xml" } });
+      return new Response(sitemap, {
+        status: 200,
+        headers: {
+          "Content-Type": "application/xml",
+          "Cache-Control": "s-maxage=86400, stale-while-revalidate",
+        },
+      });
     }
 
     // Ako fajl ne postoji, generiše sve sitemap fajlove
@@ -46,7 +52,13 @@ export async function GET(req) {
     // Pokušava ponovo da pročita generisani fajl
     if (fs.existsSync(filePath)) {
       const sitemap = fs.readFileSync(filePath, "utf-8");
-      return new Response(sitemap, { status: 200, headers: { "Content-Type": "application/xml" } });
+      return new Response(sitemap, {
+        status: 200,
+        headers: {
+          "Content-Type": "application/xml",
+          "Cache-Control": "s-maxage=86400, stale-while-revalidate",
+        },
+      });
     } else {
       return new Response(JSON.stringify({ message: "Sitemap file not found." }), {
         status: 404,
