@@ -36,12 +36,20 @@ const createSitemapFiles = (sitemapData) => {
  * kako bi se osiguralo da novi sitemap fajlovi ne preklapaju postojeće.
  */
 const deleteOldSitemaps = () => {
-  const sitemapDir = "/tmp";
+  const sitemapDir = "/tmp/sitemap";
   if (fs.existsSync(sitemapDir)) {
-    fs.rmSync(sitemapDir, { recursive: true, force: true });
+    // Brisanje svih fajlova i poddirektorijuma unutar sitemap direktorijuma
+    fs.readdirSync(sitemapDir).forEach((file) => {
+      const filePath = path.join(sitemapDir, file);
+      if (fs.lstatSync(filePath).isDirectory()) {
+        fs.rmSync(filePath, { recursive: true, force: true });
+      } else {
+        fs.unlinkSync(filePath);
+      }
+    });
     console.log("Old sitemap files deleted.");
   } else {
-    console.log("No old sitemap files found.");
+    console.log("No sitemap directory found to delete.");
   }
 };
 
