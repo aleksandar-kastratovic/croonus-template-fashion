@@ -1,16 +1,10 @@
-/*
- * Modul za generisanje sitemap fajlova
- *
- * Omogućava dinamičko kreiranje sitemap fajlova na osnovu podataka dobijenih
- * od API-ja. Fajlovi se generišu u `/tmp` direktorijumu zbog ograničenja Vercel platforme.
- */
-
 const { list, fetch } = require("../../../api/api_staging");
 const fs = require("fs");
 const path = require("path");
 
 /**
  * Kreira sitemap fajlove sa odgovarajućom strukturom direktorijuma
+ * Fajlovi se generisu u `/tmp` direktorijumu
  *
  * @param {Array} sitemapData - Podaci o sitemap fajlovima (putanja i sadržaj)
  */
@@ -100,7 +94,10 @@ const buildSitemapFile = async () => {
 
         sitemapData.push({ path: file.path, content: xmlContent });
       } catch (fetchError) {
-        console.error(`Error fetching content for file: ${file.path}`, fetchError);
+        console.error(
+          `Error fetching content for file: ${file.path}`,
+          fetchError
+        );
         continue;
       }
     }

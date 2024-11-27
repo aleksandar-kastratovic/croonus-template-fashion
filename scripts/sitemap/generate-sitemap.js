@@ -5,8 +5,8 @@
  * @returns {Promise<{ success: boolean }>}
  */
 
-const { get } = require("../api/api_staging");
-const { buildSitemapFile } = require("../app/api/sitemap/buildSitemapFile");
+const { get } = require("../../api/api_staging");
+const { buildSitemapFile } = require("../../app/api/sitemap/buildSitemapFile");
 
 const generateSitemap = async () => {
   try {

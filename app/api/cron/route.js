@@ -17,6 +17,20 @@ import { buildSitemapFile } from "@/app/api/sitemap/buildSitemapFile";
 import { get } from "@/api/api_staging";
 
 /**
+ * Odgovor za API
+ *
+ * @param {string} message - Poruka odgovora.
+ * @param {number} status - HTTP status kod.
+ * @returns {Response} - HTTP odgovor.
+ */
+function createResponse(message, status) {
+  return new Response(JSON.stringify({ message }), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+/**
  * GET handler za cron rutu
  *
  * @param {Request} req - HTTP zahtev koji sadrži informacije o autorizaciji cron secret.
@@ -24,18 +38,19 @@ import { get } from "@/api/api_staging";
  */
 
 export async function GET(req) {
-
   console.log("CRON_SECRET from environment:", process.env.CRON_SECRET);
-  console.log("Authorization header received:", req.headers.get("Authorization"));
+  console.log(
+    "Authorization header received:",
+    req.headers.get("Authorization")
+  );
 
   // Provera autorizacije
-  if (req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
-
-    console.log("CRON_SECRET from environment:", process.env.CRON_SECRET);
-    console.log("Authorization header received:", req.headers.get("Authorization"));
-
-    return new Response("Unauthorized", { status: 401 });
+  if (
+    req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return createResponse("Unauthorized", 401);
   }
+
   try {
     console.log("Cron job triggered at:", new Date().toISOString());
 
@@ -46,22 +61,13 @@ export async function GET(req) {
     if (status === true) {
       console.log("Sitemap status is true. Regenerating sitemap...");
       await buildSitemapFile();
-      return new Response(JSON.stringify({ message: "Sitemap successfully updated." }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
+      return createResponse("Sitemap successfully updated.", 200);
     } else {
       console.log("Sitemap status is false. No updates needed.");
-      return new Response(JSON.stringify({ message: "No changes detected in sitemap." }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
+      return createResponse("No changes detected in sitemap.", 200);
     }
   } catch (error) {
     console.error("Error in cron job:", error.message);
-    return new Response(JSON.stringify({ message: "Failed to update sitemap." }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return createResponse("Failed to update sitemap.", 500);
   }
 }

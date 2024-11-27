@@ -1,20 +1,32 @@
-/*
- * API ruta za dinamičko serviranje sitemap fajlova
- *
- * Omogućava pretraživačima (crawler-ima) da pristupe sitemap fajlovima
- * generisanim u `/tmp` direktorijumu. Ako traženi fajl ne postoji, ruta automatski
- * pokreće generisanje svih sitemap fajlova i ponovo pokušava da ga učita.
- */
-
 import fs from "fs";
 import path from "path";
-import { buildSitemapFile } from "@/app/api/sitemap/buildSitemapFile";
 
 /**
- * GET handler za serviranje sitemap fajlova
+ * Kreira HTTP odgovor sa zadatim statusom, porukom i opcionalnim zaglavljima.
  *
- * @param {Request} req - HTTP zahtev sa query parametrom `slug` koji određuje traženi fajl.
- * @returns {Promise<Response>} - XML sadržaj traženog sitemap fajla ili JSON poruka o grešci.
+ * @param {string} message - Poruka odgovora.
+ * @param {number} status - HTTP status kod.
+ * @param {Object} [headers] - Dodatni HTTP zaglavlja (opciono).
+ * @returns {Response} - HTTP odgovor.
+ */
+function createResponse(
+  message,
+  status,
+  headers = { "Content-Type": "application/json" }
+) {
+  const body =
+    headers["Content-Type"] === "application/json"
+      ? JSON.stringify({ message })
+      : message;
+  return new Response(body, { status, headers });
+}
+
+/**
+ * API ruta za dinamičko serviranje sitemap fajlova na osnovu query parametra `slug`.
+ * Omogućava crawler-ima pristup sitemap fajlovima u /tmp direktorijumu.
+ *
+ * @param {Request} req - HTTP zahtev sa query parametrom `slug`.
+ * @returns {Promise<Response>} - XML sadržaj sitemap fajla ili JSON poruka o grešci.
  */
 
 export async function GET(req) {
@@ -24,10 +36,7 @@ export async function GET(req) {
     const slug = searchParams.get("slug");
 
     if (!slug) {
-      return new Response(JSON.stringify({ message: "Missing `slug` parameter." }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return createResponse("Missing `slug` parameter.", 400);
     }
 
     // Formiranje putanje do traženog fajla u `/tmp` direktorijumu
@@ -36,40 +45,15 @@ export async function GET(req) {
     // Ako fajl postoji u `/tmp`, koristi ga
     if (fs.existsSync(filePath)) {
       const sitemap = fs.readFileSync(filePath, "utf-8");
-      return new Response(sitemap, {
-        status: 200,
-        headers: {
-          "Content-Type": "application/xml",
-          "Cache-Control": "s-maxage=86400, stale-while-revalidate",
-        },
+      return createResponse(sitemap, 200, {
+        "Content-Type": "application/xml",
+        "Cache-Control": "s-maxage=86400, stale-while-revalidate",
       });
     }
 
-    // Ako fajl ne postoji, generiše sve sitemap fajlove
-    console.log("Sitemap file not found. Generating...");
-    await buildSitemapFile();
-
-    // Pokušava ponovo da pročita generisani fajl
-    if (fs.existsSync(filePath)) {
-      const sitemap = fs.readFileSync(filePath, "utf-8");
-      return new Response(sitemap, {
-        status: 200,
-        headers: {
-          "Content-Type": "application/xml",
-          "Cache-Control": "s-maxage=86400, stale-while-revalidate",
-        },
-      });
-    } else {
-      return new Response(JSON.stringify({ message: "Sitemap file not found." }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+    return createResponse("Sitemap file not found.", 404);
   } catch (error) {
     console.error("Error serving sitemap:", error.message);
-    return new Response(JSON.stringify({ message: "Internal server error." }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return createResponse("Internal server error.", 500);
   }
 }
