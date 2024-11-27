@@ -45,11 +45,11 @@ export async function GET(req) {
   );
 
   // Provera autorizacije
-  if (
-    req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
-  ) {
-    return createResponse("Unauthorized", 401);
-  }
+  // if (
+  //   req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
+  // ) {
+  //   return createResponse("Unauthorized", 401);
+  // }
 
   try {
     console.log("Cron job triggered at:", new Date().toISOString());
