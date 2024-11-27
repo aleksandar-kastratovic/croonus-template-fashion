@@ -8,7 +8,7 @@ console.log("Starting local cron testing script...");
 const triggerCron = async () => {
   console.log("Triggering cron job...");
   try {
-    const response = await fetch("http://localhost:3000/api/cron");
+    const response = await fetch("http://localhost:3000/api/sitemap/cron");
     console.log("Cron job triggered, status:", response.status);
 
     if (response.ok) {
