@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/sitemap/cron",
-      "schedule": "0 9 * * *"
+      "schedule": "35 17 * * *"
     }
   ]
 }
