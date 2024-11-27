@@ -38,18 +38,17 @@ function createResponse(message, status) {
  */
 
 export async function GET(req) {
-  console.log("CRON_SECRET from environment:", process.env.CRON_SECRET);
   console.log(
     "Authorization header received:",
     req.headers.get("Authorization")
   );
 
   // Provera autorizacije
-  // if (
-  //   req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
-  // ) {
-  //   return createResponse("Unauthorized", 401);
-  // }
+  if (
+    req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return createResponse("Unauthorized", 401);
+  }
 
   try {
     console.log("Cron job triggered at:", new Date().toISOString());
