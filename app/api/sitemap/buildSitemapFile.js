@@ -61,9 +61,6 @@ const deleteOldSitemaps = () => {
 const buildSitemapFile = async () => {
   try {
     // Brise vec kreirane fajlove ako postoje
-    console.log(`Checking /tmp directory: ${fs.existsSync("/tmp")}`);
-    console.log(`Attempting to delete /tmp directory...`);
-
     deleteOldSitemaps();
 
     // Dohvatanje liste fajlova za sitemap
@@ -104,7 +101,6 @@ const buildSitemapFile = async () => {
 
     // Provera da li ima prikupljenih podataka za zapisivanje
     if (sitemapData.length === 0) {
-      console.error("No valid sitemap data fetched.");
       throw new Error("No valid sitemap data fetched");
     }
 

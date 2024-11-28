@@ -1,12 +1,4 @@
 /*
- * API ruta za zakazano osvežavanje sitemap fajlova
- *
- * Automatsko pokretanje regeneracije sitemap fajlova putem Vercel Scheduled Functions.
- * Proverava status sitemap-a, i ako je potrebno, regeneriše fajlove.
- *
- */
-
-/*
 Kod potreban za lokalno testiranje. Kada se pusti u produkciju obrisati
  export const config = {
      runtime: "nodejs",
@@ -31,18 +23,13 @@ function createResponse(message, status) {
 }
 
 /**
- * GET handler za cron rutu
+ * API ruta za zakazano osvežavanje sitemap fajlova
  *
  * @param {Request} req - HTTP zahtev koji sadrži informacije o autorizaciji cron secret.
- * @returns {Promise<Response>} - JSON odgovor o statusu sitemap regeneracije.
+ * @returns {Promise<Response>} - JSON odgovor o statusu osvežavanja sitemap-a.
  */
 
 export async function GET(req) {
-  console.log(
-    "Authorization header received:",
-    req.headers.get("Authorization")
-  );
-
   // Provera autorizacije
   if (
     req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
@@ -62,7 +49,6 @@ export async function GET(req) {
       await buildSitemapFile();
       return createResponse("Sitemap successfully updated.", 200);
     } else {
-      console.log("Sitemap status is false. No updates needed.");
       return createResponse("No changes detected in sitemap.", 200);
     }
   } catch (error) {
