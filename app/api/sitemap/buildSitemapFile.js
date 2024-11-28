@@ -1,6 +1,20 @@
-const { list, fetch } = require("../../../api/api_staging");
+const { get, list, fetch } = require("../../../api/api_staging");
 const fs = require("fs");
 const path = require("path");
+
+/**
+ * Odgovor za API
+ *
+ * @param {string} message - Poruka odgovora.
+ * @param {number} status - HTTP status kod.
+ * @returns {Response} - HTTP odgovor.
+ */
+function createResponse(message, status) {
+  return new Response(JSON.stringify({ message }), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
 /**
  * Kreira sitemap fajlove sa odgovarajućom strukturom direktorijuma
@@ -60,6 +74,19 @@ const deleteOldSitemaps = () => {
  */
 const buildSitemapFile = async () => {
   try {
+    // Provera statusa sitemap-a sa API-ja
+    const statusResponse = await get(`/sitemap/status`);
+    if (!statusResponse?.payload) {
+      console.error("Sitemap status is unavailable or false.");
+      throw new Error("Sitemap not available");
+    }
+
+    // Ukoliko je status false, izlazi iz funkcije
+    const status = statusResponse?.payload.status;
+    if (status === false) {
+      return createResponse("No changes detected in sitemap.", 200);
+    }
+
     // Brise vec kreirane fajlove ako postoje
     deleteOldSitemaps();
 
@@ -108,7 +135,7 @@ const buildSitemapFile = async () => {
     createSitemapFiles(sitemapData);
 
     console.log("Sitemap generation completed successfully.");
-    return { success: true };
+    return createResponse("Sitemap successfully updated.", 200);
   } catch (error) {
     console.error("Error during sitemap generation:", error.message);
     throw error;

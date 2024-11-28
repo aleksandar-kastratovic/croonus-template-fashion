@@ -1,12 +1,12 @@
 /*
 Kod potreban za lokalno testiranje. Kada se pusti u produkciju obrisati
- export const config = {
-     runtime: "nodejs",
-   };
+
 */
+// export const config = {
+//   runtime: "nodejs",
+// };
 
 import { buildSitemapFile } from "@/app/api/sitemap/buildSitemapFile";
-import { get } from "@/api/api_staging";
 
 /**
  * Odgovor za API
@@ -38,19 +38,8 @@ export async function GET(req) {
   }
 
   try {
-    console.log("Cron job triggered at:", new Date().toISOString());
-
-    // Provera statusa sitemap-a sa API-ja
-    const statusResponse = await get(`/sitemap/status`);
-    const status = statusResponse?.payload.status;
-
-    if (status === true) {
-      console.log("Sitemap status is true. Regenerating sitemap...");
-      await buildSitemapFile();
-      return createResponse("Sitemap successfully updated.", 200);
-    } else {
-      return createResponse("No changes detected in sitemap.", 200);
-    }
+    await buildSitemapFile();
+    return createResponse("Sitemap successfully updated.", 200);
   } catch (error) {
     console.error("Error in cron job:", error.message);
     return createResponse("Failed to update sitemap.", 500);

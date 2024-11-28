@@ -7,8 +7,7 @@
     "generate-config": "node generate-config.js",
     "dev": "next dev",
     "build": "next build && npm run generate-sitemap",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

@@ -22,9 +22,9 @@ const triggerCron = async () => {
   }
 };
 
-// Pokreće cron svakih 2 minuta
+// Pokreće cron svakih 10 sekundi
 console.log("Setting up interval for every 20...");
 setInterval(() => {
   console.log("Running cron task at:", new Date().toISOString());
   triggerCron();
-}, 20 * 1000); // 30 sek
+}, 10 * 1000); // 30 sek
