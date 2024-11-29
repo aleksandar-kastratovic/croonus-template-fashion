@@ -22,8 +22,24 @@ function createResponse(message, status) {
  *
  * @param {Array} sitemapData - Podaci o sitemap fajlovima (putanja i sadržaj)
  */
-const createSitemapFiles = (sitemapData) => {
+
+
+const createSitemapFiles = (sitemapData, baseUrl ) => {
   sitemapData.forEach(({ path: filePath, content }) => {
+
+   // Modifikovanje sadržaja: razlikuje XML fajlove i prave stranice
+   const updatedContent = content.replace(
+    /<loc>(.*?)<\/loc>/g, // Regularni izraz za pronalaženje <loc> tagova
+    (_, loc) => {
+      // Ako URL ukazuje na XML fajl, koristi `slug` za API
+      if (loc.endsWith(".xml")) {
+        return `<loc>${baseUrl}/api/sitemap?slug=${filePath}</loc>`;
+      }
+      // Ako je URL prava stranica, ostavlja originalni link
+      return `<loc>${loc}</loc>`;
+    }
+  );
+
     // Formiranje putanje do fajla u `/tmp` direktorijumu
     const outputPath = path.join("/tmp", filePath);
 
@@ -34,10 +50,28 @@ const createSitemapFiles = (sitemapData) => {
     fs.mkdirSync(outputDir, { recursive: true });
 
     // Zapisivanje XML sadržaja u fajl
-    fs.writeFileSync(outputPath, content, "utf-8");
+    fs.writeFileSync(outputPath, updatedContent, "utf-8");
     console.log(`Sitemap file created: ${filePath}`);
   });
-};
+}
+
+
+// const createSitemapFiles = (sitemapData) => {
+//   sitemapData.forEach(({ path: filePath, content }) => {
+//     // Formiranje putanje do fajla u `/tmp` direktorijumu
+//     const outputPath = path.join("/tmp", filePath);
+
+//     console.log(`Attempting to create file: ${outputPath}`);
+
+//     // Kreiranje potrebnih direktorijuma ukoliko ne postoje
+//     const outputDir = path.dirname(outputPath);
+//     fs.mkdirSync(outputDir, { recursive: true });
+
+//     // Zapisivanje XML sadržaja u fajl
+//     fs.writeFileSync(outputPath, content, "utf-8");
+//     console.log(`Sitemap file created: ${filePath}`);
+//   });
+// };
 
 /**
  * Proverava da li postoji direktorijum `/tmp` i briše sav sadržaj unutar njega
@@ -71,7 +105,7 @@ const deleteOldSitemaps = () => {
  *
  * @returns {Promise<{ success: boolean }>} - Indikacija uspešnosti generisanja sitemap-a.
  */
-const buildSitemapFile = async (fileList) => {
+const buildSitemapFile = async (fileList, baseUrl) => {
   try {
 
     console.log('LIST OF SITEMAP FILES:',fileList)
@@ -88,7 +122,7 @@ const buildSitemapFile = async (fileList) => {
       try {
         const fetchResponse = await fetch(`/sitemap`, { path: file.path });
         const base64Content = fetchResponse?.payload?.file_base64;
-
+console.log("fetchResponse?.payload",fetchResponse?.payload)
         if (!base64Content) {
           console.warn(`No content found for file: ${file.path}`);
           continue;
@@ -113,7 +147,7 @@ const buildSitemapFile = async (fileList) => {
     }
 
     // Kreiranje sitemap fajlova sa odgovarajućom strukturom direktorijuma
-    createSitemapFiles(sitemapData);
+    createSitemapFiles(sitemapData, baseUrl);
 
     console.log("Sitemap generation completed successfully.");
     return createResponse("Sitemap successfully updated.", 200);

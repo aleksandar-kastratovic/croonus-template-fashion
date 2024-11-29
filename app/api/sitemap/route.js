@@ -33,6 +33,11 @@ function createResponse(
  */
 
 export async function GET(req) {
+  // Dinamički izvlacenje protokola i hosta
+  const protocol = headers.get("x-forwarded-proto") || "http";
+  const host = headers.get("host") || "localhost:3000";
+  const baseUrl = `${protocol}://${host}`;
+
   // Parsiranje query parametra `slug` iz URL-a
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug");
@@ -64,7 +69,7 @@ export async function GET(req) {
       if (filesResponse) console.log("!!!!!filesResponse!!!!!!", filesResponse);
 
       if (files) {
-        await buildSitemapFile(files);
+        await buildSitemapFile(files, baseUrl);
 
         const sitemap = fs.readFileSync(filePath, "utf-8");
         return createResponse(sitemap, 200, {
