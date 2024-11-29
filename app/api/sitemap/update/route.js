@@ -29,8 +29,11 @@ function createResponse(message, status) {
  * @returns {Promise<Response>} - JSON odgovor o statusu osvežavanja sitemap-a.
  */
 
-export async function GET(req) {
+export async function POST(req) {
   console.log("req", req);
+
+  const body = await req.json();
+  console.log("Received data from backend:", body);
 
   try {
     await buildSitemapFile();
