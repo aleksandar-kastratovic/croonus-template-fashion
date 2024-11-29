@@ -1,7 +1,6 @@
 import { currencyFormat } from "@/helpers/functions";
 
 const CheckoutTotals = ({ className, options, totals, summary, formData }) => {
-
   return (
     <div className={`flex flex-col pl-2`}>
       <div className={`flex items-center justify-between py-2`}>
@@ -19,7 +18,9 @@ const CheckoutTotals = ({ className, options, totals, summary, formData }) => {
           Iznos ostvarenog popusta:
         </p>
         <p className={`${className} text-[1rem] font-light`}>
-          -
+          {totals?.items_discount_amount + totals?.cart_discount_amount > 0 && (
+            <span>-</span>
+          )}
           {currencyFormat(
             totals?.items_discount_amount + totals?.cart_discount_amount
           )}
