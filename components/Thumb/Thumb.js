@@ -215,7 +215,7 @@ export const Thumb = ({
           {product?.image?.map((item, index) => {
             return (
               <SwiperSlide key={`${slug}-${index}`}>
-                <Link href={`/${product?.link?.link_path}`} className="z-50">
+                <Link href={`/${product?.link?.link_path}`}>
                   <Image
                     src={convertHttpToHttps(
                       image?.id === product?.basic_data?.id_product
@@ -413,7 +413,7 @@ export const Thumb = ({
               height={15}
               className={`${
                 isInWishlist?.exist && "!hidden "
-              } group-hover:invert block w-full h-full`}
+              } group-hover:invert block w-4 h-auto`}
             />
           ) : (
             <Image
@@ -423,7 +423,7 @@ export const Thumb = ({
               height={15}
               className={`${
                 isInWishlist?.exist && "!block"
-              } hidden group-hover:block w-full h-full`}
+              } hidden group-hover:block w-4 h-auto`}
             />
           )}
         </div>

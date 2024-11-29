@@ -151,7 +151,7 @@ const CategoryLogicPage = ({ singleCategory }) => {
               alt="Filter"
               width={20}
               height={20}
-              className={`max-md:ml-auto`}
+              className={`max-md:ml-auto w-5 h-auto`}
             />
             <h1 className="uppercase max-md:hidden max-md:pl-4 font-bold text-[13.74px] text-[#191919]">
               Filteri

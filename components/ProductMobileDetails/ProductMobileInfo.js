@@ -387,7 +387,7 @@ const ProductInfo = ({
                   alt="wishlist"
                   width={39}
                   height={35}
-                  className="h-full object-cover"
+                  className="object-cover w-10 h-auto"
                 />
               </div>
             </div>
