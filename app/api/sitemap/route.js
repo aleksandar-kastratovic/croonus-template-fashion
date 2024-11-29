@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
 
+import { buildSitemapFile } from "@/app/api/sitemap/buildSitemapFile";
+import { list } from "@/api/api_staging";
+
 /**
  * Kreira HTTP odgovor sa zadatim statusom, porukom i opcionalnim zaglavljima.
  *
@@ -30,26 +33,15 @@ function createResponse(
  */
 
 export async function GET(req) {
-
-  console.log(req)
-
+  // Parsiranje query parametra `slug` iz URL-a
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug");
-  console.log("slug",slug)
-  const filePath = path.join("/tmp", slug);
-  console.log("filePath",filePath)
-  console.log("fs.existsSync(filePath)",fs.existsSync(filePath))
-  console.log("sitemap",fs.readFileSync(filePath, "utf-8"))
+
+  if (!slug) {
+    return createResponse("Missing `slug` parameter.", 400);
+  }
 
   try {
-    // Parsiranje query parametra `slug` iz URL-a
-    const { searchParams } = new URL(req.url);
-    const slug = searchParams.get("slug");
-
-    if (!slug) {
-      return createResponse("Missing `slug` parameter.", 400);
-    }
-
     // Formiranje putanje do traženog fajla u `/tmp` direktorijumu
     const filePath = path.join("/tmp", slug);
 
@@ -60,9 +52,27 @@ export async function GET(req) {
         "Content-Type": "application/xml",
         "Cache-Control": "s-maxage=86400, stale-while-revalidate",
       });
-    }
+    } else {
+      // Dohvatanje liste fajlova za sitemap
+      const filesResponse = await list(`/sitemap/files`);
+      const files = filesResponse?.payload?.files;
+      if (!files || files.length === 0) {
+        console.error("No sitemap files found.");
+        throw new Error("No sitemap files found");
+      }
 
-    return createResponse("Sitemap file not found.", 404);
+      if (filesResponse) console.log("!!!!!filesResponse!!!!!!", filesResponse);
+
+      if (files) {
+        await buildSitemapFile(files);
+
+        const sitemap = fs.readFileSync(filePath, "utf-8");
+        return createResponse(sitemap, 200, {
+          "Content-Type": "application/xml",
+          "Cache-Control": "s-maxage=86400, stale-while-revalidate",
+        });
+      }
+    }
   } catch (error) {
     console.error("Error serving sitemap:", error.message);
     return createResponse("Internal server error.", 500);

@@ -6,7 +6,7 @@
     "generate-sitemap": "node scripts/sitemap/generate-sitemap.js",
     "generate-config": "node generate-config.js",
     "dev": "next dev",
-    "build": "next build && npm run generate-sitemap",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
