@@ -20,7 +20,7 @@ const generateSitemap = async () => {
 
     if (filesResponse) console.log("!!!!!filesResponse!!!!!!", filesResponse);
 
-    if (files) await buildSitemapFile(files);
+    if (files) await buildSitemapFile(files, 'http://localhost:3000');
   } catch (error) {
     console.error("Error during sitemap generation:", error.message);
     throw error;

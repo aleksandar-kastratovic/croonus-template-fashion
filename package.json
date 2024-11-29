@@ -5,7 +5,7 @@
   "scripts": {
     "generate-sitemap": "node scripts/sitemap/generate-sitemap.js",
     "generate-config": "node generate-config.js",
-    "dev": "npm run generate-sitemap && next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
