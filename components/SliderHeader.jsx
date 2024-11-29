@@ -27,7 +27,7 @@ const SliderHeader = () => {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        loop={true}
+        loop={banners.length <= 2 ? false : true}
         modules={[Autoplay]}
         getswiper={setSwiper}
         centeredSlides={true}

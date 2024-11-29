@@ -23,10 +23,10 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={`${await getHTMLLang()}`}>
       <head>
-        <Script
+        {/* <Script
           crossOrigin="anonymous"
           src="https://kit.fontawesome.com/f141ac3909.js"
-        />{" "}
+        />{" "} */}
         <link
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"

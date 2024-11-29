@@ -16,6 +16,7 @@ const RecommendedCategories = ({ categories }) => {
                   src={category?.images?.image}
                   alt={category.slug}
                   fill
+                  sizes="100vw"
                   priority={true}
                   className="h-full bg-fixed max-xl:object-cover"
                 />

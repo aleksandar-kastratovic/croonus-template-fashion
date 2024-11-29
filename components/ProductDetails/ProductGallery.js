@@ -129,7 +129,10 @@ export const ProductGallery = ({ slug }) => {
 
   const thumbImage = gallery?.map((image, index) => {
     return (
-      <SwiperSlide key={index} className={`!overflow-hidden !aspect-2/3`}>
+      <SwiperSlide
+        key={`${slug}-${index}-thumbImage`}
+        className={`!overflow-hidden !aspect-2/3`}
+      >
         <Image
           src={convertHttpToHttps(image?.image)}
           alt={`croonus Shop`}
@@ -249,7 +252,9 @@ export const ProductGallery = ({ slug }) => {
                   key={sticker?.id}
                   className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
                 >
-                  <span className={`text-[0.75rem] text-white`}>{sticker?.name}</span>
+                  <span className={`text-[0.75rem] text-white`}>
+                    {sticker?.name}
+                  </span>
                 </div>
               );
             })}
@@ -260,8 +265,7 @@ export const ProductGallery = ({ slug }) => {
         onSwiper={(swiper) => setThumbsSwiper(swiper)}
         spaceBetween={10}
         id={`thumbsSwiper`}
-        slidesPerView={0}
-        loop={true}
+        slidesPerView={4}
         breakpoints={{
           320: {
             direction: "horizontal",
@@ -286,6 +290,7 @@ export const ProductGallery = ({ slug }) => {
         {" "}
         {thumbImage}
         <div
+          slot="container-start"
           className={`absolute ${
             productGallery?.gallery?.length > swiper?.params?.slidesPerView
               ? `block`
@@ -354,12 +359,16 @@ export const ProductGallery = ({ slug }) => {
             >
               {productGallery?.gallery?.map((image, index) => {
                 return (
-                  <SwiperSlide key={index} className="w-full">
+                  <SwiperSlide
+                    key={`${slug}-${index}-product-image-first-swiper`}
+                    className="w-full"
+                  >
                     <div className="swiper-zoom-container">
                       <Image
                         src={image?.image}
                         alt={`Croonus Shop`}
                         layout="fill"
+                        sizes="100vw"
                         objectFit="cover"
                         priority={true}
                         className="cursor-pointer w-full h-auto"

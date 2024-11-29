@@ -46,7 +46,7 @@ export const Wishlist = ({ product }) => {
           alt="wishlist"
           width={39}
           height={35}
-          className={``}
+          className={`w-10 h-auto`}
         />
       ) : (
         <Image
@@ -54,7 +54,9 @@ export const Wishlist = ({ product }) => {
           alt="wishlist"
           width={39}
           height={35}
-          className={`favorite ${!isInWishlist && "group-hover:invert"}`}
+          className={`favorite w-10 h-auto ${
+            !isInWishlist && "group-hover:invert"
+          }`}
         />
       )}
     </div>

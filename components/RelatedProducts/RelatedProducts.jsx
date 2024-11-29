@@ -50,7 +50,8 @@ const RelatedProducts = ({ relatedProducts = [], loading }) => {
                           {item?.image[0]?.toString() && (
                             <Image
                               src={item?.image[0]?.toString()}
-                              fill={true}
+                              fill
+                              sizes="100vw"
                               style={{ objectFit: "contain" }}
                               className={`object-cover`}
                               loading="lazy"

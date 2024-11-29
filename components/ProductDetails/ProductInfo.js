@@ -266,6 +266,7 @@ export const ProductInfo = ({
                 alt="free delivery"
                 width={30}
                 height={30}
+                className="w-7 h-auto"
               />
               <p className="text-sm regular">2 dana isporuka</p>
             </div>
@@ -296,6 +297,7 @@ export const ProductInfo = ({
                 alt="free delivery"
                 width={47}
                 height={42}
+                className="w-11 h-auto"
               />
               <p className="text-sm regular">2 dana isporuka</p>
             </div>

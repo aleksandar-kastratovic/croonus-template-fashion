@@ -133,11 +133,17 @@ const NavigationMobile = () => {
       <div className="xl:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
         <div className="w-[95%] py-3 mx-auto flex justify-between items-center">
           <div onClick={() => setMenuOpen(true)}>
-            <Image alt={``} src={Burger} width={30} height={30} />
+            <Image alt={`HAMBURGER ICON`} src={Burger} width={30} height={30} />
           </div>
           <Link href="/">
             <div className="relative">
-              <Image alt={`logo`} src={"/logo.png"} width={150} height={33} />
+              <Image
+                alt={`logo`}
+                src={"/logo.png"}
+                width={150}
+                height={33}
+                className="w-36 h-auto"
+              />
             </div>
           </Link>
           <div className="relative flex items-center gap-4">
@@ -152,6 +158,7 @@ const NavigationMobile = () => {
               >
                 <Image
                   src="/search.png"
+                  alt="search icon"
                   id="search"
                   width={22}
                   height={22}
@@ -162,6 +169,7 @@ const NavigationMobile = () => {
               <div>
                 <Image
                   src={Search}
+                  alt="search icon"
                   id="search"
                   width={22}
                   height={22}
@@ -170,11 +178,17 @@ const NavigationMobile = () => {
               </div>
             )}
             <Link href={`/login`}>
-              <Image src={User} width={33} height={33} />
+              <Image alt="user icon" src={User} width={33} height={33} />
             </Link>
             <Link href="/korpa">
               <div className="relative">
-                <Image src={Cart} width={33} height={33} />
+                <Image
+                  alt="cart icon"
+                  className="w-10 h-auto"
+                  src={Cart}
+                  width={33}
+                  height={33}
+                />
                 {cartCount > 0 && (
                   <span className="absolute text-white text-xs -top-1 right-0 bg-[#e10000] px-1 py-0 rounded-full">
                     {cartCount}
@@ -219,7 +233,13 @@ const NavigationMobile = () => {
         }
       >
         <div className="w-[95%]  mx-auto flex items-center justify-between py-3.5">
-          <Image src="/logo.png" width={150} height={150} alt="logo" />
+          <Image
+            src="/logo.png"
+            width={150}
+            height={150}
+            alt="logo"
+            className="w-36 h-auto"
+          />
           <i
             className="fas fa-times text-2xl"
             onClick={() => setMenuOpen(false)}
@@ -489,6 +509,7 @@ const NavigationMobile = () => {
                             src={item.image[0]}
                             alt={``}
                             fill
+                            sizes="100vw"
                             className={`object-cover rounded-full`}
                           />
                         </div>

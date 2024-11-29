@@ -319,9 +319,12 @@ export default function Variants({
 
   return (
     <div className="flex flex-col-reverse max-md:gap-7 gap-[25px] max-lg:w-full  ">
-      {variantOptions?.map((item) => {
+      {variantOptions?.map((item, itemIndex) => {
         return (
-          <div className="flex flex-col items-start gap-[1.5rem]">
+          <div
+            key={itemIndex}
+            className="flex flex-col items-start gap-[1.5rem]"
+          >
             <label
               htmlFor={item.id}
               className={
@@ -353,10 +356,13 @@ export default function Variants({
               // }}
             >
               {item?.attribute?.name === "Boja"
-                ? item.values.map((value) => {
+                ? item.values.map((value, valueIndex) => {
                     let display = value.display;
                     return (
-                      <div className={display === "show" ? `block` : `hidden`}>
+                      <div
+                        key={value.id}
+                        className={display === "show" ? `block` : `hidden`}
+                      >
                         <button
                           onClick={(e) => {
                             e.preventDefault();
@@ -371,7 +377,6 @@ export default function Variants({
                             }
                             setSelectedColor(value.key);
                           }}
-                          key={value.id}
                           value={value.key}
                           selected={value.selected}
                           style={{ display: value.display }}

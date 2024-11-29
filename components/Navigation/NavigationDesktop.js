@@ -375,6 +375,7 @@ const NavigationDesktop = () => {
                                     src={item.image[0]}
                                     alt={``}
                                     fill
+                                    sizes="100vw"
                                     className={`object-cover rounded-full`}
                                   />
                                 </div>
@@ -461,9 +462,9 @@ const NavigationDesktop = () => {
                     width={40}
                     height={40}
                     alt=""
-                    className={
+                    className={`${
                       background === "white" ? "wiggle" : "invert wiggle"
-                    }
+                    } w-10 h-auto`}
                   />
                   <span className="absolute -top-1 text-white -right-1 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
                     {cartCount}

@@ -68,13 +68,10 @@ export const OrderItemsInfo = ({ order }) => {
         <h1 className={`font-semibold text- border-b-2 border-b-gray-300`}>
           Poručeni artikli
         </h1>
-        {order?.items?.map((item) => {
+        {order?.items?.map((item, itemIndex) => {
           return (
             <Link href={`/${item?.basic_data?.slug}`}>
-              <div
-                className={`flex mt-3 items-center gap-10`}
-                key={Math.random()}
-              >
+              <div className={`flex mt-3 items-center gap-10`} key={itemIndex}>
                 <div>
                   <Image
                     src={item?.basic_data?.image}

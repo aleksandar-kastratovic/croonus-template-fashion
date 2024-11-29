@@ -360,7 +360,7 @@ const Footer = () => {
                 width={50}
                 height={30}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
@@ -369,7 +369,7 @@ const Footer = () => {
                 width={50}
                 height={30}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
@@ -378,7 +378,7 @@ const Footer = () => {
                 width={200}
                 height={70}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
@@ -387,7 +387,7 @@ const Footer = () => {
                 width={50}
                 height={30}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
@@ -396,7 +396,7 @@ const Footer = () => {
                 width={50}
                 height={30}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
@@ -405,7 +405,7 @@ const Footer = () => {
                 width={50}
                 height={30}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
@@ -414,7 +414,7 @@ const Footer = () => {
                 width={50}
                 height={30}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
@@ -423,7 +423,7 @@ const Footer = () => {
                 width={50}
                 height={30}
                 alt="Master Card"
-                className="object-scale-down"
+                className="object-scale-down w-12 h-auto"
               />
             </div>
           </div>

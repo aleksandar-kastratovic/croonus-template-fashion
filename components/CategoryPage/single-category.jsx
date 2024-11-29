@@ -31,7 +31,10 @@ export const SingleCategory = ({ slug, path, base_url, text = "" }) => {
             <>/</>
             {singleCategory?.parents?.map((breadcrumb, index, arr) => {
               return (
-                <div className="flex items-center gap-2">
+                <div
+                  key={`category-parent-${index}`}
+                  className="flex items-center gap-2"
+                >
                   <Link
                     href={`/${breadcrumb?.link?.link_path}`}
                     className="text-[#191919] text-[0.95rem] font-normal"
