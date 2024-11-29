@@ -34,6 +34,7 @@ function createResponse(
 
 export async function GET(req) {
   // Dinamički izvlacenje protokola i hosta
+  const { headers } = req;
   const protocol = headers.get("x-forwarded-proto") || "http";
   const host = headers.get("host") || "localhost:3000";
   const baseUrl = `${protocol}://${host}`;
