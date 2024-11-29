@@ -75,7 +75,7 @@ const buildSitemapFile = async (fileList) => {
   try {
     // Brise vec kreirane fajlove ako postoje
     deleteOldSitemaps();
-
+    return;
     const sitemapData = [];
 
     // Iteracija kroz fajlove i dohvatanje njihovog sadržaja
