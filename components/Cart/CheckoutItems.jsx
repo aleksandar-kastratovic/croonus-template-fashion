@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { currencyFormat } from "@/helpers/functions";
 import PlusMinusInput from "@/components/PlusMinusInput";
 import Link from "next/link";
+import { DeleteIcon } from "../svg/DeleteIcon";
 
 const CheckoutItems = ({
   id,
@@ -48,14 +49,16 @@ const CheckoutItems = ({
   return (
     <>
       <div className={`relative grid grid-cols-4 gap-5`}>
-        <i
-          className={`fas fa-times absolute right-2 top-2 z-10 cursor-pointer ${
+        <button
+          className={`w-8 absolute right-2 top-2 z-10 cursor-pointer ${
             isClosed && !inventory?.inventory_defined && "text-white"
           } text-lg hover:text-red-500`}
           onClick={() => {
             removeFromCart({ id: id });
           }}
-        ></i>
+        >
+          <DeleteIcon className="size-8" />
+        </button>
         <Link href={`/${slug_path}`} className={`col-span-1`}>
           <Image
             src={image?.[0] ?? "/comr.png"}
