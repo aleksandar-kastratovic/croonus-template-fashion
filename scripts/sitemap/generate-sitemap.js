@@ -6,10 +6,19 @@
  */
 
 const { buildSitemapFile } = require("../../app/api/sitemap/buildSitemapFile");
+const { list } = require("../../api/api_staging");
 
 const generateSitemap = async () => {
   try {
-    await buildSitemapFile();
+    // Dohvatanje liste fajlova za sitemap
+    const filesResponse = await list(`/sitemap/files`);
+    const files = filesResponse?.payload?.files;
+    if (!files || files.length === 0) {
+      console.error("No sitemap files found.");
+      throw new Error("No sitemap files found");
+    }
+
+    await buildSitemapFile(files);
   } catch (error) {
     console.error("Error during sitemap generation:", error.message);
     throw error;
@@ -17,6 +26,4 @@ const generateSitemap = async () => {
 };
 
 // Pokretanje generisanja sitemap-a
-generateSitemap()
-  .then(() => console.log("Sitemap generated successfully"))
-  .catch((error) => console.error("Sitemap generation failed:", error.message));
+generateSitemap();

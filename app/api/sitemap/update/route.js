@@ -32,11 +32,19 @@ function createResponse(message, status) {
 export async function POST(req) {
   console.log("req", req);
 
-    const body = await req.json();
-    console.log("Received data from backend:", body);
+  const referer = req.headers.referer || req.headers.origin || '';
+  const clientIP = req.headers["x-forwarded-for"] || req.headers["x-real-ip"];
+  const providedSecret = req.headers["authorization"] || req.headers["x-secret-key"];
+
+  console.log("referer",referer)
+  console.log("clientIP",clientIP)
+  console.log("providedSecret",providedSecret)
+
+  const body = await req.json();
+  console.log("Received data from backend:", body);
 
   try {
-    await buildSitemapFile();
+    await buildSitemapFile(body.files);
     return createResponse("Sitemap successfully updated.", 200);
   } catch (error) {
     console.error("Error in cron job:", error.message);

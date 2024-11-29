@@ -42,9 +42,15 @@ export async function GET(req) {
     // Formiranje putanje do traženog fajla u `/tmp` direktorijumu
     const filePath = path.join("/tmp", slug);
 
+    console.log("filePath",filePath)
+
     // Ako fajl postoji u `/tmp`, koristi ga
     if (fs.existsSync(filePath)) {
       const sitemap = fs.readFileSync(filePath, "utf-8");
+
+
+      console.log("sitemap",sitemap)
+
       return createResponse(sitemap, 200, {
         "Content-Type": "application/xml",
         "Cache-Control": "s-maxage=86400, stale-while-revalidate",

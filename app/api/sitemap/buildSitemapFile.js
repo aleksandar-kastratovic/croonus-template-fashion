@@ -1,4 +1,4 @@
-const { get, list, fetch } = require("../../../api/api_staging");
+const { fetch } = require("../../../api/api_staging");
 const fs = require("fs");
 const path = require("path");
 
@@ -66,42 +66,20 @@ const deleteOldSitemaps = () => {
  *
  * Ova funkcija:
  * 1. Briše stare sitemap fajlove.
- * 2. Dohvata listu fajlova za sitemap sa API-ja.
- * 3. Iterira kroz svaki fajl i preuzima njegov sadržaj.
- * 4. Generiše nove fajlove u `/tmp` direktorijumu.
+ * 2. Iterira kroz svaki fajl i preuzima njegov sadržaj.
+ * 3. Generiše nove fajlove u `/tmp` direktorijumu.
  *
  * @returns {Promise<{ success: boolean }>} - Indikacija uspešnosti generisanja sitemap-a.
  */
-const buildSitemapFile = async () => {
+const buildSitemapFile = async (fileList) => {
   try {
-    // Provera statusa sitemap-a sa API-ja
-    const statusResponse = await get(`/sitemap/status`);
-    if (!statusResponse?.payload) {
-      console.error("Sitemap status is unavailable or false.");
-      throw new Error("Sitemap not available");
-    }
-
-    // Ukoliko je status false, izlazi iz funkcije
-    const status = statusResponse?.payload.status;
-    if (status === false) {
-      return createResponse("No changes detected in sitemap.", 200);
-    }
-
     // Brise vec kreirane fajlove ako postoje
     deleteOldSitemaps();
-
-    // Dohvatanje liste fajlova za sitemap
-    const filesResponse = await list(`/sitemap/files`);
-    const files = filesResponse?.payload?.files;
-    if (!files || files.length === 0) {
-      console.error("No sitemap files found.");
-      throw new Error("No sitemap files found");
-    }
 
     const sitemapData = [];
 
     // Iteracija kroz fajlove i dohvatanje njihovog sadržaja
-    for (const file of files) {
+    for (const file of fileList) {
       console.log(`Generated file: ${file.path}`);
 
       try {
