@@ -18,7 +18,9 @@ const generateSitemap = async () => {
       throw new Error("No sitemap files found");
     }
 
-    await buildSitemapFile(files);
+    if (filesResponse) console.log("!!!!!filesResponse!!!!!!", filesResponse);
+
+    if (files) await buildSitemapFile(files);
   } catch (error) {
     console.error("Error during sitemap generation:", error.message);
     throw error;

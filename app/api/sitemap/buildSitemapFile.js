@@ -73,9 +73,12 @@ const deleteOldSitemaps = () => {
  */
 const buildSitemapFile = async (fileList) => {
   try {
+
+    console.log('LIST OF SITEMAP FILES:',fileList)
+
     // Brise vec kreirane fajlove ako postoje
     deleteOldSitemaps();
-    return;
+
     const sitemapData = [];
 
     // Iteracija kroz fajlove i dohvatanje njihovog sadržaja
