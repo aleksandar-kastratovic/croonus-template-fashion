@@ -4,7 +4,6 @@ import { useGlobalAddToWishList } from "@/api/globals";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import classes from "../RelatedProducts/RelatedProducts.module.css";
 import { Thumb } from "../Thumb/Thumb";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";

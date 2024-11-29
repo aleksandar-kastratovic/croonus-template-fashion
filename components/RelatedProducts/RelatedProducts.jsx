@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useGlobalAddToWishList, useGlobalAddToCart } from "@/api/globals";
 import Image from "next/image";
 import Link from "next/link";
-import classes from "./RelatedProducts.module.css";
 
 import ProductPrice from "@/components/ProductPrice/ProductPrice";
 
@@ -25,7 +24,9 @@ const RelatedProducts = ({ relatedProducts = [], loading }) => {
   return (
     <>
       <div className="relative col-span-2 md:col-span-1 flex flex-col justify-center gap-5 mt-[6rem] lg:col-span-1">
-        <h1 className={`${classes.border} text-2xl font-bold text-black`}>
+        <h1
+          className={`lg:after:absolute lg:after:-bottom-3 lg:after:left-0 lg:after:rounded-sm lg:after:h-0.5 lg:after:bg-[#d91631] lg:after:w-20 text-2xl font-bold text-black`}
+        >
           Možda će vas zanimati{" "}
         </h1>
       </div>
@@ -34,9 +35,7 @@ const RelatedProducts = ({ relatedProducts = [], loading }) => {
           return (
             <div key={item?.id} className="col-span-1  flex-col ">
               <div className="border border-[#e6e6e6] rounded-lg overflow-hidden hoverborder">
-                <div
-                  className={`${classes.item} relative flex items-center justify-center`}
-                >
+                <div className={`relative flex items-center justify-center`}>
                   <div className="h-[350px] relative">
                     <>
                       {item?.stickers[0]?.name ? (
