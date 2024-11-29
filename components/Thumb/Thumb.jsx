@@ -184,7 +184,6 @@ export const Thumb = ({
           modules={[Navigation, Pagination]}
           // onSwiper={(swiper) => setSwiper(swiper)}
           pagination={true}
-          direction={"horizontal"}
           rewind
           initialSlide={product?.image?.findIndex(
             (item) => item === product?.image[0]
@@ -206,10 +205,9 @@ export const Thumb = ({
               pagination: {
                 enabled: false,
               },
-              direction: "horizontal",
             },
           }}
-          className={`categoryImageSwiper relative`}
+          className={`categoryImageSwiper relative w-full h-full`}
           onSwiper={(swiper) => setSwiper(swiper)}
         >
           {product?.image?.map((item, index) => {

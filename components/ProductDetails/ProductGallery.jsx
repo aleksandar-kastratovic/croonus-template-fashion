@@ -9,7 +9,6 @@ import "swiper/css/zoom";
 
 import { FreeMode, Navigation, Pagination, Thumbs, Zoom } from "swiper/modules";
 import Image from "next/image";
-import classes from "./styles.module.css";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { get } from "@/api/api";
@@ -202,7 +201,7 @@ export const ProductGallery = ({ slug }) => {
         navigation={true}
         loop={true}
         onSwiper={(swiper) => setSwiper(swiper)}
-        className={`${classes.mySwiper2} mySwiper2 !relative`}
+        className={`w-full h-full !relative`}
         breakpoints={{
           768: {
             direction: "horizontal",
@@ -265,7 +264,7 @@ export const ProductGallery = ({ slug }) => {
         onSwiper={(swiper) => setThumbsSwiper(swiper)}
         spaceBetween={10}
         id={`thumbsSwiper`}
-        slidesPerView={4}
+        slidesPerView={0}
         breakpoints={{
           320: {
             direction: "horizontal",
@@ -279,15 +278,13 @@ export const ProductGallery = ({ slug }) => {
             direction: "vertical",
             slidesPerView: 4.25,
             enabled: true,
-            loop: true,
             allowSlidePrev: true,
             modules: [FreeMode, Thumbs],
           },
         }}
         freeMode={true}
-        className={`${classes.mySwiper} mySwiper max-md:hidden !relative`}
+        className={`max-h-[880px] w-1/4 h-full max-md:hidden !relative`}
       >
-        {" "}
         {thumbImage}
         <div
           slot="container-start"
@@ -342,7 +339,7 @@ export const ProductGallery = ({ slug }) => {
               initialSlide={productGallery?.gallery?.findIndex(
                 (item) => item?.image === modalImage
               )}
-              className={`${classes.mySwiper2} modalSwiper swiper-zoom-container`}
+              className={`modalSwiper w-full h-full swiper-zoom-container`}
               breakpoints={{
                 0: {
                   direction: "vertical",
