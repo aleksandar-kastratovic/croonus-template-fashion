@@ -31,14 +31,15 @@ function createResponse(
 
 export async function GET(req) {
 
-  console.log("req",req)
+  console.log(req)
+
+  const { searchParams } = new URL(req.url);
+  const slug = searchParams.get("slug");
+  console.log("slug",slug)
   const filePath = path.join("/tmp", slug);
   console.log("filePath",filePath)
-
-console.log("fs.existsSync(filePath) fs.existsSync(filePath)",fs.existsSync(filePath))
-
-  const sitemap = fs.readFileSync(filePath, "utf-8");
-  console.log(sitemap)
+  console.log("fs.existsSync(filePath)",fs.existsSync(filePath))
+  console.log("sitemap",fs.readFileSync(filePath, "utf-8"))
 
   try {
     // Parsiranje query parametra `slug` iz URL-a
@@ -52,12 +53,9 @@ console.log("fs.existsSync(filePath) fs.existsSync(filePath)",fs.existsSync(file
     // Formiranje putanje do traženog fajla u `/tmp` direktorijumu
     const filePath = path.join("/tmp", slug);
 
-    
-
     // Ako fajl postoji u `/tmp`, koristi ga
     if (fs.existsSync(filePath)) {
       const sitemap = fs.readFileSync(filePath, "utf-8");
-
       return createResponse(sitemap, 200, {
         "Content-Type": "application/xml",
         "Cache-Control": "s-maxage=86400, stale-while-revalidate",
