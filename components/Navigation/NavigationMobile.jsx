@@ -3,11 +3,7 @@ import { get, list } from "@/api/api";
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Burger from "../../assets/Icons/hamburger.png";
-import Search from "../../assets/Icons/search.png";
 import { useRouter, usePathname } from "next/navigation";
-import User from "../../assets/Icons/user.png";
-import Cart from "../../assets/Icons/shopping-bag.png";
 import { currencyFormat } from "@/helpers/functions";
 import useDebounce from "@/hooks/useDebounce";
 import { useQuery } from "@tanstack/react-query";
@@ -133,7 +129,12 @@ const NavigationMobile = () => {
       <div className="xl:hidden w-full z-[2000] sticky top-0 bg-white bg-opacity-90 backdrop-blur-md">
         <div className="w-[95%] py-3 mx-auto flex justify-between items-center">
           <div onClick={() => setMenuOpen(true)}>
-            <Image alt={`HAMBURGER ICON`} src={Burger} width={30} height={30} />
+            <Image
+              alt={`HAMBURGER ICON`}
+              src={"/icons/hamburger.png"}
+              width={30}
+              height={30}
+            />
           </div>
           <Link href="/">
             <div className="relative">
@@ -168,7 +169,7 @@ const NavigationMobile = () => {
             ) : (
               <div>
                 <Image
-                  src={Search}
+                  src={"/icons/search.png"}
                   alt="search icon"
                   id="search"
                   width={22}
@@ -178,14 +179,19 @@ const NavigationMobile = () => {
               </div>
             )}
             <Link href={`/login`}>
-              <Image alt="user icon" src={User} width={33} height={33} />
+              <Image
+                alt="user icon"
+                src={"/icons/user.png"}
+                width={33}
+                height={33}
+              />
             </Link>
             <Link href="/korpa">
               <div className="relative">
                 <Image
                   alt="cart icon"
                   className="w-10 h-auto"
-                  src={Cart}
+                  src={"/icons/shopping-bag.png"}
                   width={33}
                   height={33}
                 />

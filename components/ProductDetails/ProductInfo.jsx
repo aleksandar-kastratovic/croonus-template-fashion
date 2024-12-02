@@ -6,10 +6,6 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Measure from "../../assets/Icons/measure.png";
-import DeliveryStatus from "../../assets/Icons/delivery-status.png";
-import Calendar from "../../assets/Icons/calendar.png";
-import FreeDelivery from "../../assets/Icons/package.png";
-import Cancel from "../../assets/Icons/cancel.png";
 // import info from "../../assets/Icons/info.png";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -253,7 +249,7 @@ export const ProductInfo = ({
           <div className="md:hidden mt-5 flex items-center gap-[10px] justify-between py-5 ">
             <div className="flex flex-col items-center text-center justify-center">
               <Image
-                src={FreeDelivery}
+                src={"/icons/package.png"}
                 alt="free delivery"
                 width={30}
                 height={30}
@@ -262,7 +258,7 @@ export const ProductInfo = ({
             </div>
             <div className="flex flex-col items-center text-center justify-center">
               <Image
-                src={Calendar}
+                src={"/icons/calendar.png"}
                 alt="free delivery"
                 width={30}
                 height={30}
@@ -272,7 +268,7 @@ export const ProductInfo = ({
             </div>
             <div className="flex flex-col items-center text-center justify-center">
               <Image
-                src={DeliveryStatus}
+                src={"/icons/delivery-status.png"}
                 alt="free delivery"
                 width={30}
                 height={30}
@@ -284,7 +280,7 @@ export const ProductInfo = ({
           <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 top-[30%] flex flex-col gap-[30px] px-5 py-[37px] bg-white drop-shadow-2xl rounded-l-lg">
             <div className="flex flex-col items-center text-center justify-center">
               <Image
-                src={FreeDelivery}
+                src={"/icons/package.png"}
                 alt="free delivery"
                 width={50}
                 height={50}
@@ -293,7 +289,7 @@ export const ProductInfo = ({
             </div>
             <div className="flex flex-col items-center text-center justify-center">
               <Image
-                src={Calendar}
+                src={"/icons/calendar.png"}
                 alt="free delivery"
                 width={47}
                 height={42}
@@ -303,7 +299,7 @@ export const ProductInfo = ({
             </div>
             <div className="flex flex-col items-center text-center justify-center">
               <Image
-                src={DeliveryStatus}
+                src={"/icons/delivery-status.png"}
                 alt="free delivery"
                 width={46}
                 height={46}

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
-import WishlistImg from "../../../assets/Icons/heart.png";
 import {
   useAddToWishlist,
   useIsInWishlist,
@@ -50,7 +49,7 @@ export const Wishlist = ({ product }) => {
         />
       ) : (
         <Image
-          src={WishlistImg}
+          src={"/icons/heart.png"}
           alt="wishlist"
           width={39}
           height={35}

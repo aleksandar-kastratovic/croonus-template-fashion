@@ -8,10 +8,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import LogoDark from "../../assets/Logo/Croonus-logo-dark.png";
 import LogoLight from "../../assets/Logo/Croonus-logo-light.png";
-import User from "../../assets/Icons/user.png";
-import Wishlist from "../../assets/Icons/heart.png";
-import Cart from "../../assets/Icons/shopping-bag.png";
-import Search from "../../assets/Icons/search.png";
 import { currencyFormat } from "@/helpers/functions";
 
 const NavigationDesktop = () => {
@@ -313,7 +309,7 @@ const NavigationDesktop = () => {
             <div className="flex items-center gap-5 relative">
               <Image
                 ref={searchImgRef}
-                src={Search}
+                src={"/icons/search.png"}
                 width={20}
                 height={20}
                 alt=""
@@ -429,7 +425,7 @@ const NavigationDesktop = () => {
             <div className="flex items-center gap-5">
               <Link href="/login">
                 <Image
-                  src={User}
+                  src={"/icons/user.png"}
                   width={40}
                   height={40}
                   alt=""
@@ -442,7 +438,7 @@ const NavigationDesktop = () => {
                 {" "}
                 <div className="relative">
                   <Image
-                    src={Wishlist}
+                    src={"/icons/heart.png"}
                     width={30}
                     height={30}
                     alt=""
@@ -458,7 +454,7 @@ const NavigationDesktop = () => {
               <Link href="/korpa">
                 <div className="relative">
                   <Image
-                    src={Cart}
+                    src={"/icons/shopping-bag.png"}
                     width={40}
                     height={40}
                     alt=""

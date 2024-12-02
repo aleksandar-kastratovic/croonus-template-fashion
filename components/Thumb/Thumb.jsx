@@ -8,8 +8,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
-import Wishlist from "../../assets/Icons/heart.png";
-import WishlistActive from "../../assets/Icons/heart-active.png";
 import { ToastContainer, toast } from "react-toastify";
 import { currencyFormat } from "@/helpers/functions";
 import { get, list, post } from "@/api/api";
@@ -405,7 +403,7 @@ export const Thumb = ({
           {isInWishlist?.exist && <p> </p>}
           {!isInWishlist?.exist ? (
             <Image
-              src={Wishlist}
+              src={"/icons/heart.png"}
               alt="wishlist"
               width={15}
               height={15}
@@ -415,7 +413,7 @@ export const Thumb = ({
             />
           ) : (
             <Image
-              src={WishlistActive}
+              src={"/icons/heart-active.png"}
               alt="wishlist"
               width={15}
               height={15}

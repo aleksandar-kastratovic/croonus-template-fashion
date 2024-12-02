@@ -97,8 +97,8 @@ const NewsLetterInstagramSection = () => {
               <Image
                 alt="send icon"
                 src={"/send.png"}
-                width={28}
-                height={34}
+                width={34}
+                height={28}
                 className="w-7 h-auto"
               />
             </button>

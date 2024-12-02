@@ -5,7 +5,6 @@ import { list } from "@/api/api";
 import { Thumb } from "../Thumb/Thumb";
 import Image from "next/image";
 import Link from "next/link";
-import Image1 from "../../assets/Icons/no-results.png";
 import { useSearch } from "@/hooks/ecommerce.hooks";
 import { ToastContainer } from "react-toastify";
 
@@ -43,7 +42,12 @@ const SearchPage = () => {
             <div className="flex items-center justify-center py-10 text-center mt-[1.2rem] lg:mt-[13rem] max-md:w-[95%] mx-auto">
               <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#f8f8f8] p-6">
                 <div>
-                  <Image src={Image1} alt="404" width={130} height={130} />
+                  <Image
+                    src={"/icons/no-results.png"}
+                    alt="404"
+                    width={130}
+                    height={130}
+                  />
                 </div>
                 <div>
                   <p className="text-lg font-medium">

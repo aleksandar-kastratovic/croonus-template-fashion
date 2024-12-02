@@ -7,9 +7,6 @@ import { useContext } from "react";
 import { userContext } from "@/context/userContext";
 import Image from "next/image";
 
-import profilemenu from "@/assets/Icons/profilemenu.png";
-import profilecancel from "@/assets/Icons/profilecancel.png";
-
 const ProfilNav = ({ selectedButton, handleButtonClick }) => {
   const router = useRouter();
   const { isLoggedIn, setIsLoggedIn } = useContext(userContext);
@@ -115,7 +112,12 @@ const ProfilNav = ({ selectedButton, handleButtonClick }) => {
       </div>
       <div className="lg:hidden p-2 bg-croonus-gray absolute rounded-3xl">
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <Image src={profilemenu} width={30} height={30} alt="profile menu" />
+          <Image
+            src={"/icons/profilemenu.png"}
+            width={30}
+            height={30}
+            alt="profile menu"
+          />
         </div>
         <div
           className={
@@ -210,7 +212,7 @@ const ProfilNav = ({ selectedButton, handleButtonClick }) => {
             className="ml-auto mt-[1rem] mr-[1rem]  p-2 bg-croonus-gray rounded-3xl"
           >
             <Image
-              src={profilecancel}
+              src={"/icons/profilecancel.png"}
               width={30}
               height={30}
               alt="profile cancel menu"

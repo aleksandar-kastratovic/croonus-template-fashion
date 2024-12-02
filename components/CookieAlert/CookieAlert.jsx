@@ -1,5 +1,4 @@
 "use client";
-import Cookie from "../../assets/Icons/cookie.png";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
@@ -18,7 +17,7 @@ const CookieAlert = () => {
         <div className="fixed right-0 bottom-0 bg-white z-[1000] p-5 max-lg:w-full w-[40%] shadow-2xl rounded-tl-2xl max-lg:rounded-t-2xl">
           <div className="flex flex-row gap-2">
             <Image
-              src={Cookie}
+              src={"/icons/cookie.png"}
               alt="Cookie"
               width={40}
               height={40}

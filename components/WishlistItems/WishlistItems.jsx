@@ -4,8 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { currencyFormat } from "@/helpers/functions";
 import React, { useState, useCallback, useEffect } from "react";
-import Heart from "../../assets/Icons/heart.png";
-import Cart from "../../assets/Icons/shopping-bag.png";
 import { toast, ToastContainer } from "react-toastify";
 import { useCartContext } from "@/api/cartContext";
 import { useGlobalAddToCart } from "@/api/globals";

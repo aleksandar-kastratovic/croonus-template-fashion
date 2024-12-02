@@ -3,9 +3,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { post } from "@/api/api";
 import Link from "next/link";
-import back from "@/assets/Icons/right-chevron.png";
-import hide from "@/assets/Icons/hide-password.png";
-import show from "@/assets/Icons/show-password.png";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import classes from "@/components/Registration/Registration.module.css";
@@ -112,7 +109,7 @@ const ResetPasswordComponent = ({ token }) => {
         <Link href="/login">
           <div className="bg-croonus-3 p-[0.4rem] mr-[4rem] ml-[1re] rounded-[50%] mt-[0.4rem] hover:translate-y-0.5 transition-all ease cursor-pointer text-white">
             <Image
-              src={back}
+              src={"/icons/right-chevron.png"}
               alt="back button"
               className="invert transform rotate-180"
               width={22}
@@ -167,9 +164,19 @@ const ResetPasswordComponent = ({ token }) => {
           </div>
           <button onClick={togglePasswordVisibility}>
             {showPassword ? (
-              <Image src={hide} alt="hide password" width={22} height={22} />
+              <Image
+                src={"/icons/hide-password.png"}
+                alt="hide password"
+                width={22}
+                height={22}
+              />
             ) : (
-              <Image src={show} alt="show password" width={22} height={22} />
+              <Image
+                src={"/icons/show-password.png"}
+                alt="show password"
+                width={22}
+                height={22}
+              />
             )}
           </button>
           <div className="flex flex-col ml-[1.4rem] mr-[0.4rem]">
@@ -193,9 +200,19 @@ const ResetPasswordComponent = ({ token }) => {
           </div>
           <button onClick={togglePasswordVisibility2}>
             {showPassword2 ? (
-              <Image src={hide} alt="hide password" width={22} height={22} />
+              <Image
+                src={"/icons/hide-password.png"}
+                alt="hide password"
+                width={22}
+                height={22}
+              />
             ) : (
-              <Image src={show} alt="show password" width={22} height={22} />
+              <Image
+                src={"/icons/show-password.png"}
+                alt="show password"
+                width={22}
+                height={22}
+              />
             )}
           </button>
         </div>

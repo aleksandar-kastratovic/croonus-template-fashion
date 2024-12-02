@@ -3,8 +3,6 @@ import { useState } from "react";
 import { post } from "@/api/api";
 import { ToastContainer, toast } from "react-toastify";
 import Image from "next/image";
-import show from "@/assets/Icons/show-password.png";
-import hide from "@/assets/Icons/hide-password.png";
 
 const ChangePassword = () => {
   const [isChecked, setIsChecked] = useState(true);
@@ -85,9 +83,19 @@ const ChangePassword = () => {
         />
         <button onClick={togglePasswordVisibility} className="ml-3">
           {showChangedPassword ? (
-            <Image src={hide} alt="hide password" width={22} height={22} />
+            <Image
+              src={"/icons/hide-password.png"}
+              alt="hide password"
+              width={22}
+              height={22}
+            />
           ) : (
-            <Image src={show} alt="show password" width={22} height={22} />
+            <Image
+              src={"/icons/show-password.png"}
+              alt="show password"
+              width={22}
+              height={22}
+            />
           )}
         </button>
       </div>

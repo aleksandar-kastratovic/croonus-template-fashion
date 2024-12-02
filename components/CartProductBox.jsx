@@ -1,5 +1,4 @@
 import CartProductItem from "./CartProductItem";
-import classes from "./CartProductBox.module.css";
 const CartProductBox = ({ cartItems = [] }) => {
   return (
     <div className={`mt-[30px]  xl:ml-6`}>

@@ -1,17 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import Image1 from "../../assets/Icons/master (1).webp";
-import Image2 from "../../assets/Icons/visa.webp";
-import Image3 from "../../assets/Icons/bancaIntesa.webp";
-import Image4 from "../../assets/Icons/img1.webp";
-import Image5 from "../../assets/Icons/img.webp";
-import Image6 from "../../assets/Icons/img3.webp";
-import Image7 from "../../assets/Icons/img4.webp";
-import Image8 from "../../assets/Icons/american.webp";
-import Instagram from "../../assets/Icons/instagram.png";
-import Youtube from "../../assets/Icons/youtube.png";
-import Facebook from "../../assets/Icons/facebook.png";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -64,7 +53,7 @@ const Footer = () => {
         <div className="flex max-xl:mt-10 items-center gap-[1.938rem]">
           <a href="https://www.instagram.com/lifeatcroonus/" target={"_blank"}>
             <Image
-              src={Instagram}
+              src={"/icons/instagram.png"}
               width={30}
               height={30}
               alt="Instagram"
@@ -77,7 +66,7 @@ const Footer = () => {
           >
             {" "}
             <Image
-              src={Youtube}
+              src={"/icons/youtube.png"}
               width={30}
               height={30}
               alt="Instagram"
@@ -86,7 +75,7 @@ const Footer = () => {
           </a>
           <a href="https://www.facebook.com/Croonus/" target={"_blank"}>
             <Image
-              src={Facebook}
+              src={"/icons/facebook.png"}
               width={30}
               height={30}
               alt="Instagram"
@@ -356,7 +345,7 @@ const Footer = () => {
           <div className="flex items-center gap-1 ">
             <div>
               <Image
-                src={Image1}
+                src={"/icons/idcheck.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -365,7 +354,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={Image2}
+                src={"/icons/visaSecure.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -374,7 +363,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={Image3}
+                src={"/icons/bancaIntesa.webp"}
                 width={200}
                 height={70}
                 alt="Master Card"
@@ -383,7 +372,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={Image4}
+                src={"/icons/mastercard.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -392,7 +381,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={Image5}
+                src={"/icons/maestro.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -401,7 +390,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={Image6}
+                src={"/icons/dinacard.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -410,16 +399,16 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={Image7}
+                src={"/icons/visa.webp"}
                 width={50}
                 height={30}
-                alt="Master Card"
+                alt="Visa"
                 className="object-scale-down w-12 h-auto"
               />
             </div>
             <div>
               <Image
-                src={Image8}
+                src={"/icons/american.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"

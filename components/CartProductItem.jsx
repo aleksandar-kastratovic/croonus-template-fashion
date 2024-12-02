@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useGlobalAddToCart } from "@/api/globals";
 import { useGlobalRemoveFromCart } from "@/api/globals";
 import { currencyFormat } from "../helpers/functions";
-import PlusMinusInputOne from "./PlusMinusInputOne";
+// import PlusMinusInputOne from "./PlusMinusInputOne";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 import Link from "next/link";
 
@@ -40,15 +40,17 @@ const CartProductItem = ({ item }) => {
               />
             </Link>
             {item?.product?.price?.per_item?.discount?.active && (
-              <div className={`absolute top-2 right-2 bg-[#c23d27] px-[0.85rem] py-0.5 rounded-lg font-thin text-xs text-white`}>
-                -{(
-                  (
-                    ((item?.product?.price?.per_item?.price_with_vat -
-                      item?.product?.price?.per_item?.price_discount) /
-                      item?.product?.price?.per_item?.price_with_vat) *
-                    100
-                  ).toFixed(0)
-                )}%
+              <div
+                className={`absolute top-2 right-2 bg-[#c23d27] px-[0.85rem] py-0.5 rounded-lg font-thin text-xs text-white`}
+              >
+                -
+                {(
+                  ((item?.product?.price?.per_item?.price_with_vat -
+                    item?.product?.price?.per_item?.price_discount) /
+                    item?.product?.price?.per_item?.price_with_vat) *
+                  100
+                ).toFixed(0)}
+                %
               </div>
             )}
           </div>
@@ -65,12 +67,12 @@ const CartProductItem = ({ item }) => {
             </span>
             <div className="flex items-center gap-3 max-md:hidden">
               <span>Količina</span>
-              <PlusMinusInputOne
+              {/* <PlusMinusInputOne
                 setCount={setProductAmount}
                 count={productAmount}
                 amount={productAmount}
                 maxAmount={+item?.product?.inventory?.amount}
-              />
+              /> */}
             </div>
             <div className="flex items-center gap-3 md:hidden">
               <span>Količina:</span>
