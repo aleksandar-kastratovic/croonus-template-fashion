@@ -66,12 +66,21 @@ export async function GET(req) {
 
     // Ako fajl postoji u `/tmp`
     if (fs.existsSync(filePath)) {
-      readSitemapAndCreateResponse(filePath);
+      return readSitemapAndCreateResponse(filePath);
     } else {
       /**
-       * Ako ne postoji, dohvati listu sitemap fajlova i generisi ih
+       * filePath u `/tmp` direktorijumu ne postoji ali postoji sitemap direktorijum.
+       * To znaci da je sitemap generisan ali je trazeni slug pogresan. Zato treba izbaciti gresku i prekinuti dalje izvrsavanje koda
+       */
+      if (fs.readdirSync("/tmp").length > 0) {
+        console.warn(`Requested sitemap not found: ${slug}`);
+        return createResponse("Sitemap not found.", 404);
+      }
+
+      /**
+       * Ukoliko je izvrsavanje koda doslo do ovde, znaci da sitemap jos nije generisan
        *
-       * Zasto je ovo potrebno ovde uraditi a ne pri build-u?
+       * Zasto sitemap nije generisan pri build-u?
        * Vercel funksionise tako da tokom build-a moze kreirati /tmp direktorijum ali
        * se ne prenosi u runtime okruzenje.
        * Zato, cim web crawler ili bilo ko drugi pristupi ovom API endpoint-u,
@@ -88,8 +97,7 @@ export async function GET(req) {
 
       if (files) {
         await buildSitemapFile(files);
-
-        readSitemapAndCreateResponse(filePath);
+        return readSitemapAndCreateResponse(filePath);
       }
     }
   } catch (error) {

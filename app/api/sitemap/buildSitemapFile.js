@@ -43,7 +43,7 @@ const createSitemapFiles = (sitemapData) => {
  * kako bi se osiguralo da novi sitemap fajlovi ne preklapaju postojeće.
  */
 const deleteOldSitemaps = () => {
-  const sitemapDir = "/tmp/sitemap";
+  const sitemapDir = "/tmp";
   if (fs.existsSync(sitemapDir)) {
     // Brisanje svih fajlova i poddirektorijuma unutar sitemap direktorijuma
     fs.readdirSync(sitemapDir).forEach((file) => {
