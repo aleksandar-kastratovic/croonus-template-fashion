@@ -4,7 +4,6 @@ export const CartWrapper = ({
   children,
   verifyCaptcha = () => {},
   data,
-  recommendedProducts,
   cartCost,
 }) => {
   //kljuc kao sto je "template_one" moze i sa api-ja da se dobije
@@ -12,7 +11,6 @@ export const CartWrapper = ({
     children,
     cartCost,
     data,
-    recommendedProducts,
     verifyCaptcha,
   });
 };

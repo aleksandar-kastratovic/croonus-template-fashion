@@ -8,6 +8,7 @@ import { CartLoader } from "@/components/Cart/cart-loader";
 import { CartNoItems } from "@/components/Cart/cart-no-items";
 import { CheckoutDataLoader } from "@/components/Cart/checkout-data-loader";
 import Cookies from "js-cookie";
+import RecommendedProducts from "../sections/homepage/RecommendedProducts";
 
 export const CheckoutPage = ({
   payment_options,
@@ -102,7 +103,6 @@ export const CheckoutPage = ({
             data={data}
             cartCost={cartCost}
             verifyCaptcha={verifyCaptcha}
-            recommendedProducts={recommendedProducts}
           >
             <Suspense fallback={<CheckoutDataLoader />}>
               <CheckoutData
@@ -128,5 +128,15 @@ export const CheckoutPage = ({
     }
   };
 
-  return renderCart();
+  return (
+    <>
+      {renderCart()}
+      {recommendedProducts?.length > 0 && (
+        <RecommendedProducts
+          recommendedProducts={recommendedProducts}
+          action4={`Gledali ste i ove modele`}
+        />
+      )}
+    </>
+  );
 };
