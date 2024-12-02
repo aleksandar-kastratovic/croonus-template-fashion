@@ -1,11 +1,3 @@
-/*
-Kod potreban za lokalno testiranje. Kada se pusti u produkciju obrisati
-
-*/
-// export const config = {
-//   runtime: "nodejs",
-// };
-
 import { buildSitemapFile } from "@/app/api/sitemap/buildSitemapFile";
 
 /**
@@ -30,7 +22,6 @@ function createResponse(message, status) {
  */
 
 export async function POST(req) {
-
   // Dinamički izvlacenje protokola i hosta
   const { headers } = req;
   const protocol = headers.get("x-forwarded-proto") || "http";
@@ -41,11 +32,7 @@ export async function POST(req) {
 
   const clientIP = req.headers.get("x-forwarded-for");
 
-  console.log("clientIP", clientIP);
-  console.log("process.env.SERVER_IP", process.env.SERVER_IP);
-
-
-
+  // Provera IP adrese
   if (clientIP !== process.env.SERVER_IP) {
     console.log("Unauthorized");
     return new Response("Unauthorized", { status: 403 });
