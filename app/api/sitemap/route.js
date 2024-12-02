@@ -29,7 +29,11 @@ function createResponse(
  * Omogućava crawler-ima pristup sitemap fajlovima u /tmp direktorijumu.
  *
  * @param {Request} req - HTTP zahtev sa query parametrom `slug`.
+ * @param {Headers} req.headers - HTTP zaglavlja koja sadrže informacije o protokolu i hostu.
  * @returns {Promise<Response>} - XML sadržaj sitemap fajla ili JSON poruka o grešci.
+ * 
+ * @throws {Error} Ako nema dostupnih sitemap fajlova ili dođe do greške u procesu.
+
  */
 
 export async function GET(req) {

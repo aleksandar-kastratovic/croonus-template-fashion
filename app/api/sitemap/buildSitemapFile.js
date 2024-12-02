@@ -21,6 +21,7 @@ function createResponse(message, status) {
  * Fajlovi se generisu u `/tmp` direktorijumu
  *
  * @param {Array} sitemapData - Podaci o sitemap fajlovima (putanja i sadržaj)
+ * @param {string} baseUrl - Osnovni URL koji se koristi za generisanje sitemap-a.
  */
 
 const createSitemapFiles = (sitemapData, baseUrl) => {
@@ -68,7 +69,12 @@ const deleteOldSitemaps = () => {
  * 2. Iterira kroz svaki fajl i preuzima njegov sadržaj.
  * 3. Generiše nove fajlove u `/tmp` direktorijumu.
  *
- * @returns {Promise<{ success: boolean }>} - Indikacija uspešnosti generisanja sitemap-a.
+ * @async
+ * @param {Array<{path: string}>} fileList - Lista fajlova za generisanje sitemap-a.
+ * @param {string} baseUrl - Osnovni URL koji se koristi za generisanje sitemap-a.
+ * @returns {Promise<Response>} - HTTP odgovor koji ukazuje na uspešnost generisanja sitemap-a.
+ *
+ * @throws {Error} Ako dođe do greške tokom generisanja sitemap fajlova.
  */
 const buildSitemapFile = async (fileList, baseUrl) => {
   try {
