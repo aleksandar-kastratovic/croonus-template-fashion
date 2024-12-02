@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useCallback, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { CheckoutData } from "../Cart/CheckoutData";
 import { useCart, useForm, useSummary } from "@/hooks/ecommerce.hooks";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -78,7 +78,19 @@ export const CheckoutPage = ({
   });
 
   //fetchujemo sve artikle iz korpe
-  const { data: items, refetch: refreshCart, isFetching } = useCart();
+  const {
+    data: items,
+    refetch: refreshCart,
+    isFetching,
+    isSuccess,
+  } = useCart();
+  const [successfullyFetched, setSuccessfullyFetched] = useState(false);
+
+  useEffect(() => {
+    if (!isFetching) {
+      setSuccessfullyFetched(true);
+    }
+  }, [isFetching]);
 
   //fetchujemo summary korpe (iznos,popuste,dostavu itd)
   const { data, refetch: refreshSummary } = useSummary({
@@ -95,9 +107,9 @@ export const CheckoutPage = ({
 
   const renderCart = () => {
     switch (true) {
-      case isFetching:
+      case !successfullyFetched:
         return <CartLoader />;
-      case items?.items?.length > 0 && !isFetching:
+      case items?.items?.length > 0 && successfullyFetched:
         return (
           <CartWrapper
             data={data}
@@ -121,7 +133,7 @@ export const CheckoutPage = ({
             </Suspense>
           </CartWrapper>
         );
-      case items?.items?.length === 0 && !isFetching:
+      case items?.items?.length === 0 && successfullyFetched:
         return <CartNoItems />;
       default:
         return <CartLoader />;
