@@ -17,6 +17,7 @@ const nextConfig = {
     POSTAL_CODE: process.env.POSTAL_CODE,
     ADDRESS_COUNTRY: process.env.ADDRESS_COUNTRY,
     SHOW_CHECKOUT_SHIPPING_FORM: process.env.SHOW_CHECKOUT_SHIPPING_FORM,
+    SERVER_IP: process.env.SERVER_IP,
   },
   images: {
     domains: [

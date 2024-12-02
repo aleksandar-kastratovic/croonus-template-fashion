@@ -30,14 +30,6 @@ function createResponse(message, status) {
  */
 
 export async function POST(req) {
-  const clientIP = req.headers.get("x-forwarded-for");
-
-  console.log("clientIP", clientIP);
-  console.log("process.env.SERVER_IP", process.env.SERVER_IP);
-
-  if (clientIP !== process.env.SERVER_IP) {
-    return new Response("Unauthorized", { status: 403 });
-  }
 
   // Dinamički izvlacenje protokola i hosta
   const { headers } = req;
@@ -45,8 +37,24 @@ export async function POST(req) {
   const host = headers.get("host") || "localhost:3000";
   const baseUrl = `${protocol}://${host}`;
 
+  const body = await req.json();
+
+  const clientIP = req.headers.get("x-forwarded-for");
+
+  console.log("clientIP", clientIP);
+  console.log("process.env.SERVER_IP", process.env.SERVER_IP);
+
+
+
+  if (clientIP !== process.env.SERVER_IP) {
+    console.log("Unauthorized");
+    return new Response("Unauthorized", { status: 403 });
+  }
+
   try {
+    // Pokretanje sitemap build procesa
     await buildSitemapFile(body.files, baseUrl);
+
     return createResponse("Sitemap successfully updated.", 200);
   } catch (error) {
     console.error("Error in cron job:", error.message);
