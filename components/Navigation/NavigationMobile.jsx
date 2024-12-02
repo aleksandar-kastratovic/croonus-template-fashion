@@ -14,6 +14,7 @@ import {
   useNewProducts,
   useWishlistBadge,
 } from "@/hooks/ecommerce.hooks";
+import { CloseIcon } from "../svg/CloseIcon";
 
 const NavigationMobile = () => {
   const router = useRouter();
@@ -246,10 +247,9 @@ const NavigationMobile = () => {
             alt="logo"
             className="w-36 h-auto"
           />
-          <i
-            className="fas fa-times text-2xl"
-            onClick={() => setMenuOpen(false)}
-          ></i>
+          <button className="w-8" onClick={() => setMenuOpen(false)}>
+            <CloseIcon className={"w-full"} />
+          </button>
         </div>
         <div className="w-[95%] flex flex-row gap-7 mx-auto mt-5 border-b border-b-[#e5e7eb]">
           {(categories ?? [])?.map((category) => {
