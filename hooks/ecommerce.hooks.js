@@ -287,12 +287,14 @@ export const useSearch = ({ searchTerm, isSearchPage = false }) => {
   switch (isSearchPage) {
     case false:
       return useQuery({
-        queryKey: [{ search: searchTerm }],
+        queryKey: ["search", { search: searchTerm }],
         queryFn: async () => {
           if (searchTerm?.length >= 3) {
             return await LIST("/products/search/list", {
               search: searchTerm,
             }).then((res) => res?.payload);
+          } else {
+            return [];
           }
         },
         refetchOnWindowFocus: false,
@@ -306,6 +308,8 @@ export const useSearch = ({ searchTerm, isSearchPage = false }) => {
             return await LIST("/products/search/list", {
               search: searchTerm,
             }).then((res) => res?.payload?.items);
+          } else {
+            return [];
           }
         },
         refetchOnWindowFocus: false,

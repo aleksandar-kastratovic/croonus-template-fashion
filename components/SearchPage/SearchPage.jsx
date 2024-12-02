@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 
 const SearchPage = () => {
   const params = useSearchParams();
+
   const search = params.get("search");
 
   const { data: returnedProducts, isFetching: loading } = useSearch({
