@@ -169,6 +169,16 @@ input[type="number"] {
   object-fit: cover;
 } */
 
+/* Sledeci css sluzi za sakrivanje elemenata koji se pojavljuju od strane Google translate APi-ja */
+#goog-gt-tt {
+  display: none !important;
+}
+
+font {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
 @media (max-width: 768px) {
   .swiper-button-prev {
     background-color: white !important;
