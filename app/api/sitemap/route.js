@@ -67,8 +67,6 @@ export async function GET(req) {
         throw new Error("No sitemap files found");
       }
 
-      if (filesResponse) console.log("!!!!!filesResponse!!!!!!", filesResponse);
-
       if (files) {
         await buildSitemapFile(files, baseUrl);
 

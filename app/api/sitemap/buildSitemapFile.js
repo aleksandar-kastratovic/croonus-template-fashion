@@ -25,33 +25,15 @@ function createResponse(message, status) {
 
 const createSitemapFiles = (sitemapData, baseUrl) => {
   sitemapData.forEach(({ path: filePath, content }) => {
-    // Modifikovanje sadržaja: razlikuje XML fajlove i prave stranice
-    const updatedContent = content.replace(/<loc>(.*?)<\/loc>/g, (_, loc) => {
-      // Izvlačenje slug-a iz trenutnog loc linka
-      const url = new URL(loc);
-      const slug = url.pathname.startsWith("/")
-        ? url.pathname.slice(1)
-        : url.pathname;
-
-      // Ako URL ukazuje na .xml fajl, generiši API link
-      if (loc.endsWith(".xml")) {
-        return `<loc>${baseUrl}/api/sitemap?slug=${slug}</loc>`;
-      }
-      // Ostavi originalni loc za prave stranice
-      return `<loc>${loc}</loc>`;
-    });
-
     // Formiranje putanje do fajla u `/tmp` direktorijumu
     const outputPath = path.join("/tmp", filePath);
-
-    console.log(`Attempting to create file: ${outputPath}`);
 
     // Kreiranje potrebnih direktorijuma ukoliko ne postoje
     const outputDir = path.dirname(outputPath);
     fs.mkdirSync(outputDir, { recursive: true });
 
     // Zapisivanje XML sadržaja u fajl
-    fs.writeFileSync(outputPath, updatedContent, "utf-8");
+    fs.writeFileSync(outputPath, content, "utf-8");
     console.log(`Sitemap file created: ${filePath}`);
   });
 };
