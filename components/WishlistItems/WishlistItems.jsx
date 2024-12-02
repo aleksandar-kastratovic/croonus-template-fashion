@@ -13,7 +13,6 @@ import ProductPrice from "@/components/ProductPrice/ProductPrice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
-import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 const WishlistItems = ({ items, product, border }) => {

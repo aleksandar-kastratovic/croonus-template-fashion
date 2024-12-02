@@ -1,4 +1,5 @@
 import { CartContextProvider } from "@/api/cartContext";
+import "swiper/css";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/Footer/Footer";

@@ -2,89 +2,13 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import "swiper/css/navigation";
+import "swiper/css/effect-fade";
+import "swiper/css/autoplay";
+import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
 
 const IndexSlider = ({ banners, mobileBanners }) => {
-  const [currentSlide, setCurrentSlide] = useState({
-    index: 0,
-    banner: banners[0]?.image,
-  });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStartIndex, setDragStartIndex] = useState(0);
-  const [draggingIndex, setDraggingIndex] = useState(0);
-  const sliderRef = useRef();
-
-  useEffect(() => {
-    const handleMouseUp = () => {
-      if (isDragging) {
-        setCurrentSlide({
-          index: draggingIndex,
-          banner: banners[draggingIndex]?.image,
-        });
-        setIsDragging(false);
-      }
-    };
-
-    const handleMouseMove = (event) => {
-      if (isDragging) {
-        event.preventDefault();
-        const sliderRect = sliderRef.current.getBoundingClientRect();
-        const slideWidth = sliderRect.width / banners.length;
-        const mouseX = event.clientX - sliderRect.left;
-        let newIndex = Math.floor(mouseX / slideWidth);
-        if (newIndex < 0) newIndex = 0;
-        if (newIndex > banners.length - 1) newIndex = banners.length - 1;
-        setDraggingIndex(newIndex);
-      }
-    };
-
-    document.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      document.removeEventListener("mouseup", handleMouseUp);
-      document.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [isDragging, draggingIndex, banners]);
-
-  const handleSlideChange = (index) => {
-    setCurrentSlide({
-      index: index,
-      banner: banners[index]?.image,
-    });
-  };
-
-  const handleMouseDown = (event, index) => {
-    event.preventDefault();
-    setDragStartIndex(index);
-    setDraggingIndex(index);
-    setIsDragging(true);
-  };
-
-  const intervalRef = useRef(null);
-
-  useEffect(() => {
-    const nextSlide = () => {
-      setCurrentSlide((prevState) => {
-        const nextIndex = (prevState.index + 1) % banners.length;
-        return {
-          index: nextIndex,
-          banner: banners[nextIndex]?.image,
-        };
-      });
-    };
-    intervalRef.current = setInterval(nextSlide, 5000);
-    const handleInteraction = () => {
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(nextSlide, 5000);
-    };
-    window.addEventListener("click", handleInteraction);
-    window.addEventListener("keydown", handleInteraction);
-    return () => {
-      clearInterval(intervalRef.current);
-      window.removeEventListener("click", handleInteraction);
-      window.removeEventListener("keydown", handleInteraction);
-    };
-  }, [banners]);
   const renderMedia = (banner) => {
     if (banner?.file_data?.type === "video") {
       return (
@@ -115,204 +39,178 @@ const IndexSlider = ({ banners, mobileBanners }) => {
 
   return (
     <>
-      <div className="max-md:hidden">
-        <div
-          className="absolute w-screen block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[700px] 2xl:h-[750px] 3xl:h-[800px]"
-          ref={sliderRef}
-        >
+      <div className="hidden md:block">
+        <div className="absolute w-screen block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[700px] 2xl:h-[750px] 3xl:h-[800px]">
           <div className="relative h-full overflow-hidden">
-            <div className="items-center max-sm:h-[400px] justify-between h-full w-full">
-              {banners.map((banner, index) => {
-                const isActive = currentSlide?.index === index;
-
-                return (
-                  <div
-                    key={index}
-                    className={
-                      isActive
-                        ? "relative w-full overflow-hidden h-full opacity-100 duration-[1000ms] transition-all ease-linear"
-                        : "absolute w-full h-full overflow-hidden opacity-0 duration-[1000ms] transition-all ease-linear"
-                    }
-                  >
-                    <div className="relative max-sm:h-[400px] sm:h-full">
-                      {renderMedia(banner)}
-                      <Link
-                        href={`${banner?.url ?? `/stranica-u-izradi`}`}
-                        target={banner?.target ?? "_self"}
-                        className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40"
-                      >
-                        <div className="absolute flex flex-col items-center md:items-start justify-center md:justify-start max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-[4%] transform -translate-y-1/2">
-                          {banner?.title && (
-                            <h1 className="text-white max-sm:text-base text-xl font-bold ">
-                              {banner?.title}
-                            </h1>
-                          )}
-                          {banner?.subtitle && (
-                            <h2 className="text-white max-sm:text-xl text-4xl font-bold uppercase">
-                              {banner?.subtitle}
-                            </h2>
-                          )}
-                          {banner?.text && (
-                            <p className="text-white text-left sm:max-w-[60%] max-sm:text-[0.925rem] text-base font-normal">
-                              {banner?.text}
-                            </p>
-                          )}
-                          {banner?.button && (
-                            <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-2 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white max-sm:w-[250px]">
-                              {banner?.button}
-                            </button>
-                          )}
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="relative max-sm:hidden">
-            <div className="absolute max-sm:-top-[1rem] md:-top-[2rem] xl:-top-[2rem] 2xl:-top-20  w-full flex items-center justify-center z-[50]">
-              {banners?.map((banner, index) => (
+            {banners && banners.length > 0 && (
+              <Swiper
+                rewind={true}
+                modules={[EffectFade, Pagination, Autoplay]}
+                effect="fade"
+                autoplay={{
+                  delay: 5000,
+                }}
+                pagination={{
+                  type: "fraction",
+                  currentClass: "text-white",
+                  totalClass: "text-white",
+                }}
+                fadeEffect={{
+                  crossFade: true,
+                }}
+                className="items-center max-sm:h-[400px] justify-between h-full w-full"
+              >
+                {banners.map((banner, index) => {
+                  return (
+                    <SwiperSlide key={index} className={"h-full w-full"}>
+                      <div className="relative max-sm:h-[400px] sm:h-full">
+                        {renderMedia(banner)}
+                        <Link
+                          href={`${banner?.url ?? `/stranica-u-izradi`}`}
+                          target={banner?.target ?? "_self"}
+                          className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40"
+                        >
+                          <div className="absolute flex flex-col items-center md:items-start justify-center md:justify-start max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-[4%] transform -translate-y-1/2">
+                            {banner?.title && (
+                              <h1 className="text-white max-sm:text-base text-xl font-bold ">
+                                {banner?.title}
+                              </h1>
+                            )}
+                            {banner?.subtitle && (
+                              <h2 className="text-white max-sm:text-xl text-4xl font-bold uppercase">
+                                {banner?.subtitle}
+                              </h2>
+                            )}
+                            {banner?.text && (
+                              <p className="text-white text-left sm:max-w-[60%] max-sm:text-[0.925rem] text-base font-normal">
+                                {banner?.text}
+                              </p>
+                            )}
+                            {banner?.button && (
+                              <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-2 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white max-sm:w-[250px]">
+                                {banner?.button}
+                              </button>
+                            )}
+                          </div>
+                        </Link>
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
                 <div
-                  key={index}
-                  className={`${
-                    currentSlide?.index === index ? "bganimate" : "bg-gray-500"
-                  } w-32 h-[3.5px]  mx-1 cursor-pointer`}
-                  onClick={() => handleSlideChange(index)}
-                ></div>
-              ))}
-
-              {banners?.map((banner, index) => (
-                <div
-                  key={index}
-                  className="absolute flex gap-10 items-center bottom-6"
+                  slot="container-start"
+                  className="absolute z-20 left-0 w-full flex flex-col items-center justify-center bottom-6"
                 >
-                  <i
-                    className="cursor-pointer fas fa-chevron-left text-white text-sm"
-                    onClick={
-                      currentSlide?.index === 0
-                        ? () => handleSlideChange(banners.length - 1)
-                        : () => handleSlideChange(currentSlide?.index - 1)
-                    }
-                  ></i>
-                  <div>
-                    <p className="text-white">{`${currentSlide?.index + 1} / ${
-                      banners?.length
-                    }`}</p>
-                  </div>
-                  <i
-                    className="fas cursor-pointer fa-chevron-right text-white text-sm"
-                    onClick={
-                      currentSlide?.index === banners.length - 1
-                        ? () => handleSlideChange(0)
-                        : () => handleSlideChange(currentSlide?.index + 1)
-                    }
-                  ></i>
+                  <PaginationComponent />
                 </div>
-              ))}
-            </div>
+              </Swiper>
+            )}
           </div>
         </div>
       </div>
-      <div className="md:hidden">
-        <div
-          className="absolute w-screen block max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[700px] 2xl:h-[750px] 3xl:h-[800px]"
-          ref={sliderRef}
+      {mobileBanners && mobileBanners.length > 0 && (
+        <Swiper
+          modules={[Autoplay, EffectFade, Pagination]}
+          effect="fade"
+          rewind={true}
+          pagination={{
+            type: "fraction",
+          }}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}
+          fadeEffect={{
+            crossFade: true,
+          }}
+          className="items-center max-sm:h-[400px] justify-between h-full w-full md:!hidden"
         >
-          <div className="relative h-full overflow-hidden">
-            <div className="items-center max-sm:h-[400px] justify-between h-full w-full">
-              {mobileBanners.map((banner, index) => {
-                const isActive = currentSlide?.index === index;
-
-                return (
-                  <div
-                    key={index}
-                    className={
-                      isActive
-                        ? "relative w-full overflow-hidden h-full opacity-100 duration-[1000ms] transition-all ease-linear"
-                        : "absolute w-full h-full overflow-hidden opacity-0 duration-[1000ms] transition-all ease-linear"
-                    }
-                  >
-                    <div className="relative max-sm:h-[400px] sm:h-full">
-                      {renderMedia(banner)}
-                      <Link
-                        href={`${banner?.url ?? `/stranica-u-izradi`}`}
-                        target={banner?.target ?? "_self"}
-                        className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40"
-                      >
-                        <div className="absolute flex flex-col items-center md:items-start justify-center md:justify-start max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-[4%] transform -translate-y-1/2">
-                          {banner?.title && (
-                            <h1 className="text-white max-sm:text-base text-xl font-bold ">
-                              {banner?.title}
-                            </h1>
-                          )}
-                          {banner?.subtitle && (
-                            <h2 className="text-white max-sm:text-xl text-4xl font-bold uppercase">
-                              {banner?.subtitle}
-                            </h2>
-                          )}
-                          {banner?.text && (
-                            <p className="text-white text-left sm:max-w-[60%] max-sm:text-[0.925rem] text-base font-normal">
-                              {banner?.text}
-                            </p>
-                          )}
-                          {banner?.button && (
-                            <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-2 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white max-sm:w-[250px]">
-                              {banner?.button}
-                            </button>
-                          )}
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="relative">
-            <div className="absolute max-sm:-top-[1rem] md:-top-[2rem] xl:-top-[2rem] 2xl:-top-20  w-full flex items-center justify-center z-[50]">
-              {mobileBanners?.map((banner, index) => (
-                <div
-                  key={index}
-                  className={`${
-                    currentSlide?.index === index ? "bganimate" : "bg-gray-500"
-                  } w-32 h-[3.5px]  mx-1 cursor-pointer`}
-                  onClick={() => handleSlideChange(index)}
-                ></div>
-              ))}
-
-              {mobileBanners?.map((banner, index) => (
-                <div
-                  key={index}
-                  className="absolute flex gap-10 items-center bottom-6"
+          {mobileBanners.map((banner, index) => {
+            return (
+              <SwiperSlide
+                key={index}
+                className={"w-full h-full relative max-sm:h-[400px] sm:h-full"}
+              >
+                {renderMedia(banner)}
+                <Link
+                  href={`${banner?.url ?? `/stranica-u-izradi`}`}
+                  target={banner?.target ?? "_self"}
+                  className="absolute z-[49] top-0 left-0 w-full h-full bg-black transition-all duration-500 bg-opacity-40"
                 >
-                  <i
-                    className="cursor-pointer fas fa-chevron-left text-white text-sm"
-                    onClick={
-                      currentSlide?.index === 0
-                        ? () => handleSlideChange(banners.length - 1)
-                        : () => handleSlideChange(currentSlide?.index - 1)
-                    }
-                  ></i>
-                  <div>
-                    <p className="text-white">{`${currentSlide?.index + 1} / ${
-                      banners?.length
-                    }`}</p>
+                  <div className="absolute flex flex-col items-center md:items-start justify-center md:justify-start max-sm:gap-[20px] gap-[33px] max-sm:top-[50%] top-[40%] text-center left-[4%] transform -translate-y-1/2">
+                    {banner?.title && (
+                      <h1 className="text-white max-sm:text-base text-xl font-bold ">
+                        {banner?.title}
+                      </h1>
+                    )}
+                    {banner?.subtitle && (
+                      <h2 className="text-white max-sm:text-xl text-4xl font-bold uppercase">
+                        {banner?.subtitle}
+                      </h2>
+                    )}
+                    {banner?.text && (
+                      <p className="text-white text-left sm:max-w-[60%] max-sm:text-[0.925rem] text-base font-normal">
+                        {banner?.text}
+                      </p>
+                    )}
+                    {banner?.button && (
+                      <button className="bg-transparent  hover:bg-white hover:text-black transition-all duration-300  text-white text-sm font-bold uppercase py-4 px-12 max-sm:px-2 max-sm:py-2 max-sm:flex max-sm:items-center max-sm:justify-center border border-white max-sm:w-[250px]">
+                        {banner?.button}
+                      </button>
+                    )}
                   </div>
-                  <i
-                    className="fas cursor-pointer fa-chevron-right text-white text-sm"
-                    onClick={
-                      currentSlide?.index === banners.length - 1
-                        ? () => handleSlideChange(0)
-                        : () => handleSlideChange(currentSlide?.index + 1)
-                    }
-                  ></i>
-                </div>
-              ))}
-            </div>
+                </Link>
+              </SwiperSlide>
+            );
+          })}
+          <div
+            slot="container-start"
+            className="absolute z-20 left-0 w-full flex flex-col items-center justify-center bottom-6"
+          >
+            <PaginationComponent />
           </div>
-        </div>
+        </Swiper>
+      )}
+    </>
+  );
+};
+
+const PaginationComponent = () => {
+  const swiper = useSwiper();
+  console.log(swiper);
+  return (
+    <>
+      <div className="flex gap-16 items-center bottom-6">
+        <button
+          onClick={() => {
+            console.log("slide prev");
+            swiper.slidePrev();
+          }}
+        >
+          <i className="cursor-pointer fas fa-chevron-left text-white text-sm"></i>
+        </button>
+        {/* <div>
+          <p className="text-white">
+            {swiper.activeIndex + 1} / {swiper.slides.length}
+          </p>
+        </div> */}
+        <button
+          onClick={() => {
+            swiper.slideNext();
+          }}
+        >
+          <i className="fas cursor-pointer fa-chevron-right text-white text-sm"></i>
+        </button>
       </div>
+      {/* <div className={`bg-gray-500 w-32 h-[3.5px] mx-1 mt-2`}>
+        <div
+          className="bg-white h-full transition-all"
+          style={{
+            width:
+              ((swiper.activeIndex + 1) / swiper.slides.length) * 100 + "%",
+          }}
+        ></div>
+      </div> */}
     </>
   );
 };
