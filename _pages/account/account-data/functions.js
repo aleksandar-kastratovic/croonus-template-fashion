@@ -6,6 +6,7 @@ import { PasswordChange } from "@/_pages/account/account-data/password-change";
 import { Dashboard } from "@/_pages/account/account-data/dashboard";
 import { Suspense } from "react";
 import { Loader } from "@/_pages/account/account-data/loader";
+import Logout from "./logout/Logout";
 
 export const getActiveScreen = (active_tab) => {
   switch (active_tab) {
@@ -45,5 +46,7 @@ export const getActiveScreen = (active_tab) => {
           <PasswordChange />
         </Suspense>
       );
+    case "logout":
+      return <Logout />;
   }
 };

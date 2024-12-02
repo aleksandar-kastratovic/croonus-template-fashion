@@ -23,8 +23,8 @@ export const useTabChange = () => {
 
 export const handleClick = (tab, mutate, logout, handleTabChange) => {
   switch (tab) {
-    case "logout":
-      logout(mutate);
+    // case "logout":
+    //   logout(mutate);
     default:
       return handleTabChange(tab);
   }
