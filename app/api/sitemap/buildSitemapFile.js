@@ -21,10 +21,9 @@ function createResponse(message, status) {
  * Fajlovi se generisu u `/tmp` direktorijumu
  *
  * @param {Array} sitemapData - Podaci o sitemap fajlovima (putanja i sadržaj)
- * @param {string} baseUrl - Osnovni URL koji se koristi za generisanje sitemap-a.
  */
 
-const createSitemapFiles = (sitemapData, baseUrl) => {
+const createSitemapFiles = (sitemapData) => {
   sitemapData.forEach(({ path: filePath, content }) => {
     // Formiranje putanje do fajla u `/tmp` direktorijumu
     const outputPath = path.join("/tmp", filePath);
@@ -62,6 +61,17 @@ const deleteOldSitemaps = () => {
 };
 
 /**
+ * Dekodira Base64 string u XML sadržaj.
+ *
+ * @param {string} base64Content - Base64 kodirani string.
+ * @returns {string} - Dekodirani XML string.
+ */
+const decodeBase64ToXml = (base64Content) => {
+  const base64Data = base64Content.split(",")[1];
+  return Buffer.from(base64Data, "base64").toString("utf-8");
+};
+
+/**
  * buildSitemapFile - Glavna funkcija za generisanje sitemap fajlova
  *
  * Ova funkcija:
@@ -71,15 +81,12 @@ const deleteOldSitemaps = () => {
  *
  * @async
  * @param {Array<{path: string}>} fileList - Lista fajlova za generisanje sitemap-a.
- * @param {string} baseUrl - Osnovni URL koji se koristi za generisanje sitemap-a.
  * @returns {Promise<Response>} - HTTP odgovor koji ukazuje na uspešnost generisanja sitemap-a.
  *
  * @throws {Error} Ako dođe do greške tokom generisanja sitemap fajlova.
  */
-const buildSitemapFile = async (fileList, baseUrl) => {
+const buildSitemapFile = async (fileList) => {
   try {
-    console.log("LIST OF SITEMAP FILES:", fileList);
-
     // Brise vec kreirane fajlove ako postoje
     deleteOldSitemaps();
 
@@ -98,8 +105,7 @@ const buildSitemapFile = async (fileList, baseUrl) => {
           continue;
         }
 
-        const base64Data = base64Content.split(",")[1];
-        const xmlContent = Buffer.from(base64Data, "base64").toString("utf-8");
+        const xmlContent = decodeBase64ToXml(base64Content);
 
         sitemapData.push({ path: file.path, content: xmlContent });
       } catch (fetchError) {
@@ -117,7 +123,7 @@ const buildSitemapFile = async (fileList, baseUrl) => {
     }
 
     // Kreiranje sitemap fajlova sa odgovarajućom strukturom direktorijuma
-    createSitemapFiles(sitemapData, baseUrl);
+    createSitemapFiles(sitemapData);
 
     console.log("Sitemap generation completed successfully.");
     return createResponse("Sitemap successfully updated.", 200);

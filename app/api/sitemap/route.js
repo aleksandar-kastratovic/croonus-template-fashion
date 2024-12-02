@@ -25,6 +25,21 @@ function createResponse(
 }
 
 /**
+ * Čita sadržaj sitemap fajla sa zadate putanje i
+ * kreira HTTP odgovor sa XML sadržajem i odgovarajućim zaglavljima.
+ *
+ * @param {*} filePath - Putanja do sitemap fajla.
+ * @returns {Response} - HTTP odgovor sa sitemap sadržajem u XML formatu.
+ */
+const readSitemapAndCreateResponse = (filePath) => {
+  const sitemap = fs.readFileSync(filePath, "utf-8");
+  return createResponse(sitemap, 200, {
+    "Content-Type": "application/xml",
+    "Cache-Control": "s-maxage=86400, stale-while-revalidate",
+  });
+};
+
+/**
  * API ruta za dinamičko serviranje sitemap fajlova na osnovu query parametra `slug`.
  * Omogućava crawler-ima pristup sitemap fajlovima u /tmp direktorijumu.
  *
@@ -37,12 +52,6 @@ function createResponse(
  */
 
 export async function GET(req) {
-  // Dinamički izvlacenje protokola i hosta
-  const { headers } = req;
-  const protocol = headers.get("x-forwarded-proto") || "http";
-  const host = headers.get("host") || "localhost:3000";
-  const baseUrl = `${protocol}://${host}`;
-
   // Parsiranje query parametra `slug` iz URL-a
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug");
@@ -55,14 +64,20 @@ export async function GET(req) {
     // Formiranje putanje do traženog fajla u `/tmp` direktorijumu
     const filePath = path.join("/tmp", slug);
 
-    // Ako fajl postoji u `/tmp`, koristi ga
+    // Ako fajl postoji u `/tmp`
     if (fs.existsSync(filePath)) {
-      const sitemap = fs.readFileSync(filePath, "utf-8");
-      return createResponse(sitemap, 200, {
-        "Content-Type": "application/xml",
-        "Cache-Control": "s-maxage=86400, stale-while-revalidate",
-      });
+      readSitemapAndCreateResponse(filePath);
     } else {
+      /**
+       * Ako ne postoji, dohvati listu sitemap fajlova i generisi ih
+       *
+       * Zasto je ovo potrebno ovde uraditi a ne pri build-u?
+       * Vercel funksionise tako da tokom build-a moze kreirati /tmp direktorijum ali
+       * se ne prenosi u runtime okruzenje.
+       * Zato, cim web crawler ili bilo ko drugi pristupi ovom API endpoint-u,
+       * ukoliko ne postoji tmp direktorijum, bice kreiran.
+       */
+
       // Dohvatanje liste fajlova za sitemap
       const filesResponse = await list(`/sitemap/files`);
       const files = filesResponse?.payload?.files;
@@ -72,13 +87,9 @@ export async function GET(req) {
       }
 
       if (files) {
-        await buildSitemapFile(files, baseUrl);
+        await buildSitemapFile(files);
 
-        const sitemap = fs.readFileSync(filePath, "utf-8");
-        return createResponse(sitemap, 200, {
-          "Content-Type": "application/xml",
-          "Cache-Control": "s-maxage=86400, stale-while-revalidate",
-        });
+        readSitemapAndCreateResponse(filePath);
       }
     }
   } catch (error) {

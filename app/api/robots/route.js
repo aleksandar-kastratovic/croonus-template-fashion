@@ -19,13 +19,14 @@ export async function GET(req) {
   const protocol = headers.get("x-forwarded-proto") || "http";
   const host = headers.get("host") || "localhost:3000";
 
+  // TODO: Povezati api za dobijanje robots sadrzaja
+
   // Sadržaj robots.txt fajla
   const robotsContent = `
-      User-agent: *
-      Disallow:
+User-agent: *
+Disallow:
   
-      Sitemap: ${protocol}://${host}/api/sitemap?slug=sitemap/index.xml
-    `;
+Sitemap: ${protocol}://${host}/api/sitemap?slug=sitemap/index.xml`;
 
   // Vraća robots.txt sadržaj u tekstualnom formatu
   return new Response(robotsContent.trim(), {

@@ -22,12 +22,6 @@ function createResponse(message, status) {
  */
 
 export async function POST(req) {
-  // Dinamički izvlacenje protokola i hosta
-  const { headers } = req;
-  const protocol = headers.get("x-forwarded-proto") || "http";
-  const host = headers.get("host") || "localhost:3000";
-  const baseUrl = `${protocol}://${host}`;
-
   const body = await req.json();
 
   const clientIP = req.headers.get("x-forwarded-for");
@@ -40,7 +34,7 @@ export async function POST(req) {
 
   try {
     // Pokretanje sitemap build procesa
-    await buildSitemapFile(body.files, baseUrl);
+    await buildSitemapFile(body.files);
 
     return createResponse("Sitemap successfully updated.", 200);
   } catch (error) {
