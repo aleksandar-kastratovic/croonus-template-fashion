@@ -1,7 +1,6 @@
 "use client";
 
 import { useOrder } from "@/hooks/ecommerce.hooks";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import { Suspense } from "react";
 import Thumb from "@/components/Thumb/Thumb";
 import Image from "next/image";
@@ -37,8 +36,6 @@ const Order = ({ orderToken, className }) => {
 
   return (
     <>
-   
-
       <div
         className={`container mx-auto mt-[4rem] px-2 2xl:px-[2rem] 3xl:px-[3rem] 4xl:px-[9.5rem]`}
       >
@@ -107,7 +104,7 @@ const Success = ({
                     </p>
                   </div>
                 );
-              },
+              }
             )}
           </div>
         </div>
@@ -163,15 +160,14 @@ const Success = ({
             className={`mt-5 flex flex-col gap-2 rounded-lg bg-[#f7f7f7] p-2`}
           >
             <h3 className={`${className} text-base font-light`}>
-              Prodavac:{" "}<span className={`font-normal`}>
-                Maximon DOO
-              </span>
-            </h3><h3 className={`${className} text-base font-light`}>
-              PIB:{" "}<span className={`font-normal`}>
-                112766359
-              </span>
-            </h3><h3 className={`${className} text-base font-light`}>
-              Adresa:{" "}<span className={`font-normal`}>
+              Prodavac: <span className={`font-normal`}>Maximon DOO</span>
+            </h3>
+            <h3 className={`${className} text-base font-light`}>
+              PIB: <span className={`font-normal`}>112766359</span>
+            </h3>
+            <h3 className={`${className} text-base font-light`}>
+              Adresa:{" "}
+              <span className={`font-normal`}>
                 Rudnička 1, Čačak 32000, Srbija
               </span>
             </h3>
