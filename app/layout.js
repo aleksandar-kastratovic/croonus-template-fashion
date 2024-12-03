@@ -1,6 +1,6 @@
 import { CartContextProvider } from "@/api/cartContext";
+import "swiper/css";
 import "./globals.css";
-import Script from "next/script";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/Footer/Footer";
 import NavigationMobile from "@/components/Navigation/NavigationMobile";
@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import { AnalyticsGA4 } from "@/_components/shared/analyticsGA4";
 import { AnalyticsGTM } from "@/_components/shared/analyticsGTM";
 import { Suspense } from "react";
+import Script from "next/script";
 
 const getHTMLLang = async () => {
   return process.env.HTML_LANG;
@@ -23,14 +24,25 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={`${await getHTMLLang()}`}>
       <head>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+        <link
+          rel={`stylesheet`}
+          href={`https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css`}
+        />
         <Script
-          crossOrigin="anonymous"
-          src="https://kit.fontawesome.com/f141ac3909.js"
-        />{" "}
+          src={`https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/regular.js`}
+        ></Script>
         <link
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         ></link>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        />
       </head>
       <body className="relative">
         <QueryProvider>

@@ -25,6 +25,7 @@ const NewCategoriesSections = ({ categories }) => {
                 src={category?.images?.image}
                 alt="category"
                 fill
+                sizes="100vw"
                 className="object-cover hover:scale-110 transition-all duration-700 ease-in-out"
               />
             )}

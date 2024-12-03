@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 
-import back from "../../assets/Icons/right-chevron.png";
-
 const Shipping = () => {
   const [customerData, setCustomerData] = useState();
   const [disabled, setDisabled] = useState(true);
@@ -154,7 +152,7 @@ const Shipping = () => {
           onClick={handleGoBack}
         >
           <Image
-            src={back}
+            src={"/icons/right-chevron.png"}
             alt="back button"
             className="invert transform rotate-180"
             width={22}

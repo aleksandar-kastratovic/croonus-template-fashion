@@ -4,8 +4,6 @@ import { list } from "@/api/api";
 import Image from "next/image";
 import Link from "next/link";
 
-import pen from "../../assets/Icons/pen.png";
-
 const PreviousOrders = () => {
   const [previousOrders, setPreviousOrders] = useState();
 

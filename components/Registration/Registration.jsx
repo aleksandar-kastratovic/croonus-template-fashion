@@ -5,10 +5,6 @@ import { post } from "@/api/api";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 
-import hide from "@/assets/Icons/hide-password.png";
-import show from "@/assets/Icons/show-password.png";
-import calendar from "@/assets/Icons/calendar.png";
-
 const Registration = ({ setIsReg }) => {
   const [secondAddress, setSecondAddress] = useState(false);
   const [reg, setReg] = useState(false);
@@ -348,7 +344,7 @@ const Registration = ({ setIsReg }) => {
                         <Image
                           className="sm:hidden absolute right-[0.6rem] top-[1rem]"
                           alt="Calendar"
-                          src={calendar}
+                          src={"/icons/calendar.png"}
                           width={24}
                           height={20}
                         />
@@ -381,14 +377,14 @@ const Registration = ({ setIsReg }) => {
                         >
                           {showPassword ? (
                             <Image
-                              src={hide}
+                              src={"/icons/hide-password.png"}
                               alt="hide password"
                               width={22}
                               height={22}
                             />
                           ) : (
                             <Image
-                              src={show}
+                              src={"/icons/show-password.png"}
                               alt="show password"
                               width={22}
                               height={22}
@@ -658,14 +654,14 @@ const Registration = ({ setIsReg }) => {
                         <button onClick={togglePasswordVisibility2}>
                           {showPassword2 ? (
                             <Image
-                              src={hide}
+                              src={"/icons/hide-password.png"}
                               alt="hide password"
                               width={22}
                               height={22}
                             />
                           ) : (
                             <Image
-                              src={show}
+                              src={"/icons/show-password.png"}
                               alt="show password"
                               width={22}
                               height={22}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Fragment } from "react";
 
 export const Pagination = ({
   getPaginationArray = (r, m) => {},
@@ -36,7 +37,7 @@ export const Pagination = ({
         data.pagination.selected_page,
         data.pagination.total_pages
       )?.map((num, index, array) => (
-        <>
+        <Fragment key={index}>
           {index === 0 && num !== 1 && (
             <>
               <Link
@@ -91,7 +92,7 @@ export const Pagination = ({
                 </Link>
               </>
             )}
-        </>
+        </Fragment>
       ))}
     </div>
   );

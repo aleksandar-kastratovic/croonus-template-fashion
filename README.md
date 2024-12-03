@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Module documentation
+SEO sitemap module, [documentation](docs/SEO/sitemap-module.md).
+
 ## Getting Started
 
 First, run the development server:
@@ -37,6 +40,126 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## Module documentation
+## E-Commerce Hooks
 
-SEO sitemap module, [documentation](docs/SEO/sitemap-module.md).
+Our custom e-commerce hooks are implemented in the file `hooks/ecommerce.hooks.js`. Our project leverages custom hooks for seamless integration with the **B2C/B2B Admin** backend. These hooks, built with **React Query**, facilitate efficient data fetching, caching, and state management for key e-commerce functionalities.
+
+### Available Hooks
+
+#### `useCategoryTree`
+
+Fetches the hierarchical structure of product categories.
+
+```javascript
+export const useCategoryTree = () => {
+  return useSuspenseQuery({
+    queryKey: ["categoryTree"],
+    queryFn: async () => {
+      return await GET(`/categories/product/tree`).then((res) => res?.payload);
+    },
+  });
+};
+```
+
+#### `useLandingPages`
+
+Retrieves a list of landing pages.
+
+```javascript
+export const useLandingPages = () => {
+  return useSuspenseQuery({
+    queryKey: ["landingPagesList"],
+    queryFn: async () => {
+      return await LIST(`/landing-pages/list`).then((res) => res?.payload);
+    },
+  });
+};
+```
+
+#### `useAddToCart`
+
+Adds an item to the cart. Parameters include:
+
+```javascript
+export const useAddToCart = () => {
+  const [, mutateCart] = useCartContext();
+
+  return useMutation({
+    mutationKey: ["addToCart"],
+    mutationFn: async ({ id, quantity, message, type = false }) => {
+      return await POST(`/cart`, {
+        id_product: +id,
+        quantity: quantity,
+        id_product_parent: null,
+        description: null,
+        status: null,
+        quantity_calc_type: type ? "replace" : "calc",
+      }).then((res) => {
+        switch (res?.code) {
+          case 200:
+            mutateCart();
+            toast.success(message ?? "Uspešno dodato u korpu", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+            break;
+          default:
+            toast.error("Greška prilikom dodavanja u korpu", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+            break;
+        }
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+```
+
+#### `useCartBadge`
+
+Fetches the total number of items in the cart.
+
+```javascript
+export const useCartBadge = () => {
+  const [cart] = useCartContext();
+
+  return useQuery({
+    queryKey: ["cartBadge", cart],
+    queryFn: async () => {
+      return await GET("/cart/badge-count").then(
+        (res) => res?.payload?.summary?.items_count ?? 0
+      );
+    },
+  });
+};
+```
+
+#### `useWishlistBadge`
+
+Fetches the total number of items in the wishlist.
+
+```javascript
+export const useWishlistBadge = () => {
+  const [, , wishList] = useCartContext();
+
+  return useQuery({
+    queryKey: ["wishlistBadge", wishList],
+    queryFn: async () => {
+      return await GET("/wishlist/badge-count").then(
+        (res) => res?.payload?.summary?.items_count ?? 0
+      );
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+```

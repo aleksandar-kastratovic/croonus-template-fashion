@@ -94,7 +94,13 @@ const NewsLetterInstagramSection = () => {
               className="absolute right-3 top-1/2 -translate-y-1/2 z-10"
               type="submit"
             >
-              <Image src={"/send.png"} width={28} height={34} />
+              <Image
+                alt="send icon"
+                src={"/send.png"}
+                width={34}
+                height={28}
+                className="w-7 h-auto"
+              />
             </button>
           </form>
           <p className="text-[17px] text-black font-normal mb-3 mt-5 lg:mt-20">
@@ -102,8 +108,20 @@ const NewsLetterInstagramSection = () => {
             aplikacije.
           </p>
           <div className="flex items-center gap-7">
-            <Image src={"/app-store.png"} width={120} height={40} />
-            <Image src={"/google-play.png"} width={120} height={40} />
+            <Image
+              alt="app store"
+              src={"/app-store.png"}
+              width={120}
+              height={40}
+              className="w-28 h-auto"
+            />
+            <Image
+              alt="google play"
+              src={"/google-play.png"}
+              width={120}
+              height={40}
+              className="w-28 h-auto"
+            />
           </div>
           <p className="text-base text-black mt-5 lg:mt-14 font-normal">
             Podelite svoje jedinstveno onlajn iskustvo sa našim <br /> timom i

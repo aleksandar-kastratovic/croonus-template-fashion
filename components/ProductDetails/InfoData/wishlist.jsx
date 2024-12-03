@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
-import WishlistImg from "../../../assets/Icons/heart.png";
 import {
   useAddToWishlist,
   useIsInWishlist,
@@ -46,15 +45,17 @@ export const Wishlist = ({ product }) => {
           alt="wishlist"
           width={39}
           height={35}
-          className={``}
+          className={`w-10 h-auto`}
         />
       ) : (
         <Image
-          src={WishlistImg}
+          src={"/icons/heart.png"}
           alt="wishlist"
           width={39}
           height={35}
-          className={`favorite ${!isInWishlist && "group-hover:invert"}`}
+          className={`favorite w-10 h-auto ${
+            !isInWishlist && "group-hover:invert"
+          }`}
         />
       )}
     </div>

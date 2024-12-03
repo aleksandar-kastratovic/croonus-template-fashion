@@ -3,45 +3,34 @@ import { useState } from "react";
 import Image from "next/image";
 import { post } from "@/api/api";
 import Link from "next/link";
-import back from "@/assets/Icons/right-chevron.png";
-import hide from "@/assets/Icons/hide-password.png";
-import show from "@/assets/Icons/show-password.png";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-import classes from "@/components/Registration/Registration.module.css";
 
 const ResetPasswordComponent = ({ token }) => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     pin: "",
     password: "",
-    passwordconfirmed: "",
+    confirmPassword: "",
     token: token,
   });
-  const required = ["pin", "password", "token"];
+  const required = ["pin", "password", "confirmPassword", "token"];
   const [errors, setErrors] = useState([]);
 
   const formChangeHandler = ({ target }) => {
     setErrors(errors.filter((item) => item != target.name));
 
-    if (target.type === "radio" && target.checked) {
-      setFormData({ ...formData, [target.name]: target.value });
-    } else {
-      setFormData({ ...formData, [target.name]: target.value });
-    }
+    setFormData({ ...formData, [target.name]: target.value });
   };
   const formSubmitHandler = () => {
     const err = [];
     for (const key in formData) {
       const item = formData[key];
-      if (
-        (required.includes(key) && (item === "" || item == null)) ||
-        (required.includes(key) && (item === "" || item == null))
-      ) {
+      if (required.includes(key) && (item === "" || item == null)) {
         err.push(key);
       }
     }
@@ -49,6 +38,21 @@ const ResetPasswordComponent = ({ token }) => {
     if (err.length > 0) {
       setErrors(err);
     } else {
+      if (formData["password"] !== formData["confirmPassword"]) {
+        err.push("password", "confirmPassword");
+        setErrors(err);
+        toast.error(
+          "Greška. Potvrđena lozinka se razlikuje od lozinke. Pokušajte ponovo.",
+          {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          }
+        );
+        return;
+      }
       const ret = {
         pin: formData.pin,
         password: formData.password,
@@ -102,8 +106,8 @@ const ResetPasswordComponent = ({ token }) => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-  const togglePasswordVisibility2 = () => {
-    setShowPassword2((prevShowPassword2) => !prevShowPassword2);
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((state) => !state);
   };
 
   return (
@@ -112,7 +116,7 @@ const ResetPasswordComponent = ({ token }) => {
         <Link href="/login">
           <div className="bg-croonus-3 p-[0.4rem] mr-[4rem] ml-[1re] rounded-[50%] mt-[0.4rem] hover:translate-y-0.5 transition-all ease cursor-pointer text-white">
             <Image
-              src={back}
+              src={"/icons/right-chevron.png"}
               alt="back button"
               className="invert transform rotate-180"
               width={22}
@@ -167,9 +171,19 @@ const ResetPasswordComponent = ({ token }) => {
           </div>
           <button onClick={togglePasswordVisibility}>
             {showPassword ? (
-              <Image src={hide} alt="hide password" width={22} height={22} />
+              <Image
+                src={"/icons/hide-password.png"}
+                alt="hide password"
+                width={22}
+                height={22}
+              />
             ) : (
-              <Image src={show} alt="show password" width={22} height={22} />
+              <Image
+                src={"/icons/show-password.png"}
+                alt="show password"
+                width={22}
+                height={22}
+              />
             )}
           </button>
           <div className="flex flex-col ml-[1.4rem] mr-[0.4rem]">
@@ -179,23 +193,33 @@ const ResetPasswordComponent = ({ token }) => {
             </label>
             <input
               onChange={formChangeHandler}
-              type={showPassword2 ? "text" : "password"}
-              id="passwordconfirmed"
-              name="passwordconfirmed"
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              name="confirmPassword"
               value={formData.passwordconfirmed}
               className={`max-sm:text-sm h-[58px]  text-black ${
-                errors.includes("passwordconfirmed")
+                errors.includes("confirmPassword")
                   ? "border-red-500 focus:border-red-500"
                   : "border-none focus:border-none"
               }  focus:ring-0 bg-[#f5f5f6] max-xl:mx-3`}
               placeholder="Potvrda lozinke*"
             />
           </div>
-          <button onClick={togglePasswordVisibility2}>
-            {showPassword2 ? (
-              <Image src={hide} alt="hide password" width={22} height={22} />
+          <button onClick={toggleConfirmPasswordVisibility}>
+            {showConfirmPassword ? (
+              <Image
+                src={"/icons/hide-password.png"}
+                alt="hide password"
+                width={22}
+                height={22}
+              />
             ) : (
-              <Image src={show} alt="show password" width={22} height={22} />
+              <Image
+                src={"/icons/show-password.png"}
+                alt="show password"
+                width={22}
+                height={22}
+              />
             )}
           </button>
         </div>

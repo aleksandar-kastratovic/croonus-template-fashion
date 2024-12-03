@@ -20,6 +20,7 @@ const nextConfig = {
     SERVER_IP: process.env.SERVER_IP,
   },
   images: {
+    unoptimized: true,
     domains: [
       "scontent.cdninstagram.com",
       "192.168.1.223",

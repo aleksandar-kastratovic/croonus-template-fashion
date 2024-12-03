@@ -1,6 +1,7 @@
 import StaticPage from "@/components/StaticPage/StaticPage";
 import { get, list } from "@/api/api";
 import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 
 const getBasicData = async (slug) => {
   return await get(`/static-pages/content/${slug}`)?.then(
@@ -15,6 +16,7 @@ const getData = (slug) => {
 
 const DynamicStaticPage = async ({ params: { slug } }) => {
   const data = await getData(slug);
+  data ?? notFound();
   return <StaticPage slug={slug} data={data} />;
 };
 
