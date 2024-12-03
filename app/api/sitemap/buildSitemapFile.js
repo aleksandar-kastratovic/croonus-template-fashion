@@ -1,4 +1,4 @@
-const { fetch } = require("../../../api/api_staging");
+const { fetch } = require("../../../api/api");
 const fs = require("fs");
 const path = require("path");
 

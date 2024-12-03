@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import { buildSitemapFile } from "@/app/api/sitemap/buildSitemapFile";
-import { list } from "@/api/api_staging";
+import { list } from "@/api/api";
 
 /**
  * Kreira HTTP odgovor sa zadatim statusom, porukom i opcionalnim zaglavljima.
