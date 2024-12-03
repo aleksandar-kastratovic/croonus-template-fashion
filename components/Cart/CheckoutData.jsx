@@ -29,6 +29,8 @@ import fields from "./shipping.json";
 import Cookies from "js-cookie";
 import Spinner from "@/components/UI/Spinner";
 
+import FreeDeliveryScale from "./FreeDeliveryScale";
+
 export const CheckoutData = ({
   className,
   formData,
@@ -402,6 +404,14 @@ export const CheckoutData = ({
         >
           {isPending ? "OBRADA..." : "ZAVRŠI KUPOVINU"}
         </button>
+        <div className="hidden xl:block w-full">
+          <FreeDeliveryScale
+            freeDeliveryAmount={
+              summary?.options?.delivery?.free_delivery?.amount
+            }
+            cartCost={summary?.total}
+          />
+        </div>
       </div>
       <NoStockModal
         className={className}
