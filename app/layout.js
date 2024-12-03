@@ -24,6 +24,10 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={`${await getHTMLLang()}`}>
       <head>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
         <link
           rel={`stylesheet`}
           href={`https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css`}
