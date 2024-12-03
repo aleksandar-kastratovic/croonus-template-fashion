@@ -26,6 +26,7 @@ const SearchProducts = () => {
           return res?.payload;
         });
       }
+      return [];
     },
     refetchOnWindowFocus: false,
     enabled: true,
@@ -94,6 +95,7 @@ const SearchProducts = () => {
                             src={item.image[0]}
                             alt={``}
                             fill
+                            sizes="100vw"
                             className={`object-cover rounded-full`}
                           />
                         </div>

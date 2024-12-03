@@ -17,6 +17,7 @@ const InstagramSection = ({ instagramImages }) => {
             <Image
               src={image?.media_url}
               fill
+              sizes="100vw"
               alt={image?.caption}
               className="object-cover"
             />

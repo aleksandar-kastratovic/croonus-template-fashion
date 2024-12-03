@@ -42,7 +42,7 @@ const HeaderIcons = () => {
             src="/shopping-bag.png"
             width={21}
             height={21}
-            className="object-cover"
+            className="object-cover w-5 h-auto"
             alt="shopping-bag"
           />
           <span className="absolute -top-2 text-white -right-3 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">

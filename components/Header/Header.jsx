@@ -208,6 +208,7 @@ const Header = () => {
                     {landingPagesList?.items?.map((item, index) => {
                       return (
                         <Link
+                          key={index}
                           onClick={resetActiveCategory}
                           href={`/promo/${item?.slug}`}
                           className="uppercase text-red-500 hover:translate-x-5 hover:text-slate-500 transition-all duration-300 text-lg  font-medium mb-1 block"
@@ -323,6 +324,7 @@ const Header = () => {
                         }
                         alt="img-modal"
                         fill
+                        sizes="100vw"
                         priority
                         className="object-cover"
                       />

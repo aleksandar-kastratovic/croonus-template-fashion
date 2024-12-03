@@ -19,6 +19,7 @@ const nextConfig = {
     SHOW_CHECKOUT_SHIPPING_FORM: process.env.SHOW_CHECKOUT_SHIPPING_FORM,
   },
   images: {
+    unoptimized: true,
     domains: [
       "scontent.cdninstagram.com",
       "192.168.1.223",

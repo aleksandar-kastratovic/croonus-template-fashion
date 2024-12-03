@@ -101,7 +101,10 @@ const Filters = ({
           {(availableFilters ?? []).map((filter, index) => {
             const isOpen = openIndex === index;
             return (
-              <div className="relative max-lg:hidden filter">
+              <div
+                key={`${index}-filters`}
+                className="relative max-lg:hidden filter"
+              >
                 <div
                   className="relative select-none cursor-pointer filter"
                   key={filter?.id}
@@ -116,11 +119,12 @@ const Filters = ({
                       {filter?.name}
                     </h1>
                     <Image
-                      className={
-                        isOpen
-                          ? `rotate-180 filter transition-all duration-500`
-                          : `rotate-0 filter transition-all duration-500`
-                      }
+                      className={`w-4 h-auto
+                        ${
+                          isOpen
+                            ? `rotate-180 filter transition-all duration-500`
+                            : `rotate-0 filter transition-all duration-500`
+                        }`}
                       src={`/icons/chevron.png`}
                       alt={`TFY Production`}
                       width={15}
@@ -189,11 +193,11 @@ const Filters = ({
             >
               <h1 className=" text-base  font-light text-center">Sortiranje</h1>
               <Image
-                className={
+                className={`w-4 h-auto ${
                   openSort.open
                     ? `rotate-180 transition-all duration-500`
                     : `rotate-0 transition-all duration-500`
-                }
+                }`}
                 src={`/icons/chevron.png`}
                 alt={`TFY Production`}
                 width={15}
@@ -205,12 +209,13 @@ const Filters = ({
                 ref={sortRef}
                 className="absolute sortref z-[2] border border-[#f2f2f2] right-[-100px] top-[33px] flex flex-col items-center justify-end w-[250px]"
               >
-                {sortKeys.map((key) => {
+                {sortKeys.map((key, index) => {
                   const isActive =
                     openSort?.key?.field === key?.field &&
                     openSort?.key?.direction === key?.direction;
                   return (
                     <div
+                      key={`${index}-sortKey`}
                       className={`flex sortref items-center text-black justify-start w-full py-2 px-4 cursor-pointer text-[0.875rem] ${
                         isActive ? "" : "bg-white "
                       }`}

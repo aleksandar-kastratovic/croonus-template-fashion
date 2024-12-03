@@ -16,6 +16,7 @@ const RecommendedCategories = async ({ categories }) => {
           <Image
             src={category?.image}
             fill
+            sizes="100vw"
             alt="banner"
             className="object-cover"
           />

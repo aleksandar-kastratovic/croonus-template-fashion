@@ -22,7 +22,6 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-
 .notranslate .rs-picker-default .rs-btn,
 .rs-picker-default .rs-picker-toggle,
 .rs-picker-input .rs-btn,
@@ -53,12 +52,12 @@ input[type="number"] {
   align-items: center;
 }
 
-.swiper-slide img {
+/* .swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 .translate3d {
   transform: translate3d(0, 0, 0);
@@ -150,11 +149,6 @@ input[type="number"] {
   }
 }
 
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
 .swiper-slide {
   text-align: center;
   font-size: 18px;
@@ -164,11 +158,25 @@ input[type="number"] {
   align-items: center;
 }
 
-.swiper-slide img {
+.grecaptcha-badge {
+  z-index: 10;
+}
+
+/* .swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+} */
+
+/* Sledeci css sluzi za sakrivanje elemenata koji se pojavljuju od strane Google translate APi-ja */
+#goog-gt-tt {
+  display: none !important;
+}
+
+font {
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 
 @media (max-width: 768px) {
@@ -311,7 +319,7 @@ input[type="number"] {
 }
 
 .favorites:hover > .activeWishlist {
- display: block !important;
+  display: block !important;
 }
 
 .slider .rs-slider-bar {

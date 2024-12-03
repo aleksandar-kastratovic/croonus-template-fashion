@@ -128,24 +128,28 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
               navigation={true}
               modules={[Navigation]}
               fadeEffect={{ crossFade: true }}
-              loop={true}
+              loop={products.length < 4 ? false : true}
               className="mySwiper3 w-full select-none"
               breakpoints={{
                 640: {
                   slidesPerView: 2,
                   spaceBetween: 10,
+                  loop: products.length < 4 ? false : true,
                 },
                 768: {
                   slidesPerView: 2.5,
                   spaceBetween: 10,
+                  loop: products.length < 5 ? false : true,
                 },
                 1024: {
                   slidesPerView: 4,
                   spaceBetween: 10,
+                  loop: products.length < 8 ? false : true,
                 },
                 1680: {
                   slidesPerView: 5,
                   spaceBetween: 10,
+                  loop: products.length < 10 ? false : true,
                 },
               }}
             >

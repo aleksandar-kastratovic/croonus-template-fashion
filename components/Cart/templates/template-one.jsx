@@ -3,15 +3,8 @@ import {
   GoogleReCaptchaProvider,
 } from "react-google-recaptcha-v3";
 import { currencyFormat } from "@/helpers/functions";
-import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
 
-export const TemplateOne = ({
-  verifyCaptcha,
-  data,
-  cartCost,
-  recommendedProducts,
-  children,
-}) => {
+export const TemplateOne = ({ verifyCaptcha, data, cartCost, children }) => {
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={true} />
@@ -80,13 +73,6 @@ export const TemplateOne = ({
               {children}
             </div>
           </div>
-
-          {recommendedProducts?.length > 0 && (
-            <RecommendedProducts
-              recommendedProducts={recommendedProducts}
-              action4={`Gledali ste i ove modele`}
-            />
-          )}
         </>
       </div>
     </GoogleReCaptchaProvider>
