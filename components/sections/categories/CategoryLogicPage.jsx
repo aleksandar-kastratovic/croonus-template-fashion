@@ -147,7 +147,7 @@ const CategoryLogicPage = ({ singleCategory }) => {
             onClick={() => setOpenFilter(true)}
           >
             <Image
-              src={"/heart.png"}
+              src={"/icons/heart.png"}
               alt="Filter"
               width={20}
               height={20}

@@ -43,7 +43,7 @@ export const handlePaymentText = (payment_type, status, fields) => {
   if (status === "success") {
     data_tmp = {
       title: "Uspešno ste napravili porudžbenicu!",
-      image: "/uspesno.png",
+      image: "/images/uspesno.png",
       subtitle: "Hvala Vam na ukazanom poverenju.",
       text_line_1: null,
       text_line_2:
@@ -57,7 +57,7 @@ export const handlePaymentText = (payment_type, status, fields) => {
     data_tmp = {
       title: "Uspešno ste napravili porudžbenicu!",
       subtitle: "Hvala Vam na ukazanom poverenju.",
-      image: "/uspesno.png",
+      image: "/images/uspesno.png",
       text_line_2:
         "Za sve dodatne informacije možete nas kontaktirati putem call centra +381 63 11 23 988 ili putem emaila masnetiedup@gmail.com",
       button: "Nazad na početnu stranu",

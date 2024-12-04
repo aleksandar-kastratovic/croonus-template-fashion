@@ -97,7 +97,7 @@ const Header = () => {
         <div className="py-5 px-[3rem] flex items-center justify-between">
           <Link href="/">
             <Image
-              src="/logo.png"
+              src="/images/logo/logo.png"
               width={185}
               height={39}
               className="object-cover"

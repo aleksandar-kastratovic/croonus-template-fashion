@@ -62,7 +62,7 @@ const SearchProducts = () => {
         ) : (
           <div className="absolute right-2 top-1/2 -translate-y-1/2 py-2">
             <Image
-              src={"/search.png"}
+              src={"/icons/search.png"}
               width={20}
               height={20}
               className="object-cover"

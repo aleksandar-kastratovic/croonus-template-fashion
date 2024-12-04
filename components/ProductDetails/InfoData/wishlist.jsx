@@ -41,7 +41,7 @@ export const Wishlist = ({ product }) => {
     >
       {isInWishlist ? (
         <Image
-          src={`/heart-active.png`}
+          src={`/icons/heart-active.png`}
           alt="wishlist"
           width={39}
           height={35}

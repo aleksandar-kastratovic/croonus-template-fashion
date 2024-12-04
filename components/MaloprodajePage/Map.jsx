@@ -2,7 +2,6 @@
 import GoogleMapReact from "google-map-react";
 import { footerMapStyle } from "./FooterMapStyle";
 import Image from "next/image";
-import pin from "@/public/pin.png";
 import { useEffect } from "react";
 
 const Marker = () => {
@@ -21,7 +20,7 @@ const Marker = () => {
         transform: "translate(-50%, -50%)",
       }}
     >
-      <Image src={pin} alt="" layout="fill" objectFit="contain" />
+      <Image src={"/icons/pin.png"} alt="" layout="fill" objectFit="contain" />
     </div>
   );
 };

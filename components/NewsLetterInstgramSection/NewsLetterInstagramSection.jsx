@@ -96,7 +96,7 @@ const NewsLetterInstagramSection = () => {
             >
               <Image
                 alt="send icon"
-                src={"/send.png"}
+                src={"/icons/send.png"}
                 width={34}
                 height={28}
                 className="w-7 h-auto"
@@ -110,14 +110,14 @@ const NewsLetterInstagramSection = () => {
           <div className="flex items-center gap-7">
             <Image
               alt="app store"
-              src={"/app-store.png"}
+              src={"/images/app-store.png"}
               width={120}
               height={40}
               className="w-28 h-auto"
             />
             <Image
               alt="google play"
-              src={"/google-play.png"}
+              src={"/images/google-play.png"}
               width={120}
               height={40}
               className="w-28 h-auto"

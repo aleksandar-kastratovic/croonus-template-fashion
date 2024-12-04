@@ -115,7 +115,7 @@ const Order = () => {
                             ) : (
                               <>
                                 <Image
-                                  src={"/missing.png"}
+                                  src={"/images/missing.png"}
                                   width={80}
                                   height={80}
                                   alt="Product image"
@@ -170,7 +170,7 @@ const Order = () => {
                       ) : (
                         <>
                           <Image
-                            src={"/missing.png"}
+                            src={"/images/missing.png"}
                             width={160}
                             height={160}
                             alt="Product image"

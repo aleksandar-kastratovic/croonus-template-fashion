@@ -349,7 +349,7 @@ const Thumb = ({ data, slider }) => {
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >
               <Image
-                src={"/heart.png"}
+                src={"/icons/heart.png"}
                 alt="wishlist"
                 width={15}
                 height={15}
@@ -756,7 +756,7 @@ const Thumb = ({ data, slider }) => {
               className="hover:bg-red-500 max-md:hidden rounded-full p-1 favorites cursor-pointer"
             >
               <Image
-                src={"/heart.png"}
+                src={"/icons/heart.png"}
                 alt="wishlist"
                 width={15}
                 height={15}

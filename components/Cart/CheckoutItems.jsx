@@ -57,7 +57,7 @@ const CheckoutItems = ({
             removeFromCart({ id: id });
           }}
         >
-          <DeleteIcon className="size-8" />
+          <i className="fas fa-times text-2xl"></i>
         </button>
         <Link href={`/${slug_path}`} className={`col-span-1`}>
           <Image
