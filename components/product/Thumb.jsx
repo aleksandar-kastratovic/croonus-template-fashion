@@ -143,7 +143,7 @@ const Thumb = ({ data, slider }) => {
               // onSwiper={(swiper) => setSwiper(swiper)}
               pagination={true}
               direction={"vertical"}
-              loop={true}
+              rewind={true}
               navigation={
                 navigationEnabled.enabled === true &&
                 navigationEnabled.id === product?.basic_data?.id_product
@@ -212,7 +212,6 @@ const Thumb = ({ data, slider }) => {
                         },
                       }}
                       className="variantsSwiper"
-                      loop={true}
                       rewind={true}
                       dir={"ltr"}
                       modules={[Navigation]}
@@ -442,7 +441,7 @@ const Thumb = ({ data, slider }) => {
           navigation={true}
           modules={[Navigation]}
           fadeEffect={{ crossFade: true }}
-          loop={true}
+          rewind={true}
           className="mySwiper3 w-full select-none"
           breakpoints={{
             640: {
@@ -508,7 +507,7 @@ const Thumb = ({ data, slider }) => {
               // onSwiper={(swiper) => setSwiper(swiper)}
               pagination={true}
               direction={"vertical"}
-              loop={true}
+              rewind={true}
               initialSlide={product?.image?.findIndex(
                 (item) => item === product?.image[0]
               )}
@@ -583,7 +582,6 @@ const Thumb = ({ data, slider }) => {
                         },
                       }}
                       className="variantsSwiper"
-                      loop={true}
                       rewind={true}
                       dir={"ltr"}
                       modules={[Navigation]}

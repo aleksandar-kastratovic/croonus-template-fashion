@@ -20,7 +20,7 @@ const Marker = () => {
         transform: "translate(-50%, -50%)",
       }}
     >
-      <Image src={"/icons/pin.png"} alt="" layout="fill" objectFit="contain" />
+      <Image src={"/icons/pin.png"} className="object-contain" alt="" fill />
     </div>
   );
 };

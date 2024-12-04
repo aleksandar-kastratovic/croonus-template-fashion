@@ -40,28 +40,24 @@ const UpsellProducts = ({
               navigation={true}
               modules={[Navigation]}
               fadeEffect={{ crossFade: true }}
-              loop={data.length < 4 ? false : true}
+              rewind={true}
               className="mySwiper3 w-full select-none"
               breakpoints={{
                 640: {
                   slidesPerView: 2,
                   spaceBetween: 10,
-                  loop: data.length < 4 ? false : true,
                 },
                 768: {
                   slidesPerView: 2.5,
                   spaceBetween: 10,
-                  loop: data.length < 5 ? false : true,
                 },
                 1024: {
                   slidesPerView: 4,
                   spaceBetween: 10,
-                  loop: data.length < 8 ? false : true,
                 },
                 1680: {
                   slidesPerView: 5,
                   spaceBetween: 10,
-                  loop: data.length < 10 ? false : true,
                 },
               }}
             >

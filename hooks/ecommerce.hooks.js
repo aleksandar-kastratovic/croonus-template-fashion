@@ -1,5 +1,5 @@
 "use client";
-
+import { useIsMounted } from "./useIsMounted";
 import { useContext, useEffect, useState } from "react";
 import {
   useInfiniteQuery,
@@ -482,6 +482,7 @@ export const useCategoryProducts = ({
   setIsLoadingMore,
   isSection,
 }) => {
+  const { current: isMounted } = useIsMounted();
   let pagination_type = process.env["PAGINATION_TYPE"];
 
   switch (pagination_type) {
@@ -540,13 +541,22 @@ export const useCategoryProducts = ({
               }
             ).then((res) => {
               //na kraju setujemo state za filtere i sort, da znamo koji su selektovani
-              if (
-                selectedFilters_tmp?.every((column) => column?.column !== "")
-              ) {
-                setSelectedFilters(selectedFilters_tmp);
+              if (isMounted) {
+                if (
+                  selectedFilters_tmp?.every(
+                    (column) => column?.column !== ""
+                  ) &&
+                  setSelectedFilters
+                ) {
+                  setSelectedFilters(selectedFilters_tmp);
+                }
+                if (setSort) {
+                  setSort(sortObj);
+                }
+                if (setIsLoadingMore) {
+                  setIsLoadingMore(false);
+                }
               }
-              setSort(sortObj);
-              setIsLoadingMore(false);
 
               return res?.payload;
             });
@@ -607,11 +617,21 @@ export const useCategoryProducts = ({
             );
 
             // Update state if necessary
-            if (selectedFilters_tmp?.every((col) => col?.column !== "")) {
-              setSelectedFilters(selectedFilters_tmp);
+            if (isMounted) {
+              if (
+                selectedFilters_tmp?.every((col) => col?.column !== "") &&
+                setSelectedFilters
+              ) {
+                setSelectedFilters(selectedFilters_tmp);
+              }
+              if (setSort) {
+                setSort(sortObj);
+              }
+
+              if (setIsLoadingMore) {
+                setIsLoadingMore(false);
+              }
             }
-            setSort(sortObj);
-            setIsLoadingMore(false);
 
             return res?.payload; // Ensure payload is valid
           } catch (error) {
@@ -681,13 +701,22 @@ export const useCategoryProducts = ({
               }
             ).then((res) => {
               //na kraju setujemo state za filtere i sort, da znamo koji su selektovani
-              if (
-                selectedFilters_tmp?.every((column) => column?.column !== "")
-              ) {
-                setSelectedFilters(selectedFilters_tmp);
+              if (isMounted) {
+                if (
+                  selectedFilters_tmp?.every(
+                    (column) => column?.column !== ""
+                  ) &&
+                  setSelectedFilters
+                ) {
+                  setSelectedFilters(selectedFilters_tmp);
+                }
+                if (setSort) {
+                  setSort(sortObj);
+                }
+                if (setIsLoadingMore) {
+                  setIsLoadingMore(false);
+                }
               }
-              setSort(sortObj);
-              setIsLoadingMore(false);
 
               return res?.payload;
             });

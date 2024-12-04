@@ -70,6 +70,8 @@ const MaloprodajePage = () => {
                       <Image
                         src={"/images/logo/logo.svg"}
                         alt=""
+                        width={158}
+                        height={33}
                         className={`w-full`}
                       />
                       <div className={`flex flex-col`}>
