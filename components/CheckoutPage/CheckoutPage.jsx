@@ -103,7 +103,7 @@ export const CheckoutPage = ({
   const [errors, setErrors] = useState([]);
 
   const cartItems = items?.items ?? [];
-  const cartCost = items?.items?.summary?.total ?? 0;
+  const cartCost = data?.summary?.total ?? 0;
 
   const renderCart = () => {
     switch (true) {
