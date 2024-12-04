@@ -84,6 +84,63 @@ export const useLandingPages = () => {
   });
 };
 
+/**
+ * Custom hook to fetch basic data for a landing page by its slug.
+ *
+ * @param {Object} params - Parameters for the query.
+ * @param {string} params.slug - The slug of the landing page.
+ * @returns {Object} - Data fetched from the `/landing-pages/basic-data` endpoint.
+ */
+export const useLandingPageBasicData = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["landingPageBasicData", { slug: slug }],
+    queryFn: async () => {
+      return await GET(`/landing-pages/basic-data/${slug}`).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+/**
+ * Custom hook to fetch the thumbnail of a landing page by its slug.
+ *
+ * @param {Object} params - Parameters for the query.
+ * @param {string} params.slug - The slug of the landing page.
+ * @returns {Object} - Data fetched from the `/landing-pages/thumb` endpoint.
+ */
+export const useLandingPageThumb = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["landingPageThumb", { slug: slug }],
+    queryFn: async () => {
+      return await LIST(`/landing-pages/thumb/${slug}`).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+/**
+ * Custom hook to fetch the conditions of a landing page by its slug.
+ *
+ * @param {Object} params - Parameters for the query.
+ * @param {string} params.slug - The slug of the landing page.
+ * @returns {Object} - Data fetched from the `/landing-pages/conditions` endpoint.
+ */
+export const useLandingPageConditions = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["landingPageConditions", { slug: slug }],
+    queryFn: async () => {
+      return await LIST(`/landing-pages/conditions/${slug}`).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
 //hook za dodavanje u korpu, proslediti id i kolicinu
 export const useAddToCart = () => {
   const [, mutateCart] = useCartContext();
