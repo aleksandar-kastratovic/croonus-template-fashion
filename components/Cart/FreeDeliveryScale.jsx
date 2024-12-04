@@ -4,9 +4,11 @@ export default function FreeDeliveryScale({ freeDeliveryAmount, cartCost }) {
   const showFreeDeliveryScale =
     process.env.SHOW_FREE_DELIVERY_SCALE === "true" ? true : false;
 
+  console.log(freeDeliveryAmount);
+
   return (
     <>
-      {showFreeDeliveryScale && freeDeliveryAmount && (
+      {showFreeDeliveryScale && freeDeliveryAmount !== 0 && (
         <div className={`py-5`}>
           <div className={`max-xl:w-full xl:w-[400px] mt-2`}>
             {/*bar for measuring*/}
