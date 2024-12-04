@@ -7,6 +7,7 @@ import Variants from "@/components/Variants/Variants";
 import { notFound, useRouter } from "next/navigation";
 import { Description } from "@/components/ProductDetails/InfoData/desc";
 import { generateProductSchema } from "@/_functions";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export const BasicData = ({
   path,
@@ -15,6 +16,7 @@ export const BasicData = ({
   setProduct,
   canonical,
 }) => {
+  const { current: isMounted } = useIsMounted();
   const { data: product } = useSuspenseQuery({
     queryKey: ["product", path],
     queryFn: async () => {

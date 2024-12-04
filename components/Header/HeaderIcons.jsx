@@ -28,7 +28,7 @@ const HeaderIcons = () => {
             src="/icons/heart.png"
             width={21}
             height={21}
-            className="object-cover mx-5"
+            className="object-cover mx-5 w-5 h-auto"
             alt="heart"
           />
           <span className="absolute -top-2.5 text-white right-1 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
