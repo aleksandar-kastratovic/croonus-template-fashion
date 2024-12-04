@@ -1,32 +1,16 @@
 "use client";
-import { Fragment, Suspense, useState } from "react";
-import { useGlobalAddToWishList } from "@/api/globals";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+import { Fragment, Suspense } from "react";
 import { Thumb } from "../Thumb/Thumb";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { list } from "@/api/api";
+import { useUpsell } from "@/hooks/ecommerce.hooks";
 
-const UpsellProducts = ({
-  upsellProducts = [],
-  loading,
-  text = "Preporučujemo",
-  api,
-  path,
-}) => {
-  const { data } = useSuspenseQuery({
-    queryKey: [path, api, text],
-    queryFn: async () => {
-      return await list(`${api}/${path}`).then((res) => res?.payload?.items);
-    },
-  });
+const UpsellProducts = ({ text = "Preporučujemo", slug }) => {
+  const { data } = useUpsell({ slug: slug });
 
   return (
     <>
-      {data?.length > 0 && (
+      {data?.items?.length > 0 && (
         <div className="max-sm:w-[95%] mt-[6rem] max-sm:mx-auto md:mx-[3rem] max-sm:mt-[3rem]  overflow-visible">
           <div className="flex justify-between w-full items-center">
             <h5 className="text-[1.5rem] font-bold max-md:text-[1.1rem] ">
@@ -61,7 +45,7 @@ const UpsellProducts = ({
                 },
               }}
             >
-              {data?.map(({ id }) => {
+              {data?.items?.map(({ id }) => {
                 return (
                   <Fragment key={id}>
                     <Suspense

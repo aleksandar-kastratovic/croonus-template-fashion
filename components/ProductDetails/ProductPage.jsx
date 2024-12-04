@@ -3,6 +3,9 @@ import { ProductGallery } from "@/components/ProductDetails/ProductGallery";
 import { ProductInfo } from "@/components/ProductDetails/ProductInfo";
 import { Breadcrumbs } from "@/components/ProductDetails/InfoData/breadcrumbs";
 import UpsellProducts from "@/components/UpsellProducts/UpsellProducts";
+import CrossSellProducts from "../CrosssellProducts/CrosssellProducts";
+import RelatedProducts from "../RelatedProducts/RelatedProducts";
+import RecommendedProducts from "../RecommendedProducts/RecommendedProducts";
 
 export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
   return (
@@ -40,21 +43,10 @@ export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
           </div>
         }
       >
-        <Suspense
-          fallback={<div className={`h-2 bg-slate-300 animate-pulse w-full`} />}
-        >
-          <UpsellProducts api={`/product-details/up-sell`} path={path} />
-          <UpsellProducts
-            text={`Možda će vas zanimati`}
-            api={`/product-details/recommended`}
-            path={path}
-          />
-          <UpsellProducts
-            text={`Možda će Vam biti potrebno`}
-            api={`/product-details/cross-sell`}
-            path={path}
-          />
-        </Suspense>
+        <UpsellProducts slug={path} />
+        <CrossSellProducts slug={path} />
+        <RelatedProducts slug={path} />
+        <RecommendedProducts slug={path} />
       </Suspense>
     </>
   );

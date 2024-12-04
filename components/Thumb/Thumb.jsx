@@ -437,7 +437,7 @@ export const Thumb = ({
           </span>
         )}
       </div>{" "}
-      <div className={`absolute bottom-[-20px] w-full`}>
+      <div className={`w-full`}>
         <div
           className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
         >

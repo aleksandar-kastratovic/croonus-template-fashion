@@ -829,7 +829,22 @@ export const useProductDeclaration = ({ slug }) => {
 //hook za dobijanje related artikala na detaljnoj strani
 export const useRelatedProducts = ({ slug }) => {
   return useSuspenseQuery({
-    queryKey: ["productDeclaration", { slug: slug }],
+    queryKey: ["relatedProducts", { slug: slug }],
+    queryFn: async () => {
+      return await LIST(`/product-details/related/${slug}`, {
+        render: false,
+      }).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+//hook za dobijanje recommended artikala na detaljnoj strani
+export const useRecommendedProducts = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["recommendedProducts", { slug: slug }],
     queryFn: async () => {
       return await LIST(`/product-details/recommended/${slug}`, {
         render: false,
@@ -844,7 +859,7 @@ export const useRelatedProducts = ({ slug }) => {
 //hook za dobijanje related artikala na detaljnoj strani
 export const useUpsell = ({ slug }) => {
   return useSuspenseQuery({
-    queryKey: ["productDeclaration", { slug: slug }],
+    queryKey: ["upSellProducts", { slug: slug }],
     queryFn: async () => {
       return await LIST(`/product-details/up-sell/${slug}`, {
         render: false,
@@ -859,7 +874,7 @@ export const useUpsell = ({ slug }) => {
 //hook za dobijanje related artikala na detaljnoj strani
 export const useCrossSell = ({ slug }) => {
   return useSuspenseQuery({
-    queryKey: ["productDeclaration", { slug: slug }],
+    queryKey: ["crossSellProducts", { slug: slug }],
     queryFn: async () => {
       return await LIST(`/product-details/cross-sell/${slug}`, {
         render: false,
