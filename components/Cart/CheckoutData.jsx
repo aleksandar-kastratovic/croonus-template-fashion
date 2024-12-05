@@ -295,7 +295,7 @@ export const CheckoutData = ({
 
       <div className={`col-span-5 flex flex-col gap-3 lg:col-span-2`}>
         <div
-          className={`customScroll mb-16 flex max-h-[400px] flex-col gap-5 overflow-y-auto sm:mb-10`}
+          className={`customScroll mb-16 pr-2 flex max-h-[400px] flex-col gap-5 overflow-y-auto sm:mb-10`}
         >
           {(items ?? [])?.map(
             ({
@@ -461,7 +461,7 @@ const NoStockModal = ({
           <h3 className={`mt-4 text-center text-xl font-semibold ${className}`}>
             U korpi su proizvodi koji trenutno nisu na stanju.
           </h3>
-          <p className={`mt-2 text-center text-base font-normal ${className}`}>
+          <p className={`mt-2 text-left text-base font-normal ${className}`}>
             Kako bi završili porudžbinu, morate izbrisati sledeće artikle iz
             korpe:
           </p>

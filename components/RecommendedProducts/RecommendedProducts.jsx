@@ -7,7 +7,7 @@ import { useRecommendedProducts } from "@/hooks/ecommerce.hooks";
 
 const RecommendedProducts = ({ text = "Možda će Vas zanimati", slug }) => {
   const { data } = useRecommendedProducts({ slug: slug });
-  console.log(data);
+  console.log("Recommended: ", data);
 
   return (
     <>

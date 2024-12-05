@@ -50,7 +50,7 @@ const CheckoutItems = ({
     <>
       <div className={`relative grid grid-cols-4 gap-5`}>
         <button
-          className={`w-8 absolute right-2 top-2 z-10 cursor-pointer ${
+          className={`w-8 absolute right-0 top-0 z-10 cursor-pointer ${
             isClosed && !inventory?.inventory_defined && "text-white"
           } text-lg hover:text-red-500`}
           onClick={() => {
@@ -70,13 +70,9 @@ const CheckoutItems = ({
           />
         </Link>
         <div
-          className={`col-span-3 mb-auto ml-[2rem] flex flex-col items-start gap-2`}
+          className={`col-span-3 mb-auto ml-2 flex flex-col items-start gap-2 pr-9`}
         >
-          <h4
-            className={`${className} mt-2 text-center text-[1.1rem] font-normal`}
-          >
-            {name}
-          </h4>
+          <h4 className={`${className} text-[1.1rem] font-normal`}>{name}</h4>
           <div className={`flex items-center`}>
             <span className={`${className} text-[0.9rem]`}>Količina:</span>{" "}
             &nbsp;
@@ -91,10 +87,10 @@ const CheckoutItems = ({
               refreshCart={refreshCart}
             />
           </div>
-          <p className={`text-center ${className} text-[0.9rem] font-normal`}>
+          <p className={`${className} text-[0.9rem] font-normal`}>
             Šifra:&nbsp;{sku}
           </p>
-          <p className={`text-center ${className} text-[0.9rem] font-normal`}>
+          <p className={`${className} text-[0.9rem] font-normal`}>
             Ukupan iznos:&nbsp;{currencyFormat(price?.per_item?.total)}
           </p>
         </div>

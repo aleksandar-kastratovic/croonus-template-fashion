@@ -4,8 +4,6 @@ export default function FreeDeliveryScale({ freeDeliveryAmount, cartCost }) {
   const showFreeDeliveryScale =
     process.env.SHOW_FREE_DELIVERY_SCALE === "true" ? true : false;
 
-  console.log(freeDeliveryAmount);
-
   return (
     <>
       {showFreeDeliveryScale && freeDeliveryAmount !== 0 && (

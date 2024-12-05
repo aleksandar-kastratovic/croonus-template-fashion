@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const PlusMinusInput = ({
@@ -10,9 +10,21 @@ const PlusMinusInput = ({
   setQuantity,
   updateCart,
   id,
-  refreshCart,
-  refreshSummary,
 }) => {
+  const quantityErrorMessageId = useId();
+  const showQuantitiyError = () => {
+    if (!toast.isActive(quantityErrorMessageId)) {
+      toast.error(`Na lageru trenutno nema željena količina artikala.`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        toastId: quantityErrorMessageId,
+      });
+    }
+  };
+
   const onPlus = () => {
     if (quantity < maxAmount) {
       setQuantity(quantity + 1);
@@ -22,8 +34,34 @@ const PlusMinusInput = ({
         message: `Uspešno izmenjena količina.`,
         type: true,
       });
+    } else {
+      showQuantitiyError();
     }
   };
+
+  const onQuantityInputChange = (e) => {
+    const inputValue = e?.target?.value
+      ?.replace(/[^0-9.]/g, "")
+      .replace(/^0+/, "");
+    setQuantity(inputValue);
+    if (inputValue && quantity !== inputValue) {
+      if (inputValue < maxAmount) {
+        updateCart({
+          id: id,
+          quantity: inputValue,
+          message: `Uspešno izmenjena količina.`,
+        });
+      }
+    }
+  };
+
+  const onQuantityInputBlur = (e) => {
+    const inputValue = e?.target?.value;
+    if (inputValue === "") {
+      setQuantity(1);
+    }
+  };
+
   const onMinus = () => {
     if (quantity > 1 && quantity <= maxAmount) {
       setQuantity(quantity - 1);
@@ -39,13 +77,7 @@ const PlusMinusInput = ({
   useEffect(() => {
     if (quantity > maxAmount && maxAmount > 0) {
       setQuantity(maxAmount);
-      toast.error(`Na lageru trenutno nema željena količina artikala.`, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      });
+      showQuantitiyError();
     }
   }, [quantity]);
 
@@ -60,19 +92,11 @@ const PlusMinusInput = ({
         -
       </span>
       <input
-        type={`number`}
+        type={`text`}
         className={`w-full bg-inherit !p-0 text-center ${className} border-none text-[0.9rem] font-normal focus:border-none focus:outline-none focus:ring-0`}
         value={quantity}
-        onChange={(e) => {
-          setQuantity(+e.target.value);
-          updateCart({
-            id: id,
-            quantity: +e.target.value,
-            message: `Uspešno izmenjena količina.`,
-          });
-        }}
-        min={1}
-        max={maxAmount}
+        onChange={onQuantityInputChange}
+        onBlur={onQuantityInputBlur}
       />
       <span
         className={`cursor-pointer text-[0.9rem] ${className}`}

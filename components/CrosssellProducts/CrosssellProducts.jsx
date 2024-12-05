@@ -7,6 +7,7 @@ import { useCrossSell } from "@/hooks/ecommerce.hooks";
 
 const CrossSellProducts = ({ text = "Možda će Vam biti potrebno", slug }) => {
   const { data } = useCrossSell({ slug: slug });
+  console.log("CrossSell: ", data);
 
   return (
     <>
