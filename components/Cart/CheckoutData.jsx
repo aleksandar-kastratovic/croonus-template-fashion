@@ -59,7 +59,7 @@ export const CheckoutData = ({
 
   const { data: billing_addresses } = useBillingAddresses(loggedIn);
 
-  const { data: billing_addresses_test} = useGetAccountData(
+  const { data: user_billing_addresses} = useGetAccountData(
     `/customers/billing-address`,
     "list"
   );
@@ -125,7 +125,7 @@ export const CheckoutData = ({
   }, [formData?.delivery_method]);
 
   useEffect(() =>{
-    const defaultAddress = billing_addresses_test.find(address => address.set_default === 1);
+    const defaultAddress = user_billing_addresses.find(address => address.set_default === 1);
     if (defaultAddress) {
       const {id: billing_id} = defaultAddress;
       setSelected((prev) => ({
@@ -133,7 +133,7 @@ export const CheckoutData = ({
         id: billing_id,
       }))
     }
-  },[billing_addresses_test])
+  },[user_billing_addresses])
 
   const router = useRouter();
 
