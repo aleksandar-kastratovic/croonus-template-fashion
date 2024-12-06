@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import {
   useBillingAddresses,
   useCheckout,
@@ -29,6 +29,7 @@ import Link from "next/link";
 import fields from "./shipping.json";
 import Cookies from "js-cookie";
 import Spinner from "@/components/UI/Spinner";
+import { userContext } from "@/context/userContext";
 
 export const CheckoutData = ({
   className,
@@ -55,14 +56,16 @@ export const CheckoutData = ({
     use_same_data: true,
   });
 
+  const { loggedIn:userLoggedIn} = useContext(userContext);
+
   const { data: loggedIn } = useIsLoggedIn();
 
   const { data: billing_addresses } = useBillingAddresses(loggedIn);
 
-  const { data: user_billing_addresses} = useGetAccountData(
+  const { data: user_billing_addresses} = userLoggedIn ? useGetAccountData(
     `/customers/billing-address`,
     "list"
-  );
+  ): [];
 
   const { data: form, isLoading } = useGetAddress(
     billing_addresses?.length > 1 ? selected?.id : billing_addresses?.[0]?.id,
@@ -125,7 +128,7 @@ export const CheckoutData = ({
   }, [formData?.delivery_method]);
 
   useEffect(() =>{
-    const defaultAddress = user_billing_addresses.find(address => address.set_default === 1);
+    const defaultAddress = user_billing_addresses?.find(address => address.set_default === 1);
     if (defaultAddress) {
       const {id: billing_id} = defaultAddress;
       setSelected((prev) => ({
