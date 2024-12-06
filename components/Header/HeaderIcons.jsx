@@ -18,7 +18,7 @@ const HeaderIcons = () => {
           src="/icons/user.png"
           width={21}
           height={21}
-          className="object-cover"
+          className="object-cover w-7 h-auto"
           alt="user"
         />
       </Link>

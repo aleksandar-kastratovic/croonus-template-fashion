@@ -184,6 +184,7 @@ const NavigationMobile = () => {
                 src={"/icons/user.png"}
                 width={33}
                 height={33}
+                className="w-9 h-auto"
               />
             </Link>
             <Link href="/korpa">

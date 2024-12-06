@@ -8,6 +8,7 @@ import {
   useGetAddress,
   useIsLoggedIn,
   useRemoveFromCart,
+  useGetAccountData,
 } from "@/hooks/ecommerce.hooks";
 import { handleCreditCard, handleSetData } from "@/components/Cart/functions";
 import { useRouter } from "next/navigation";
@@ -59,6 +60,11 @@ export const CheckoutData = ({
   const { data: loggedIn } = useIsLoggedIn();
 
   const { data: billing_addresses } = useBillingAddresses(loggedIn);
+
+  const { data: user_billing_addresses } = useGetAccountData(
+    `/customers/billing-address`,
+    "list"
+  );
 
   const { data: form, isLoading } = useGetAddress(
     billing_addresses?.length > 1 ? selected?.id : billing_addresses?.[0]?.id,
@@ -119,6 +125,19 @@ export const CheckoutData = ({
       );
     }
   }, [formData?.delivery_method]);
+
+  useEffect(() => {
+    const defaultAddress = user_billing_addresses?.find(
+      (address) => address.set_default === 1
+    );
+    if (defaultAddress) {
+      const { id: billing_id } = defaultAddress;
+      setSelected((prev) => ({
+        ...prev,
+        id: billing_id,
+      }));
+    }
+  }, [user_billing_addresses]);
 
   const router = useRouter();
 
@@ -208,11 +227,9 @@ export const CheckoutData = ({
   const show_options = process.env.SHOW_CHECKOUT_SHIPPING_FORM;
 
   return (
-    <div
-      className={`mt-5 grid grid-cols-6 2xl:grid-cols-5 gap-8 2xl:gap-[3.75rem]`}
-    >
+    <div className={`mt-5 grid grid-cols-6 2xl:grid-cols-5 gap-[3.75rem]`}>
       <div className={`col-span-6 flex flex-col lg:col-span-3`}>
-        {show_options === "true" && billing_addresses?.length > 1 && (
+        {show_options === "false" && billing_addresses?.length > 1 && (
           <SelectInput
             className={`!w-fit`}
             errors={errorsTmp}
@@ -242,7 +259,7 @@ export const CheckoutData = ({
           refreshSummary={refreshSummary}
         />
 
-        {show_options === "true" && (
+        {show_options === "false" && (
           <CheckboxInput
             className={`mb-5`}
             placeholder={`Koristi iste podatke za dostavu i naplatu`}
