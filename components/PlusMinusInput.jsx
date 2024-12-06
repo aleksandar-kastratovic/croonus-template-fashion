@@ -2,15 +2,22 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { Tooltip } from "@mui/material";
+
+const quantityInputStyle = {
+  error: "focus:border-red-600 border-transparent",
+  default: "focus:border-black border-transparent",
+};
 
 const PlusMinusInput = ({
-  className,
   quantity,
   maxAmount,
   setQuantity,
   updateCart,
   id,
 }) => {
+  const [showInputErrorToolTip, setShowInputErrorTooltip] = useState(false);
+
   const quantityErrorMessageId = useId();
   const showQuantitiyError = () => {
     if (!toast.isActive(quantityErrorMessageId)) {
@@ -45,6 +52,7 @@ const PlusMinusInput = ({
       .replace(/^0+/, "");
     setQuantity(inputValue);
     if (inputValue && quantity !== inputValue) {
+      setShowInputErrorTooltip(false);
       if (inputValue < maxAmount) {
         updateCart({
           id: id,
@@ -52,11 +60,14 @@ const PlusMinusInput = ({
           message: `Uspešno izmenjena količina.`,
         });
       }
+    } else {
+      setShowInputErrorTooltip(true);
     }
   };
 
   const onQuantityInputBlur = (e) => {
     const inputValue = e?.target?.value;
+    setShowInputErrorTooltip(false);
     if (inputValue === "") {
       setQuantity(1);
     }
@@ -82,28 +93,34 @@ const PlusMinusInput = ({
   }, [quantity]);
 
   return (
-    <div
-      className={`${className} flex max-w-[6.25rem] items-center gap-2 rounded-md bg-[#f7f7f7] px-3`}
-    >
-      <span
-        className={`cursor-pointer text-[0.9rem] ${className}`}
+    <div className={`flex w-28 items-stretch rounded-md bg-[#f7f7f7]`}>
+      <button
+        className={`cursor-pointer text-[0.9rem] flex items-center justify-center w-8 shrink-0`}
         onClick={onMinus}
       >
-        -
-      </span>
-      <input
-        type={`text`}
-        className={`w-full bg-inherit !p-0 text-center ${className} border-none text-[0.9rem] font-normal focus:border-none focus:outline-none focus:ring-0`}
-        value={quantity}
-        onChange={onQuantityInputChange}
-        onBlur={onQuantityInputBlur}
-      />
-      <span
-        className={`cursor-pointer text-[0.9rem] ${className}`}
+        <span>-</span>
+      </button>
+      <Tooltip
+        title={"Unesite broj koji je veći od 0"}
+        arrow
+        open={showInputErrorToolTip}
+      >
+        <input
+          type={`text`}
+          className={`w-full ${
+            quantityInputStyle[showInputErrorToolTip ? "error" : "default"]
+          } bg-inherit text-center border-[1px] py-1 px-1 text-[0.9rem] font-normal focus:outline-none focus:ring-0`}
+          value={quantity}
+          onChange={onQuantityInputChange}
+          onBlur={onQuantityInputBlur}
+        />
+      </Tooltip>
+      <button
+        className={`cursor-pointer text-[0.9rem] flex items-center justify-center w-8 shrink-0`}
         onClick={onPlus}
       >
-        +
-      </span>
+        <span>+</span>
+      </button>
     </div>
   );
 };

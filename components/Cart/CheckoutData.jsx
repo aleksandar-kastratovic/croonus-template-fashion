@@ -208,8 +208,10 @@ export const CheckoutData = ({
   const show_options = process.env.SHOW_CHECKOUT_SHIPPING_FORM;
 
   return (
-    <div className={`mt-5 grid grid-cols-5 gap-[3.75rem]`}>
-      <div className={`col-span-5 flex flex-col lg:col-span-3`}>
+    <div
+      className={`mt-5 grid grid-cols-6 2xl:grid-cols-5 gap-8 2xl:gap-[3.75rem]`}
+    >
+      <div className={`col-span-6 flex flex-col lg:col-span-3`}>
         {show_options === "true" && billing_addresses?.length > 1 && (
           <SelectInput
             className={`!w-fit`}
@@ -293,7 +295,9 @@ export const CheckoutData = ({
         />
       </div>
 
-      <div className={`col-span-5 flex flex-col gap-3 lg:col-span-2`}>
+      <div
+        className={`col-span-6 md:col-span-4 lg:col-span-3 flex flex-col gap-3 2xl:col-span-2`}
+      >
         <div
           className={`customScroll mb-16 pr-2 flex max-h-[400px] flex-col gap-5 overflow-y-auto sm:mb-10`}
         >
