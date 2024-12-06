@@ -227,7 +227,7 @@ export const CheckoutData = ({
   const show_options = process.env.SHOW_CHECKOUT_SHIPPING_FORM;
 
   return (
-    <div className={`mt-5 grid grid-cols-6 2xl:grid-cols-5 gap-[3.75rem]`}>
+    <div className={`mt-5 grid grid-cols-6 2xl:grid-cols-5 gap-10 2xl:gap-16`}>
       <div className={`col-span-6 flex flex-col lg:col-span-3`}>
         {show_options === "false" && billing_addresses?.length > 1 && (
           <SelectInput

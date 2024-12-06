@@ -11,8 +11,8 @@ export const TemplateOne = ({ verifyCaptcha, data, cartCost, children }) => {
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.CAPTCHAKEY}>
       <GoogleReCaptcha onVerify={verifyCaptcha} refreshReCaptcha={true} />
-      <div className="mx-auto text-sm 4xl:container mt-[1rem] lg:mt-[4rem] placeholder">
-        <div className="md:hidden bg-[#f5f5f6]">
+      <div className="mx-auto text-sm 4xl:container mt-0 xl:mt-12 placeholder">
+        <div className="xl:hidden bg-[#f5f5f6]">
           <div className="font-semibold py-3 text-xl w-[85%] mx-auto">
             Korpa
           </div>

@@ -104,6 +104,7 @@ export const CheckoutPage = ({
 
   const cartItems = items?.items ?? [];
   const cartCost = data?.summary?.total ?? 0;
+  console.log(cartCost);
 
   const renderCart = () => {
     switch (true) {
