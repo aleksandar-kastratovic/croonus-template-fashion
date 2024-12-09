@@ -49,7 +49,7 @@ const CheckoutItems = ({
   return (
     <>
       <div
-        className={`relative items-start justify-start grid grid-cols-[150px_1fr] gap-5`}
+        className={`relative items-start justify-start grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] gap-5`}
       >
         <button
           className={`w-8 absolute right-0 top-0 z-10 cursor-pointer ${
@@ -68,7 +68,7 @@ const CheckoutItems = ({
             width={0}
             height={0}
             sizes={`90vw`}
-            className={`h-60 lg:h-56 w-full object-cover hover:object-contain bg-gray-100`}
+            className={`h-44 sm:h-56 w-full object-cover hover:object-contain bg-gray-100`}
           />
         </Link>
         <div
