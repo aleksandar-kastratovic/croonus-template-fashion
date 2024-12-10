@@ -140,7 +140,18 @@ export const CheckoutData = ({
 
   const router = useRouter();
 
+  const formatCountry = (fields)  =>{
+    fields.map(field => {
+      if(field.name === 'id_country_shipping') {
+        return {
+          ...field,fill: userLoggedIn ? `/customers/shipping-address/ddl/id_country`: `checkout/ddl/id_country`
+        }
+      }
+    })
+  }
+
   const formatCheckoutFields = (fields, data) => {
+    console.log(data);
     if (data && Number(data?.id_country_shipping) === 193) {
       return fields
         ?.map((field) => {
@@ -149,7 +160,7 @@ export const CheckoutData = ({
               ...field,
               name: "id_town_shipping",
               type: "select",
-              fill: `/customers/billing-address/ddl/id_town?id_country=${data?.id_country}`,
+              fill:userLoggedIn ? '/customers/shipping-address/ddl/id_town?id_country=${data?.id_country}' : `checkout/ddl/id_town?id_country=${data?.id_country_shipping}`,
             };
           }
           return field;
@@ -224,9 +235,11 @@ export const CheckoutData = ({
   );
 
   useEffect(() => {
+    formatCountry(fields);
     if (selected?.use_same_data) {
       return handleSetData("same_data", form, dataTmp, setDataTmp);
     } else {
+      
       return handleSetData("different_data", form, dataTmp, setDataTmp);
     }
   }, [selected?.id, selected?.use_same_data]);
@@ -309,7 +322,6 @@ export const CheckoutData = ({
                   country_name_shipping: e?.target?.selectedOptions[0]?.text,
                 }));
               } else if(e?.target?.name === "id_town_shipping") {
-                console.log(e.target.selectedOptions[0]);
                 handleInputChange(e, setDataTmp, setErrorsTmp);
                 setDataTmp((prev) => ({
                 ...prev,

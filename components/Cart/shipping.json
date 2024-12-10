@@ -33,7 +33,7 @@
     "placeholder": "Država",
     "options": [],
     "type": "select",
-    "fill": "/customers/shipping-address/ddl/id_country",
+    "fill": "checkout/ddl/id_country",
     "required": true
   },
   {
