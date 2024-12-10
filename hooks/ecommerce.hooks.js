@@ -968,6 +968,8 @@ export const useCheckout = ({ formData, setPostErrors, setLoading }) => {
             fields: res?.response?.data?.payload?.fields ?? [],
           });
           return res?.payload;
+        }).then(() => {
+          window.location.reload();
         })
         .catch((err) => {
           return err;

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import {
   useBillingAddresses,
   useCheckout,
@@ -29,6 +29,7 @@ import Link from "next/link";
 import fields from "./shipping.json";
 import Cookies from "js-cookie";
 import Spinner from "@/components/UI/Spinner";
+import { userContext } from "@/context/userContext";
 
 import FreeDeliveryScale from "./FreeDeliveryScale";
 
@@ -57,17 +58,20 @@ export const CheckoutData = ({
     use_same_data: true,
   });
 
+  const { loggedIn: userLoggedIn } = useContext(userContext);
+
   const { data: loggedIn } = useIsLoggedIn();
 
-  const { data: billing_addresses } = useBillingAddresses(loggedIn);
+  const { data: billing_addresses } = userLoggedIn ? useBillingAddresses() : [];
 
-  const { data: user_billing_addresses } = useGetAccountData(
-    `/customers/billing-address`,
-    "list"
-  );
+  const { data: user_billing_addresses } = userLoggedIn
+    ? useGetAccountData(`/customers/billing-address`, "list")
+    : [];
 
   const { data: form, isLoading } = useGetAddress(
-    billing_addresses?.length > 1 ? selected?.id : billing_addresses?.[0]?.id,
+    billing_addresses?.length > 1 && selected?.id
+      ? selected?.id
+      : billing_addresses?.[0]?.id,
     "billing",
     loggedIn && Boolean(billing_addresses?.length)
   );
@@ -140,6 +144,25 @@ export const CheckoutData = ({
   }, [user_billing_addresses]);
 
   const router = useRouter();
+
+  const formatCheckoutFields = (fields, data) => {
+    if (data && Number(data?.id_country_shipping) === 193) {
+      return fields
+        ?.map((field) => {
+          if (field?.name === "town_name_shipping") {
+            return {
+              ...field,
+              name: "id_town_shipping",
+              type: "select",
+              fill: `/customers/billing-address/ddl/id_town?id_country=${data?.id_country}`,
+            };
+          }
+          return field;
+        })
+        .filter(Boolean); // Remove null fields from the array
+    }
+    return fields;
+  };
 
   const filterOutProductsOutOfStock = (data) => {
     const productsOutOfStock = [];
@@ -274,12 +297,12 @@ export const CheckoutData = ({
           />
         )}
 
-        {show_options === "true" && !selected?.use_same_data && (
+        {show_options === "false" && !selected?.use_same_data && (
           <Form
             className={`grid grid-cols-2 gap-x-5`}
             data={dataTmp}
             errors={errorsTmp}
-            fields={fields}
+            fields={formatCheckoutFields(fields, dataTmp)}
             isPending={isPending}
             handleSubmit={() => {}}
             showOptions={false}
@@ -289,6 +312,13 @@ export const CheckoutData = ({
                 setDataTmp((prev) => ({
                   ...prev,
                   country_name_shipping: e?.target?.selectedOptions[0]?.text,
+                }));
+              } else if (e?.target?.name === "id_town_shipping") {
+                console.log(e.target.selectedOptions[0]);
+                handleInputChange(e, setDataTmp, setErrorsTmp);
+                setDataTmp((prev) => ({
+                  ...prev,
+                  town_name_shipping: e?.target?.selectedOptions[0]?.text,
                 }));
               } else {
                 handleInputChange(e, setDataTmp, setErrorsTmp);
@@ -411,8 +441,15 @@ export const CheckoutData = ({
           onClick={() => {
             let err = [];
             (required ?? [])?.forEach((key) => {
-              if (!dataTmp[key] || dataTmp[key]?.length === 0) {
-                err.push(key);
+              if (
+                dataTmp.id_country_shipping == "-" ||
+                dataTmp.id_country_shipping == 0
+              ) {
+                err = [...err, "id_country_shipping"];
+              } else {
+                if (!dataTmp[key] || dataTmp[key]?.length === 0) {
+                  err.push(key);
+                }
               }
             });
             setErrorsTmp(err);
