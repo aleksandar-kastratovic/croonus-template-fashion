@@ -45,8 +45,8 @@ export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
       >
         <UpsellProducts slug={path} />
         <CrossSellProducts slug={path} />
-        <RelatedProducts slug={path} />
         <RecommendedProducts slug={path} />
+        <RelatedProducts slug={path} />
       </Suspense>
     </>
   );
