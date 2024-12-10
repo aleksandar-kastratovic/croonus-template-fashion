@@ -463,12 +463,7 @@ export const CheckoutData = ({
           {isPending ? "OBRADA..." : "ZAVRŠI KUPOVINU"}
         </button>
         <div className="hidden xl:block w-full">
-          <FreeDeliveryScale
-            freeDeliveryAmount={
-              summary?.options?.delivery?.free_delivery?.amount
-            }
-            cartCost={summary?.total}
-          />
+          <FreeDeliveryScale summary={summary} />
         </div>
       </div>
       <NoStockModal
