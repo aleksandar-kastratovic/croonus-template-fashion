@@ -76,7 +76,7 @@ export const useCategoryTree = () => {
 
 //hook za dobijanje liste landing strana
 export const useLandingPages = () => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["landingPagesList"],
     queryFn: async () => {
       return await LIST(`/landing-pages/list`).then((res) => res?.payload);
