@@ -1,6 +1,6 @@
 import { CartContextProvider } from "@/api/cartContext";
-import "swiper/css";
 import "./globals.css";
+import "./swiper-bundle-min.css";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/Footer/Footer";
 import NavigationMobile from "@/components/Navigation/NavigationMobile";
@@ -35,10 +35,6 @@ export default async function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         ></link>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-        />
       </head>
       <body className="relative">
         <QueryProvider>
