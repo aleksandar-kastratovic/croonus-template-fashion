@@ -140,7 +140,7 @@ const NavigationMobile = () => {
             <div className="relative">
               <Image
                 alt={`logo`}
-                src={"/logo.png"}
+                src={"/images/logo/logo.png"}
                 width={150}
                 height={33}
                 className="w-36 h-auto"
@@ -158,7 +158,7 @@ const NavigationMobile = () => {
                 }
               >
                 <Image
-                  src="/search.png"
+                  src="/icons/search.png"
                   alt="search icon"
                   id="search"
                   width={22}
@@ -184,6 +184,7 @@ const NavigationMobile = () => {
                 src={"/icons/user.png"}
                 width={33}
                 height={33}
+                className="w-9 h-auto"
               />
             </Link>
             <Link href="/korpa">
@@ -240,7 +241,7 @@ const NavigationMobile = () => {
       >
         <div className="w-[95%]  mx-auto flex items-center justify-between py-3.5">
           <Image
-            src="/logo.png"
+            src="/images/logo/logo.png"
             width={150}
             height={150}
             alt="logo"

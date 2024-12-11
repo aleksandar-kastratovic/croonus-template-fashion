@@ -442,9 +442,9 @@ const NavigationDesktop = () => {
                     width={30}
                     height={30}
                     alt=""
-                    className={
-                      background === "white" ? "wiggle" : "invert wiggle"
-                    }
+                    className={`w-7 h-auto 
+                      ${background === "white" ? "wiggle" : "invert wiggle"}
+                    `}
                   />
                   <span className="absolute -top-2.5 text-white -right-1 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
                     {wishListCount}

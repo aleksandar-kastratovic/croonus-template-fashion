@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import Croonus from "@/public/logo.svg";
 import Map from "@/components/MaloprodajePage/Map";
 
 const MaloprodajePage = () => {
@@ -68,7 +67,13 @@ const MaloprodajePage = () => {
                     }}
                   >
                     <div className={`flex flex-col items-start gap-2 p-2`}>
-                      <Image src={Croonus} alt="" className={`w-full`}/>
+                      <Image
+                        src={"/images/logo/logo.svg"}
+                        alt=""
+                        width={158}
+                        height={33}
+                        className={`w-full`}
+                      />
                       <div className={`flex flex-col`}>
                         <h1 className={`text-[1.2rem] font-semibold`}>
                           {object?.name}

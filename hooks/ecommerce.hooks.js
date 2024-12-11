@@ -1,5 +1,5 @@
 "use client";
-
+import { useIsMounted } from "./useIsMounted";
 import { useContext, useEffect, useState } from "react";
 import {
   useInfiniteQuery,
@@ -81,6 +81,63 @@ export const useLandingPages = () => {
     queryFn: async () => {
       return await LIST(`/landing-pages/list`).then((res) => res?.payload);
     },
+  });
+};
+
+/**
+ * Custom hook to fetch basic data for a landing page by its slug.
+ *
+ * @param {Object} params - Parameters for the query.
+ * @param {string} params.slug - The slug of the landing page.
+ * @returns {Object} - Data fetched from the `/landing-pages/basic-data` endpoint.
+ */
+export const useLandingPageBasicData = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["landingPageBasicData", { slug: slug }],
+    queryFn: async () => {
+      return await GET(`/landing-pages/basic-data/${slug}`).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+/**
+ * Custom hook to fetch the thumbnail of a landing page by its slug.
+ *
+ * @param {Object} params - Parameters for the query.
+ * @param {string} params.slug - The slug of the landing page.
+ * @returns {Object} - Data fetched from the `/landing-pages/thumb` endpoint.
+ */
+export const useLandingPageThumb = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["landingPageThumb", { slug: slug }],
+    queryFn: async () => {
+      return await LIST(`/landing-pages/thumb/${slug}`).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+/**
+ * Custom hook to fetch the conditions of a landing page by its slug.
+ *
+ * @param {Object} params - Parameters for the query.
+ * @param {string} params.slug - The slug of the landing page.
+ * @returns {Object} - Data fetched from the `/landing-pages/conditions` endpoint.
+ */
+export const useLandingPageConditions = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["landingPageConditions", { slug: slug }],
+    queryFn: async () => {
+      return await LIST(`/landing-pages/conditions/${slug}`).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -482,6 +539,7 @@ export const useCategoryProducts = ({
   setIsLoadingMore,
   isSection,
 }) => {
+  const { current: isMounted } = useIsMounted();
   let pagination_type = process.env["PAGINATION_TYPE"];
 
   switch (pagination_type) {
@@ -540,13 +598,22 @@ export const useCategoryProducts = ({
               }
             ).then((res) => {
               //na kraju setujemo state za filtere i sort, da znamo koji su selektovani
-              if (
-                selectedFilters_tmp?.every((column) => column?.column !== "")
-              ) {
-                setSelectedFilters(selectedFilters_tmp);
+              if (isMounted) {
+                if (
+                  selectedFilters_tmp?.every(
+                    (column) => column?.column !== ""
+                  ) &&
+                  setSelectedFilters
+                ) {
+                  setSelectedFilters(selectedFilters_tmp);
+                }
+                if (setSort) {
+                  setSort(sortObj);
+                }
+                if (setIsLoadingMore) {
+                  setIsLoadingMore(false);
+                }
               }
-              setSort(sortObj);
-              setIsLoadingMore(false);
 
               return res?.payload;
             });
@@ -607,11 +674,21 @@ export const useCategoryProducts = ({
             );
 
             // Update state if necessary
-            if (selectedFilters_tmp?.every((col) => col?.column !== "")) {
-              setSelectedFilters(selectedFilters_tmp);
+            if (isMounted) {
+              if (
+                selectedFilters_tmp?.every((col) => col?.column !== "") &&
+                setSelectedFilters
+              ) {
+                setSelectedFilters(selectedFilters_tmp);
+              }
+              if (setSort) {
+                setSort(sortObj);
+              }
+
+              if (setIsLoadingMore) {
+                setIsLoadingMore(false);
+              }
             }
-            setSort(sortObj);
-            setIsLoadingMore(false);
 
             return res?.payload; // Ensure payload is valid
           } catch (error) {
@@ -681,13 +758,22 @@ export const useCategoryProducts = ({
               }
             ).then((res) => {
               //na kraju setujemo state za filtere i sort, da znamo koji su selektovani
-              if (
-                selectedFilters_tmp?.every((column) => column?.column !== "")
-              ) {
-                setSelectedFilters(selectedFilters_tmp);
+              if (isMounted) {
+                if (
+                  selectedFilters_tmp?.every(
+                    (column) => column?.column !== ""
+                  ) &&
+                  setSelectedFilters
+                ) {
+                  setSelectedFilters(selectedFilters_tmp);
+                }
+                if (setSort) {
+                  setSort(sortObj);
+                }
+                if (setIsLoadingMore) {
+                  setIsLoadingMore(false);
+                }
               }
-              setSort(sortObj);
-              setIsLoadingMore(false);
 
               return res?.payload;
             });
@@ -800,7 +886,22 @@ export const useProductDeclaration = ({ slug }) => {
 //hook za dobijanje related artikala na detaljnoj strani
 export const useRelatedProducts = ({ slug }) => {
   return useSuspenseQuery({
-    queryKey: ["productDeclaration", { slug: slug }],
+    queryKey: ["relatedProducts", { slug: slug }],
+    queryFn: async () => {
+      return await LIST(`/product-details/related/${slug}`, {
+        render: false,
+      }).then((res) => {
+        return res?.payload;
+      });
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
+//hook za dobijanje recommended artikala na detaljnoj strani
+export const useRecommendedProducts = ({ slug }) => {
+  return useSuspenseQuery({
+    queryKey: ["recommendedProducts", { slug: slug }],
     queryFn: async () => {
       return await LIST(`/product-details/recommended/${slug}`, {
         render: false,
@@ -815,7 +916,7 @@ export const useRelatedProducts = ({ slug }) => {
 //hook za dobijanje related artikala na detaljnoj strani
 export const useUpsell = ({ slug }) => {
   return useSuspenseQuery({
-    queryKey: ["productDeclaration", { slug: slug }],
+    queryKey: ["upSellProducts", { slug: slug }],
     queryFn: async () => {
       return await LIST(`/product-details/up-sell/${slug}`, {
         render: false,
@@ -830,7 +931,7 @@ export const useUpsell = ({ slug }) => {
 //hook za dobijanje related artikala na detaljnoj strani
 export const useCrossSell = ({ slug }) => {
   return useSuspenseQuery({
-    queryKey: ["productDeclaration", { slug: slug }],
+    queryKey: ["crossSellProducts", { slug: slug }],
     queryFn: async () => {
       return await LIST(`/product-details/cross-sell/${slug}`, {
         render: false,
@@ -876,7 +977,7 @@ export const useCheckout = ({ formData, setPostErrors, setLoading }) => {
 };
 
 //hook za dobijanje info o cenama,popustima itd u korpi
-export const useSummary = ({ items, formData }) => {
+export const useSummary = ({ items, formData } = {}) => {
   return useSuspenseQuery({
     queryKey: [
       "summary",
@@ -1347,6 +1448,7 @@ export const useUpdateCartQuantity = () => {
         cart_items_id: id,
         quantity: quantity,
       }).then((res) => {
+        console.log(res);
         switch (res?.code) {
           case 200:
             mutateCart();
@@ -1360,7 +1462,7 @@ export const useUpdateCartQuantity = () => {
             });
             break;
           default:
-            toast.error("Došlo je do greške!", {
+            toast.error("Na lageru trenutno nema željena količina artikala.", {
               position: "top-center",
               autoClose: 2000,
               hideProgressBar: true,
@@ -1368,6 +1470,7 @@ export const useUpdateCartQuantity = () => {
               pauseOnHover: true,
               draggable: true,
             });
+            throw new Error();
             break;
         }
       });

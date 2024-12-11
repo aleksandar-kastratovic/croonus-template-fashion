@@ -8,7 +8,7 @@ import {
   useGetAddress,
   useIsLoggedIn,
   useRemoveFromCart,
-  useGetAccountData
+  useGetAccountData,
 } from "@/hooks/ecommerce.hooks";
 import { handleCreditCard, handleSetData } from "@/components/Cart/functions";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,8 @@ import fields from "./shipping.json";
 import Cookies from "js-cookie";
 import Spinner from "@/components/UI/Spinner";
 import { userContext } from "@/context/userContext";
+
+import FreeDeliveryScale from "./FreeDeliveryScale";
 
 export const CheckoutData = ({
   className,
@@ -56,19 +58,20 @@ export const CheckoutData = ({
     use_same_data: true,
   });
 
-  const { loggedIn:userLoggedIn} = useContext(userContext);
+  const { loggedIn: userLoggedIn } = useContext(userContext);
 
   const { data: loggedIn } = useIsLoggedIn();
 
   const { data: billing_addresses } = userLoggedIn ? useBillingAddresses() : [];
-  //Get user billing addresses
-  const { data: user_billing_addresses} = userLoggedIn ? useGetAccountData(
-    `/customers/billing-address`,
-    "list"
-  ): [];
+
+  const { data: user_billing_addresses } = userLoggedIn
+    ? useGetAccountData(`/customers/billing-address`, "list")
+    : [];
 
   const { data: form, isLoading } = useGetAddress(
-    billing_addresses?.length > 1 && selected?.id ? selected?.id : billing_addresses?.[0]?.id,
+    billing_addresses?.length > 1 && selected?.id
+      ? selected?.id
+      : billing_addresses?.[0]?.id,
     "billing",
     loggedIn && Boolean(billing_addresses?.length)
   );
@@ -127,17 +130,18 @@ export const CheckoutData = ({
     }
   }, [formData?.delivery_method]);
 
-  //Check default billing address if there is one
-  useEffect(() =>{
-    const defaultAddress = user_billing_addresses?.find(address => address.set_default === 1);
+  useEffect(() => {
+    const defaultAddress = user_billing_addresses?.find(
+      (address) => address.set_default === 1
+    );
     if (defaultAddress) {
-      const {id: billing_id} = defaultAddress;
+      const { id: billing_id } = defaultAddress;
       setSelected((prev) => ({
         ...prev,
         id: billing_id,
-      }))
+      }));
     }
-  },[user_billing_addresses])
+  }, [user_billing_addresses]);
 
   const router = useRouter();
 
@@ -259,8 +263,8 @@ export const CheckoutData = ({
   const show_options = process.env.SHOW_CHECKOUT_SHIPPING_FORM;
 
   return (
-    <div className={`mt-5 grid grid-cols-5 gap-[3.75rem]`}>
-      <div className={`col-span-5 flex flex-col lg:col-span-3`}>
+    <div className={`mt-5 grid grid-cols-6 2xl:grid-cols-5 gap-10 2xl:gap-16`}>
+      <div className={`col-span-6 flex flex-col lg:col-span-3`}>
         {show_options === "false" && billing_addresses?.length > 1 && (
           <SelectInput
             className={`!w-fit`}
@@ -311,7 +315,7 @@ export const CheckoutData = ({
             className={`grid grid-cols-2 gap-x-5`}
             data={dataTmp}
             errors={errorsTmp}
-            fields={formatCheckoutFields(fields,dataTmp)}
+            fields={formatCheckoutFields(fields, dataTmp)}
             isPending={isPending}
             handleSubmit={() => {}}
             showOptions={false}
@@ -328,9 +332,14 @@ export const CheckoutData = ({
                     town_name_shipping: ''
                   }))
                 }
-              } 
-              else {
-                
+              } else if (e?.target?.name === "id_town_shipping") {
+                console.log(e.target.selectedOptions[0]);
+                handleInputChange(e, setDataTmp, setErrorsTmp);
+                setDataTmp((prev) => ({
+                  ...prev,
+                  town_name_shipping: e?.target?.selectedOptions[0]?.text,
+                }));
+              } else {
                 handleInputChange(e, setDataTmp, setErrorsTmp);
               }
             }}
@@ -352,9 +361,11 @@ export const CheckoutData = ({
         />
       </div>
 
-      <div className={`col-span-5 flex flex-col gap-3 lg:col-span-2`}>
+      <div
+        className={`col-span-6 md:col-span-4 lg:col-span-3 flex flex-col gap-3 2xl:col-span-2`}
+      >
         <div
-          className={`customScroll mb-16 flex max-h-[400px] flex-col gap-5 overflow-y-auto sm:mb-10`}
+          className={`customScroll mb-16 pr-2 flex max-h-[400px] flex-col gap-5 overflow-y-auto sm:mb-10`}
         >
           {(items ?? [])?.map(
             ({
@@ -472,6 +483,9 @@ export const CheckoutData = ({
         >
           {isPending ? "OBRADA..." : "ZAVRŠI KUPOVINU"}
         </button>
+        <div className="hidden xl:block w-full">
+          <FreeDeliveryScale summary={summary} />
+        </div>
       </div>
       <NoStockModal
         className={className}
@@ -521,7 +535,7 @@ const NoStockModal = ({
           <h3 className={`mt-4 text-center text-xl font-semibold ${className}`}>
             U korpi su proizvodi koji trenutno nisu na stanju.
           </h3>
-          <p className={`mt-2 text-center text-base font-normal ${className}`}>
+          <p className={`mt-2 text-left text-base font-normal ${className}`}>
             Kako bi završili porudžbinu, morate izbrisati sledeće artikle iz
             korpe:
           </p>

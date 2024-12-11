@@ -177,13 +177,11 @@ const IndexSlider = ({ banners, mobileBanners }) => {
 
 const PaginationComponent = () => {
   const swiper = useSwiper();
-  console.log(swiper);
   return (
     <>
       <div className="flex gap-16 items-center bottom-6">
         <button
           onClick={() => {
-            console.log("slide prev");
             swiper.slidePrev();
           }}
         >
