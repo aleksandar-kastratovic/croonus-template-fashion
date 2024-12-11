@@ -2,11 +2,11 @@ import { get, list } from "@/api/api";
 import dynamic from "next/dynamic";
 import { headers } from "next/headers";
 import { generateOrganizationSchema } from "@/_functions";
-import IndexSlider from "@/components/IndexSlider/IndexSlider";
 import RecommendedCategories from "@/components/sections/homepage/RecommendedCategories";
 import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
 import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";
 import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
+import { BannerSlider } from "@/components/BannerSlider/BannerSlider";
 
 const getBanners = () => {
   return get("/banners/index_slider").then((res) => res?.payload);
@@ -59,12 +59,7 @@ const Home = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <div className="block relative overflow-hidden">
-        <div
-          className="relative max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[700px] 2xl:h-[750px] 3xl:h-[800px] block"
-          id="slider"
-        >
-          <IndexSlider banners={banners} mobileBanners={mobileBanners} />
-        </div>
+        <BannerSlider banners={{ desktop: banners, mobile: mobileBanners }} />
         <div className="overflow-hidden">
           <RecommendedProducts
             recommendedProducts={recommendedProducts}

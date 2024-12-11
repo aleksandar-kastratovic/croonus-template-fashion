@@ -14,7 +14,6 @@ import { useCategoryTree, useLandingPages } from "@/hooks/ecommerce.hooks";
 const Header = () => {
   const { data: categories } = useCategoryTree();
   const { data: landingPagesList } = useLandingPages();
-  console.log(categories);
 
   const categoriesMain = [
     { name: "Početna", slug: "/", isCategory: false, id: 0 },

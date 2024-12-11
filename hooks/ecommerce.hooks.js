@@ -24,7 +24,7 @@ import { useInvalidateBadges } from "@/context/functions";
 
 //hook za prepoznavanje mobilnih uredjaja, vraca true ili false
 export const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(null);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
