@@ -968,7 +968,8 @@ export const useCheckout = ({ formData, setPostErrors, setLoading }) => {
             fields: res?.response?.data?.payload?.fields ?? [],
           });
           return res?.payload;
-        }).then(() => {
+        })
+        .then(() => {
           window.location.reload();
         })
         .catch((err) => {
@@ -979,7 +980,7 @@ export const useCheckout = ({ formData, setPostErrors, setLoading }) => {
 };
 
 //hook za dobijanje info o cenama,popustima itd u korpi
-export const useSummary = ({ items, formData }) => {
+export const useSummary = ({ items, formData } = {}) => {
   return useSuspenseQuery({
     queryKey: [
       "summary",
@@ -1450,6 +1451,7 @@ export const useUpdateCartQuantity = () => {
         cart_items_id: id,
         quantity: quantity,
       }).then((res) => {
+        console.log(res);
         switch (res?.code) {
           case 200:
             mutateCart();
@@ -1463,7 +1465,7 @@ export const useUpdateCartQuantity = () => {
             });
             break;
           default:
-            toast.error("Došlo je do greške!", {
+            toast.error("Na lageru trenutno nema željena količina artikala.", {
               position: "top-center",
               autoClose: 2000,
               hideProgressBar: true,
@@ -1471,6 +1473,7 @@ export const useUpdateCartQuantity = () => {
               pauseOnHover: true,
               draggable: true,
             });
+            throw new Error();
             break;
         }
       });

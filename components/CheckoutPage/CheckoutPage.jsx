@@ -84,6 +84,7 @@ export const CheckoutPage = ({
     isFetching,
     isSuccess,
   } = useCart();
+  console.log(items);
   const [successfullyFetched, setSuccessfullyFetched] = useState(false);
 
   useEffect(() => {
@@ -104,8 +105,6 @@ export const CheckoutPage = ({
 
   const cartItems = items?.items ?? [];
   const cartCost = data?.summary?.total ?? 0;
-  console.log(data);
-  console.log(cartCost);
 
   const renderCart = () => {
     switch (true) {

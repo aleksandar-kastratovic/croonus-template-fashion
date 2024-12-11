@@ -29,7 +29,12 @@ const CheckoutItems = ({
   cart_item_id,
 }) => {
   const { mutate: removeFromCart, isSuccess: isRemoved } = useRemoveFromCart();
-  const { mutate: updateCart, isSuccess: isUpdated } = useUpdateCartQuantity();
+  const {
+    mutate: updateCart,
+    isSuccess: isUpdated,
+    isPending,
+    isError,
+  } = useUpdateCartQuantity();
 
   const [productQuantity, setProductQuantity] = useState(Number(quantity));
 
@@ -87,6 +92,8 @@ const CheckoutItems = ({
               id={cart_item_id}
               refreshSummary={refreshSummary}
               refreshCart={refreshCart}
+              updatingCart={isPending}
+              updatingCartError={isError}
             />
           </div>
           <p className={`${className} text-[0.9rem] font-normal`}>

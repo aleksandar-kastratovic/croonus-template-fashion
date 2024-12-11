@@ -7,7 +7,7 @@ import { useUpsell } from "@/hooks/ecommerce.hooks";
 
 const UpsellProducts = ({ text = "Preporučujemo", slug }) => {
   const { data } = useUpsell({ slug: slug });
-  console.log("Upsell: ", data);
+
   return (
     <>
       {data?.items?.length > 0 && (

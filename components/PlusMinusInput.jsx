@@ -3,6 +3,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Tooltip } from "@mui/material";
+import { useCart } from "@/hooks/ecommerce.hooks";
+import { useIsFetching } from "@tanstack/react-query";
 
 const quantityInputStyle = {
   error: "focus:border-red-600 border-transparent",
@@ -15,8 +17,13 @@ const PlusMinusInput = ({
   setQuantity,
   updateCart,
   id,
+  updatingCart,
+  updatingCartError,
 }) => {
+  const { isFetching: isFetchingCart } = useCart();
+  const isFetchingSummary = useIsFetching({ queryKey: ["summary"] });
   const [showInputErrorToolTip, setShowInputErrorTooltip] = useState(false);
+  const previousQuantity = useRef(quantity);
 
   const quantityErrorMessageId = useId();
   const showQuantitiyError = () => {
@@ -33,62 +40,89 @@ const PlusMinusInput = ({
   };
 
   const onPlus = () => {
-    if (quantity < maxAmount) {
-      setQuantity(quantity + 1);
+    if (!isFetchingCart && !isFetchingSummary && !updatingCart) {
+      // if (quantity < maxAmount) {
+      // setQuantity(quantity + 1);
       updateCart({
         id: id,
         quantity: quantity + 1,
         message: `Uspešno izmenjena količina.`,
         type: true,
       });
-    } else {
-      showQuantitiyError();
+      // } else {
+      //   showQuantitiyError();
+      // }
     }
   };
 
   const onQuantityInputChange = (e) => {
-    const inputValue = e?.target?.value
-      ?.replace(/[^0-9.]/g, "")
-      .replace(/^0+/, "");
-    setQuantity(inputValue);
-    if (inputValue && quantity !== inputValue) {
-      setShowInputErrorTooltip(false);
-      if (inputValue < maxAmount) {
+    if (!isFetchingCart && !isFetchingSummary && !updatingCart) {
+      const inputValue = e?.target?.value
+        ?.replace(/[^0-9.]/g, "")
+        .replace(/^0+/, "");
+
+      if (Number(inputValue) === previousQuantity.current) {
+        setQuantity(Number(inputValue));
+      }
+      if (inputValue) {
         updateCart({
           id: id,
           quantity: inputValue,
           message: `Uspešno izmenjena količina.`,
         });
+        // previousQuantity.current = Number(inputValue);
+        setShowInputErrorTooltip(false);
+      } else {
+        setQuantity("");
+        setShowInputErrorTooltip(true);
       }
-    } else {
-      setShowInputErrorTooltip(true);
     }
   };
 
   const onQuantityInputBlur = (e) => {
-    const inputValue = e?.target?.value;
-    setShowInputErrorTooltip(false);
-    if (inputValue === "") {
-      setQuantity(1);
+    if (!isFetchingCart && !isFetchingSummary && !updatingCart) {
+      const inputValue = e?.target?.value;
+      setShowInputErrorTooltip(false);
+      if (inputValue === "") {
+        setQuantity(previousQuantity.current);
+        updateCart({
+          id: id,
+          quantity: previousQuantity.current,
+          message: `Uspešno izmenjena količina.`,
+        });
+      }
     }
   };
 
   const onMinus = () => {
-    if (quantity > 1 && quantity <= maxAmount) {
-      setQuantity(quantity - 1);
-      updateCart({
-        id: id,
-        quantity: quantity - 1,
-        message: `Uspešno izmenjena količina.`,
-        type: true,
-      });
+    if (!isFetchingCart && !isFetchingSummary && !updatingCart) {
+      if (quantity > 1) {
+        // setQuantity(quantity - 1);
+        updateCart({
+          id: id,
+          quantity: quantity - 1,
+          message: `Uspešno izmenjena količina.`,
+          type: true,
+        });
+      }
     }
   };
 
   useEffect(() => {
-    if (quantity > maxAmount && maxAmount > 0) {
-      setQuantity(maxAmount);
+    if (updatingCartError) {
+      updateCart({
+        id: id,
+        quantity: maxAmount,
+        message: `Uspešno izmenjena količina.`,
+        type: true,
+      });
       showQuantitiyError();
+    }
+  }, [updatingCartError, maxAmount]);
+
+  useEffect(() => {
+    if (quantity !== "") {
+      previousQuantity.current = quantity;
     }
   }, [quantity]);
 

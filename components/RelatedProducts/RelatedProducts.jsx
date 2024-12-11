@@ -7,7 +7,6 @@ import { useRelatedProducts } from "@/hooks/ecommerce.hooks";
 
 const RelatedProducts = ({ text = "Slični proizvodi", slug }) => {
   const { data } = useRelatedProducts({ slug: slug });
-  console.log("Related Products: ", data);
 
   return (
     <>
