@@ -8,6 +8,7 @@ import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/N
 import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
 import { BannerSlider } from "@/components/BannerSlider/BannerSlider";
 import NewInProducts from "@/components/NewInProducts/NewInProducts";
+import { Suspense } from "react";
 
 const getBanners = () => {
   return get("/banners/index_slider").then((res) => res?.payload);
@@ -67,7 +68,9 @@ const Home = async () => {
             action4={`Izdvajamo za Vas`}
           />
         </div>
-        <NewInProducts />
+        <Suspense>
+          <NewInProducts />
+        </Suspense>
         <RecommendedCategories categories={categories} />
         <NewCategoriesSections categories={recommendedCategories} />
         <NewsLetterInstagramSection />
