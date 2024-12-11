@@ -1008,10 +1008,10 @@ export const useOrder = ({ order_token }) => {
 };
 
 //hook za dobijanje novih proizvoda
-export const useNewProducts = () => {
+export const useNewProducts = (render = true) => {
   return useSuspenseQuery({
     queryKey: ["newProducts"],
-    queryFn: async ({ render = true }) => {
+    queryFn: async () => {
       return await LIST(`/products/new-in/list`, { render: render }).then(
         (res) => res?.payload
       );

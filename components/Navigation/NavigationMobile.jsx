@@ -118,6 +118,7 @@ const NavigationMobile = () => {
   });
 
   const categoriesMain = [
+    { name: "NOVO", slug: "/novo" },
     { name: "Brendovi", slug: "/brendovi" },
     { name: "Blog", slug: "/blog" },
     { name: "Maloprodaje", slug: "/maloprodaje" },
