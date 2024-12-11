@@ -61,7 +61,7 @@ export const CheckoutData = ({
   const { data: loggedIn } = useIsLoggedIn();
 
   const { data: billing_addresses } = userLoggedIn ? useBillingAddresses() : [];
-
+  //Get user billing addresses
   const { data: user_billing_addresses} = userLoggedIn ? useGetAccountData(
     `/customers/billing-address`,
     "list"
@@ -127,6 +127,7 @@ export const CheckoutData = ({
     }
   }, [formData?.delivery_method]);
 
+  //Check default billing address if there is one
   useEffect(() =>{
     const defaultAddress = user_billing_addresses?.find(address => address.set_default === 1);
     if (defaultAddress) {
@@ -140,6 +141,7 @@ export const CheckoutData = ({
 
   const router = useRouter();
 
+  //Function to switch api use of country depending on user logged in status
   const formatCountry = (fields)  =>{
     fields.map(field => {
       if(field.name === 'id_country_shipping') {
@@ -149,9 +151,8 @@ export const CheckoutData = ({
       }
     })
   }
-
+  //Function to switch field from input to select and changing api depending on user logged in status
   const formatCheckoutFields = (fields, data) => {
-    console.log(data);
     if (data && Number(data?.id_country_shipping) === 193) {
       return fields
         ?.map((field) => {
@@ -321,13 +322,13 @@ export const CheckoutData = ({
                   ...prev,
                   country_name_shipping: e?.target?.selectedOptions[0]?.text,
                 }));
-              } else if(e?.target?.name === "id_town_shipping") {
-                handleInputChange(e, setDataTmp, setErrorsTmp);
-                setDataTmp((prev) => ({
-                ...prev,
-                town_name_shipping: e?.target?.selectedOptions[0]?.text,
-              }));
-              }
+                if (e.target.selectedOptions[0]!== 193) {
+                  setDataTmp((prev) => ({
+                    ...prev,
+                    town_name_shipping: ''
+                  }))
+                }
+              } 
               else {
                 
                 handleInputChange(e, setDataTmp, setErrorsTmp);
@@ -448,14 +449,19 @@ export const CheckoutData = ({
           onClick={() => {
             let err = [];
             (required ?? [])?.forEach((key) => {
+              //Error handling for countries
               if(dataTmp.id_country_shipping == '-' || dataTmp.id_country_shipping == 0) {
                 err = [...err,'id_country_shipping']
-              }else {
+              }else if (dataTmp.id_town_shipping === "") {
+                err = [...err,'id_town_shipping']
+              } 
+              else {
                 if (!dataTmp[key] || dataTmp[key]?.length === 0) {
                   err.push(key);
                 }
               }
             });
+            console.log(err);
             setErrorsTmp(err);
             if (err?.length === 0) {
               checkOut();

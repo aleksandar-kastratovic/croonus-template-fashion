@@ -101,7 +101,7 @@ export const Payments = () => {
         onClick={() => {
           setData({
             ...new_address,
-            id_country: 0,
+            id_country: 0, //set Default to Izaberi
             set_default: false,
           });
 

@@ -95,7 +95,7 @@ export const Shippings = () => {
         onClick={() => {
           setData({
             ...data,
-            id_country: 0,
+            id_country: 0, //set Default to Izaberi
           })
           setShow({
             ...show,
