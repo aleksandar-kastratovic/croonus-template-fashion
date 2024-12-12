@@ -84,7 +84,6 @@ export const CheckoutPage = ({
     isFetching,
     isSuccess,
   } = useCart();
-  console.log(items);
   const [successfullyFetched, setSuccessfullyFetched] = useState(false);
 
   useEffect(() => {
