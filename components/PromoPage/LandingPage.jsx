@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { get, list } from "@/api/api";
 import Image from "next/image";
 import { Thumb } from "@/components/Thumb/Thumb";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -13,6 +10,8 @@ import {
   useLandingPageConditions,
   useLandingPageThumb,
 } from "@/hooks/ecommerce.hooks";
+import { Fragment, Suspense } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const LandingPage = ({ slug }) => {
   const {
@@ -25,15 +24,7 @@ const LandingPage = ({ slug }) => {
     isFetching: isFetchingThumb,
     isError: isErrorThumb,
   } = useLandingPageThumb({ slug: slug });
-  const {
-    data: conditions,
-    isFetching: isFetchingConditions,
-    isError: isErrorConditions,
-  } = useLandingPageConditions({ slug: slug });
-
-  if (isErrorBasicData) {
-    notFound;
-  }
+  const { data: products } = useLandingPageConditions({ slug: slug });
 
   return (
     <>
@@ -123,23 +114,50 @@ const LandingPage = ({ slug }) => {
                 </div>
               </>
             )}
-            <div
-              className={`grid ${
-                conditions?.length > 0 ? `` : `flex-1`
-              } max-md:grid-cols-2 mt-16 w-full gap-y-[40px] gap-x-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[11px]`}
-            >
-              {isFetchingConditions ? (
-                <>
-                  {Array.from({ length: 12 }, (x, i) => (
-                    <div
-                      key={i}
-                      className="max-md:h-[250px] h-[500px] w-full col-span-1 bg-slate-300 object-cover animate-pulse"
-                    ></div>
-                  ))}
-                </>
-              ) : (
-                <Thumb data={conditions} slider={false} />
-              )}
+            <div className="w-full mt-16">
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={10}
+                navigation={true}
+                modules={[Navigation]}
+                fadeEffect={{ crossFade: true }}
+                rewind={true}
+                className="mySwiper3 w-full select-none"
+                breakpoints={{
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                  },
+                  768: {
+                    slidesPerView: 2.5,
+                    spaceBetween: 10,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                  },
+                  1680: {
+                    slidesPerView: 5,
+                    spaceBetween: 10,
+                  },
+                }}
+              >
+                {products?.items?.map(({ id }) => {
+                  return (
+                    <Fragment key={id}>
+                      <Suspense
+                        fallback={
+                          <SwiperSlide className="aspect-2/3 h-full w-full animate-pulse bg-slate-300" />
+                        }
+                      >
+                        <SwiperSlide key={id} className="hoveredColor">
+                          <Thumb id={id} slug={id} />
+                        </SwiperSlide>
+                      </Suspense>
+                    </Fragment>
+                  );
+                })}
+              </Swiper>
             </div>
             <div
               className={`grid grid-cols-2 w-full md:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-5 mt-16`}
