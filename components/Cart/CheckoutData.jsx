@@ -333,7 +333,6 @@ export const CheckoutData = ({
                   }))
                 }
               } else if (e?.target?.name === "id_town_shipping") {
-                console.log(e.target.selectedOptions[0]);
                 handleInputChange(e, setDataTmp, setErrorsTmp);
                 setDataTmp((prev) => ({
                   ...prev,
@@ -472,7 +471,6 @@ export const CheckoutData = ({
                 }
               }
             });
-            console.log(err);
             setErrorsTmp(err);
             if (err?.length === 0) {
               checkOut();

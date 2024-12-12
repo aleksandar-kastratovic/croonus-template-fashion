@@ -12,6 +12,7 @@ const Order = ({ orderToken, className }) => {
     data: {
       order,
       order: { credit_card },
+      deliveries,
       items,
       shipping_address,
     },
@@ -25,6 +26,7 @@ const Order = ({ orderToken, className }) => {
           <Success
             items={items}
             order={order}
+            deliveries={deliveries}
             shipping_address={shipping_address}
             className={className}
           />
@@ -48,7 +50,8 @@ const Order = ({ orderToken, className }) => {
 export default Order;
 
 const Success = ({
-  order: { slug, delivery_method_name, payment_method_name },
+  order: { slug, payment_method_name },
+  deliveries,
   items,
   shipping_address,
   className,
@@ -126,7 +129,7 @@ const Success = ({
             </h3>
             <h3 className={`${className} text-base font-light`}>
               Način dostave:{" "}
-              <span className={`font-normal`}>{delivery_method_name}</span>
+              <span className={`font-normal`}>{deliveries[0].format_data.full_name}</span>
             </h3>
             <h3 className={`${className} text-base font-light`}>
               Način plaćanja:{" "}
