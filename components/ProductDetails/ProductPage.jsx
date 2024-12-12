@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Suspense } from "react";
 import { ProductGallery } from "@/components/ProductDetails/ProductGallery";
 import { ProductInfo } from "@/components/ProductDetails/ProductInfo";
@@ -8,6 +10,7 @@ import RelatedProducts from "../RelatedProducts/RelatedProducts";
 import RecommendedProducts from "../RecommendedProducts/RecommendedProducts";
 
 export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
+  console.log(path);
   return (
     <>
       <div className="max-md:mt-[1rem]  max-md:w-[95%]  max-md:mx-auto md:mx-[3rem] mt-6 max-lg:hidden">

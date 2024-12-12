@@ -27,6 +27,8 @@ import { BasicData } from "@/components/ProductDetails/InfoData/basic-data";
 import { Wishlist } from "@/components/ProductDetails/InfoData/wishlist";
 import { Specifications } from "@/components/ProductDetails/InfoData/specifications";
 
+import { checkIsInStock, checkPrices } from "./prices/functions";
+
 export const ProductInfo = ({
   path,
   canonical,
@@ -35,50 +37,75 @@ export const ProductInfo = ({
 }) => {
   const [product, setProduct] = useState();
   const [productVariant, setProductVariant] = useState(null);
+  const [tempError, setTempError] = useState(null);
+
+  const [count, setCount] = useState(1);
 
   const router = useRouter();
 
-  const [productAmount, setProductAmount] = useState(1);
-  const { mutate: addItemToCart } = useAddToCart();
+  const { mutate: addToCart, isPending } = useAddToCart();
   const [, , , mutateWishList] = useCartContext();
 
-  const addToCart = (e, action) => {
-    if (product.product_type === "single") {
-      if (product?.data?.item?.inventory?.inventory_defined) {
-        addItemToCart({
-          id: product?.data?.item?.basic_data?.id_product,
-          quantity: 1,
-        });
+  const checkIsAddable = (price, inventory) => {
+    let addable_data = {};
 
-        if (action === "push") {
-          router.push("/korpa");
-        }
-      } else {
-        toast.error("Proizvod trenutno nije na lageru!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      }
+    let is_in_stock = checkIsInStock(inventory);
+    let { price_defined } = checkPrices(price);
+    if (is_in_stock && price_defined) {
+      addable_data.addable = true;
+      addable_data.text = "DODAJ U KORPU";
     } else {
-      if (productVariant) {
-        if (productVariant?.inventory?.inventory_defined) {
-          addItemToCart({
-            id: productVariant?.basic_data?.id_product,
-            quantity: 1,
-          });
-
-          if (action === "push") {
-            router.push("/korpa");
-          }
-        } else {
-          toast.error("Proizvod trenutno nije na lageru!", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-        }
-      }
+      addable_data.addable = false;
+      addable_data.text = "POŠALJI UPIT";
     }
 
-    setProductAmount(1);
+    return addable_data;
   };
+
+  //hendlujemo dodavanje u korpu
+  const handleAddToCart = () => {
+    switch (product?.product_type) {
+      case "single":
+        let is_addable = checkIsAddable(
+          product?.data?.item?.price,
+          product?.data?.item?.inventory
+        );
+        if (is_addable?.addable) {
+          addToCart({
+            id: product?.data?.item?.basic_data?.id_product,
+            quantity: count,
+          });
+          // pushToDataLayer("add_to_cart", product?.data?.item, count);
+        } else {
+          router.push(`/kontakt?slug=${product?.data?.item?.slug}`);
+        }
+        break;
+      case "variant":
+        if (productVariant?.id) {
+          let is_addable = checkIsAddable(
+            productVariant?.price,
+            productVariant?.inventory
+          );
+
+          if (is_addable?.addable) {
+            addToCart({
+              id: productVariant?.id,
+              quantity: count,
+            });
+            // pushToDataLayer("add_to_cart", productVariant, count);
+          } else {
+            router.push(`/kontakt?slug=${productVariant?.slug}`);
+          }
+        } else {
+          let text = checkSelectedOptions(selectedOptions);
+          setTempError(text);
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
   const [deliveryModal, setDeliveryModal] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
   const [returnModal, setReturnModal] = useState(false);
@@ -97,16 +124,26 @@ export const ProductInfo = ({
   const [text, setText] = useState("Dodaj u korpu");
   const [text2, setText2] = useState("Kupi odmah");
 
-  const handleTextChangeAddToCart = () => {
-    if (product?.product_type === "variant" && !productVariant?.id) {
-      setText("Izaberite veličinu");
-    }
-  };
-  const handleTextChangeBuyNow = () => {
-    if (product?.product_type === "variant" && !productVariant?.id) {
-      setText2("Izaberite veličinu");
-    }
-  };
+  // const isVariantSelected = () => {
+  //   console.log(productVariant);
+  //   switch (true) {
+  //     case product?.product_type === "variant" && !productVariant?.id && !color:
+  //       setText("Izaberite boju");
+  //       setText2("Izaberite boju");
+  //       return false;
+  //     case product?.product_type === "variant" &&
+  //       !productVariant?.id &&
+  //       color !== "":
+  //       setText("Izaberite veličinu");
+  //       setText2("Izaberite veličinu");
+  //       return false;
+  //     case product?.product_type === "variant" && productVariant?.id:
+  //       setText("Dodaj u korpu");
+  //       setText2("Kupi odmah");
+  //   }
+  //   return true;
+  // };
+
   useEffect(() => {
     if (product?.product_type === "variant" && productVariant?.id) {
       setText("Dodaj u korpu");
@@ -191,6 +228,7 @@ export const ProductInfo = ({
           </div>
           <div className="mt-[1.6rem] max-md:mt-[1rem] flex items-center gap-3">
             <button
+              disabled={isPending}
               className={
                 productVariant === null || productVariant.length === 0
                   ? `max-sm:w-[8.5rem] ${
@@ -205,39 +243,57 @@ export const ProductInfo = ({
                     } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
               }
               onClick={() => {
-                if (product?.product_type === "variant" && productVariant?.id) {
-                  addToCart();
-                } else {
-                  if (product?.product_type === "single") {
-                    addToCart();
-                  }
+                // if (isVariantSelected()) {
+                handleAddToCart();
+                // }
+              }}
+            >
+              {isPending
+                ? "DODAJEM..."
+                : tempError
+                ? tempError
+                : checkIsAddable(
+                    productVariant?.id
+                      ? productVariant?.price
+                      : product?.data?.item?.price,
+                    productVariant?.id
+                      ? productVariant?.inventory
+                      : product?.data?.item?.inventory
+                  )?.text}
+            </button>
+            {checkIsAddable(
+              productVariant?.id
+                ? productVariant?.price
+                : product?.data?.item?.price,
+              productVariant?.id
+                ? productVariant?.inventory
+                : product?.data?.item?.inventory
+            )?.addable && (
+              <button
+                className={
+                  productVariant === null || productVariant.length === 0
+                    ? `max-sm:w-[8.5rem] ${
+                        text2 === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#191919]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
+                    : `max-sm:w-[8.5rem] ${
+                        text2 === "Izaberite veličinu"
+                          ? `bg-red-500`
+                          : `bg-[#191919]`
+                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
                 }
-                handleTextChangeAddToCart();
-              }}
-            >
-              {text}
-            </button>
-            <button
-              className={
-                productVariant === null || productVariant.length === 0
-                  ? `max-sm:w-[8.5rem] ${
-                      text2 === "Izaberite veličinu"
-                        ? `bg-red-500`
-                        : `bg-[#191919]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
-                  : `max-sm:w-[8.5rem] ${
-                      text2 === "Izaberite veličinu"
-                        ? `bg-red-500`
-                        : `bg-[#191919]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
-              }
-              onClick={(e) => {
-                addToCart(e, "push");
-                handleTextChangeBuyNow();
-              }}
-            >
-              {text2}
-            </button>
+                onClick={() => {
+                  // if (isVariantSelected()) {
+                  handleAddToCart();
+                  router.push("/korpa");
+                  // }
+                }}
+              >
+                {text2}
+              </button>
+            )}
+
             <Suspense
               fallback={
                 <div className={`w-10 h-10 bg-slate-300 animate-pulse`} />

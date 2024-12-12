@@ -28,6 +28,8 @@ export const BasicData = ({
     refetchOnWindowFocus: false,
   });
 
+  console.log(productVariant);
+
   const { data: product_gallery } = useSuspenseQuery({
     queryKey: ["productGallerySchema", path],
     queryFn: async () => {
@@ -88,12 +90,19 @@ export const BasicData = ({
   const [newURL, setNewURL] = useState(null);
   useEffect(() => {
     if (newURL) {
-      window.history.replaceState(null, null, newURL);
+      window?.history?.replaceState(null, null, newURL);
     }
   }, [newURL]);
 
   const updateProductVariant = (newProduct) => {
-    setProductVariant(newProduct);
+    setProductVariant({
+      ...newProduct,
+      price: {
+        ...newProduct?.price,
+        min: [],
+        max: [],
+      },
+    });
   };
   const handleURLChange = (newURL) => {
     setNewURL(newURL);
@@ -188,6 +197,7 @@ export const BasicData = ({
         className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
       >
         <ProductPrice
+          is_details
           price={
             productVariant?.id
               ? productVariant?.price
@@ -197,6 +207,11 @@ export const BasicData = ({
             productVariant?.id
               ? productVariant?.inventory
               : product?.data?.item?.inventory
+          }
+          className={
+            product?.data?.item?.price?.discount?.active
+              ? `font-bold text-[21px] py-0.5`
+              : `font-bold text-[1.172rem]  py-0.5`
           }
         />
         {renderDiscount(product)}

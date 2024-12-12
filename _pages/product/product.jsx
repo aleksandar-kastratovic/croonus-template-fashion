@@ -8,10 +8,11 @@ export const ProductDetailsPage = ({ path, category_id }) => {
   let headers_list = headers();
   let canonical = headers_list.get("x-pathname");
   let base_url = headers_list.get("x-base_url");
+  console.log(path);
 
   return (
     <ProductPage
-      path={path}
+      path={path?.[path?.length - 1]}
       categoryId={category_id}
       canonical={canonical}
       base_url={base_url}

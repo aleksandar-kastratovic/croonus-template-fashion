@@ -1,74 +1,35 @@
 "use client";
-import { currencyFormat } from "@/helpers/functions";
-import { usePathname } from "next/navigation";
+import {
+  checkIsInStock,
+  checkPrices,
+  getPriceStatus,
+  renderDefaultPrices,
+  renderDiscountPrices,
+} from "@/components/ProductDetails/prices/functions";
 
+const ProductPrice = ({ price, inventory, is_details = false }) => {
+  let status = getPriceStatus(price);
+  let is_in_stock = checkIsInStock(inventory);
+  let prices = checkPrices(price);
 
-const ProductPrice = ({ price, inventory, className, handlePrice }) => {
-  const pathname = usePathname();
-  switch (true) {
-    case price?.price_defined && inventory?.amount !== null:
-      handlePrice ? handlePrice(price?.price?.original) : null;
-      return (
-        <div className={`flex items-center gap-3 font-bold`}>
-          {price?.price?.discount !== null ? (
+  let data = {
+    status: status,
+    is_in_stock: is_in_stock,
+    price_defined: prices?.price_defined,
+    is_price_range: prices?.price_range,
+    price: price,
+    is_details: is_details,
+  };
 
-            <div className="group relative inline-block">
-              <span className="z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-0 text-[10px] font-normal">
-                Cena sa popustom
-                <svg className="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
-                  <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
-                </svg>
-              </span>
-              <div className={`${className}`}>
-               {currencyFormat(price?.price?.discount)}
-              </div>
-            </div>
+  if (!data?.is_in_stock || !data.price_defined) {
+    return <p className={`md:mt-3 font-bold`}>Cena na upit</p>;
+  }
 
-          ) : (
-            <div className={className}>{currencyFormat(price?.price?.original)}</div>
-          )}
-        </div>
-
-      );
-
-    case price?.price_defined && inventory?.amount === null:
-      handlePrice ? handlePrice(price?.price?.original) : null;
-      return (
-        <>
-          {price?.price?.discount !== null ? (
-
-            <div className="group relative inline-block">
-              <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-green-500 text-white p-[6px] rounded absolute -top-8 left-[15%] text-[10px] font-normal">
-                Cena sa popustom
-                <svg className="absolute z-50 w-6 h-6 text-green-500 transform left-[45%] -translate-x-1/2 -translate-y-[2px] fill-current stroke-current" width="8" height="8">
-                  <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
-                </svg>
-              </span>
-              <div className={`${className}`}>
-
-                {currencyFormat(price?.price?.discount)}
-              </div>
-            </div>
-          ) : (
-            <>
-              {" "}
-              <div className={className}>{currencyFormat(price?.price?.original)}</div>
-            </>
-          )}
-        </>
-      );
-
-    case !price?.price_defined && inventory?.amount !== null:
-      handlePrice ? handlePrice("Cena na upit") : null;
-      return <h1 className={className}>Cena na upit</h1>;
-
-    case !price?.price_defined && inventory?.amount === null:
-      handlePrice ? handlePrice("Cena na upit") : null;
-
-      return <h1 className={className}>Cena na upit</h1>;
-
-    default:
-      return null;
+  switch (data?.status) {
+    case "default":
+      return renderDefaultPrices({ ...data });
+    case "discount":
+      return renderDiscountPrices({ ...data });
   }
 };
 
