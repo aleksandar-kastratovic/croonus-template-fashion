@@ -169,6 +169,7 @@ const CategoryProduct = async ({ params: { path }, params, searchParams }) => {
       data?.redirect_url === false:
       return (
         <ProductPage
+          id={data?.id}
           path={params.path}
           category_id={path?.[path?.length - 2] ?? "*"}
         />

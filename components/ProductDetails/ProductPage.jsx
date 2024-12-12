@@ -9,15 +9,14 @@ import CrossSellProducts from "../CrosssellProducts/CrosssellProducts";
 import RelatedProducts from "../RelatedProducts/RelatedProducts";
 import RecommendedProducts from "../RecommendedProducts/RecommendedProducts";
 
-export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
-  console.log(path);
+export const ProductPage = ({ path, categoryId, canonical, base_url, id }) => {
   return (
     <>
       <div className="max-md:mt-[1rem]  max-md:w-[95%]  max-md:mx-auto md:mx-[3rem] mt-6 max-lg:hidden">
         <Suspense
           fallback={<div className={`h-2 bg-slate-300 animate-pulse w-full`} />}
         >
-          <Breadcrumbs path={path} categoryId={categoryId} />
+          <Breadcrumbs id={id} categoryId={categoryId} />
         </Suspense>
       </div>
       <div className="max-md:mt-[1.01rem] mt-[2rem] max-md:w-[95%]  max-md:mx-auto mx-[3rem] gap-x-[3.063rem] grid grid-cols-4">
@@ -28,9 +27,14 @@ export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
             />
           }
         >
-          <ProductGallery slug={path} />
+          <ProductGallery slug={id} />
         </Suspense>
-        <ProductInfo path={path} canonical={canonical} base_url={base_url} />
+        <ProductInfo
+          path={path}
+          id={id}
+          canonical={canonical}
+          base_url={base_url}
+        />
       </div>
       <Suspense
         fallback={
@@ -46,10 +50,10 @@ export const ProductPage = ({ path, categoryId, canonical, base_url }) => {
           </div>
         }
       >
-        <UpsellProducts slug={path} />
-        <CrossSellProducts slug={path} />
-        <RecommendedProducts slug={path} />
-        <RelatedProducts slug={path} />
+        <UpsellProducts slug={id} />
+        <CrossSellProducts slug={id} />
+        <RecommendedProducts slug={id} />
+        <RelatedProducts slug={id} />
       </Suspense>
     </>
   );

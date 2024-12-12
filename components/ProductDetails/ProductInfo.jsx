@@ -30,6 +30,7 @@ import { Specifications } from "@/components/ProductDetails/InfoData/specificati
 import { checkIsInStock, checkPrices } from "./prices/functions";
 
 export const ProductInfo = ({
+  id,
   path,
   canonical,
   base_url,
@@ -163,7 +164,7 @@ export const ProductInfo = ({
                 <div className={`h-2 bg-slate-300 animate-pulse w-full`} />
               }
             >
-              <Breadcrumbs path={path} base_url={base_url} />
+              <Breadcrumbs id={id} path={path} base_url={base_url} />
             </Suspense>
           </div>
           <div className="flex mt-3 flex-col ">
@@ -197,6 +198,7 @@ export const ProductInfo = ({
               <BasicData
                 productVariant={productVariant}
                 path={path}
+                id={id}
                 canonical={canonical}
                 setType={setType}
                 setProduct={setProduct}
@@ -332,7 +334,7 @@ export const ProductInfo = ({
               <p className="text-sm regular">Povrat do 14 dana</p>
             </div>
           </div>
-          <Specifications path={path} />
+          <Specifications id={id} />
           <div className="max-md:hidden fixed z-[100] max-w-[114px] right-0 top-[30%] flex flex-col gap-[30px] px-5 py-[37px] bg-white drop-shadow-2xl rounded-l-lg">
             <div className="flex flex-col items-center text-center justify-center">
               <Image

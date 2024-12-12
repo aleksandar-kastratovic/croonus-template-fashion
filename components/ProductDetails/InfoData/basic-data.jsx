@@ -11,6 +11,7 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 
 export const BasicData = ({
   path,
+  id,
   productVariant,
   setProductVariant,
   setProduct,
@@ -20,7 +21,7 @@ export const BasicData = ({
   const { data: product } = useSuspenseQuery({
     queryKey: ["product", path],
     queryFn: async () => {
-      return await get(`/product-details/basic-data/${path}`).then((res) => {
+      return await get(`/product-details/basic-data/${id}`).then((res) => {
         setProduct(res?.payload);
         return res?.payload;
       });
@@ -31,9 +32,9 @@ export const BasicData = ({
   console.log(productVariant);
 
   const { data: product_gallery } = useSuspenseQuery({
-    queryKey: ["productGallerySchema", path],
+    queryKey: ["productGallerySchema", id],
     queryFn: async () => {
-      return await get(`/product-details/gallery/${path}`).then((res) => {
+      return await get(`/product-details/gallery/${id}`).then((res) => {
         return res?.payload;
       });
     },
