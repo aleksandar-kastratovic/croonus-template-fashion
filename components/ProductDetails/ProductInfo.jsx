@@ -78,7 +78,7 @@ export const ProductInfo = ({
           });
           // pushToDataLayer("add_to_cart", product?.data?.item, count);
         } else {
-          router.push(`/kontakt?slug=${product?.data?.item?.slug}`);
+          router.push(`/kontakt?id=${product?.data?.item?.id}`);
         }
         break;
       case "variant":
@@ -95,7 +95,7 @@ export const ProductInfo = ({
             });
             // pushToDataLayer("add_to_cart", productVariant, count);
           } else {
-            router.push(`/kontakt?slug=${productVariant?.slug}`);
+            router.push(`/kontakt?id=${product?.data?.item?.id}`);
           }
         } else {
           let text = checkSelectedOptions(selectedOptions);
