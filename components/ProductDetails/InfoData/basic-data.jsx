@@ -195,6 +195,12 @@ export const BasicData = ({
           ? productVariant?.basic_data?.sku
           : product?.data?.item?.basic_data?.sku}
       </h2>
+      <h2 className="mt-[1.063rem] text-[#636363] text-[0.688rem]">
+      Bar Kod:&nbsp;
+        {productVariant?.basic_data?.barcode
+          ? productVariant?.basic_data?.barcode
+          : product?.data?.item?.basic_data?.barcode}
+      </h2>
       <div
         className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
       >
