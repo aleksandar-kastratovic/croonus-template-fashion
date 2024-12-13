@@ -124,61 +124,6 @@ export const BasicData = ({
     setProduct(product);
   }, [product]);
 
-  const renderDiscount = (product) => {
-    switch (true) {
-      case product?.product_type === "single":
-        if (product?.data?.item?.price?.discount?.active) {
-          return (
-            <span className="text-[#636363] text-[1rem]">
-              -
-              {(
-                ((product?.data?.item?.price?.price?.original -
-                  product?.data?.item?.price?.price?.discount) /
-                  product?.data?.item?.price?.price?.original) *
-                100
-              ).toFixed(0)}
-              %
-            </span>
-          );
-        }
-        break;
-      case product?.product_type === "variant":
-        if (Boolean(productVariant?.id)) {
-          if (productVariant?.price?.discount?.active) {
-            return (
-              <span className="text-[#636363] text-[1rem]">
-                -
-                {(
-                  ((productVariant?.price?.price?.original -
-                    productVariant?.price?.price?.discount) /
-                    productVariant?.price?.price?.original) *
-                  100
-                ).toFixed(0)}
-                %
-              </span>
-            );
-          }
-        } else {
-          if (product?.data?.item?.price?.discount?.active) {
-            return (
-              <span className="text-[#636363] text-[1rem]">
-                -{" "}
-                {(
-                  ((product?.data?.item?.price?.price?.original -
-                    product?.data?.item?.price?.price?.discount) /
-                    product?.data?.item?.price?.price?.original) *
-                  100
-                ).toFixed(0)}
-                %
-              </span>
-            );
-          }
-        }
-      default:
-        break;
-    }
-  };
-
   return product ? (
     <>
       <script
@@ -196,7 +141,7 @@ export const BasicData = ({
           : product?.data?.item?.basic_data?.sku}
       </h2>
       <h2 className="mt-[1.063rem] text-[#636363] text-[0.688rem]">
-      Bar Kod:&nbsp;
+        Bar Kod:&nbsp;
         {productVariant?.basic_data?.barcode
           ? productVariant?.basic_data?.barcode
           : product?.data?.item?.basic_data?.barcode}
@@ -222,12 +167,6 @@ export const BasicData = ({
               : `font-bold text-[1.172rem]  py-0.5`
           }
         />
-        {renderDiscount(product)}
-        {product?.data?.item?.price?.discount?.active && (
-          <span className="text-[#636363] text-[1rem] line-through">
-            {currencyFormat(product?.data?.item?.price?.price?.original)}
-          </span>
-        )}
       </div>
       <p className={`text-sm mt-5 max-w-full md:max-w-[90%]`}>
         {product?.data?.item?.basic_data?.short_description}
