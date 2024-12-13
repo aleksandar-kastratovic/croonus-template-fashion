@@ -8,30 +8,32 @@ export default function Variants({
   updateProductVariant,
   updateProductPrice,
   productSlug,
-  slug,
   handleURLChange,
-  firstVariantOption,
   setSelectedColor,
-  productVariant,
-  setVariant,
   setVariantOnOff,
+  setSelectedOptions,
 }) {
   let variant_options = product?.data?.variant_options; // niz svih variant_options
   let variant_items = product?.data?.variant_items; // niz svih varijanti proizvoda
   let product_slug = productSlug; // slug proizvoda koji se prikazuje
   let variant_product = null; // krajnji proizvodd koji se prikazuje
   const [selected, setSelected] = useState([]); // niz selektovanih variant_options
+
   useEffect(() => {
-    if (setVariant) {
-      setSelected([
-        {
-          attribute_key: variant_options[1]?.attribute?.key,
-          value_key: variant_options[1]?.values[0]?.key,
-        },
-      ]);
+    // setSelected([
+    //   {
+    //     attribute_key: variant_options[1]?.attribute?.key,
+    //     value_key: variant_options[1]?.values[0]?.key,
+    //   },
+    // ]);
+    if (setVariantOnOff) {
       setVariantOnOff(false);
     }
-  }, [setVariant]);
+  }, [setVariantOnOff]);
+
+  useEffect(() => {
+    setSelectedOptions(selected);
+  }, [selected]);
 
   const [variantOptions, setVariantOptions] = useState(variant_options); // niz variant_options koji se prikazuje
   useEffect(() => {
@@ -306,16 +308,17 @@ export default function Variants({
     setSelected(temp_selected);
   };
 
-  useEffect(() => {
-    if (variant_options?.length === 1) {
-      updateProductVariant(variant_items[0]);
-      setSelected(variant_items[0]?.variant_key_array);
-      onChangeHandler(
-        variant_items[0]?.variant_key_array[0]?.attribute_key,
-        variant_items[0]?.variant_key_array[0]?.value_key
-      );
-    }
-  }, [variant_options]);
+  // useEffect(() => {
+  //   if (variant_options?.length === 1) {
+  //     updateProductVariant(variant_items[0]);
+  //     setSelected(variant_items[0]?.variant_key_array);
+  //     console.log("selected item", variant_items[0]?.variant_key_array);
+  //     onChangeHandler(
+  //       variant_items[0]?.variant_key_array[0]?.attribute_key,
+  //       variant_items[0]?.variant_key_array[0]?.value_key
+  //     );
+  //   }
+  // }, [variant_options]);
 
   return (
     <div className="flex flex-col-reverse max-md:gap-7 gap-[25px] max-lg:w-full  ">

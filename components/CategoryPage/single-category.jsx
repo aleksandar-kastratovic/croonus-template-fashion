@@ -6,8 +6,6 @@ import { generateBreadcrumbSchema } from "@/_functions";
 export const SingleCategory = ({ slug, path, base_url, text = "" }) => {
   const { data: singleCategory } = useCategory({ slug });
 
-  console.log(singleCategory);
-
   const breadcrumbs_schema = generateBreadcrumbSchema(
     singleCategory?.parents,
     singleCategory?.basic_data?.name,

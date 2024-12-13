@@ -42,7 +42,6 @@ const getSEO = (slug) => {
 
 export const generateMetadata = async ({ params: { slug } }) => {
   const data = await getSEO(slug);
-  console.log(data);
   const header_list = headers();
   let canonical = header_list.get("x-pathname");
   return {

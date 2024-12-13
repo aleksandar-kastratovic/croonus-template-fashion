@@ -16,6 +16,8 @@ export const BasicData = ({
   setProductVariant,
   setProduct,
   canonical,
+  setSelectedOptions,
+  setTempError,
 }) => {
   const { current: isMounted } = useIsMounted();
   const { data: product } = useSuspenseQuery({
@@ -28,8 +30,6 @@ export const BasicData = ({
     },
     refetchOnWindowFocus: false,
   });
-
-  console.log(productVariant);
 
   const { data: product_gallery } = useSuspenseQuery({
     queryKey: ["productGallerySchema", id],
@@ -92,6 +92,7 @@ export const BasicData = ({
   useEffect(() => {
     if (newURL) {
       window?.history?.replaceState(null, null, newURL);
+      setTempError(null);
     }
   }, [newURL]);
 
@@ -238,6 +239,7 @@ export const BasicData = ({
             productVariant={productVariant}
             slug={path}
             productSlug={path}
+            setSelectedOptions={setSelectedOptions}
           />
         </div>
       )}

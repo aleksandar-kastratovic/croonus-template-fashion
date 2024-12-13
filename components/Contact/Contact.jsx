@@ -20,8 +20,6 @@ const Contact = () => {
 
   const { data } = useProduct({ slug: id });
 
-  console.log(data);
-
   const [token, setToken] = useState();
   //
   const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);

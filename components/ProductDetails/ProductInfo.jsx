@@ -39,6 +39,7 @@ export const ProductInfo = ({
   const [product, setProduct] = useState();
   const [productVariant, setProductVariant] = useState(null);
   const [tempError, setTempError] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState(null);
 
   const [count, setCount] = useState(1);
 
@@ -46,6 +47,49 @@ export const ProductInfo = ({
 
   const { mutate: addToCart, isPending } = useAddToCart();
   const [, , , mutateWishList] = useCartContext();
+
+  const checkSelectedOptions = (options) => {
+    let text = "";
+    if (options && product?.product_type === "variant") {
+      let options_length = product?.data?.variant_options?.length;
+      let selected_options_length = options?.length;
+
+      if (options_length !== selected_options_length) {
+        let not_selected_attributes = [];
+
+        let selected_attributes = (options ?? [])?.map(
+          ({ attribute_key }) => attribute_key
+        );
+
+        (product?.data?.variant_options ?? [])?.forEach((option) => {
+          if (!selected_attributes?.includes(option?.attribute?.key)) {
+            not_selected_attributes.push(option?.attribute?.name);
+          }
+        });
+
+        not_selected_attributes = (not_selected_attributes ?? [])?.map(
+          (attribute) => {
+            if (attribute?.[attribute?.length - 1] === "a") {
+              return attribute?.slice(0, -1)?.toLowerCase() + "u";
+            } else {
+              return attribute;
+            }
+          }
+        );
+
+        switch (true) {
+          case not_selected_attributes?.length === 1:
+            text = `Odaberite ${not_selected_attributes?.[0]}`;
+            break;
+          case not_selected_attributes?.length > 1:
+            text = `Odaberite ${(not_selected_attributes ?? [])?.map((item) => {
+              return item;
+            })}`;
+        }
+      }
+    }
+    return text;
+  };
 
   const checkIsAddable = (price, inventory) => {
     let addable_data = {};
@@ -76,6 +120,7 @@ export const ProductInfo = ({
             id: product?.data?.item?.basic_data?.id_product,
             quantity: count,
           });
+          return true;
           // pushToDataLayer("add_to_cart", product?.data?.item, count);
         } else {
           router.push(`/kontakt?id=${product?.data?.item?.id}`);
@@ -93,6 +138,7 @@ export const ProductInfo = ({
               id: productVariant?.id,
               quantity: count,
             });
+            return true;
             // pushToDataLayer("add_to_cart", productVariant, count);
           } else {
             router.push(`/kontakt?id=${product?.data?.item?.id}`);
@@ -105,6 +151,7 @@ export const ProductInfo = ({
       default:
         break;
     }
+    return false;
   };
 
   const [deliveryModal, setDeliveryModal] = useState(false);
@@ -202,7 +249,9 @@ export const ProductInfo = ({
                 canonical={canonical}
                 setType={setType}
                 setProduct={setProduct}
+                setSelectedOptions={setSelectedOptions}
                 setProductVariant={setProductVariant}
+                setTempError={setTempError}
               />
             </Suspense>
           </div>
@@ -231,19 +280,9 @@ export const ProductInfo = ({
           <div className="mt-[1.6rem] max-md:mt-[1rem] flex items-center gap-3">
             <button
               disabled={isPending}
-              className={
-                productVariant === null || productVariant.length === 0
-                  ? `max-sm:w-[8.5rem] ${
-                      text === "Izaberite veličinu"
-                        ? `bg-red-500`
-                        : `bg-[#2bc48a]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
-                  : `max-sm:w-[8.5rem] ${
-                      text === "Izaberite veličinu"
-                        ? `bg-red-500`
-                        : `bg-[#2bc48a]`
-                    } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
-              }
+              className={`relative max-sm:w-[8.5rem] sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold ${
+                tempError ? `bg-red-500` : `bg-[#2bc48a]`
+              }`}
               onClick={() => {
                 // if (isVariantSelected()) {
                 handleAddToCart();
@@ -270,31 +309,23 @@ export const ProductInfo = ({
               productVariant?.id
                 ? productVariant?.inventory
                 : product?.data?.item?.inventory
-            )?.addable && (
-              <button
-                className={
-                  productVariant === null || productVariant.length === 0
-                    ? `max-sm:w-[8.5rem] ${
-                        text2 === "Izaberite veličinu"
-                          ? `bg-red-500`
-                          : `bg-[#191919]`
-                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold  relative`
-                    : `max-sm:w-[8.5rem] ${
-                        text2 === "Izaberite veličinu"
-                          ? `bg-red-500`
-                          : `bg-[#191919]`
-                      } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem]  flex justify-center items-center uppercase text-white text-sm font-bold`
-                }
-                onClick={() => {
-                  // if (isVariantSelected()) {
-                  handleAddToCart();
-                  router.push("/korpa");
-                  // }
-                }}
-              >
-                {text2}
-              </button>
-            )}
+            )?.addable &&
+              !tempError && (
+                <button
+                  className={`max-sm:w-[8.5rem] ${
+                    tempError ? `bg-red-500` : `bg-[#191919]`
+                  } sm:w-[15.313rem] hover:bg-opacity-80 h-[3.25rem] flex justify-center items-center uppercase text-white text-sm font-bold`}
+                  onClick={() => {
+                    // if (isVariantSelected()) {
+                    if (handleAddToCart()) {
+                      router.push("/korpa");
+                    }
+                    // }
+                  }}
+                >
+                  {text2}
+                </button>
+              )}
 
             <Suspense
               fallback={
