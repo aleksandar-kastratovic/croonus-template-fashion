@@ -80,11 +80,13 @@ export const ProductInfo = ({
         switch (true) {
           case not_selected_attributes?.length === 1:
             text = `Odaberite ${not_selected_attributes?.[0]}`;
+            text = "Odaberite varijantu";
             break;
           case not_selected_attributes?.length > 1:
             text = `Odaberite ${(not_selected_attributes ?? [])?.map((item) => {
               return item;
             })}`;
+            text = "Odaberite varijantu";
         }
       }
     }
