@@ -23,7 +23,7 @@ const NewsLetterInstagramSection = () => {
     } else {
       setError(false);
       await post("/newsletter", { email: email }).then((response) => {
-        if (!response?.code) {
+        if (response?.code !== 200) {
           setEmail("");
           toast.error(response?.payload?.message || "Error 404", {
             position: "top-center",

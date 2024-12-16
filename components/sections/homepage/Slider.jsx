@@ -13,6 +13,7 @@ const Slider = ({ banners }) => {
     const [draggingIndex, setDraggingIndex] = useState(0);
     const sliderRef = useRef();
 
+
     useEffect(() => {
         const handleMouseUp = () => {
             if (isDragging) {
@@ -90,7 +91,6 @@ const Slider = ({ banners }) => {
                 <div className=" items-center max-sm:h-[400px] justify-between w-full max-h-[1057px]">
                     {banners?.map((banner, index) => {
                         const isActive = currentSlide?.index === index;
-
                         return (
                             <div
                                 key={index}
@@ -106,8 +106,8 @@ const Slider = ({ banners }) => {
                                     <Image
                                         src={banner?.image}
                                         alt={banner?.title}
-                                        width={1920}
-                                        height={1080}
+                                        width={banner?.file_data?.banner_position?.width}
+                                        height={banner?.file_data?.banner_position?.height}
                                         className="bg-fixed w-full max-sm:h-full object-cover"
                                     />
                                     <Link

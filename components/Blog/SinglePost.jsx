@@ -28,7 +28,7 @@ const SinglePost = ({ post }) => {
               >
                 <Image
                   src={image}
-                  alt={post?.basic_data?.title}
+                  alt={post?.basic_data?.title || 'Slika Bloga'}
                   width={0}
                   height={0}
                   sizes={`100vw`}

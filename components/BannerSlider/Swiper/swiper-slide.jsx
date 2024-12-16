@@ -21,6 +21,8 @@ export const Slide = ({
   image,
   file_data,
   children,
+  height,
+  width
 }) => {
   return (
     <>
@@ -30,9 +32,9 @@ export const Slide = ({
       >
         <div className="relative w-full">
           {type === "image" ? (
-            <ImageWrapper {...{ image, file_data }}>{children}</ImageWrapper>
+            <ImageWrapper {...{ image, file_data,height,width }}>{children}</ImageWrapper>
           ) : type === "video_link" ? (
-            <YoutubeVideoWrapper {...{ video_url, file_data }}>
+            <YoutubeVideoWrapper {...{ video_url, file_data,height,width }}>
               {children}
             </YoutubeVideoWrapper>
           ) : (
@@ -44,28 +46,28 @@ export const Slide = ({
   );
 };
 
-const ImageWrapper = ({ children, image, file_data }) => {
+const ImageWrapper = ({ children, image, file_data,height,width }) => {
   return (
     <>
       <Image
         src={convertHttpToHttps(image ?? "")}
         alt={file_data?.alt ?? "Bogutovo"}
-        width={file_data?.width ?? 1920}
+        width={width || 1920}
         priority
         className={`!w-full !h-auto`}
-        height={file_data?.height ?? 1080}
+        height={height || 1080}
       />
       {children}
     </>
   );
 };
 
-const VideoWrapper = ({ children, file_data }) => {
+const VideoWrapper = ({ children, file_data,height,width }) => {
   return (
     <>
       <video
-        width={file_data?.banner_position?.width}
-        height={file_data?.banner_position?.height}
+        width={width || 1920}
+        height={height || 1080}
         className="bg-fixed w-full h-full object-cover"
         autoPlay
         loop

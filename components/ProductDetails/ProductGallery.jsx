@@ -134,7 +134,7 @@ export const ProductGallery = ({ slug }) => {
       >
         <Image
           src={convertHttpToHttps(image?.image)}
-          alt={`croonus Shop`}
+          alt={image?.image_data?.description?.alt || 'Croonus Shop'}
           width={0}
           height={0}
           priority={true}
@@ -363,7 +363,7 @@ export const ProductGallery = ({ slug }) => {
                     <div className="swiper-zoom-container">
                       <Image
                         src={image?.image}
-                        alt={`Croonus Shop`}
+                        alt={image?.image_data?.description?.alt || 'Croonus shop'}
                         layout="fill"
                         sizes="100vw"
                         objectFit="cover"

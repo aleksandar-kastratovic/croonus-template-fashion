@@ -14,7 +14,7 @@ const RecommendedCategories = ({ categories }) => {
               {category?.images?.image && (
                 <Image
                   src={category?.images?.image}
-                  alt={category.slug}
+                  alt={category.slug || "Slika Kategorije"}
                   fill
                   sizes="100vw"
                   priority={true}

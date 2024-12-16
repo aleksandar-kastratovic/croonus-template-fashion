@@ -111,7 +111,7 @@ const RecommendedProducts = ({ recommendedProducts, action4 }) => {
                 <div className="flex items-center gap-3">
                   <Link
                     className="max-md:text-[0.9rem] text-lg underline text-[#171717] block"
-                    href={`/sve-kategorije`}
+                    href={`/`}
                   >
                     Pogledajte sve proizvode
                   </Link>

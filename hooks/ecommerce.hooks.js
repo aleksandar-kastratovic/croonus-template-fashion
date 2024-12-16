@@ -169,7 +169,7 @@ export const useAddToCart = () => {
             });
             break;
           default:
-            toast.error("Greška prilikom dodavanja u korpu", {
+            toast.error("Artikal nije dostupan", {
               position: "top-center",
               autoClose: 2000,
               hideProgressBar: true,
