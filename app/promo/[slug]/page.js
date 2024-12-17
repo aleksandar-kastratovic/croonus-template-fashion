@@ -1,11 +1,14 @@
 import LandingPage from "@/components/PromoPage/LandingPage";
 import { get } from "@/api/api";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 const PromoPage = async ({ params: { slug } }) => {
   return (
     <>
-      <LandingPage slug={slug} />
+      <Suspense>
+        <LandingPage slug={slug} />
+      </Suspense>
     </>
   );
 };

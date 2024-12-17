@@ -41,10 +41,10 @@ export const Wishlist = ({ product }) => {
     >
       {isInWishlist ? (
         <Image
-          src={`/heart-active.png`}
+          src={`/icons/heart-active.png`}
           alt="wishlist"
           width={39}
-          height={35}
+          height={39}
           className={`w-10 h-auto`}
         />
       ) : (
@@ -52,7 +52,7 @@ export const Wishlist = ({ product }) => {
           src={"/icons/heart.png"}
           alt="wishlist"
           width={39}
-          height={35}
+          height={39}
           className={`favorite w-10 h-auto ${
             !isInWishlist && "group-hover:invert"
           }`}

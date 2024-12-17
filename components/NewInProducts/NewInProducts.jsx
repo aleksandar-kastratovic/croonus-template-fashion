@@ -3,10 +3,10 @@ import { Fragment, Suspense } from "react";
 import { Thumb } from "../Thumb/Thumb";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useRecommendedProducts } from "@/hooks/ecommerce.hooks";
+import { useNewProducts } from "@/hooks/ecommerce.hooks";
 
-const RecommendedProducts = ({ text = "Možda će Vas zanimati", slug }) => {
-  const { data } = useRecommendedProducts({ slug: slug });
+const NewInProducts = ({ text = "Novo u ponudi" }) => {
+  const { data } = useNewProducts();
 
   return (
     <>
@@ -68,4 +68,4 @@ const RecommendedProducts = ({ text = "Možda će Vas zanimati", slug }) => {
   );
 };
 
-export default RecommendedProducts;
+export default NewInProducts;

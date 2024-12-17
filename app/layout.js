@@ -1,5 +1,4 @@
 import { CartContextProvider } from "@/api/cartContext";
-import "swiper/css";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/Footer/Footer";
@@ -24,10 +23,6 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={`${await getHTMLLang()}`}>
       <head>
-        <meta
-          http-equiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
         <link
           rel={`stylesheet`}
           href={`https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css`}
@@ -43,6 +38,7 @@ export default async function RootLayout({ children }) {
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
         />
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
       </head>
       <body className="relative">
         <QueryProvider>
@@ -68,6 +64,9 @@ export default async function RootLayout({ children }) {
 }
 
 export const metadata = {
+  icons: {
+    icon: "/favicon.ico",
+  },
   title: "Početna | Fashion Template",
   description: "Dobrodošli na Fashion Template Online Shop",
   alternates: {

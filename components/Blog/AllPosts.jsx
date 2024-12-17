@@ -24,7 +24,7 @@ const AllPosts = ({ posts }) => {
                   <Link href={`/blog/${post?.slug}`}>
                     <Image
                       src={post?.images?.thumb_image}
-                      alt={post?.basic_data?.title}
+                      alt={post?.basic_data?.title || 'Blog Slika'}
                       width={0}
                       height={0}
                       sizes={`100vw`}

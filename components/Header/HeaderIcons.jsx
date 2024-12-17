@@ -15,20 +15,20 @@ const HeaderIcons = () => {
     <div className="flex items-center">
       <Link href="/login">
         <Image
-          src="/user.png"
+          src="/icons/user.png"
           width={21}
           height={21}
-          className="object-cover"
+          className="object-cover w-7 h-auto"
           alt="user"
         />
       </Link>
       <Link href="/lista-zelja">
         <div className="relative">
           <Image
-            src="/heart.png"
+            src="/icons/heart.png"
             width={21}
             height={21}
-            className="object-cover mx-5"
+            className="object-cover mx-5 w-5 h-auto"
             alt="heart"
           />
           <span className="absolute -top-2.5 text-white right-1 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
@@ -39,13 +39,13 @@ const HeaderIcons = () => {
       <Link href="/korpa">
         <div className="relative">
           <Image
-            src="/shopping-bag.png"
+            src="/icons/shopping-bag.png"
             width={21}
             height={21}
-            className="object-cover w-5 h-auto"
+            className="object-cover w-8 h-auto"
             alt="shopping-bag"
           />
-          <span className="absolute -top-2 text-white -right-3 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
+          <span className="absolute -top-1 text-white -right-2 bg-[#e10000] rounded-full w-5 h-5 flex items-center justify-center  text-xs">
             {cartCount}
           </span>
         </div>

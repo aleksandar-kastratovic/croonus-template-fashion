@@ -134,7 +134,7 @@ export const ProductGallery = ({ slug }) => {
       >
         <Image
           src={convertHttpToHttps(image?.image)}
-          alt={`croonus Shop`}
+          alt={image?.image_data?.description?.alt || 'Croonus Shop'}
           width={0}
           height={0}
           priority={true}
@@ -199,7 +199,7 @@ export const ProductGallery = ({ slug }) => {
         modules={[FreeMode, Thumbs, Pagination, Navigation]}
         initialSlide={color ? newImage : 0}
         navigation={true}
-        loop={true}
+        rewind={true}
         onSwiper={(swiper) => setSwiper(swiper)}
         className={`w-full h-full !relative`}
         breakpoints={{
@@ -245,10 +245,10 @@ export const ProductGallery = ({ slug }) => {
         )}
         <div className={`absolute z-50 flex flex-col gap-1 top-2 right-2`}>
           {productGallery?.stickers?.length > 0 &&
-            productGallery?.stickers?.map((sticker) => {
+            productGallery?.stickers?.map((sticker, stickerIndex) => {
               return (
                 <div
-                  key={sticker?.id}
+                  key={`stickerIndex-${stickerIndex}`}
                   className={`text-[13px] bg-[#39ae00] px-[0.85rem] py-1 rounded-lg font-bold`}
                 >
                   <span className={`text-[0.75rem] text-white`}>
@@ -363,7 +363,7 @@ export const ProductGallery = ({ slug }) => {
                     <div className="swiper-zoom-container">
                       <Image
                         src={image?.image}
-                        alt={`Croonus Shop`}
+                        alt={image?.image_data?.description?.alt || 'Croonus shop'}
                         layout="fill"
                         sizes="100vw"
                         objectFit="cover"

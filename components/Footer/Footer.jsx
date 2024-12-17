@@ -17,7 +17,7 @@ const Footer = () => {
         <div>
           <Link href={`/`}>
             <Image
-              src={"/logo.png"}
+              src={"/images/logo/logo.png"}
               width={214}
               height={45}
               alt="Croonus Logo"
@@ -345,7 +345,7 @@ const Footer = () => {
           <div className="flex items-center gap-1 ">
             <div>
               <Image
-                src={"/icons/idcheck.webp"}
+                src={"/icons/bank/idcheck.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -354,7 +354,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={"/icons/visaSecure.webp"}
+                src={"/icons/bank/visaSecure.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -363,7 +363,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={"/icons/bancaIntesa.webp"}
+                src={"/icons/bank/bancaIntesa.webp"}
                 width={200}
                 height={70}
                 alt="Master Card"
@@ -372,7 +372,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={"/icons/mastercard.webp"}
+                src={"/icons/bank/mastercard.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -381,7 +381,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={"/icons/maestro.webp"}
+                src={"/icons/bank/maestro.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -390,7 +390,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={"/icons/dinacard.webp"}
+                src={"/icons/bank/dinacard.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"
@@ -399,7 +399,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={"/icons/visa.webp"}
+                src={"/icons/bank/visa.webp"}
                 width={50}
                 height={30}
                 alt="Visa"
@@ -408,7 +408,7 @@ const Footer = () => {
             </div>
             <div>
               <Image
-                src={"/icons/american.webp"}
+                src={"/icons/bank/american.webp"}
                 width={50}
                 height={30}
                 alt="Master Card"

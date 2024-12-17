@@ -190,6 +190,9 @@ const Contact = () => {
                     : " border-slate-300"
                 } border rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
+              {errors.includes("customer_name") && (
+                <p style={{ color: 'red' }}>Ovo polje je obavezno</p>
+              )}
             </div>
             <div className={`flex flex-col gap-2 col-span-2 lg:col-span-1`}>
               <label htmlFor={`phone`}>Telefon</label>
@@ -206,6 +209,9 @@ const Contact = () => {
                     : " border-slate-300"
                 } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
+              {errors.includes("phone") && (
+                <p style={{ color: 'red' }}>Ovo polje je obavezno</p>
+              )}
             </div>
             <div className={`flex flex-col gap-2 col-span-2 lg:col-span-1`}>
               <label htmlFor={`email`}>Email</label>
@@ -222,6 +228,9 @@ const Contact = () => {
                     : " border-slate-300"
                 } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
+              {errors.includes("email") && (
+                <p style={{ color: 'red' }}>Ovo polje je obavezno</p>
+              )}
             </div>
             <div className={`flex flex-col gap-2 col-span-2 lg:col-span-1`}>
               <label htmlFor={`subject`}>Naslov poruke</label>
@@ -238,6 +247,9 @@ const Contact = () => {
                     : " border-slate-300"
                 } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
+              {errors.includes("subject") && (
+                <p style={{ color: 'red' }}>Ovo polje je obavezno</p>
+              )}
             </div>
             <div className={`flex flex-col gap-2 col-span-2`}>
               <label htmlFor={`message`}>Poruka</label>
@@ -253,6 +265,9 @@ const Contact = () => {
                     : " border-slate-300"
                 } rounded-lg focus:border-[#04b400] focus:ring-0 focus:outline-0 p-2`}
               />
+              {errors.includes("message") && (
+                <p style={{ color: 'red' }}>Ovo polje je obavezno</p>
+              )}
             </div>
             <div
               className={`flex flex-col lg:flex-row items-start max-lg:gap-5 lg:items-center justify-between  col-span-2`}
@@ -263,7 +278,7 @@ const Contact = () => {
                   type={`checkbox`}
                   name={`accept_rules`}
                   id={`accept_rules`}
-                  value={formData.accept_rules}
+                  checked={formData.accept_rules}
                   onChange={handleChange}
                   className={`${
                     errors.includes("accept_rules")
@@ -282,6 +297,9 @@ const Contact = () => {
                     </Link>
                   </span>
                 </label>
+                {errors.includes("accept_rules") && (
+                <p style={{ color: 'red' }}>Ovo polje je obavezno</p>
+              )}  
               </div>
               <div className={`max-lg:w-full`}>
                 <button

@@ -6,7 +6,7 @@ import { useNewProducts } from "@/hooks/ecommerce.hooks";
 import { Suspense } from "react";
 
 const NewProductsPage = () => {
-  const { data: newProducts } = useNewProducts({ render: false });
+  const { data: newProducts } = useNewProducts(true);
   return (
     <div className="md:px-[3rem] max-md:w-[95%] mx-auto max-md:mt-[2rem] mt-[5rem]">
       {newProducts?.items?.length > 0 ? (

@@ -101,6 +101,7 @@ export const Payments = () => {
         onClick={() => {
           setData({
             ...new_address,
+            id_country: 0, //set Default to Izaberi
             set_default: false,
           });
 
@@ -149,6 +150,7 @@ export const Payments = () => {
         setErrors={setErrors}
         showOptions={false}
         handleInputChange={(e) => {
+          
           handleInputChange(e, setData, setErrors);
         }}
         handleSubmit={(e) => {

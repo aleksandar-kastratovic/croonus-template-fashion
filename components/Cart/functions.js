@@ -45,6 +45,7 @@ const handleSetDifferentData = (data, setDataTmp) => {
       setDataTmp((prev) => ({
         ...prev,
         [key]: null,
+        id_country_shipping: 0, //Set default to Izaberi
       }));
     }
   });

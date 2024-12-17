@@ -54,8 +54,12 @@ const CheckoutTotals = ({ className, options, totals, summary, formData }) => {
         <p className={`${className} text-[0.965rem] font-normal`}>
           Iznos koštanja dostave:
         </p>
-        <p className={`${className} text-[1rem] font-light`}>
-          {currencyFormat(totals?.delivery_amount)}
+        <p className={`${className} text-[1rem] font-light`}> 
+          {/* Checkout if the delivery is free */}
+          {totals?.cart_discount > summary?.options?.delivery?.free_delivery?.amount ? (
+             <p>Besplatna dostava</p>
+          ) : ( <span>{currencyFormat(totals?.delivery_amount)}</span>)}
+          
         </p>
       </div>
       <div

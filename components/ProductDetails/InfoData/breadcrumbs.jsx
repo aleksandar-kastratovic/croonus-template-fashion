@@ -5,12 +5,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { get } from "@/api/api";
 import { generateBreadcrumbSchema } from "@/_functions";
 
-export const Breadcrumbs = ({ path, base_url, categoryId }) => {
+export const Breadcrumbs = ({ id, base_url, categoryId }) => {
   const { data: breadcrumbs } = useSuspenseQuery({
-    queryKey: ["breadcrumbs", path],
+    queryKey: ["breadcrumbs", id],
     queryFn: async () => {
       return await get(
-        `/product-details/breadcrumbs/${path}?categoryId=${categoryId ?? "*"}`
+        `/product-details/breadcrumbs/${id}?categoryId=${categoryId ?? "*"}`
       ).then((res) => res?.payload);
     },
     refetchOnWindowFocus: false,

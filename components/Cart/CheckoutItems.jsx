@@ -29,7 +29,12 @@ const CheckoutItems = ({
   cart_item_id,
 }) => {
   const { mutate: removeFromCart, isSuccess: isRemoved } = useRemoveFromCart();
-  const { mutate: updateCart, isSuccess: isUpdated } = useUpdateCartQuantity();
+  const {
+    mutate: updateCart,
+    isSuccess: isUpdated,
+    isPending,
+    isError,
+  } = useUpdateCartQuantity();
 
   const [productQuantity, setProductQuantity] = useState(Number(quantity));
 
@@ -48,35 +53,33 @@ const CheckoutItems = ({
 
   return (
     <>
-      <div className={`relative grid grid-cols-4 gap-5`}>
+      <div
+        className={`relative items-start justify-start grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] gap-5`}
+      >
         <button
-          className={`w-8 absolute right-2 top-2 z-10 cursor-pointer ${
+          className={`w-8 absolute right-0 top-0 z-10 cursor-pointer ${
             isClosed && !inventory?.inventory_defined && "text-white"
           } text-lg hover:text-red-500`}
           onClick={() => {
             removeFromCart({ id: id });
           }}
         >
-          <DeleteIcon className="size-8" />
+          <i className="fas fa-times text-2xl"></i>
         </button>
-        <Link href={`/${slug_path}`} className={`col-span-1`}>
+        <Link href={`/${slug_path}`} className="w-full">
           <Image
             src={image?.[0] ?? "/comr.png"}
             alt={`Comr`}
             width={0}
             height={0}
             sizes={`90vw`}
-            className={`aspect-2/3 h-full max-h-[250px] w-full`}
+            className={`h-44 sm:h-56 w-full object-cover hover:object-contain bg-gray-100`}
           />
         </Link>
         <div
-          className={`col-span-3 mb-auto ml-[2rem] flex flex-col items-start gap-2`}
+          className={`mb-auto ml-2 pt-2 flex flex-col items-start gap-2 pr-9`}
         >
-          <h4
-            className={`${className} mt-2 text-center text-[1.1rem] font-normal`}
-          >
-            {name}
-          </h4>
+          <h4 className={`${className} text-[1.1rem] font-normal`}>{name}</h4>
           <div className={`flex items-center`}>
             <span className={`${className} text-[0.9rem]`}>Količina:</span>{" "}
             &nbsp;
@@ -89,12 +92,14 @@ const CheckoutItems = ({
               id={cart_item_id}
               refreshSummary={refreshSummary}
               refreshCart={refreshCart}
+              updatingCart={isPending}
+              updatingCartError={isError}
             />
           </div>
-          <p className={`text-center ${className} text-[0.9rem] font-normal`}>
+          <p className={`${className} text-[0.9rem] font-normal`}>
             Šifra:&nbsp;{sku}
           </p>
-          <p className={`text-center ${className} text-[0.9rem] font-normal`}>
+          <p className={`${className} text-[0.9rem] font-normal`}>
             Ukupan iznos:&nbsp;{currencyFormat(price?.per_item?.total)}
           </p>
         </div>

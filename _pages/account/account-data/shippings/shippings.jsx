@@ -93,6 +93,10 @@ export const Shippings = () => {
         icon={`plus`}
         button={`Dodajte novu adresu`}
         onClick={() => {
+          setData({
+            ...data,
+            id_country: 0, //set Default to Izaberi
+          })
           setShow({
             ...show,
             show: true,
@@ -138,6 +142,7 @@ export const Shippings = () => {
           handleInputChange(e, setData, setErrors);
         }}
         handleSubmit={(e) => {
+          
           handleSubmit(
             e,
             data,

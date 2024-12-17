@@ -426,18 +426,18 @@ export const Thumb = ({
       <div className="flex items-center gap-1 mt-2 flex-wrap max-md:text-[0.75rem] text-[0.813rem] min-w-[5.938rem] max-w-max">
         <div
           className={`${
-            product?.price?.discount?.active && "bg-[#f8ce5d] px-2"
+            product?.price?.discount?.active && "px-2"
           }  md:mt-3 font-bold text-center`}
         >
+          <Link
+          href={`/${product?.link?.link_path}`}
+          className="max-md:text-[0.85] text-[0.813rem] relative max-md:leading-4 max-sm:line-clamp-1"
+        >
           <ProductPrice price={product?.price} inventory={product?.inventory} />
+        </Link>
         </div>
-        {product?.price?.discount?.active && (
-          <span className={`line-through md:mt-3`}>
-            {currencyFormat(product?.price?.price?.original)}
-          </span>
-        )}
       </div>{" "}
-      <div className={`absolute bottom-[-20px] w-full`}>
+      <div className={`w-full`}>
         <div
           className={`flex flex-row items-start gap-[0.05rem] md:gap-[0.35rem] mt-2 color`}
         >

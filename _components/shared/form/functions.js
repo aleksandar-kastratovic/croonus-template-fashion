@@ -32,10 +32,19 @@ export const handleSubmit = (
   setErrors
 ) => {
   let err = handleFieldsValidation(data, fields);
-  if (err?.length > 0) {
-    return setErrors(err);
+  //Added error validation for - value 
+  if(data.id_country == '-') {
+    err = [...err,'id_country'];
+    if (err?.length > 0) {
+      return setErrors(err);
+    }
+  } else {
+    if (err?.length > 0) {
+      return setErrors(err);
+    }
   }
 
+  setData = {}
   return handler({ ...data });
 };
 

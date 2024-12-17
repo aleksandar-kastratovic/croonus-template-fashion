@@ -7,18 +7,23 @@ import Variants from "@/components/Variants/Variants";
 import { notFound, useRouter } from "next/navigation";
 import { Description } from "@/components/ProductDetails/InfoData/desc";
 import { generateProductSchema } from "@/_functions";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export const BasicData = ({
   path,
+  id,
   productVariant,
   setProductVariant,
   setProduct,
   canonical,
+  setSelectedOptions,
+  setTempError,
 }) => {
+  const { current: isMounted } = useIsMounted();
   const { data: product } = useSuspenseQuery({
     queryKey: ["product", path],
     queryFn: async () => {
-      return await get(`/product-details/basic-data/${path}`).then((res) => {
+      return await get(`/product-details/basic-data/${id}`).then((res) => {
         setProduct(res?.payload);
         return res?.payload;
       });
@@ -27,9 +32,9 @@ export const BasicData = ({
   });
 
   const { data: product_gallery } = useSuspenseQuery({
-    queryKey: ["productGallerySchema", path],
+    queryKey: ["productGallerySchema", id],
     queryFn: async () => {
-      return await get(`/product-details/gallery/${path}`).then((res) => {
+      return await get(`/product-details/gallery/${id}`).then((res) => {
         return res?.payload;
       });
     },
@@ -86,12 +91,20 @@ export const BasicData = ({
   const [newURL, setNewURL] = useState(null);
   useEffect(() => {
     if (newURL) {
-      window.history.replaceState(null, null, newURL);
+      window?.history?.replaceState(null, null, newURL);
+      setTempError(null);
     }
   }, [newURL]);
 
   const updateProductVariant = (newProduct) => {
-    setProductVariant(newProduct);
+    setProductVariant({
+      ...newProduct,
+      price: {
+        ...newProduct?.price,
+        min: [],
+        max: [],
+      },
+    });
   };
   const handleURLChange = (newURL) => {
     setNewURL(newURL);
@@ -111,61 +124,6 @@ export const BasicData = ({
     setProduct(product);
   }, [product]);
 
-  const renderDiscount = (product) => {
-    switch (true) {
-      case product?.product_type === "single":
-        if (product?.data?.item?.price?.discount?.active) {
-          return (
-            <span className="text-[#636363] text-[1rem]">
-              -
-              {(
-                ((product?.data?.item?.price?.price?.original -
-                  product?.data?.item?.price?.price?.discount) /
-                  product?.data?.item?.price?.price?.original) *
-                100
-              ).toFixed(0)}
-              %
-            </span>
-          );
-        }
-        break;
-      case product?.product_type === "variant":
-        if (Boolean(productVariant?.id)) {
-          if (productVariant?.price?.discount?.active) {
-            return (
-              <span className="text-[#636363] text-[1rem]">
-                -
-                {(
-                  ((productVariant?.price?.price?.original -
-                    productVariant?.price?.price?.discount) /
-                    productVariant?.price?.price?.original) *
-                  100
-                ).toFixed(0)}
-                %
-              </span>
-            );
-          }
-        } else {
-          if (product?.data?.item?.price?.discount?.active) {
-            return (
-              <span className="text-[#636363] text-[1rem]">
-                -{" "}
-                {(
-                  ((product?.data?.item?.price?.price?.original -
-                    product?.data?.item?.price?.price?.discount) /
-                    product?.data?.item?.price?.price?.original) *
-                  100
-                ).toFixed(0)}
-                %
-              </span>
-            );
-          }
-        }
-      default:
-        break;
-    }
-  };
-
   return product ? (
     <>
       <script
@@ -182,10 +140,17 @@ export const BasicData = ({
           ? productVariant?.basic_data?.sku
           : product?.data?.item?.basic_data?.sku}
       </h2>
+      <h2 className="mt-[1.063rem] text-[#636363] text-[0.688rem]">
+        Bar Kod:&nbsp;
+        {productVariant?.basic_data?.barcode
+          ? productVariant?.basic_data?.barcode
+          : product?.data?.item?.basic_data?.barcode}
+      </h2>
       <div
         className={`mt-[2.125rem] text-[1.313rem] flex items-center gap-3 font-bold`}
       >
         <ProductPrice
+          is_details
           price={
             productVariant?.id
               ? productVariant?.price
@@ -196,13 +161,12 @@ export const BasicData = ({
               ? productVariant?.inventory
               : product?.data?.item?.inventory
           }
+          className={
+            product?.data?.item?.price?.discount?.active
+              ? `font-bold text-[21px] py-0.5`
+              : `font-bold text-[1.172rem]  py-0.5`
+          }
         />
-        {renderDiscount(product)}
-        {product?.data?.item?.price?.discount?.active && (
-          <span className="text-[#636363] text-[1rem] line-through">
-            {currencyFormat(product?.data?.item?.price?.price?.original)}
-          </span>
-        )}
       </div>
       <p className={`text-sm mt-5 max-w-full md:max-w-[90%]`}>
         {product?.data?.item?.basic_data?.short_description}
@@ -220,6 +184,7 @@ export const BasicData = ({
             productVariant={productVariant}
             slug={path}
             productSlug={path}
+            setSelectedOptions={setSelectedOptions}
           />
         </div>
       )}

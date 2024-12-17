@@ -1,12 +1,13 @@
 import { get, list } from "@/api/api";
-import dynamic from "next/dynamic";
 import { headers } from "next/headers";
 import { generateOrganizationSchema } from "@/_functions";
-import IndexSlider from "@/components/IndexSlider/IndexSlider";
 import RecommendedCategories from "@/components/sections/homepage/RecommendedCategories";
 import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
 import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";
 import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
+import IndexSlider from "@/components/IndexSlider/IndexSlider";
+import NewInProducts from "@/components/NewInProducts/NewInProducts";
+import { Suspense } from "react";
 
 const getBanners = () => {
   return get("/banners/index_slider").then((res) => res?.payload);
@@ -22,12 +23,7 @@ const getRecommendedProducts = () => {
     (res) => res?.payload?.items
   );
 };
-const getIndexBanner = () => {
-  return get("/banners/index_banner").then((res) => res?.payload);
-};
-const fetchAction4 = () => {
-  return get("/banners/akcija4").then((response) => response?.payload);
-};
+
 const getNew = () => {
   return list("/categories/section/recommended").then((res) => res?.payload);
 };
@@ -59,10 +55,7 @@ const Home = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <div className="block relative overflow-hidden">
-        <div
-          className="relative max-sm:h-[400px] md:h-[510px] lg:h-[690px] xl:h-[700px] 2xl:h-[750px] 3xl:h-[800px] block"
-          id="slider"
-        >
+        <div className="relative block" id="slider">
           <IndexSlider banners={banners} mobileBanners={mobileBanners} />
         </div>
         <div className="overflow-hidden">
@@ -71,6 +64,9 @@ const Home = async () => {
             action4={`Izdvajamo za Vas`}
           />
         </div>
+        <Suspense>
+          <NewInProducts />
+        </Suspense>
         <RecommendedCategories categories={categories} />
         <NewCategoriesSections categories={recommendedCategories} />
         <NewsLetterInstagramSection />

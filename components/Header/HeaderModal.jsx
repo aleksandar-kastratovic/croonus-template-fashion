@@ -85,7 +85,7 @@ const HeaderModal = () => {
           </div>
           <div className="relative aspect-video">
             <Image
-              src="/fashion-img.png"
+              src="/images/fashion-img.png"
               alt="img-modal"
               fill
               sizes="100vw"

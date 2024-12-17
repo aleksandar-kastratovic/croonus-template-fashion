@@ -18,6 +18,7 @@ const Header = () => {
   const categoriesMain = [
     { name: "Početna", slug: "/", isCategory: false, id: 0 },
     ...categories,
+    { name: "Novo", slug: "/novo", isCategory: false },
     { name: "Brendovi", slug: "/brendovi", isCategory: false },
     { name: "Blog", slug: "/blog", isCategory: false },
     { name: "Maloprodaje", slug: "/maloprodaje", isCategory: false },
@@ -97,7 +98,7 @@ const Header = () => {
         <div className="py-5 px-[3rem] flex items-center justify-between">
           <Link href="/">
             <Image
-              src="/logo.png"
+              src="/images/logo/logo.png"
               width={185}
               height={39}
               className="object-cover"

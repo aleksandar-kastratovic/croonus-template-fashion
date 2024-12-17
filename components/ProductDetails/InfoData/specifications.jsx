@@ -7,10 +7,10 @@ import {
 } from "@/hooks/ecommerce.hooks";
 import React, { Fragment, useState } from "react";
 
-export const Specifications = ({ path }) => {
-  const { data: specification } = useProductSpecification({ slug: path });
-  const { data: desc } = useProductDescription({ slug: path });
-  const { data: declaration } = useProductDeclaration({ slug: path });
+export const Specifications = ({ id }) => {
+  const { data: specification } = useProductSpecification({ slug: id });
+  const { data: desc } = useProductDescription({ slug: id });
+  const { data: declaration } = useProductDeclaration({ slug: id });
 
   const [activeTab, setActiveTab] = useState(2);
 
