@@ -1,12 +1,11 @@
 import { get, list } from "@/api/api";
-import dynamic from "next/dynamic";
 import { headers } from "next/headers";
 import { generateOrganizationSchema } from "@/_functions";
 import RecommendedCategories from "@/components/sections/homepage/RecommendedCategories";
 import NewCategoriesSections from "@/components/NewCategoriesSection/NewCategoriesSection";
 import NewsLetterInstagramSection from "@/components/NewsLetterInstgramSection/NewsLetterInstagramSection";
 import RecommendedProducts from "@/components/sections/homepage/RecommendedProducts";
-import { BannerSlider } from "@/components/BannerSlider/BannerSlider";
+import IndexSlider from "@/components/IndexSlider/IndexSlider";
 import NewInProducts from "@/components/NewInProducts/NewInProducts";
 import { Suspense } from "react";
 
@@ -24,12 +23,7 @@ const getRecommendedProducts = () => {
     (res) => res?.payload?.items
   );
 };
-const getIndexBanner = () => {
-  return get("/banners/index_banner").then((res) => res?.payload);
-};
-const fetchAction4 = () => {
-  return get("/banners/akcija4").then((response) => response?.payload);
-};
+
 const getNew = () => {
   return list("/categories/section/recommended").then((res) => res?.payload);
 };
@@ -61,7 +55,9 @@ const Home = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <div className="block relative overflow-hidden">
-        <BannerSlider banners={{ desktop: banners, mobile: mobileBanners }} />
+        <div className="relative block" id="slider">
+          <IndexSlider banners={banners} mobileBanners={mobileBanners} />
+        </div>
         <div className="overflow-hidden">
           <RecommendedProducts
             recommendedProducts={recommendedProducts}
