@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Aos from "aos";
 import { useIsMobile } from "@/hooks/ecommerce.hooks";
+import { convertHttpToHttps } from "@/helpers/convertHttpToHttps";
 
 function extractYoutubeId(url) {
   const regex =
@@ -60,7 +61,7 @@ const RenderBanner = ({ banner }) => {
           playsInline
           controls={false}
         >
-          <source src={banner?.file} type="video/mp4" />
+          <source src={convertHttpToHttps(banner?.file)} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       );
