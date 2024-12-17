@@ -20,6 +20,14 @@ const NewsLetterInstagramSection = () => {
     e.preventDefault();
     if (!email?.includes("@")) {
       setError(true);
+      toast.error("Mejl nije validan", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } else {
       setError(false);
       await post("/newsletter", { email: email }).then((response) => {

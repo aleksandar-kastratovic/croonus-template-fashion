@@ -1172,7 +1172,7 @@ export const useLogin = () => {
             login(res?.payload?.customer_token);
             break;
           default:
-            toast.error(res?.message, {
+            toast.error("Prijava nije uspela. Proverite da li koristite ispravnu e-adresu i lozinku.", {
               position: "top-center",
               autoClose: 2000,
               hideProgressBar: true,

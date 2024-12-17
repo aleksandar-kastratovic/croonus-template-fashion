@@ -264,7 +264,7 @@ export const renderDiscountPrices = (data = {}) => {
         <div
           className={`mt-2 flex flex-row flex-wrap items-center gap-3 font-sans`}
         >
-          <p className={`font-bold`}>
+          <p className={`font-bold text-base bg-yellow-300`}>
             {currencyFormat(price?.min?.price?.discount)} -{" "}
             {currencyFormat(price?.max?.price?.discount)}
           </p>
@@ -298,9 +298,9 @@ export const renderDiscountPrices = (data = {}) => {
       <div
         className={`mt-2 flex flex-row flex-wrap items-center gap-3 font-sans`}
       >
-        <p className={`font-bold`}>{currencyFormat(price?.price?.discount)}</p>
+        <p className={`font-bold`}>{currencyFormat(price?.price?.discount)}cc</p>
         <div className={`line-through text-xs group relative`}>
-          {currencyFormat(price?.price?.original)}
+          {currencyFormat(price?.price?.original)}dd
           {data?.is_details && (
             <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-[#b89980] text-white p-[6px] rounded absolute -top-12 left-0 text-[10px] font-normal">
               Važeća MP cena
