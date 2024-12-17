@@ -94,7 +94,6 @@ const IndexSlider = ({ banners, mobileBanners }) => {
     const handleMouseMove = (event) => {
       if (isDragging) {
         let banner = is_mobile ? mobileBanners : banners;
-        event.preventDefault();
         const sliderRect = sliderRef.current.getBoundingClientRect();
         const slideWidth = sliderRect.width / banner.length;
         const mouseX = event.clientX - sliderRect.left;
@@ -105,8 +104,8 @@ const IndexSlider = ({ banners, mobileBanners }) => {
       }
     };
 
-    document.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp, { passive: true });
+    document.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     return () => {
       document.removeEventListener("mouseup", handleMouseUp);
