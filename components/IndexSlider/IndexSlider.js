@@ -5,6 +5,68 @@ import Link from "next/link";
 import Aos from "aos";
 import { useIsMobile } from "@/hooks/ecommerce.hooks";
 
+function extractYoutubeId(url) {
+  const regex =
+    /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+}
+
+const RenderBanner = ({ banner }) => {
+  switch (banner.type) {
+    case "image":
+      return (
+        <Image
+          src={banner?.image}
+          alt={banner?.title}
+          width={0}
+          height={0}
+          sizes={`100vw`}
+          className="w-full h-auto"
+        />
+      );
+
+    case "video_link":
+      const videoProvider = banner.video_provider;
+      const videoUrl = banner.video_url;
+
+      const src =
+        videoProvider === "youtube"
+          ? `${videoUrl}?autoplay=1&mute=1&loop=1&playsinline=1&controls=0&playlist=${extractYoutubeId(
+              videoUrl
+            )}`
+          : `${videoUrl}?autoplay=1&muted=1&loop=1&background=1&playsinline=1`;
+
+      return (
+        <iframe
+          className="w-full h-full object-cover aspect-[960/1550] md:aspect-[1920/800] pointer-events-none"
+          width={banner.width}
+          height={banner.height}
+          src={src}
+          frameborder="0"
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      );
+    default:
+      return (
+        <video
+          width={banner?.file_data?.banner_position?.width}
+          height={banner?.file_data?.banner_position?.height}
+          className="bg-fixed w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          controls={false}
+        >
+          <source src={banner?.file} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      );
+  }
+};
+
 const IndexSlider = ({ banners, mobileBanners }) => {
   const is_mobile = useIsMobile();
 
@@ -78,10 +140,10 @@ const IndexSlider = ({ banners, mobileBanners }) => {
         };
       });
     };
-    intervalRef.current = setInterval(nextSlide, 95000);
+    intervalRef.current = setInterval(nextSlide, 5000);
     const handleInteraction = () => {
       clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(nextSlide, 95000);
+      intervalRef.current = setInterval(nextSlide, 5000);
     };
     window.addEventListener("click", handleInteraction);
     window.addEventListener("keydown", handleInteraction);
@@ -98,7 +160,6 @@ const IndexSlider = ({ banners, mobileBanners }) => {
         <div className="items-center justify-between h-full w-full">
           {(is_mobile ? mobileBanners : banners ?? [])?.map((banner, index) => {
             const isActive = currentSlide?.index === index;
-
             return (
               <div
                 key={index}
@@ -109,14 +170,7 @@ const IndexSlider = ({ banners, mobileBanners }) => {
                 }
               >
                 <div className="relative sm:h-full">
-                  <Image
-                    src={banner?.image}
-                    alt={banner?.title}
-                    width={0}
-                    height={0}
-                    sizes={`100vw`}
-                    className="w-full h-auto"
-                  />
+                  <RenderBanner banner={banner} />
                   <Link
                     href={`${banner?.url ?? `/stranica-u-izradi`}`}
                     target={`${banner?.target}` ?? "_self"}
